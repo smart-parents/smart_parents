@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1088705041732",
+    "project_id": "smart-parents-df1cf",
+    "storage_bucket": "smart-parents-df1cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1088705041732:android:925a487dfff5fce6a27311",
+        "android_client_info": {
+          "package_name": "com.example.smart_parents"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1088705041732-lpb6n48f9q92vme0m6a9rh5rfabjm7oi.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smart_parents",
+            "certificate_hash": "4273eac4d1a507368f171ce82aa7680fc49556fc"
+          }
+        },
+        {
+          "client_id": "1088705041732-c65mmhv8ehf0ef9ke43ue0s79jjkf600.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD9gDkW2K3xkexolZsRinajYONZPMFRaog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1088705041732-c65mmhv8ehf0ef9ke43ue0s79jjkf600.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

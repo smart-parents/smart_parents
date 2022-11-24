@@ -1,0 +1,214 @@
+import 'package:flutter/material.dart';
+import 'package:smart_parents/pages/Login/login_screen.dart';
+import 'package:smart_parents/components/background.dart';
+import 'package:smart_parents/components/responsive.dart';
+
+class Option extends StatefulWidget {
+  const Option({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<Option> createState() => _OptionState();
+}
+
+class _OptionState extends State<Option> {
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    // double screenHeight = MediaQuery.of(context).size.height;
+
+    // body:
+    // Column(
+    //   crossAxisAlignment: CrossAxisAlignment.start,
+    //   children: [
+    //     Positioned(
+    //       top: 0,
+    //       left: 0,
+    //       child: Image.asset(
+    //         "assets/top3.png",
+    //         // width: screenWidth * 0.5,
+    //         width: 200,
+    //       ),
+    //     ),
+    // double height = 180;
+    return Background(
+      child: SafeArea(
+        child: Responsive(
+          mobile: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            // mainAxisSize: MainAxisSize.max,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: Image.asset('assets/Faculty.png'),
+                        // iconSize: height,
+                        iconSize: screenWidth * 0.4,
+                        onPressed: () {
+                          //   Navigator.push(context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => const LoginScreen()),
+                          //   );
+                        },
+                      ),
+                      const Text("Faculty", style: TextStyle(fontSize: 20.0)),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: Image.asset('assets/Parents.png'),
+                        // iconSize: height,
+                        iconSize: screenWidth * 0.4,
+                        onPressed: () {
+                          // Navigator.push(context,
+                          //   MaterialPageRoute(
+                          //       builder: (context) => const LoginScreen()),
+                          // );
+                        },
+                      ),
+                      const Text("Parents", style: TextStyle(fontSize: 20.0)),
+                    ],
+                  ),
+                ],
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: Image.asset('assets/Admin.png'),
+                        // iconSize: height,
+                        iconSize: screenWidth * 0.4,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()),
+                          );
+                        },
+                      ),
+                      const Text("Admin", style: TextStyle(fontSize: 20.0)),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      IconButton(
+                        icon: Image.asset('assets/Student.png'),
+                        // iconSize: height,
+                        iconSize: screenWidth * 0.4,
+                        onPressed: () {
+                          // Navigator.push(
+                          //   context,
+                          //   MaterialPageRoute(builder: (context) => const LoginScreen()),
+                          // );
+                        },
+                      ),
+                      const Text("Student", style: TextStyle(fontSize: 20.0)),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+          desktop: const DesktopOption(),
+        ),
+        //   ],
+      ),
+    );
+  }
+}
+
+class DesktopOption extends StatelessWidget {
+  const DesktopOption({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    // double height = 250;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Image.asset('assets/Faculty.png'),
+              // iconSize: height,
+              iconSize: screenWidth * 0.2,
+              onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const LoginScreen()),
+                // );
+              },
+            ),
+            const Text("Faculty", style: TextStyle(fontSize: 20.0)),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Image.asset('assets/Parents.png'),
+              // iconSize: height,
+              iconSize: screenWidth * 0.2,
+              onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const LoginScreen()),
+                // );
+              },
+            ),
+            const Text("Parents", style: TextStyle(fontSize: 20.0)),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Image.asset('assets/Admin.png'),
+              // iconSize: height,
+              iconSize: screenWidth * 0.2,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                );
+              },
+            ),
+            const Text("Admin", style: TextStyle(fontSize: 20.0)),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Image.asset('assets/Student.png'),
+              // iconSize: height,
+              iconSize: screenWidth * 0.2,
+              onPressed: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const LoginScreen()),
+                // );
+              },
+            ),
+            const Text("Student", style: TextStyle(fontSize: 20.0)),
+          ],
+        ),
+      ],
+    );
+  }
+}
