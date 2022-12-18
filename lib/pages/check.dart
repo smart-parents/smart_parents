@@ -46,11 +46,11 @@ class _CheckState extends State<Check> {
           if (snapshot.data == false) {
             return const Option();
           }
-          // if (snapshot.connectionState == ConnectionState.waiting) {
-          //   return Container(
-          //       color: Colors.lightBlue,
-          //       child: const Center(child: CircularProgressIndicator()));
-          // }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Container(
+                color: Colors.lightBlue,
+                child: const Center(child: CircularProgressIndicator()));
+          }
           return UserMain();
         });
     // );
