@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:smart_parents/pages/add_student_page.dart';
-import 'package:smart_parents/pages/update_student_page.dart';
+import 'package:smart_parents/pages/student/add_student_page.dart';
+import 'package:smart_parents/pages/student/update_student_page.dart';
 import 'package:flutter/material.dart';
 
 class Student extends StatefulWidget {
@@ -97,6 +97,11 @@ class _StudentState extends State<Student> {
               appBar: AppBar(
                 backgroundColor: const Color.fromARGB(255, 207, 235, 255),
                 automaticallyImplyLeading: false,
+                leading: new IconButton(
+                  icon: new Icon(Icons.arrow_back),
+                  tooltip: "Back",
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
                 title: const Text("Student Details",
                     style: TextStyle(fontSize: 30.0)),
               ),

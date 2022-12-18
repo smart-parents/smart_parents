@@ -26,7 +26,7 @@ class _OptionState extends State<Option> {
     //       top: 0,
     //       left: 0,
     //       child: Image.asset(
-    //         "assets/top3.png",
+    //         "assets/images/top3.png",
     //         // width: screenWidth * 0.5,
     //         width: 200,
     //       ),
@@ -46,7 +46,7 @@ class _OptionState extends State<Option> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        icon: Image.asset('assets/Faculty.png'),
+                        icon: Image.asset('assets/images/Faculty.png'),
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
                         onPressed: () {
@@ -63,7 +63,7 @@ class _OptionState extends State<Option> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        icon: Image.asset('assets/Parents.png'),
+                        icon: Image.asset('assets/images/Parents.png'),
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
                         onPressed: () {
@@ -85,7 +85,7 @@ class _OptionState extends State<Option> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        icon: Image.asset('assets/Admin.png'),
+                        icon: Image.asset('assets/images/Admin.png'),
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
                         onPressed: () {
@@ -103,7 +103,7 @@ class _OptionState extends State<Option> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       IconButton(
-                        icon: Image.asset('assets/Student.png'),
+                        icon: Image.asset('assets/images/Student.png'),
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
                         onPressed: () {
@@ -144,7 +144,7 @@ class DesktopOption extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: Image.asset('assets/Faculty.png'),
+              icon: Image.asset('assets/images/Faculty.png'),
               // iconSize: height,
               iconSize: screenWidth * 0.2,
               onPressed: () {
@@ -161,7 +161,7 @@ class DesktopOption extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: Image.asset('assets/Parents.png'),
+              icon: Image.asset('assets/images/Parents.png'),
               // iconSize: height,
               iconSize: screenWidth * 0.2,
               onPressed: () {
@@ -178,7 +178,7 @@ class DesktopOption extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: Image.asset('assets/Admin.png'),
+              icon: Image.asset('assets/images/Admin.png'),
               // iconSize: height,
               iconSize: screenWidth * 0.2,
               onPressed: () {
@@ -195,7 +195,7 @@ class DesktopOption extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: Image.asset('assets/Student.png'),
+              icon: Image.asset('assets/images/Student.png'),
               // iconSize: height,
               iconSize: screenWidth * 0.2,
               onPressed: () {

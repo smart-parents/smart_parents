@@ -39,7 +39,7 @@ class _UserMainState extends State<UserMain> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // Image.asset("assets/top3.png", width: 100, height: 50,),
+            // Image.asset("assets/images/top3.png", width: 100, height: 50,),
 
             const Text(
               "Admin",
@@ -48,7 +48,7 @@ class _UserMainState extends State<UserMain> {
               ),
             ),
             Image.asset(
-              "assets/Admin.png",
+              "assets/images/Admin.png",
               height: 50,
             ),
             // ElevatedButton(

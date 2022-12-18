@@ -11,30 +11,30 @@ class LoginScreenTopImage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
 
     // return SingleChildScrollView(
-    //   child: 
-      return Column(
-        children: [
-          Text(
-            "LOGIN",
-            style: TextStyle(fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: defaultPadding * 2),
-          Row(
-            children: [
-              const Spacer(),
-              Expanded(
-                flex: 8,
-                // child: SvgPicture.asset("assets/Admin.svg"),
-                child: Image.asset(
-                  "assets/Admin.png",
-                  height: screenWidth * 0.5,
-                ),
+    //   child:
+    return Column(
+      children: [
+        Text(
+          "LOGIN",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: defaultPadding * 2),
+        Row(
+          children: [
+            const Spacer(),
+            Expanded(
+              flex: 8,
+              // child: SvgPicture.asset("assets/images/Admin.svg"),
+              child: Image.asset(
+                "assets/images/Admin.png",
+                height: screenWidth * 0.5,
               ),
-              const Spacer(),
-            ],
-          ),
-          SizedBox(height: defaultPadding * 2),
-        ],
+            ),
+            const Spacer(),
+          ],
+        ),
+        SizedBox(height: defaultPadding * 2),
+      ],
       // ),
     );
   }

@@ -1,7 +1,9 @@
+// import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/pages/Login/login_screen.dart';
+// import 'dart:html' as html;
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -21,6 +23,7 @@ class _ProfileState extends State<Profile> {
   final creationTime = FirebaseAuth.instance.currentUser!.metadata.creationTime;
   final storage = new FlutterSecureStorage();
   User? user = FirebaseAuth.instance.currentUser;
+  // String ve = "Verify Email";
 
   verifyEmail() async {
     if (user != null && !user!.emailVerified) {
@@ -40,71 +43,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    // return Container(
-    //   child: SingleChildScrollView(
-    //     scrollDirection: Axis.vertical,
-    //     child: Table(
-    //       columnWidths: const <int, TableColumnWidth>{
-    //         1: FixedColumnWidth(140),
-    //       },
-    //       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-    //       children: [
-    //         TableRow(
-    //           children: [
-    //             TableCell(
-    //               child: Container(
-    //                 child: Center(
-    //                   child: Text(
-    //                     'Admin ID: $uid',
-    //                     style: TextStyle(
-    //                       fontSize: 20.0,
-    //                       fontWeight: FontWeight.bold,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //         TableRow(
-    //           children: [
-    //             TableCell(
-    //               child: Container(
-    //                 child: Center(
-    //                   child: Text(
-    //                     'Email: $email',
-    //                     style: TextStyle(
-    //                       fontSize: 20.0,
-    //                       fontWeight: FontWeight.bold,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //         TableRow(
-    //           children: [
-    //             TableCell(
-    //               child: Container(
-    //                 child: Center(
-    //                   child: Text(
-    //                     'Created: $creationTime',
-    //                     style: TextStyle(
-    //                       fontSize: 20.0,
-    //                       fontWeight: FontWeight.bold,
-    //                     ),
-    //                   ),
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    // );
-    return Container(
+    return
+        Container(
       margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
       child: Column(
         children: [
@@ -122,14 +62,17 @@ class _ProfileState extends State<Profile> {
                 'Email: $email',
                 style: TextStyle(fontSize: 18.0),
               ),
+              // refresh(),
               user!.emailVerified
                   ? Text(
-                      'verified',
+                      // '$ve',
+                      'Verified',
                       style: TextStyle(fontSize: 18.0, color: Colors.blueGrey),
                     )
                   : TextButton(
                       onPressed: () => {verifyEmail()},
-                      child: Text('Verify Email'))
+                      // child: Text('$ve')),
+                      child: Text('Verify Email')),
             ],
           ),
           Row(
@@ -156,11 +99,12 @@ class _ProfileState extends State<Profile> {
                 child: Text('Logout'),
                 style:
                     ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
-              )
+              ),
             ],
           )
         ],
       ),
+      // ),
     );
   }
 }

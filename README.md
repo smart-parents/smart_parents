@@ -1,9 +1,4 @@
-<p align="center">
-  <a href="https://github.com/jaydodhani22/smart_parents.git">
-    <img width="300px" src="https://github.com/jaydodhani22/images/blob/main/Final.png" alt="Smart Parents logo"><br/>
-  </a>
-  <h1 align="center">Smart Parents</h1>
-</p>
+# smart_parents
 
 Final year project 'Smart Parents'.
 

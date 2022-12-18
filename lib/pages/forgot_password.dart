@@ -64,6 +64,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 207, 235, 255),
         automaticallyImplyLeading: false,
+                leading: new IconButton(
+                  icon: new Icon(Icons.arrow_back),
+                  tooltip: "Back",
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
         title: Text("Reset Password"),
       ),
       body: Column(
@@ -137,7 +142,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             },
                             child: Text(
                               'Login',
-                              style: TextStyle(decoration: TextDecoration.underline,fontWeight: FontWeight.bold,),
+                              style: TextStyle(
+                                decoration: TextDecoration.underline,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ],
@@ -160,7 +168,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                                         ),
                                         (route) => false)
                                   },
-                              child: Text('Signup', style: TextStyle(decoration: TextDecoration.underline,fontWeight: FontWeight.bold,),))
+                              child: Text(
+                                'Signup',
+                                style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ))
                         ],
                       ),
                     )

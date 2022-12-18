@@ -1,51 +1,56 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class AddStudentPage extends StatefulWidget {
-  AddStudentPage({Key? key}) : super(key: key);
+class AddFacultyPage extends StatefulWidget {
+  AddFacultyPage({Key? key}) : super(key: key);
 // void initState() {
 //     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
 //       // SystemUiOverlay.bottom,
 //     ]);
 // }
   @override
-  _AddStudentPageState createState() => _AddStudentPageState();
+  _AddFacultyPageState createState() => _AddFacultyPageState();
 }
 
-class _AddStudentPageState extends State<AddStudentPage> {
+class _AddFacultyPageState extends State<AddFacultyPage> {
   final _formKey = GlobalKey<FormState>();
 
+  var faculty = "";
   var name = "";
-  var number = "";
+  var department = "";
   var password = "";
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
+
+  final facultyController = TextEditingController();
   final nameController = TextEditingController();
-  final numberController = TextEditingController();
+  final departmentController = TextEditingController();
   final passwordController = TextEditingController();
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
+    facultyController.dispose();
     nameController.dispose();
-    numberController.dispose();
+    departmentController.dispose();
     passwordController.dispose();
     super.dispose();
   }
 
   clearText() {
+    facultyController.clear();
     nameController.clear();
-    numberController.clear();
+    departmentController.clear();
     passwordController.clear();
   }
 
   // Adding Student
-  CollectionReference students =
-      FirebaseFirestore.instance.collection('students');
+  CollectionReference facultys =
+      FirebaseFirestore.instance.collection('faculty');
 
   Future<void> addUser() {
-    return students
-        .add({'name': name, 'number': number, 'password': password})
+    return facultys
+        .add({'faculty': faculty, 'name': name, 'department': department, 'password': password})
         .then((value) => print('User Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }
@@ -54,7 +59,13 @@ class _AddStudentPageState extends State<AddStudentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add New Student"),
+        title: Text("Add New Faculty"),
+        automaticallyImplyLeading: false,
+                leading: new IconButton(
+                  icon: new Icon(Icons.arrow_back),
+                  tooltip: "Back",
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
         backgroundColor: const Color.fromARGB(255, 207, 235, 255),
       ),
       body: Form(
@@ -63,6 +74,30 @@ class _AddStudentPageState extends State<AddStudentPage> {
           padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
           child: ListView(
             children: [
+              Container(
+                margin: EdgeInsets.symmetric(vertical: 10.0),
+                child: TextFormField(
+                  maxLength: 4,
+                  autofocus: false,
+                  decoration: InputDecoration(
+                    labelText: 'Faculty Id: ',
+                    labelStyle: TextStyle(fontSize: 20.0),
+                    border: OutlineInputBorder(),
+                    errorStyle:
+                        TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+                  ),
+                  keyboardType: TextInputType.number,
+                  controller: facultyController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please Enter Faculty Id';
+                    } else if (value.length != 4) {
+                      return 'Please Enter Valid Faculty Id';
+                    }
+                    return null;
+                  },
+                ),
+              ),
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
@@ -86,22 +121,22 @@ class _AddStudentPageState extends State<AddStudentPage> {
               Container(
                 margin: EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
-                  maxLength: 12,
+                  maxLength: 2,
                   autofocus: false,
                   decoration: InputDecoration(
-                    labelText: 'Enrollment Number: ',
+                    labelText: 'Department Id: ',
                     labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
                     errorStyle:
                         TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
                   ),
                   keyboardType: TextInputType.number,
-                  controller: numberController,
+                  controller: departmentController,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please Enter Enrollment Number';
-                    } else if (value.length != 12) {
-                      return 'Please Enter Valid Enrollment Number';
+                      return 'Please Enter Department Id';
+                    } else if (value.length != 2) {
+                      return 'Please Enter Valid Department Id';
                     }
                     return null;
                   },
@@ -137,8 +172,9 @@ class _AddStudentPageState extends State<AddStudentPage> {
                         // Validate returns true if the form is valid, otherwise false.
                         if (_formKey.currentState!.validate()) {
                           setState(() {
+                            faculty = facultyController.text;
                             name = nameController.text;
-                            number = numberController.text;
+                            department = departmentController.text;
                             password = passwordController.text;
                             addUser();
                             clearText();
