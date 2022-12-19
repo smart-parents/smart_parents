@@ -4,7 +4,7 @@ import 'package:smart_parents/pages/student/student.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
- 
+
   @override
   _DashboardState createState() => _DashboardState();
 }
@@ -44,14 +44,16 @@ class _DashboardState extends State<Dashboard> {
             // margin: const EdgeInsets.all(20),
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
             child: ElevatedButton(
-              onPressed: () => {Navigator.push(
+              onPressed: () => {
+                Navigator.push(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
                       return const Faculty();
                     },
                   ),
-                )},
+                )
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(200, 50),

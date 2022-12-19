@@ -7,11 +7,6 @@ import 'package:smart_parents/pages/Login/login_screen.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
-  // void initState() {
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //     // SystemUiOverlay.bottom,
-  //   ]);
-  // }
 
   @override
   _ProfileState createState() => _ProfileState();

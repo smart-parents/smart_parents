@@ -25,28 +25,28 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return FutureBuilder(
-    //   // future: _initialization,
-    //   builder: (context, snapshot) {
-    //     // CHeck for Errors
-    //     if (snapshot.hasError) {
-    //       if (kDebugMode) {
-    //         print("Something went Wrong");
-    //       }
-    //     }
-    //     // once Completed, show your application
-    //     if (snapshot.connectionState == ConnectionState.done) {
-    return MaterialApp(
-      title: 'Smart Parents',
-      theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: const TimeImage(),
+    return FutureBuilder(
+      future:Firebase.initializeApp(),
+      builder: (context, snapshot) {
+        // CHeck for Errors
+        if (snapshot.hasError) {
+          if (kDebugMode) {
+            print("Something went Wrong");
+          }
+        }
+        // once Completed, show your application
+        if (snapshot.connectionState == ConnectionState.done) {
+          return MaterialApp(
+            title: 'Smart Parents',
+            theme: ThemeData(
+              primarySwatch: Colors.lightBlue,
+            ),
+            debugShowCheckedModeBanner: false,
+            home: const TimeImage(),
+          );
+        }
+        return const CircularProgressIndicator();
+      },
     );
-    //       }
-    //       return const CircularProgressIndicator();
-    //     },
-    //   );
   }
 }

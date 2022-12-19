@@ -6,18 +6,11 @@ import 'package:smart_parents/pages/user_main.dart';
 class Check extends StatefulWidget {
   const Check({Key? key}) : super(key: key);
 
-  // void initState() {
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //     // SystemUiOverlay.bottom,
-  //   ]);
-  // }
-
   @override
   State<Check> createState() => _CheckState();
 }
 
 class _CheckState extends State<Check> {
-  // final Future<FirebaseApp> _initialization = Firebase.initializeApp();
   final storage = new FlutterSecureStorage();
 
   Future<bool> checkLoginStatus() async {
@@ -30,16 +23,6 @@ class _CheckState extends State<Check> {
 
   @override
   Widget build(BuildContext context) {
-    // return FutureBuilder(
-    //     future: _initialization,
-    //     builder: (context, snapshot) {
-    //       // Check for Errors
-    //       if (snapshot.hasError) {
-    //         print("Something Went Wrong");
-    //       }
-    //       if (snapshot.connectionState == ConnectionState.waiting) {
-    //         return Center(child: CircularProgressIndicator());
-    //       }
     return FutureBuilder(
         future: checkLoginStatus(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
@@ -53,7 +36,5 @@ class _CheckState extends State<Check> {
           }
           return UserMain();
         });
-    // );
-    // });
   }
 }
