@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:smart_parents/pages/student/add_student_page.dart';
 import 'package:smart_parents/pages/student/update_student_page.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,20 @@ class Student extends StatefulWidget {
 }
 
 class _StudentState extends State<Student> {
-  final Stream<QuerySnapshot> studentsStream =
-      FirebaseFirestore.instance.collection('students').snapshots();
+  // final email = FirebaseAuth.instance.currentUser!.email;
+
+  // static Stream<QuerySnapshot> studentsStream =
+  //     FirebaseFirestore.instance.collection('students').snapshots();
+  late Stream<QuerySnapshot> studentsStream;
+  void myMethod() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      final email = FirebaseAuth.instance.currentUser!.email;
+      studentsStream = FirebaseFirestore.instance
+          .collection('students')
+          .where("admin", isEqualTo: email)
+          .snapshots();
+    }
+  }
 
   // For Deleting User
   CollectionReference students =
@@ -34,6 +47,7 @@ class _StudentState extends State<Student> {
 
   @override
   Widget build(BuildContext context) {
+    myMethod();
     return StreamBuilder<QuerySnapshot>(
         stream: studentsStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -160,99 +174,132 @@ class _StudentState extends State<Student> {
                         //     ),
                         //   ],
                         // ),
-                        TableRow(
-                          children: [
-                            TableCell(
-                              child: Container(
-                                color: const Color.fromARGB(255, 207, 235, 255),
-                                child: Center(
-                                  child: Text(
-                                    'Name',
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Container(
-                                color: const Color.fromARGB(255, 207, 235, 255),
-                                child: Center(
-                                  child: Text(
-                                    'Enrollment',
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Container(
-                                color: const Color.fromARGB(255, 207, 235, 255),
-                                child: Center(
-                                  child: Text(
-                                    'Action',
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        for (var i = 0; i < storedocs.length; i++) ...[
+                        if (storedocs.isNotEmpty) ...{
                           TableRow(
                             children: [
                               TableCell(
-                                child: Center(
-                                    child: Text(storedocs[i]['name'],
-                                        style: TextStyle(fontSize: 18.0))),
-                              ),
-                              TableCell(
-                                child: Center(
-                                    child: Text(storedocs[i]['number'],
-                                        style: TextStyle(fontSize: 18.0))),
-                              ),
-                              TableCell(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () => {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                UpdateStudentPage(
-                                                    id: storedocs[i]['id']),
-                                          ),
-                                        )
-                                      },
-                                      icon: Icon(
-                                        Icons.edit,
-                                        color: Colors.orangeAccent,
+                                child: Container(
+                                  color:
+                                      const Color.fromARGB(255, 207, 235, 255),
+                                  child: Center(
+                                    child: Text(
+                                      'Name',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    IconButton(
-                                      onPressed: () =>
-                                          {deleteUser(storedocs[i]['id'])},
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Container(
+                                  color:
+                                      const Color.fromARGB(255, 207, 235, 255),
+                                  child: Center(
+                                    child: Text(
+                                      'Enrollment',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                  ],
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Container(
+                                  color:
+                                      const Color.fromARGB(255, 207, 235, 255),
+                                  child: Center(
+                                    child: Text(
+                                      'Action',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                        ],
+                          for (var i = 0; i < storedocs.length; i++) ...[
+                            TableRow(
+                              children: [
+                                TableCell(
+                                  child: Center(
+                                      child: Text(storedocs[i]['name'],
+                                          style: TextStyle(fontSize: 18.0))),
+                                ),
+                                TableCell(
+                                  child: Center(
+                                      child: Text(storedocs[i]['number'],
+                                          style: TextStyle(fontSize: 18.0))),
+                                ),
+                                TableCell(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () => {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UpdateStudentPage(
+                                                      id: storedocs[i]['id']),
+                                            ),
+                                          )
+                                        },
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.orangeAccent,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () =>
+                                            {deleteUser(storedocs[i]['id'])},
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        }
+                        // else ...{
+                        //   TableRow(children: [
+                        //     TableCell(
+                        //       child: Column(
+                        //         children: [
+                        //           const Text(
+                        //             "No data",
+                        //             style:
+                        //                 TextStyle(fontWeight: FontWeight.bold),
+                        //           ),
+                        //           // const SizedBox(height: defaultPadding * 2),
+                        //           Row(
+                        //             children: [
+                        //               // const Spacer(),
+                        //               Expanded(
+                        //                 flex: 8,
+                        //                 child: Image.asset(
+                        //                   "assets/images/No data.png",
+                        //                 ),
+                        //               ),
+                        //               // const Spacer(),
+                        //             ],
+                        //           ),
+                        //         ],
+                        //       ),
+                        //     )
+                        //   ])
+                        // }
                       ],
                     ),
                   ),

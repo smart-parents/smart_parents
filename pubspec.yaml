@@ -41,30 +41,23 @@ dependencies:
   # firebase_auth_desktop: ^1.0.2
   # firebase_core_desktop: ^1.0.2
   # flutter_svg: ^1.1.6
-  flutter_launcher_icons: ^0.11.0
-  firebase_core: ^2.4.0
-  firebase_auth: ^4.2.0
-  flutter_secure_storage: ^7.0.0
-  cloud_firestore: ^4.2.0
-  google_fonts: ^3.0.1
+  google_fonts: ^4.0.1
   google_nav_bar: ^5.0.6
+  flutter_launcher_icons: ^0.11.0
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.5
+  flutter_secure_storage: ^7.0.1
+  cloud_firestore: ^4.3.1
 
 # transitive dependencies:
-  # async: ^2.10.0
-  # boolean_selector: ^2.1.1
-  # collection: ^1.17.0
+  # collection: ^1.17.1
+  # image: ^4.0.12
   # intl: ^0.18.0
-  # js: ^0.6.6
+  # js: ^0.6.7
   # matcher: ^0.12.14
-  # material_color_utilities: ^0.2.0
   # path: ^1.8.3
-  # source_span: ^1.9.1
-  # stack_trace: ^1.11.0
-  # stream_channel: ^2.1.1
-  # string_scanner: ^1.2.0
-  # test_api: ^0.4.17
-  # vector_math: ^2.1.4
-  # xml: ^6.2.2
+  # test_api: ^0.4.18
+  # win32: ^4.1.0
 
 dev_dependencies:
   flutter_test:

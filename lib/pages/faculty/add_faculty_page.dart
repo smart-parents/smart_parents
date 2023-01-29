@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AddFacultyPage extends StatefulWidget {
@@ -14,6 +15,7 @@ class AddFacultyPage extends StatefulWidget {
 
 class _AddFacultyPageState extends State<AddFacultyPage> {
   final _formKey = GlobalKey<FormState>();
+  final email = FirebaseAuth.instance.currentUser!.email;
 
   var faculty = "";
   var name = "";
@@ -50,7 +52,13 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
 
   Future<void> addUser() {
     return facultys
-        .add({'faculty': faculty, 'name': name, 'department': department, 'password': password})
+        .add({
+          'faculty': faculty,
+          'name': name,
+          'department': department,
+          'password': password,
+          'admin': email
+        })
         .then((value) => print('User Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }
@@ -61,11 +69,11 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
       appBar: AppBar(
         title: Text("Add New Faculty"),
         automaticallyImplyLeading: false,
-                leading: new IconButton(
-                  icon: new Icon(Icons.arrow_back),
-                  tooltip: "Back",
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          tooltip: "Back",
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         backgroundColor: const Color.fromARGB(255, 207, 235, 255),
       ),
       body: Form(

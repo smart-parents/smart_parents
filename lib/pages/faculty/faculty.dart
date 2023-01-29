@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:smart_parents/pages/faculty/add_faculty_page.dart';
 import 'package:smart_parents/pages/faculty/update_faculty_page.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,18 @@ class Faculty extends StatefulWidget {
 }
 
 class _FacultyState extends State<Faculty> {
-  final Stream<QuerySnapshot> facultyStream =
-      FirebaseFirestore.instance.collection('faculty').snapshots();
+  // final Stream<QuerySnapshot> facultyStream =
+  //     FirebaseFirestore.instance.collection('faculty').snapshots();
+  late Stream<QuerySnapshot> facultyStream;
+  void myMethod() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      final email = FirebaseAuth.instance.currentUser!.email;
+      facultyStream = FirebaseFirestore.instance
+          .collection('faculty')
+          .where("admin", isEqualTo: email)
+          .snapshots();
+    }
+  }
 
   // For Deleting User
   CollectionReference facultys =
@@ -28,6 +39,7 @@ class _FacultyState extends State<Faculty> {
 
   @override
   Widget build(BuildContext context) {
+    myMethod();
     return StreamBuilder<QuerySnapshot>(
         stream: facultyStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -46,7 +58,6 @@ class _FacultyState extends State<Faculty> {
             storedocs.add(a);
             a['id'] = document.id;
           }).toList();
-
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
@@ -80,119 +91,123 @@ class _FacultyState extends State<Faculty> {
                       defaultVerticalAlignment:
                           TableCellVerticalAlignment.middle,
                       children: [
-                        
-                        TableRow(
-                          children: [
-                            TableCell(
-                              child: Container(
-                                color: const Color.fromARGB(255, 207, 235, 255),
-                                child: Center(
-                                  child: Text(
-                                    'Faculty',
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Container(
-                                color: const Color.fromARGB(255, 207, 235, 255),
-                                child: Center(
-                                  child: Text(
-                                    'Name',
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            // TableCell(
-                            //   child: Container(
-                            //     color: const Color.fromARGB(255, 207, 235, 255),
-                            //     child: Center(
-                            //       child: Text(
-                            //         'Department',
-                            //         style: TextStyle(
-                            //           fontSize: 20.0,
-                            //           fontWeight: FontWeight.bold,
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
-                            TableCell(
-                              child: Container(
-                                color: const Color.fromARGB(255, 207, 235, 255),
-                                child: Center(
-                                  child: Text(
-                                    'Action',
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        for (var i = 0; i < storedocs.length; i++) ...[
+                        if (storedocs.isNotEmpty) ...{
                           TableRow(
                             children: [
                               TableCell(
-                                child: Center(
-                                    child: Text(storedocs[i]['faculty'],
-                                        style: TextStyle(fontSize: 18.0))),
+                                child: Container(
+                                  color:
+                                      const Color.fromARGB(255, 207, 235, 255),
+                                  child: Center(
+                                    child: Text(
+                                      'Faculty',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                               TableCell(
-                                child: Center(
-                                    child: Text(storedocs[i]['name'],
-                                        style: TextStyle(fontSize: 18.0))),
+                                child: Container(
+                                  color:
+                                      const Color.fromARGB(255, 207, 235, 255),
+                                  child: Center(
+                                    child: Text(
+                                      'Name',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                               // TableCell(
-                              //   child: Center(
-                              //       child: Text(storedocs[i]['department'],
-                              //           style: TextStyle(fontSize: 18.0))),
+                              //   child: Container(
+                              //     color: const Color.fromARGB(255, 207, 235, 255),
+                              //     child: Center(
+                              //       child: Text(
+                              //         'Department',
+                              //         style: TextStyle(
+                              //           fontSize: 20.0,
+                              //           fontWeight: FontWeight.bold,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   ),
                               // ),
                               TableCell(
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    IconButton(
-                                      onPressed: () => {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) =>
-                                                UpdateFacultyPage(
-                                                    id: storedocs[i]['id']),
-                                          ),
-                                        )
-                                      },
-                                      icon: Icon(
-                                        Icons.edit,
-                                        color: Colors.orangeAccent,
+                                child: Container(
+                                  color:
+                                      const Color.fromARGB(255, 207, 235, 255),
+                                  child: const Center(
+                                    child: Text(
+                                      'Action',
+                                      style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    IconButton(
-                                      onPressed: () =>
-                                          {deleteUser(storedocs[i]['id'])},
-                                      icon: Icon(
-                                        Icons.delete,
-                                        color: Colors.red,
-                                      ),
-                                    ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],
                           ),
-                        ],
+                          for (var i = 0; i < storedocs.length; i++) ...[
+                            TableRow(
+                              children: [
+                                TableCell(
+                                  child: Center(
+                                      child: Text(storedocs[i]['faculty'],
+                                          style: TextStyle(fontSize: 18.0))),
+                                ),
+                                TableCell(
+                                  child: Center(
+                                      child: Text(storedocs[i]['name'],
+                                          style: TextStyle(fontSize: 18.0))),
+                                ),
+                                // TableCell(
+                                //   child: Center(
+                                //       child: Text(storedocs[i]['department'],
+                                //           style: TextStyle(fontSize: 18.0))),
+                                // ),
+                                TableCell(
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      IconButton(
+                                        onPressed: () => {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UpdateFacultyPage(
+                                                      id: storedocs[i]['id']),
+                                            ),
+                                          )
+                                        },
+                                        icon: Icon(
+                                          Icons.edit,
+                                          color: Colors.orangeAccent,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () =>
+                                            {deleteUser(storedocs[i]['id'])},
+                                        icon: Icon(
+                                          Icons.delete,
+                                          color: Colors.red,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        }
                       ],
                     ),
                   ),

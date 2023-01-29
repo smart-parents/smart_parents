@@ -70,6 +70,12 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
+  bool isValidEmail(String email) {
+    final RegExp regex =
+        RegExp(r"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    return regex.hasMatch(email);
+  }
+
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
@@ -101,7 +107,7 @@ class _LoginFormState extends State<LoginForm> {
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please Enter Email';
-              } else if (!value.contains('@')) {
+              } else if (!isValidEmail(value)) {
                 return 'Please Enter Valid Email';
               }
               return null;

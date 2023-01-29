@@ -39,6 +39,32 @@ class _SignUpFormState extends State<SignUpForm> {
     super.dispose();
   }
 
+  bool isValidEmail(String email) {
+    final RegExp regex =
+        RegExp(r"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    return regex.hasMatch(email);
+  }
+
+  bool isValidPasswordUppercase(String password) {
+    final RegExp upperCase = RegExp(r'[A-Z]');
+    return upperCase.hasMatch(password);
+  }
+
+  bool isValidPasswordLowercase(String password) {
+    final RegExp lowerCase = RegExp(r'[a-z]');
+    return lowerCase.hasMatch(password);
+  }
+
+  bool isValidPasswordNumber(String password) {
+    final RegExp number = RegExp(r'[0-9]');
+    return number.hasMatch(password);
+  }
+
+  bool isValidPasswordSpecialChar(String password) {
+    final RegExp specialChar = RegExp(r'[!@#\$%\^&\*]');
+    return specialChar.hasMatch(password);
+  }
+
   registration() async {
     if (password == confirmPassword) {
       try {
@@ -46,7 +72,7 @@ class _SignUpFormState extends State<SignUpForm> {
             .createUserWithEmailAndPassword(email: email, password: password);
         print(userCredential);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             backgroundColor: Colors.lightBlueAccent,
             content: Text(
               "Registered Successfully. Please Login..",
@@ -64,7 +90,7 @@ class _SignUpFormState extends State<SignUpForm> {
         if (e.code == 'weak-password') {
           print("Password Provided is too Weak");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "Password Provided is too Weak",
@@ -75,7 +101,7 @@ class _SignUpFormState extends State<SignUpForm> {
         } else if (e.code == 'email-already-in-use') {
           print("Account Already exists");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "Account Already exists",
@@ -88,7 +114,7 @@ class _SignUpFormState extends State<SignUpForm> {
     } else {
       print("Password and Confirm Password doesn't match");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           backgroundColor: Colors.lightBlueAccent,
           content: Text(
             "Password and Confirm Password doesn't match",
@@ -111,10 +137,10 @@ class _SignUpFormState extends State<SignUpForm> {
               textInputAction: TextInputAction.next,
               cursorColor: kPrimaryColor,
               onSaved: (email) {},
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "Your email",
                 prefixIcon: Padding(
-                  padding: const EdgeInsets.all(defaultPadding),
+                  padding: EdgeInsets.all(defaultPadding),
                   child: Icon(Icons.person),
                 ),
               ),
@@ -122,7 +148,7 @@ class _SignUpFormState extends State<SignUpForm> {
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return 'Please Enter Email';
-                } else if (!value.contains('@')) {
+                } else if (!isValidEmail(value)) {
                   return 'Please Enter Valid Email';
                 }
                 return null;
@@ -134,10 +160,10 @@ class _SignUpFormState extends State<SignUpForm> {
                 textInputAction: TextInputAction.next,
                 obscureText: true,
                 cursorColor: kPrimaryColor,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Your password",
                   prefixIcon: Padding(
-                    padding: const EdgeInsets.all(defaultPadding),
+                    padding: EdgeInsets.all(defaultPadding),
                     child: Icon(Icons.lock),
                   ),
                 ),
@@ -145,6 +171,16 @@ class _SignUpFormState extends State<SignUpForm> {
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please Enter Password';
+                  } else if (value.length < 8) {
+                    return 'Password must be at least 8 characters long.';
+                  } else if (!isValidPasswordUppercase(value)) {
+                    return 'Password must contain an uppercase letter.';
+                  } else if (!isValidPasswordLowercase(value)) {
+                    return 'Password must contain a lowercase letter.';
+                  } else if (!isValidPasswordNumber(value)) {
+                    return 'Password must contain a number.';
+                  } else if (!isValidPasswordSpecialChar(value)) {
+                    return 'Password must contain a special character.';
                   }
                   return null;
                 },
@@ -156,17 +192,17 @@ class _SignUpFormState extends State<SignUpForm> {
                 textInputAction: TextInputAction.done,
                 obscureText: true,
                 cursorColor: kPrimaryColor,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: "Confirm Your password",
                   prefixIcon: Padding(
-                    padding: const EdgeInsets.all(defaultPadding),
+                    padding: EdgeInsets.all(defaultPadding),
                     child: Icon(Icons.lock),
                   ),
                 ),
                 controller: confirmPasswordController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please Enter Password';
+                    return 'Please Enter Confirm Password';
                   }
                   return null;
                 },
@@ -194,7 +230,7 @@ class _SignUpFormState extends State<SignUpForm> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return LoginScreen();
+                      return const LoginScreen();
                     },
                   ),
                 );
