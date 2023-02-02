@@ -3,7 +3,7 @@ import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
 import 'package:smart_parents/components/background.dart';
 import 'package:smart_parents/components/responsive.dart';
 import 'package:smart_parents/pages/Faculty/Login_f/login_screen_s.dart';
-import 'package:smart_parents/pages/Parents/parents.dart';
+import 'package:smart_parents/pages/Parents/Login_p/login_screen_p.dart';
 import 'package:smart_parents/pages/Student/Login_s/login_screen_s.dart';
 class Option extends StatefulWidget {
   const Option({
@@ -56,7 +56,7 @@ class _OptionState extends State<Option> {
                         onPressed: () {
                           Navigator.push(context,
                             MaterialPageRoute(
-                                builder: (context) => const ParentsScreen()),
+                                builder: (context) => const LoginScreenP()),
                           );
                         },
                       ),
@@ -154,7 +154,7 @@ class DesktopOption extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ParentsScreen()),
+                  MaterialPageRoute(builder: (context) => const LoginScreenP()),
                 );
               },
             ),

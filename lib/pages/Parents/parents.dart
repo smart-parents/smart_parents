@@ -46,7 +46,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
                 ),
               ),
               Image.asset(
-                "assets/images/parents.png",
+                "assets/images/Parents.png",
                 height: 50,
               ),
             ],
@@ -85,8 +85,8 @@ class _ParentsScreenState extends State<ParentsScreen> {
                     text: 'Attendance',
                   ),
                   GButton(
-                    icon: Icons.contact_phone,
-                    text: ' contact faculty',
+                    icon: Icons.chat,
+                    text: 'Chat',
                   ),
                   GButton(
                     icon: Icons.account_circle,

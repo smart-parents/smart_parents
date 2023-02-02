@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 // import 'package:smart_parents/pages/Admin/profile_a.dart';
 // import 'package:smart_parents/pages/Admin/change_password_a.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/pages/Parents/attendance_screen.dart';
+import 'package:smart_parents/pages/Student/dashboard_s.dart';
 
 class UserMain extends StatefulWidget {
   UserMain({Key? key}) : super(key: key);
@@ -20,17 +22,16 @@ class _UserMainState extends State<UserMain> {
   int _selectedIndex = 0;
   // final storage = new FlutterSecureStorage();
   static List<Widget> _widgetOptions = <Widget>[
+    Dashboard(),
+    Attendance_screen(),
     Text(
-      'Index 1: student',
-    ),
-   Text(
-      'Index 2: location',
+      'Index 3: chat',
     ),
     Text(
-      'Index 3: profile',
+      'Index 4: profile',
     ),
   ];
-  
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -58,7 +59,6 @@ class _UserMainState extends State<UserMain> {
               "assets/images/Student.png",
               height: 50,
             ),
-            
           ],
         ),
       ),
@@ -94,12 +94,16 @@ class _UserMainState extends State<UserMain> {
                   text: 'Home',
                 ),
                 GButton(
-                  icon: Icons.person,
-                  text: 'Profile',
+                  icon: Icons.calendar_month_rounded,
+                  text: 'Attendance',
                 ),
                 GButton(
-                  icon: Icons.password,
-                  text: 'Change Password',
+                  icon: Icons.chat,
+                  text: ' Chat',
+                ),
+                GButton(
+                  icon: Icons.account_circle,
+                  text: 'Profile',
                 ),
               ],
               selectedIndex: _selectedIndex,

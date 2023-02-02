@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:smart_parents/pages/Faculty/parents_a/parents_a.dart';
 
-class Attendance_screen extends StatefulWidget {
-  const Attendance_screen({super.key});
+class Dashboard extends StatefulWidget {
+  const Dashboard({Key? key}) : super(key: key);
 
   @override
-  State<Attendance_screen> createState() => _Attendance_screenState();
+  _DashboardState createState() => _DashboardState();
 }
 
-class _Attendance_screenState extends State<Attendance_screen> {
+class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -29,12 +30,12 @@ class _Attendance_screenState extends State<Attendance_screen> {
                 // )
               },
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
               child: const Text(
-                'Today Attendance',
+                "Add Today's Attendence",
                 style: TextStyle(fontSize: 20.0, color: Colors.white),
               ),
             ),
@@ -44,22 +45,15 @@ class _Attendance_screenState extends State<Attendance_screen> {
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
             child: ElevatedButton(
               onPressed: () => {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) {
-                //       return const Faculty();
-                //     },
-                //   ),
-                // )
+                
               },
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
               child: const Text(
-                'Monthly Attendance',
+                'Attendence Reports',
                 style: TextStyle(fontSize: 20.0, color: Colors.white),
               ),
             ),
@@ -68,14 +62,40 @@ class _Attendance_screenState extends State<Attendance_screen> {
             // margin: const EdgeInsets.all(20),
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
             child: ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const Parent();
+                    },
+                  ),
+                )
+              },
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
               child: const Text(
-                ' Attendance Report',
+                'Add Parents',
+                style: TextStyle(fontSize: 20.0, color: Colors.white),
+              ),
+            ),
+          ),
+          
+          Container(
+            // margin: const EdgeInsets.all(20),
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: ElevatedButton(
+              onPressed: () => {},
+              style: ElevatedButton.styleFrom(
+                shape: const StadiumBorder(),
+                backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                minimumSize: const Size(250, 50),
+              ),
+              child: const Text(
+                'Schedule',
                 style: TextStyle(fontSize: 20.0, color: Colors.white),
               ),
             ),

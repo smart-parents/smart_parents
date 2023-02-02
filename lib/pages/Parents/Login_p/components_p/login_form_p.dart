@@ -3,8 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/components/constants.dart';
-// import 'package:smart_parents/pages/Student/forgot_password_s.dart';
-import 'package:smart_parents/pages/Student/user_main_s.dart';
+import 'package:smart_parents/pages/Parents/parents.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -27,20 +26,20 @@ class _LoginFormState extends State<LoginForm> {
 
   check() async {
     final snapShot = await FirebaseFirestore.instance
-        .collection('students')
+        .collection('parents')
         .where('number', isEqualTo: number)
         .get();
     if (snapShot.docs.isNotEmpty) {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
-                email: "$number@sp.com", password: password);
+                email: "$number@spp.com", password: password);
         print(userCredential.user?.uid);
         await storage.write(key: "uid", value: userCredential.user?.uid);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => UserMain(),
+            builder: (context) => ParentsScreen(),
           ),
         );
       } on FirebaseAuthException catch (e) {
@@ -112,11 +111,11 @@ class _LoginFormState extends State<LoginForm> {
       child: Column(
         children: [
           TextFormField(
-            maxLength: 12,
+            maxLength: 10,
             autofocus: false,
             textInputAction: TextInputAction.next,
             decoration: InputDecoration(
-              hintText: "Your Enrollment Number",
+              hintText: "Your Mobile Number",
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
@@ -127,9 +126,9 @@ class _LoginFormState extends State<LoginForm> {
             controller: emailController,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return 'Please Enter Enrollment Number';
-              } else if (value.length != 12) {
-                return 'Please Enter Valid Enrollment Number';
+                return 'Please Enter Mobile Number';
+              } else if (value.length != 10) {
+                return 'Please Enter Valid Mobile Number';
               }
               return null;
             },

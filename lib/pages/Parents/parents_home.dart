@@ -31,8 +31,9 @@ class _Parents_homeState extends State<Parents_home> {
                 // )
               },
               style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
-                minimumSize: const Size(200, 50),
+                minimumSize: const Size(250, 50),
               ),
               child: const Text(
                 'View Your Child Results',
@@ -55,8 +56,9 @@ class _Parents_homeState extends State<Parents_home> {
                 //   )
               },
               style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
-                minimumSize: const Size(200, 50),
+                minimumSize: const Size(250, 50),
               ),
               child: const Text(
                 'Contact Faculty',
@@ -70,11 +72,12 @@ class _Parents_homeState extends State<Parents_home> {
             child: ElevatedButton(
               onPressed: () => {},
               style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
-                minimumSize: const Size(200, 50),
+                minimumSize: const Size(250, 50),
               ),
               child: const Text(
-                'view Fees Details',
+                'View Fees Details',
                 style: TextStyle(fontSize: 20.0, color: Colors.white),
               ),
             ),
@@ -85,11 +88,12 @@ class _Parents_homeState extends State<Parents_home> {
             child: ElevatedButton(
               onPressed: () => {},
               style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
-                minimumSize: const Size(200, 50),
+                minimumSize: const Size(250, 50),
               ),
               child: const Text(
-                '  view Exam Info  ',
+                'View Exam Info',
                 style: TextStyle(fontSize: 20.0, color: Colors.white),
               ),
             ),
@@ -100,8 +104,9 @@ class _Parents_homeState extends State<Parents_home> {
             child: ElevatedButton(
               onPressed: () => {},
               style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
-                minimumSize: const Size(200, 50),
+                minimumSize: const Size(250, 50),
               ),
               child: const Text(
                 'Get Your child location',

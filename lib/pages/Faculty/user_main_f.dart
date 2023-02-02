@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 
 class UserMain extends StatefulWidget {
   UserMain({Key? key}) : super(key: key);
@@ -17,17 +18,19 @@ class _UserMainState extends State<UserMain> {
   int _selectedIndex = 0;
   // final storage = new FlutterSecureStorage();
   static List<Widget> _widgetOptions = <Widget>[
+    Dashboard(),
     Text(
-      'Index 1: faculty',
-    ),
-   Text(
       'Index 2: location',
     ),
     Text(
       'Index 3: profile',
     ),
+    
+    Text(
+      'Index 3]: profile',
+    ),
   ];
-  
+
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -55,7 +58,6 @@ class _UserMainState extends State<UserMain> {
               "assets/images/Faculty.png",
               height: 50,
             ),
-            
           ],
         ),
       ),
@@ -91,12 +93,16 @@ class _UserMainState extends State<UserMain> {
                   text: 'Home',
                 ),
                 GButton(
-                  icon: Icons.person,
-                  text: 'Profile',
+                  icon: Icons.schedule,
+                  text: 'Schedule',
                 ),
                 GButton(
-                  icon: Icons.password,
-                  text: 'Change Password',
+                  icon: Icons.chat,
+                  text: 'Chat',
+                ),
+                GButton(
+                  icon: Icons.account_circle,
+                  text: 'Profile',
                 ),
               ],
               selectedIndex: _selectedIndex,

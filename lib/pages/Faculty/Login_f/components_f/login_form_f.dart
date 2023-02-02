@@ -147,7 +147,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: defaultPadding),
           Container(
-            margin: EdgeInsets.only(left: 50.0),
+            //margin: EdgeInsets.only(left: 50.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
