@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:smart_parents/pages/check.dart';
+// import 'package:smart_parents/pages/check.dart';
+import 'package:smart_parents/pages/option.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
   const LoginAndSignupBtn({
@@ -18,35 +19,20 @@ class LoginAndSignupBtn extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return Check();
+                    return const Option();
                   },
                 ),
               );
             },
+            style: ElevatedButton.styleFrom(
+              shape: const StadiumBorder(),
+              // minimumSize: const Size.fromHeight(50),
+            ),
             child: Text(
               "Get Started".toUpperCase(),
             ),
           ),
         ),
-        // const SizedBox(height: 16),
-        // ElevatedButton(
-        //   onPressed: () {
-        //     Navigator.push(
-        //       context,
-        //       MaterialPageRoute(
-        //         builder: (context) {
-        //           return SignUpScreen();
-        //         },
-        //       ),
-        //     );
-        //   },
-        //   style: ElevatedButton.styleFrom(
-        //       primary: kPrimaryLightColor, elevation: 0),
-        //   child: Text(
-        //     "Sign Up".toUpperCase(),
-        //     style: TextStyle(color: Colors.black),
-        //   ),
-        // ),
       ],
     );
   }

@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future:Firebase.initializeApp(),
+      future: Firebase.initializeApp(),
       builder: (context, snapshot) {
         // CHeck for Errors
         if (snapshot.hasError) {

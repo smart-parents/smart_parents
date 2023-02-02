@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:smart_parents/pages/Login/login_screen.dart';
+import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
 import 'package:smart_parents/components/background.dart';
 import 'package:smart_parents/components/responsive.dart';
-
+import 'package:smart_parents/pages/Faculty/Login_f/login_screen_s.dart';
+import 'package:smart_parents/pages/Parents/parents.dart';
+import 'package:smart_parents/pages/Student/Login_s/login_screen_s.dart';
 class Option extends StatefulWidget {
   const Option({
     Key? key,
@@ -16,22 +18,7 @@ class _OptionState extends State<Option> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    // double screenHeight = MediaQuery.of(context).size.height;
-
-    // body:
-    // Column(
-    //   crossAxisAlignment: CrossAxisAlignment.start,
-    //   children: [
-    //     Positioned(
-    //       top: 0,
-    //       left: 0,
-    //       child: Image.asset(
-    //         "assets/images/top3.png",
-    //         // width: screenWidth * 0.5,
-    //         width: 200,
-    //       ),
-    //     ),
-    // double height = 180;
+    
     return Background(
       child: SafeArea(
         child: Responsive(
@@ -50,10 +37,10 @@ class _OptionState extends State<Option> {
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
                         onPressed: () {
-                          //   Navigator.push(context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => const LoginScreen()),
-                          //   );
+                            Navigator.push(context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreenF()),
+                            );
                         },
                       ),
                       const Text("Faculty", style: TextStyle(fontSize: 20.0)),
@@ -67,10 +54,10 @@ class _OptionState extends State<Option> {
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
                         onPressed: () {
-                          // Navigator.push(context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) => const LoginScreen()),
-                          // );
+                          Navigator.push(context,
+                            MaterialPageRoute(
+                                builder: (context) => const ParentsScreen()),
+                          );
                         },
                       ),
                       const Text("Parents", style: TextStyle(fontSize: 20.0)),
@@ -107,10 +94,10 @@ class _OptionState extends State<Option> {
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
                         onPressed: () {
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-                          // );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const LoginScreenS()),
+                          );
                         },
                       ),
                       const Text("Student", style: TextStyle(fontSize: 20.0)),
@@ -148,10 +135,10 @@ class DesktopOption extends StatelessWidget {
               // iconSize: height,
               iconSize: screenWidth * 0.2,
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreenF()),
+                );
               },
             ),
             const Text("Faculty", style: TextStyle(fontSize: 20.0)),
@@ -165,10 +152,10 @@ class DesktopOption extends StatelessWidget {
               // iconSize: height,
               iconSize: screenWidth * 0.2,
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ParentsScreen()),
+                );
               },
             ),
             const Text("Parents", style: TextStyle(fontSize: 20.0)),
@@ -199,10 +186,10 @@ class DesktopOption extends StatelessWidget {
               // iconSize: height,
               iconSize: screenWidth * 0.2,
               onPressed: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const LoginScreen()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreenS()),
+                );
               },
             ),
             const Text("Student", style: TextStyle(fontSize: 20.0)),

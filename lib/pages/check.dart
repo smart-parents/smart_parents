@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/pages/option.dart';
-import 'package:smart_parents/pages/user_main.dart';
+import 'package:smart_parents/pages/Admin/user_main_a.dart';
 
 class Check extends StatefulWidget {
   const Check({Key? key}) : super(key: key);

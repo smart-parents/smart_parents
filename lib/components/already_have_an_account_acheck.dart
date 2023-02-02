@@ -32,17 +32,6 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
             ),
           ),
         ),
-        // SizedBox(
-        //     child: GestureDetector(
-        //   onTap: password as void Function()?,
-        //   child: Text(
-        //     login ? "Forgot Password ?" : "",
-        //     style: const TextStyle(
-        //       color: kPrimaryColor,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ))
       ],
     );
   }
