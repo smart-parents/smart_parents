@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:smart_parents/pages/Admin/profile_a.dart';
 // import 'package:smart_parents/pages/Admin/change_password_a.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Student/dashboard_s.dart';
 
@@ -25,11 +26,9 @@ class _UserMainState extends State<UserMain> {
     Dashboard(),
     Attendance_screen(),
     Text(
-      'Index 3: chat',
+      'Index 3: Chat',
     ),
-    Text(
-      'Index 4: profile',
-    ),
+    Profile()
   ];
 
   void _onItemTapped(int index) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 
 class UserMain extends StatefulWidget {
@@ -20,15 +21,12 @@ class _UserMainState extends State<UserMain> {
   static List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     Text(
-      'Index 2: location',
+      'Index 2: Schedule',
     ),
     Text(
-      'Index 3: profile',
+      'Index 3: Chat',
     ),
-    
-    Text(
-      'Index 3]: profile',
-    ),
+    Profile()
   ];
 
   void _onItemTapped(int index) {

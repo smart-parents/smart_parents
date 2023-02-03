@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
 class ParentsScreen extends StatefulWidget {
@@ -16,11 +17,9 @@ class _ParentsScreenState extends State<ParentsScreen> {
     Parents_home(),
     Attendance_screen(),
     Text(
-      'Index 2: location',
+      'Index 3: Chat',
     ),
-    Text(
-      'Index 3: profile',
-    ),
+    Profile()
   ];
   void _onItemTapped(int index) {
     setState(() {

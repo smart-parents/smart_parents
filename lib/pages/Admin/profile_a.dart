@@ -2,7 +2,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
+import 'package:smart_parents/pages/option.dart';
 // import 'dart:html' as html;
 
 class Profile extends StatefulWidget {
@@ -86,7 +86,7 @@ class _ProfileState extends State<Profile> {
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LoginScreen(),
+                        builder: (context) => Option(),
                       ),
                       (route) => false)
                 },
