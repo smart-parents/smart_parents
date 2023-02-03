@@ -21,10 +21,10 @@ class _UserMainState extends State<UserMain> {
   static List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     Text(
-      'Index 2: Schedule',
+      'Index 2: schedule',
     ),
     Text(
-      'Index 3: Chat',
+      'Index 3: chat',
     ),
     Profile()
   ];

@@ -5,6 +5,8 @@ import 'package:smart_parents/components/responsive.dart';
 import 'package:smart_parents/pages/Faculty/Login_f/login_screen_s.dart';
 import 'package:smart_parents/pages/Parents/Login_p/login_screen_p.dart';
 import 'package:smart_parents/pages/Student/Login_s/login_screen_s.dart';
+import 'package:smart_parents/pages/Student/user_main_s.dart';
+
 class Option extends StatefulWidget {
   const Option({
     Key? key,
@@ -18,7 +20,7 @@ class _OptionState extends State<Option> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    
+
     return Background(
       child: SafeArea(
         child: Responsive(
@@ -37,10 +39,11 @@ class _OptionState extends State<Option> {
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
                         onPressed: () {
-                            Navigator.push(context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreenF()),
-                            );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreenF()),
+                          );
                         },
                       ),
                       const Text("Faculty", style: TextStyle(fontSize: 20.0)),
@@ -54,7 +57,8 @@ class _OptionState extends State<Option> {
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
                         onPressed: () {
-                          Navigator.push(context,
+                          Navigator.push(
+                            context,
                             MaterialPageRoute(
                                 builder: (context) => const LoginScreenP()),
                           );
@@ -96,7 +100,8 @@ class _OptionState extends State<Option> {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const LoginScreenS()),
+                            MaterialPageRoute(
+                                builder: (context) =>  UserMain()),
                           );
                         },
                       ),

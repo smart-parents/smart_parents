@@ -70,8 +70,7 @@ class _LoginFormState extends State<LoginForm> {
           );
         }
       }
-    }
-    else {
+    } else {
       print("No User Found for that Email");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

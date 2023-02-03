@@ -29,7 +29,7 @@ class _Attendance_screenState extends State<Attendance_screen> {
                 // )
               },
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
@@ -54,7 +54,7 @@ class _Attendance_screenState extends State<Attendance_screen> {
                 // )
               },
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
@@ -70,7 +70,7 @@ class _Attendance_screenState extends State<Attendance_screen> {
             child: ElevatedButton(
               onPressed: () => {},
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),

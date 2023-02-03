@@ -3,6 +3,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
+
 class ParentsScreen extends StatefulWidget {
   const ParentsScreen({super.key});
 
@@ -17,7 +18,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
     Parents_home(),
     Attendance_screen(),
     Text(
-      'Index 3: Chat',
+      'Index 3: chat',
     ),
     Profile()
   ];

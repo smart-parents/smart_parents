@@ -26,7 +26,7 @@ class _UserMainState extends State<UserMain> {
     Dashboard(),
     Attendance_screen(),
     Text(
-      'Index 3: Chat',
+      'Index 3: chat',
     ),
     Profile()
   ];
@@ -41,26 +41,31 @@ class _UserMainState extends State<UserMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 207, 235, 255),
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Image.asset("assets/images/top3.png", width: 100, height: 50,),
+      //   backgroundColor: Color.fromARGB(255, 207, 235, 255),
+      //   automaticallyImplyLeading: false,
+      //   title: Row(
+      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      //     children: [
+      //       // Image.asset("assets/images/top3.png", width: 100, height: 50,),
+      //
+      //       const Text(
+      //         "Student",
+      //         style: TextStyle(
+      //           fontSize: 30.0,
+      //         ),
+      //       ),
+      //       Image.asset(
+      //         "assets/images/Student.png",
+      //         height: 50,
+      //       ),
+      //     ],
+      //   ),
+      // ),
 
-            const Text(
-              "Student",
-              style: TextStyle(
-                fontSize: 30.0,
-              ),
-            ),
-            Image.asset(
-              "assets/images/Student.png",
-              height: 50,
-            ),
-          ],
-        ),
-      ),
+        title: const Text('Home'),
+    backgroundColor: Colors.blue.shade700,
+    ),
+    drawer: const NavigationDrawer(),
       body: _widgetOptions.elementAt(_selectedIndex),
 
       bottomNavigationBar: Container(
@@ -156,4 +161,100 @@ class _UserMainState extends State<UserMain> {
       // ),
     );
   }
+}
+class NavigationDrawer extends StatelessWidget {
+  const NavigationDrawer({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) => Drawer(
+    child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            buildHeader(context),
+            buildMenuItems(context),
+          ],
+        )),
+  );
+  Widget buildHeader(BuildContext contex) => Material(
+      color: Colors.blue.shade700,
+      child: InkWell(
+          onTap: () {},
+          child: Container(
+            padding: EdgeInsets.only(
+                top: 24 + MediaQuery.of(contex).padding.top, bottom: 24),
+            child: Column(
+              children: const [
+                CircleAvatar(
+                  radius: 40,
+                  backgroundImage: AssetImage('assets/Photo/raj.png'),
+                ),
+                SizedBox(height: 10),
+                Text(
+                  'Raj Birari',
+                  style: TextStyle(fontSize: 28, color: Colors.white),
+                ),
+                Text(
+                  'rajbirari@gmail.com',
+                  style: TextStyle(fontSize: 15, color: Colors.white),
+                )
+              ],
+            ),
+          )));
+  Widget buildMenuItems(BuildContext contex) => Container(
+    //padding: const EdgeInsets.all(15),
+    child: Wrap(
+      runSpacing: 10,
+      children: [
+        ListTile(
+            leading: const Icon(Icons.home_outlined),
+            title: const Text("Home"),
+            onTap: () {
+              Navigator.of(contex).push(MaterialPageRoute(
+                builder: (context) => const Dashboard(),
+              ));
+            }),
+        ListTile(
+          leading: const Icon(Icons.home_filled),
+          title: const Text("Classes Schedule"),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.calendar_month_rounded),
+          title: const Text("See Attendence"),
+          onTap: () {
+            Navigator.of(contex).push(MaterialPageRoute(
+              builder: (context) => const Attendance_screen(),
+            ));
+          },
+        ),
+        ListTile(
+          leading: const Icon(Icons.home_outlined),
+          title: const Text("Results"),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.home_outlined),
+          title: const Text("Study Material"),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.home_outlined),
+          title: const Text("Exam Info"),
+          onTap: () {},
+        ),
+        ListTile(
+          leading: const Icon(Icons.home_outlined),
+          title: const Text("Fee Details"),
+          onTap: () {},
+        ),
+        const Divider(color: Colors.black54),
+        ListTile(
+          leading: const Icon(Icons.home_outlined),
+          title: const Text("contact With Faculty"),
+          onTap: () {},
+        ),
+      ],
+    ),
+  );
 }

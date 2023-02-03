@@ -11,17 +11,14 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+    return Scaffold(
+        body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
       Text(
         "Your Today's Classes",
         textAlign: TextAlign.left,
-        style: TextStyle(fontSize: 15.0, color: Colors.white),
+        style: TextStyle(fontSize: 15.0, color: Colors.black),
       ),
-      // SizedBox(
-      //   width: 200,
-      //   height: 200,
-      // ),
+      SizedBox(width: 200, height: 200),
       Container(
         // margin: const EdgeInsets.all(20),
         margin: const EdgeInsets.fromLTRB(0, 0, 0, 5),

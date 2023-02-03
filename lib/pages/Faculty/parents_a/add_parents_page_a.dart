@@ -60,7 +60,8 @@ class _AddParentPageState extends State<AddParentPage> {
   registration() async {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: "$number@spp.com", password: password);
+          .createUserWithEmailAndPassword(
+              email: "$number@spp.com", password: password);
       print(userCredential);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

@@ -40,7 +40,10 @@ class MyApp extends StatelessWidget {
             title: 'Smart Parents',
             theme: ThemeData(
               primarySwatch: Colors.lightBlue,
+              backgroundColor: Colors.white,
+              scaffoldBackgroundColor: Colors.white,
             ),
+
             debugShowCheckedModeBanner: false,
             home: const TimeImage(),
           );

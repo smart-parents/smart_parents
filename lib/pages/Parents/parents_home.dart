@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class Parents_home extends StatefulWidget {
@@ -31,7 +30,7 @@ class _Parents_homeState extends State<Parents_home> {
                 // )
               },
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
@@ -56,7 +55,7 @@ class _Parents_homeState extends State<Parents_home> {
                 //   )
               },
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
@@ -72,7 +71,7 @@ class _Parents_homeState extends State<Parents_home> {
             child: ElevatedButton(
               onPressed: () => {},
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
@@ -88,7 +87,7 @@ class _Parents_homeState extends State<Parents_home> {
             child: ElevatedButton(
               onPressed: () => {},
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
@@ -104,7 +103,7 @@ class _Parents_homeState extends State<Parents_home> {
             child: ElevatedButton(
               onPressed: () => {},
               style: ElevatedButton.styleFrom(
-              shape: const StadiumBorder(),
+                shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
