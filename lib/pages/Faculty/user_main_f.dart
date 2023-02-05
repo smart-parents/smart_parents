@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
@@ -39,26 +42,29 @@ class _UserMainState extends State<UserMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 207, 235, 255),
-        automaticallyImplyLeading: false,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Image.asset("assets/images/top3.png", width: 100, height: 50,),
+        // backgroundColor: Color.fromARGB(255, 207, 235, 255),
+        // automaticallyImplyLeading: false,
+        // title: Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //   children: [
+        //     // Image.asset("assets/images/top3.png", width: 100, height: 50,),
 
-            const Text(
-              "Faculty",
-              style: TextStyle(
-                fontSize: 30.0,
-              ),
-            ),
-            Image.asset(
-              "assets/images/Faculty.png",
-              height: 50,
-            ),
-          ],
-        ),
+        //     const Text(
+        //       "Faculty",
+        //       style: TextStyle(
+        //         fontSize: 30.0,
+        //       ),
+        //     ),
+        //     Image.asset(
+        //       "assets/images/Faculty.png",
+        //       height: 50,
+        //     ),
+        //   ],
+        // ),
+        title: const Text('Home'),
+        backgroundColor: Colors.blue.shade700,
       ),
+      drawer: NavigationDrawer(),
       body: _widgetOptions.elementAt(_selectedIndex),
 
       bottomNavigationBar: Container(
@@ -154,4 +160,103 @@ class _UserMainState extends State<UserMain> {
       // ),
     );
   }
+}
+
+class NavigationDrawer extends StatelessWidget {
+  NavigationDrawer({Key? key}) : super(key: key);
+  String? fid;
+  main() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      final email = FirebaseAuth.instance.currentUser!.email;
+      String em = email.toString();
+      String facid = em.substring(0, em.length - 8);
+      fid = facid;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    main();
+    return Drawer(
+      child: SingleChildScrollView(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          // main(),
+          // buildHeader(context),
+          Material(
+              color: Colors.blue.shade700,
+              child: InkWell(
+                  onTap: () {},
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        top: 24 + MediaQuery.of(context).padding.top,
+                        bottom: 24),
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundImage: AssetImage('assets/Photo/raj.png'),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'xyz',
+                          style: TextStyle(fontSize: 28, color: Colors.white),
+                        ),
+                        Text(
+                          "$fid",
+                          style: TextStyle(fontSize: 15, color: Colors.white),
+                        )
+                      ],
+                    ),
+                  ))),
+          // buildMenuItems(context),
+          Container(
+            //padding: const EdgeInsets.all(15),
+            child: Wrap(
+              runSpacing: 10,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.home_outlined),
+                  title: const Text("Home"),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const Dashboard(),
+                    ));
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.paste),
+                  title: const Text("View Your Child Result"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.money),
+                  title: const Text("View Fees Details"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.insert_drive_file_outlined),
+                  title: const Text("View Exam Info"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.location_on_outlined),
+                  title: const Text("Get Your Child Location"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.contact_page_outlined),
+                  title: const Text("Contact Faculty"),
+                  onTap: () {},
+                ),
+              ],
+            ),
+          ),
+        ],
+      )),
+    );
+  }
+  // Widget buildHeader(BuildContext contex) =>
+  // Widget buildMenuItems(BuildContext contex) =>
 }

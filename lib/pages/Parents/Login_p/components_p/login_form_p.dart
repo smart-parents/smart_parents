@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/parents.dart';
@@ -69,12 +70,12 @@ class _LoginFormState extends State<LoginForm> {
         }
       }
     } else {
-      print("No Student Found for that Enrollment number");
+      print("No Parents Found for that Mobile number");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.lightBlueAccent,
           content: Text(
-            "No Student Found for that Enrollment number",
+            "No Parents Found for that Mobile number",
             style: TextStyle(fontSize: 18.0, color: Colors.black),
           ),
         ),
@@ -82,18 +83,13 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  // userLogin() async {
-  //   // myMethod();
-  //   if (student == true) {
+  bool _showPassword = false;
 
-  //   }
-  // }
-
-  // bool isValidEmail(String email) {
-  //   final RegExp regex =
-  //       RegExp(r"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-  //   return regex.hasMatch(email);
-  // }
+  void _togglePasswordVisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
 
   @override
   void dispose() {
@@ -113,11 +109,13 @@ class _LoginFormState extends State<LoginForm> {
           TextFormField(
             maxLength: 10,
             autofocus: false,
+            inputFormatters:  [FilteringTextInputFormatter.digitsOnly],
+            keyboardType: TextInputType.number,
             textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your Mobile Number",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
               errorStyle:
@@ -137,13 +135,20 @@ class _LoginFormState extends State<LoginForm> {
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
               autofocus: false,
-              obscureText: true,
+              obscureText: !_showPassword,
+              keyboardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(
+                      _showPassword ? Icons.lock_open : Icons.lock_outline),
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      _showPassword ? Icons.visibility : Icons.visibility_off),
+                  onPressed: _togglePasswordVisibility,
                 ),
                 errorStyle:
                     TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
@@ -158,50 +163,39 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           const SizedBox(height: defaultPadding),
-          Container(
-            //margin: EdgeInsets.only(left: 50.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() {
-                        number = emailController.text;
-                        password = passwordController.text;
-                        // Stream<QuerySnapshot> adminStream = FirebaseFirestore
-                        //     .instance
-                        //     .collection('Admin')
-                        //     .where("email", isEqualTo: email)
-                        //     .snapshots();
-                        // if (adminStream!=null) {
-                        //   userLogin();
-                        // }
-                      });
-                      check();
-                    }
-                  },
-                  child: Text(
-                    "Login".toUpperCase(),
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      number = emailController.text;
+                      password = passwordController.text;
+                    });
+                    check();
+                  }
+                },
+                child: Text(
+                  "Login".toUpperCase(),
                 ),
-                // TextButton(
-                //     onPressed: () {
-                //       Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (context) => ForgotPassword()),
-                //       );
-                //     },
-                //     child: const Text(
-                //       "Forgot Password ?",
-                //       style: TextStyle(
-                //           color: kPrimaryColor,
-                //           fontWeight: FontWeight.bold,
-                //           decoration: TextDecoration.underline),
-                //     )),
-              ],
-            ),
+              ),
+              // TextButton(
+              //     onPressed: () {
+              //       Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => ForgotPassword()),
+              //       );
+              //     },
+              //     child: const Text(
+              //       "Forgot Password ?",
+              //       style: TextStyle(
+              //           color: kPrimaryColor,
+              //           fontWeight: FontWeight.bold,
+              //           decoration: TextDecoration.underline),
+              //     )),
+            ],
           ),
 
           //   const SizedBox(height: defaultPadding),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/user_main_f.dart';
@@ -69,12 +70,12 @@ class _LoginFormState extends State<LoginForm> {
         }
       }
     } else {
-      print("No Faculty Found for that Enrollment number");
+      print("No Faculty Found for that Faculty ID");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           backgroundColor: Colors.lightBlueAccent,
           content: Text(
-            "No faculty Found for that Enrollment number",
+            "No faculty Found for that Faculty ID",
             style: TextStyle(fontSize: 18.0, color: Colors.black),
           ),
         ),
@@ -90,6 +91,14 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  bool _showPassword = false;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -100,8 +109,10 @@ class _LoginFormState extends State<LoginForm> {
           TextFormField(
             maxLength: 4,
             autofocus: false,
+            keyboardType: TextInputType.number,
+            inputFormatters:  [FilteringTextInputFormatter.digitsOnly],
             textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your Faculty ID",
               prefixIcon: Padding(
                 padding: const EdgeInsets.all(defaultPadding),
@@ -124,16 +135,23 @@ class _LoginFormState extends State<LoginForm> {
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
               autofocus: false,
-              obscureText: true,
+              obscureText: !_showPassword,
+              keyboardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(
+                      _showPassword ? Icons.lock_open : Icons.lock_outline),
                 ),
-                errorStyle:
-                    TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      _showPassword ? Icons.visibility : Icons.visibility_off),
+                  onPressed: _togglePasswordVisibility,
+                ),
+                errorStyle: const TextStyle(
+                    color: Colors.lightBlueAccent, fontSize: 15),
               ),
               controller: passwordController,
               validator: (value) {
@@ -145,65 +163,25 @@ class _LoginFormState extends State<LoginForm> {
             ),
           ),
           const SizedBox(height: defaultPadding),
-          Container(
-            //margin: EdgeInsets.only(left: 50.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      setState(() {
-                        faculty = emailController.text;
-                        password = passwordController.text;
-                        // Stream<QuerySnapshot> adminStream = FirebaseFirestore
-                        //     .instance
-                        //     .collection('Admin')
-                        //     .where("email", isEqualTo: email)
-                        //     .snapshots();
-                        // if (adminStream!=null) {
-                        //   userLogin();
-                        // }
-                      });
-                      check();
-                    }
-                  },
-                  child: Text(
-                    "Login".toUpperCase(),
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    setState(() {
+                      faculty = emailController.text;
+                      password = passwordController.text;
+                    });
+                    check();
+                  }
+                },
+                child: Text(
+                  "Login".toUpperCase(),
                 ),
-                // TextButton(
-                //     onPressed: () {
-                //       Navigator.push(
-                //         context,
-                //         MaterialPageRoute(
-                //             builder: (context) => ForgotPassword()),
-                //       );
-                //     },
-                //     child: const Text(
-                //       "Forgot Password ?",
-                //       style: TextStyle(
-                //           color: kPrimaryColor,
-                //           fontWeight: FontWeight.bold,
-                //           decoration: TextDecoration.underline),
-                //     )),
-              ],
-            ),
+              ),
+            ],
           ),
-
-          //   const SizedBox(height: defaultPadding),
-          //   AlreadyHaveAnAccountCheck(
-          //     press: () {
-          //       Navigator.push(
-          //         context,
-          //         MaterialPageRoute(
-          //           builder: (context) {
-          //             return const SignUpScreen();
-          //           },
-          //         ),
-          //       );
-          //     },
-          //   ),
         ],
       ),
     );

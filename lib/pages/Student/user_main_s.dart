@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 // import 'package:smart_parents/pages/Admin/dashboard_a.dart';
 // import 'package:smart_parents/pages/Admin/profile_a.dart';
@@ -41,33 +44,34 @@ class _UserMainState extends State<UserMain> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      //   backgroundColor: Color.fromARGB(255, 207, 235, 255),
-      //   automaticallyImplyLeading: false,
-      //   title: Row(
-      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //     children: [
-      //       // Image.asset("assets/images/top3.png", width: 100, height: 50,),
-      //
-      //       const Text(
-      //         "Student",
-      //         style: TextStyle(
-      //           fontSize: 30.0,
-      //         ),
-      //       ),
-      //       Image.asset(
-      //         "assets/images/Student.png",
-      //         height: 50,
-      //       ),
-      //     ],
-      //   ),
-      // ),
+        //   backgroundColor: Color.fromARGB(255, 207, 235, 255),
+        //   automaticallyImplyLeading: false,
+        //   title: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       // Image.asset("assets/images/top3.png", width: 100, height: 50,),
+        //
+        //       const Text(
+        //         "Student",
+        //         style: TextStyle(
+        //           fontSize: 30.0,
+        //         ),
+        //       ),
+        //       Image.asset(
+        //         "assets/images/Student.png",
+        //         height: 50,
+        //       ),
+        //     ],
+        //   ),
+        // ),
 
         title: const Text('Home'),
-    backgroundColor: Colors.blue.shade700,
-    ),
-    drawer: const NavigationDrawer(),
+        backgroundColor: Colors.blue.shade700,
+      ),
+      drawer: NavigationDrawer(
+        imagePath: 'Jay Photo.jpg',
+      ),
       body: _widgetOptions.elementAt(_selectedIndex),
-
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 207, 235, 255),
@@ -116,145 +120,161 @@ class _UserMainState extends State<UserMain> {
           ),
         ),
       ),
-
-      // bottomNavigationBar: BottomNavyBar(
-      //   backgroundColor: Color.fromARGB(255, 207, 235, 255),
-      //   selectedIndex: _selectedIndex,
-      //   showElevation: true,
-      //   itemCornerRadius: 24,
-      //   curve: Curves.easeIn,
-      //   onItemSelected: _onItemTapped,
-      //   items: <BottomNavyBarItem>[
-      //     BottomNavyBarItem(
-      //       icon: Icon(Icons.home),
-      //       title: Text('Home'),
-      //       activeColor: Color.fromARGB(255, 37, 86, 116),
-      //       textAlign: TextAlign.center,
-      //     ),
-      //     BottomNavyBarItem(
-      //       icon: Icon(Icons.person),
-      //       title: Text('Profile'),
-      //       activeColor: Color.fromARGB(255, 37, 86, 116),
-      //       textAlign: TextAlign.center,
-      //     ),
-      //   ],
-      // ),
-
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Student Detail',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'My Profile',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.settings),
-      //       label: 'Change Password',
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: const Color.fromARGB(255, 177, 217, 250),
-      //   onTap: _onItemTapped,
-      // ),
     );
   }
 }
-class NavigationDrawer extends StatelessWidget {
-  const NavigationDrawer({Key? key}) : super(key: key);
+
+class NavigationDrawer extends StatefulWidget {
+  final String imagePath;
+  NavigationDrawer({required this.imagePath});
 
   @override
-  Widget build(BuildContext context) => Drawer(
-    child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            buildHeader(context),
-            buildMenuItems(context),
-          ],
-        )),
-  );
-  Widget buildHeader(BuildContext contex) => Material(
-      color: Colors.blue.shade700,
-      child: InkWell(
-          onTap: () {},
-          child: Container(
-            padding: EdgeInsets.only(
-                top: 24 + MediaQuery.of(contex).padding.top, bottom: 24),
-            child: Column(
-              children: const [
-                CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage('assets/Photo/raj.png'),
+  _NavigationDrawerState createState() => _NavigationDrawerState();
+}
+
+class _NavigationDrawerState extends State<NavigationDrawer> {
+  // NavigationDrawer({Key? key}) : super(key: key);
+  late Future<Image> _image;
+  @override
+  void initState() {
+    super.initState();
+
+    _image = _getImage();
+  }
+
+  Future<Image> _getImage() async {
+    var storageReference =
+        FirebaseStorage.instance.ref().child(widget.imagePath);
+    var imageUrl = await storageReference.getDownloadURL();
+    var image = NetworkImage(imageUrl);
+    return Image(image: image);
+  }
+
+  String? fid;
+  main() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      final email = FirebaseAuth.instance.currentUser!.email;
+      String em = email.toString();
+      String facid = em.substring(0, em.length - 7);
+      fid = facid;
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    main();
+    return FutureBuilder(
+        future: _image,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            Image image = snapshot.data as Image;
+
+            return Drawer(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    // buildHeader(context),
+                    Material(
+                        color: Colors.blue.shade700,
+                        child: InkWell(
+                            onTap: () {},
+                            child: Container(
+                              padding: EdgeInsets.only(
+                                  top: 24 + MediaQuery.of(context).padding.top,
+                                  bottom: 24),
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 40,
+                                    // backgroundImage: AssetImage('assets/Photo/raj.png'),
+                                    backgroundImage: image.image,
+                                  ),
+                                  SizedBox(height: 10),
+                                  Text(
+                                    'Raj Birari',
+                                    style: TextStyle(
+                                        fontSize: 28, color: Colors.white),
+                                  ),
+                                  Text(
+                                    "$fid",
+                                    style: TextStyle(
+                                        fontSize: 15, color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ))),
+                    // buildMenuItems(context),
+                    Container(
+                      //padding: const EdgeInsets.all(15),
+                      child: Wrap(
+                        runSpacing: 10,
+                        children: [
+                          ListTile(
+                              leading: const Icon(Icons.home_outlined),
+                              title: const Text("Home"),
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const Dashboard(),
+                                ));
+                              }),
+                          ListTile(
+                            leading: const Icon(Icons.timelapse),
+                            title: const Text("Classes Schedule"),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.calendar_month_rounded),
+                            title: const Text("See Attendence"),
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const Attendance_screen(),
+                              ));
+                            },
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.paste),
+                            title: const Text("Results"),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.pages_outlined),
+                            title: const Text("Study Material"),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            leading:
+                                const Icon(Icons.insert_drive_file_outlined),
+                            title: const Text("Exam Info"),
+                            onTap: () {},
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.money),
+                            title: const Text("Fee Details"),
+                            onTap: () {},
+                          ),
+                          const Divider(color: Colors.black54),
+                          ListTile(
+                            leading: const Icon(Icons.contact_page_outlined),
+                            title: const Text("contact With Faculty"),
+                            onTap: () {},
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10),
-                Text(
-                  'Raj Birari',
-                  style: TextStyle(fontSize: 28, color: Colors.white),
-                ),
-                Text(
-                  'rajbirari@gmail.com',
-                  style: TextStyle(fontSize: 15, color: Colors.white),
-                )
-              ],
-            ),
-          )));
-  Widget buildMenuItems(BuildContext contex) => Container(
-    //padding: const EdgeInsets.all(15),
-    child: Wrap(
-      runSpacing: 10,
-      children: [
-        ListTile(
-            leading: const Icon(Icons.home_outlined),
-            title: const Text("Home"),
-            onTap: () {
-              Navigator.of(contex).push(MaterialPageRoute(
-                builder: (context) => const Dashboard(),
-              ));
-            }),
-        ListTile(
-          leading: const Icon(Icons.home_filled),
-          title: const Text("Classes Schedule"),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: const Icon(Icons.calendar_month_rounded),
-          title: const Text("See Attendence"),
-          onTap: () {
-            Navigator.of(contex).push(MaterialPageRoute(
-              builder: (context) => const Attendance_screen(),
-            ));
-          },
-        ),
-        ListTile(
-          leading: const Icon(Icons.home_outlined),
-          title: const Text("Results"),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: const Icon(Icons.home_outlined),
-          title: const Text("Study Material"),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: const Icon(Icons.home_outlined),
-          title: const Text("Exam Info"),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: const Icon(Icons.home_outlined),
-          title: const Text("Fee Details"),
-          onTap: () {},
-        ),
-        const Divider(color: Colors.black54),
-        ListTile(
-          leading: const Icon(Icons.home_outlined),
-          title: const Text("contact With Faculty"),
-          onTap: () {},
-        ),
-      ],
-    ),
-  );
+              ),
+            );
+          } else {
+            return Container(
+              height: 200.0,
+              width: 200.0,
+              child: CircularProgressIndicator(),
+            );
+          }
+        });
+  }
+  // Widget buildHeader(BuildContext contex) =>
+  // Widget buildMenuItems(BuildContext contex) =>
 }

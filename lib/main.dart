@@ -17,6 +17,7 @@ void main() async {
   } else {
     Firebase.initializeApp();
   }
+  // runApp(ImageFromFirebase(imagePath: 'raj.png'));
   runApp(const MyApp());
 }
 

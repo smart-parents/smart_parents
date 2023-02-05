@@ -5,7 +5,6 @@ import 'package:smart_parents/components/responsive.dart';
 import 'package:smart_parents/pages/Faculty/Login_f/login_screen_s.dart';
 import 'package:smart_parents/pages/Parents/Login_p/login_screen_p.dart';
 import 'package:smart_parents/pages/Student/Login_s/login_screen_s.dart';
-import 'package:smart_parents/pages/Student/user_main_s.dart';
 
 class Option extends StatefulWidget {
   const Option({
@@ -101,7 +100,7 @@ class _OptionState extends State<Option> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  UserMain()),
+                                builder: (context) =>  const LoginScreenS()),
                           );
                         },
                       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
+import 'package:smart_parents/pages/Admin/notice_a.dart';
 import 'package:smart_parents/pages/Admin/student_a/student_a.dart';
 
 class Dashboard extends StatefulWidget {
@@ -70,7 +71,12 @@ class _DashboardState extends State<Dashboard> {
             // margin: const EdgeInsets.all(20),
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
             child: ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NoticeForm()),
+                ),
+              },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),

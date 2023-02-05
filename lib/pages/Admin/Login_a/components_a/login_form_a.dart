@@ -84,59 +84,6 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-  // userLogin() async {
-  //   // myMethod();
-  //   if (admin == true) {
-  //     try {
-  //       UserCredential userCredential = await FirebaseAuth.instance
-  //           .signInWithEmailAndPassword(email: email, password: password);
-  //       // print(userCredential.user?.uid);
-  //       await storage.write(key: "uid", value: userCredential.user?.uid);
-  //       Navigator.pushReplacement(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => UserMain(),
-  //         ),
-  //       );
-  //     } on FirebaseAuthException catch (e) {
-  //       if (e.code == 'user-not-found') {
-  //         print("No User Found for that Email");
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             backgroundColor: Colors.lightBlueAccent,
-  //             content: Text(
-  //               "No User Found for that Email",
-  //               style: TextStyle(fontSize: 18.0, color: Colors.black),
-  //             ),
-  //           ),
-  //         );
-  //       } else if (e.code == 'wrong-password') {
-  //         print("Wrong Password Provided by User");
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           SnackBar(
-  //             backgroundColor: Colors.lightBlueAccent,
-  //             content: Text(
-  //               "Wrong Password Provided by User",
-  //               style: TextStyle(fontSize: 18.0, color: Colors.black),
-  //             ),
-  //           ),
-  //         );
-  //       }
-  //     }
-  //   } else {
-  //     print("No User Found for that Email");
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       SnackBar(
-  //         backgroundColor: Colors.lightBlueAccent,
-  //         content: Text(
-  //           "No User Found for that Email",
-  //           style: TextStyle(fontSize: 18.0, color: Colors.black),
-  //         ),
-  //       ),
-  //     );
-  //   }
-  // }
-
   bool isValidEmail(String email) {
     final RegExp regex =
         RegExp(r"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -151,6 +98,14 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  bool _showPassword = false;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -160,11 +115,12 @@ class _LoginFormState extends State<LoginForm> {
         children: [
           TextFormField(
             autofocus: false,
+            keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.next,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: "Your email",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
               errorStyle:
@@ -184,13 +140,20 @@ class _LoginFormState extends State<LoginForm> {
             padding: const EdgeInsets.symmetric(vertical: defaultPadding),
             child: TextFormField(
               autofocus: false,
-              obscureText: true,
+              obscureText: !_showPassword,
+              keyboardType: TextInputType.visiblePassword,
               textInputAction: TextInputAction.done,
               decoration: InputDecoration(
                 hintText: "Your password",
                 prefixIcon: Padding(
                   padding: const EdgeInsets.all(defaultPadding),
-                  child: Icon(Icons.lock),
+                  child: Icon(
+                      _showPassword ? Icons.lock_open : Icons.lock_outline),
+                ),
+                suffixIcon: IconButton(
+                  icon: Icon(
+                      _showPassword ? Icons.visibility : Icons.visibility_off),
+                  onPressed: _togglePasswordVisibility,
                 ),
                 errorStyle:
                     TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
@@ -206,7 +169,7 @@ class _LoginFormState extends State<LoginForm> {
           ),
           const SizedBox(height: defaultPadding),
           Container(
-            margin: EdgeInsets.only(left: 50.0),
+            margin: const EdgeInsets.only(left: 50.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -216,17 +179,8 @@ class _LoginFormState extends State<LoginForm> {
                       setState(() {
                         email = emailController.text;
                         password = passwordController.text;
-                        // Stream<QuerySnapshot> adminStream = FirebaseFirestore
-                        //     .instance
-                        //     .collection('Admin')
-                        //     .where("email", isEqualTo: email)
-                        //     .snapshots();
-                        // if (adminStream!=null) {
-                        //   userLogin();
-                        // }
                       });
                       check();
-                      // userLogin();
                     }
                   },
                   child: Text(

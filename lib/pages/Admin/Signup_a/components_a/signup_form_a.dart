@@ -136,6 +136,14 @@ class _SignUpFormState extends State<SignUpForm> {
     }
   }
 
+  bool _showPassword = false;
+
+  void _togglePasswordVisibility() {
+    setState(() {
+      _showPassword = !_showPassword;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -169,13 +177,20 @@ class _SignUpFormState extends State<SignUpForm> {
               padding: const EdgeInsets.symmetric(vertical: defaultPadding),
               child: TextFormField(
                 textInputAction: TextInputAction.next,
-                obscureText: true,
+                obscureText: !_showPassword,
                 cursorColor: kPrimaryColor,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Your password",
                   prefixIcon: Padding(
-                    padding: EdgeInsets.all(defaultPadding),
-                    child: Icon(Icons.lock),
+                    padding: const EdgeInsets.all(defaultPadding),
+                    child: Icon(
+                        _showPassword ? Icons.lock_open : Icons.lock_outline),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(_showPassword
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                    onPressed: _togglePasswordVisibility,
                   ),
                 ),
                 controller: passwordController,
@@ -201,13 +216,20 @@ class _SignUpFormState extends State<SignUpForm> {
               padding: const EdgeInsets.symmetric(vertical: defaultPadding),
               child: TextFormField(
                 textInputAction: TextInputAction.done,
-                obscureText: true,
+                obscureText: !_showPassword,
                 cursorColor: kPrimaryColor,
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   hintText: "Confirm Your password",
                   prefixIcon: Padding(
-                    padding: EdgeInsets.all(defaultPadding),
-                    child: Icon(Icons.lock),
+                    padding: const EdgeInsets.all(defaultPadding),
+                    child: Icon(
+                        _showPassword ? Icons.lock_open : Icons.lock_outline),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: Icon(_showPassword
+                        ? Icons.visibility
+                        : Icons.visibility_off),
+                    onPressed: _togglePasswordVisibility,
                   ),
                 ),
                 controller: confirmPasswordController,
