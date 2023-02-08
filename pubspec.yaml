@@ -39,15 +39,16 @@ dependencies:
 
   # firebase_auth_desktop: ^1.0.2
   # firebase_core_desktop: ^1.0.2
-  # flutter_svg: ^1.1.6
-  google_fonts: ^4.0.1
+  # flutter_secure_storage: ^7.0.1
+  # flutter_svg: ^2.0.0+1
+  # google_fonts: ^4.0.3
   google_nav_bar: ^5.0.6
   flutter_launcher_icons: ^0.11.0
   firebase_core: ^2.4.1
   firebase_auth: ^4.2.5
-  flutter_secure_storage: ^7.0.1
   firebase_storage: ^11.0.10
   cloud_firestore: ^4.3.1
+  shared_preferences: ^2.0.17
 
 # transitive dependencies:
   # collection: ^1.17.1
@@ -55,6 +56,7 @@ dependencies:
   # intl: ^0.18.0
   # js: ^0.6.7
   # matcher: ^0.12.14
+  # meta: ^1.9.0
   # path: ^1.8.3
   # test_api: ^0.4.18
   # win32: ^4.1.1

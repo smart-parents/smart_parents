@@ -44,7 +44,6 @@ class MyApp extends StatelessWidget {
               backgroundColor: Colors.white,
               scaffoldBackgroundColor: Colors.white,
             ),
-
             debugShowCheckedModeBanner: false,
             home: const TimeImage(),
           );

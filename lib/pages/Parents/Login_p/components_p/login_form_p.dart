@@ -2,9 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/parents.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -23,7 +24,8 @@ class _LoginFormState extends State<LoginForm> {
   var password = "";
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final storage = new FlutterSecureStorage();
+  // final storage = new FlutterSecureStorage();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   check() async {
     final snapShot = await FirebaseFirestore.instance
@@ -36,7 +38,12 @@ class _LoginFormState extends State<LoginForm> {
             .signInWithEmailAndPassword(
                 email: "$number@spp.com", password: password);
         print(userCredential.user?.uid);
-        await storage.write(key: "uid", value: userCredential.user?.uid);
+        // await storage.write(key: "uid", value: userCredential.user?.uid);
+        final SharedPreferences prefs = await _prefs;
+        await prefs.setString('uid', userCredential.user?.uid as String);
+        await prefs.setString('role', 'parents');
+        await prefs.setString('number', "$number@spp.com");
+        await prefs.setString('pass', password);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -109,7 +116,7 @@ class _LoginFormState extends State<LoginForm> {
           TextFormField(
             maxLength: 10,
             autofocus: false,
-            inputFormatters:  [FilteringTextInputFormatter.digitsOnly],
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             keyboardType: TextInputType.number,
             textInputAction: TextInputAction.next,
             decoration: const InputDecoration(

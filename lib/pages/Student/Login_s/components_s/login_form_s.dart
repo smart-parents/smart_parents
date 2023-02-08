@@ -2,10 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/components/constants.dart';
 // import 'package:smart_parents/pages/Student/forgot_password_s.dart';
 import 'package:smart_parents/pages/Student/user_main_s.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
@@ -24,7 +25,8 @@ class _LoginFormState extends State<LoginForm> {
   var password = "";
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final storage = new FlutterSecureStorage();
+  // final storage = new FlutterSecureStorage();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   check() async {
     final snapShot = await FirebaseFirestore.instance
@@ -37,11 +39,16 @@ class _LoginFormState extends State<LoginForm> {
             .signInWithEmailAndPassword(
                 email: "$number@sp.com", password: password);
         print(userCredential.user?.uid);
-        await storage.write(key: "uid", value: userCredential.user?.uid);
+        // await storage.write(key: "uid", value: userCredential.user?.uid);
+        final SharedPreferences prefs = await _prefs;
+        await prefs.setString('uid', userCredential.user?.uid as String);
+        await prefs.setString('role', 'student');
+        await prefs.setString('enumber', "$number@sp.com");
+        await prefs.setString('pass', password);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => UserMain(),
+            builder: (context) => UserMainS(),
           ),
         );
       } on FirebaseAuthException catch (e) {

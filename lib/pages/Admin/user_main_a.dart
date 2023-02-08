@@ -1,11 +1,13 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/dashboard_a.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Admin/change_password_a.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-class UserMain extends StatefulWidget {
-  UserMain({Key? key}) : super(key: key);
+class UserMainA extends StatefulWidget {
+  UserMainA({Key? key}) : super(key: key);
   // void initState() {
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
   //     // SystemUiOverlay.bottom,
@@ -16,7 +18,7 @@ class UserMain extends StatefulWidget {
   _UserMainState createState() => _UserMainState();
 }
 
-class _UserMainState extends State<UserMain> {
+class _UserMainState extends State<UserMainA> {
   int _selectedIndex = 0;
   // final storage = new FlutterSecureStorage();
   static List<Widget> _widgetOptions = <Widget>[
@@ -30,8 +32,28 @@ class _UserMainState extends State<UserMain> {
     });
   }
 
+  final _prefs = SharedPreferences.getInstance();
+  login() async {
+    FirebaseAuth.instance.signOut();
+    final SharedPreferences prefs = await _prefs;
+    String? email = prefs.getString('email');
+    String? pass = prefs.getString('pass');
+    print("signout");
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: "$email", password: "$pass")
+          .then(
+            (value) => print("login $email"),
+          );
+      print("login");
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    login();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 207, 235, 255),

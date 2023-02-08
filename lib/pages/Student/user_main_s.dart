@@ -9,9 +9,10 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Student/dashboard_s.dart';
+import 'package:smart_parents/pages/profile_screen.dart';
 
-class UserMain extends StatefulWidget {
-  UserMain({Key? key}) : super(key: key);
+class UserMainS extends StatefulWidget {
+  UserMainS({Key? key}) : super(key: key);
   // void initState() {
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
   //     // SystemUiOverlay.bottom,
@@ -22,7 +23,7 @@ class UserMain extends StatefulWidget {
   _UserMainState createState() => _UserMainState();
 }
 
-class _UserMainState extends State<UserMain> {
+class _UserMainState extends State<UserMainS> {
   int _selectedIndex = 0;
   // final storage = new FlutterSecureStorage();
   static List<Widget> _widgetOptions = <Widget>[
@@ -31,7 +32,7 @@ class _UserMainState extends State<UserMain> {
     Text(
       'Index 3: chat',
     ),
-    Profile()
+    Profile_screen()
   ];
 
   void _onItemTapped(int index) {

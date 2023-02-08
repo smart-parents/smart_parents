@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/add_faculty_page_a.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/update_faculty_page_a.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,8 @@ class Faculty extends StatefulWidget {
 class _FacultyState extends State<Faculty> {
   // final Stream<QuerySnapshot> facultyStream =
   //     FirebaseFirestore.instance.collection('faculty').snapshots();
-  late Stream<QuerySnapshot> facultyStream;
+
+  Stream<QuerySnapshot>? facultyStream;
   void myMethod() {
     if (FirebaseAuth.instance.currentUser != null) {
       final email = FirebaseAuth.instance.currentUser!.email;
@@ -37,9 +39,29 @@ class _FacultyState extends State<Faculty> {
         .catchError((error) => print('Failed to Delete user: $error'));
   }
 
+  final _prefs = SharedPreferences.getInstance();
+  login() async {
+    FirebaseAuth.instance.signOut();
+    final SharedPreferences prefs = await _prefs;
+    String? email = prefs.getString('email');
+    String? pass = prefs.getString('pass');
+    print("signout");
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: "$email", password: "$pass")
+          .then(
+            (value) => print("login $email"),
+          );
+      print("login");
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     myMethod();
+    login();
     return StreamBuilder<QuerySnapshot>(
         stream: facultyStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

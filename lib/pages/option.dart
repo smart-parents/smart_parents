@@ -100,7 +100,7 @@ class _OptionState extends State<Option> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) =>  const LoginScreenS()),
+                                builder: (context) => const LoginScreenS()),
                           );
                         },
                       ),

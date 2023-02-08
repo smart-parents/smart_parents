@@ -4,6 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
+import 'package:smart_parents/pages/profile_screen.dart';
 
 class ParentsScreen extends StatefulWidget {
   const ParentsScreen({super.key});
@@ -21,7 +22,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
     Text(
       'Index 3: chat',
     ),
-    Profile()
+    Profile_screen()
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -128,77 +129,78 @@ class NavigationDrawer extends StatelessWidget {
         children: <Widget>[
           // buildHeader(context),
           Material(
-        color: Colors.blue.shade700,
-        child: InkWell(
-            onTap: () {},
-            child: Container(
-              padding: EdgeInsets.only(
-                  top: 24 + MediaQuery.of(context).padding.top, bottom: 24),
-              child: Column(
-                children:  [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage('assets/Photo/raj.png'),
-                  ),
-                  SizedBox(height: 10),
-                  Text(
-                    'Raj Birari',
-                    style: TextStyle(fontSize: 28, color: Colors.white),
-                  ),
-                  Text(
-                    "$fid",
-                    style: TextStyle(fontSize: 15, color: Colors.white),
-                  )
-                ],
-              ),
-            ))),
+              color: Colors.blue.shade700,
+              child: InkWell(
+                  onTap: () {},
+                  child: Container(
+                    padding: EdgeInsets.only(
+                        top: 24 + MediaQuery.of(context).padding.top,
+                        bottom: 24),
+                    child: Column(
+                      children: [
+                        CircleAvatar(
+                          radius: 40,
+                          backgroundImage: AssetImage('assets/Photo/raj.png'),
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          'Raj Birari',
+                          style: TextStyle(fontSize: 28, color: Colors.white),
+                        ),
+                        Text(
+                          "$fid",
+                          style: TextStyle(fontSize: 15, color: Colors.white),
+                        )
+                      ],
+                    ),
+                  ))),
           // buildMenuItems(context),
-           Container(
-          //padding: const EdgeInsets.all(15),
-          child: Wrap(
-            runSpacing: 10,
-            children: [
-              ListTile(
-                leading: const Icon(Icons.home_outlined),
-                title: const Text("Home"),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Parents_home(),
-                  ));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.paste),
-                title: const Text("View Your Child Result"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.money),
-                title: const Text("View Fees Details"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.insert_drive_file_outlined),
-                title: const Text("View Exam Info"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.location_on_outlined),
-                title: const Text("Get Your Child Location"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.contact_page_outlined),
-                title: const Text("Contact Faculty"),
-                onTap: () {},
-              ),
-            ],
+          Container(
+            //padding: const EdgeInsets.all(15),
+            child: Wrap(
+              runSpacing: 10,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.home_outlined),
+                  title: const Text("Home"),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const Parents_home(),
+                    ));
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.paste),
+                  title: const Text("View Your Child Result"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.money),
+                  title: const Text("View Fees Details"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.insert_drive_file_outlined),
+                  title: const Text("View Exam Info"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.location_on_outlined),
+                  title: const Text("Get Your Child Location"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.contact_page_outlined),
+                  title: const Text("Contact Faculty"),
+                  onTap: () {},
+                ),
+              ],
+            ),
           ),
-        ),
         ],
       )),
     );
-    // Widget buildHeader(BuildContext contex) => 
+    // Widget buildHeader(BuildContext contex) =>
     // Widget buildMenuItems(BuildContext contex) =>
   }
 }

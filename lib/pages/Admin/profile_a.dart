@@ -1,10 +1,10 @@
 // import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/pages/option.dart';
 // import 'dart:html' as html;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -17,9 +17,10 @@ class _ProfileState extends State<Profile> {
   final uid = FirebaseAuth.instance.currentUser!.uid;
   final email = FirebaseAuth.instance.currentUser!.email;
   final creationTime = FirebaseAuth.instance.currentUser!.metadata.creationTime;
-  final storage = new FlutterSecureStorage();
+  // final storage = new FlutterSecureStorage();
   User? user = FirebaseAuth.instance.currentUser;
   // String ve = "Verify Email";
+  final _prefs = SharedPreferences.getInstance();
 
   verifyEmail() async {
     if (user != null && !user!.emailVerified) {
@@ -35,6 +36,12 @@ class _ProfileState extends State<Profile> {
         ),
       );
     }
+  }
+
+  delete() async {
+    final SharedPreferences prefs = await _prefs;
+    final success = await prefs.clear();
+    print(success);
   }
 
   @override
@@ -83,7 +90,8 @@ class _ProfileState extends State<Profile> {
               ElevatedButton(
                 onPressed: () async => {
                   await FirebaseAuth.instance.signOut(),
-                  await storage.delete(key: "uid"),
+                  delete(),
+                  // await storage.delete(key: "uid"),
                   Navigator.pushAndRemoveUntil(
                       context,
                       MaterialPageRoute(

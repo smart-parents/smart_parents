@@ -2,10 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/already_have_an_account_acheck.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/Signup_a/signup_screen_a.dart';
 import 'package:smart_parents/pages/Admin/forgot_password_a.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/user_main_a.dart';
 
 class LoginForm extends StatefulWidget {
@@ -26,7 +27,8 @@ class _LoginFormState extends State<LoginForm> {
   var password = "";
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  final storage = new FlutterSecureStorage();
+  // final storage = const FlutterSecureStorage();
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 
   check() async {
     final snapShot = await FirebaseFirestore.instance
@@ -37,12 +39,18 @@ class _LoginFormState extends State<LoginForm> {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
-        // print(userCredential.user?.uid);
-        await storage.write(key: "uid", value: userCredential.user?.uid);
+        print(userCredential.user?.uid);
+        // await storage.write(key: email, value: password);
+        final SharedPreferences prefs = await _prefs;
+        await prefs.setString('uid', userCredential.user?.uid as String);
+        await prefs.setString('role', 'admin');
+        await prefs.setString('email', email);
+        await prefs.setString('pass', password);
+
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => UserMain(),
+            builder: (context) => UserMainA(),
           ),
         );
       } on FirebaseAuthException catch (e) {

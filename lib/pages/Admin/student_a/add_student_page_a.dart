@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddStudentPage extends StatefulWidget {
   const AddStudentPage({Key? key}) : super(key: key);
@@ -15,7 +16,8 @@ class AddStudentPage extends StatefulWidget {
 
 class _AddStudentPageState extends State<AddStudentPage> {
   final _formKey = GlobalKey<FormState>();
-  final email = FirebaseAuth.instance.currentUser!.email;
+  // final email = FirebaseAuth.instance.currentUser!.email;
+  String? email;
 
   var name = "";
   var number = "";
@@ -39,6 +41,12 @@ class _AddStudentPageState extends State<AddStudentPage> {
     nameController.clear();
     numberController.clear();
     passwordController.clear();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    login();
   }
 
   // Adding Student
@@ -107,6 +115,25 @@ class _AddStudentPageState extends State<AddStudentPage> {
           ),
         );
       }
+    }
+  }
+
+  final _prefs = SharedPreferences.getInstance();
+  login() async {
+    FirebaseAuth.instance.signOut();
+    final SharedPreferences prefs = await _prefs;
+    email = prefs.getString('email');
+    String? pass = prefs.getString('pass');
+    print("signout");
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: "$email", password: "$pass")
+          .then(
+            (value) => print("login $email"),
+          );
+      print("login");
+    } on FirebaseAuthException catch (e) {
+      print(e);
     }
   }
 

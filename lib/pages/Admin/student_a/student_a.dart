@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/student_a/add_student_page_a.dart';
 import 'package:smart_parents/pages/Admin/student_a/update_student_page_a.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +36,13 @@ class _StudentState extends State<Student> {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+    login();
+    myMethod();
+  }
+
   // For Deleting User
   CollectionReference students =
       FirebaseFirestore.instance.collection('students');
@@ -45,9 +55,29 @@ class _StudentState extends State<Student> {
         .catchError((error) => print('Failed to Delete user: $error'));
   }
 
+  final _prefs = SharedPreferences.getInstance();
+  login() async {
+    FirebaseAuth.instance.signOut();
+    final SharedPreferences prefs = await _prefs;
+    String? email = prefs.getString('email');
+    String? pass = prefs.getString('pass');
+    print("signout");
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: "$email", password: "$pass")
+          .then(
+            (value) => print("login $email"),
+          );
+      print("login");
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    myMethod();
+    // login();
+    // myMethod();
     return StreamBuilder<QuerySnapshot>(
         stream: studentsStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -84,141 +114,237 @@ class _StudentState extends State<Student> {
                 title: const Text("Student Details",
                     style: TextStyle(fontSize: 30.0)),
               ),
-              body: Center(
-                  child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                    // const Text("Student", style: TextStyle(fontSize: 30.0)),
-                    if (storedocs.isNotEmpty) ...{
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 20.0),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Table(
-                            border: TableBorder.all(),
-                            columnWidths: const <int, TableColumnWidth>{
-                              1: FixedColumnWidth(140),
-                            },
-                            defaultVerticalAlignment:
-                                TableCellVerticalAlignment.middle,
-                            children: [
-                              // if (storedocs.isNotEmpty) ...{
-                              TableRow(
-                                children: [
-                                  TableCell(
-                                    child: Container(
-                                      color: const Color.fromARGB(
-                                          255, 207, 235, 255),
-                                      child: const Center(
-                                        child: Text(
-                                          'Name',
+              body:
+                  // Center(
+                  //     child: Column(
+                  //         // mainAxisAlignment: MainAxisAlignment.center,
+                  //         children: <Widget>[
+                  // const Text("Student", style: TextStyle(fontSize: 30.0)),
+                  storedocs.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: storedocs.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              semanticContainer: true,
+                              // shadowColor: Colors.black,
+                              margin: EdgeInsets.all(10),
+                              child: Container(
+                                padding: EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text(
+                                          'Enrollment Number: ${storedocs[index]['number']}',
                                           style: TextStyle(
-                                            fontSize: 20.0,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                  TableCell(
-                                    child: Container(
-                                      color: const Color.fromARGB(
-                                          255, 207, 235, 255),
-                                      child: const Center(
-                                        child: Text(
-                                          'Enrollment',
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
+                                        IconButton(
+                                          onPressed: () => {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UpdateStudentPage(
+                                                        id: storedocs[index]
+                                                            ['id']),
+                                              ),
+                                            )
+                                          },
+                                          icon: const Icon(
+                                            Icons.edit,
+                                            color: Colors.orangeAccent,
                                           ),
                                         ),
-                                      ),
+                                      ],
                                     ),
-                                  ),
-                                  TableCell(
-                                    child: Container(
-                                      color: const Color.fromARGB(
-                                          255, 207, 235, 255),
-                                      child: const Center(
-                                        child: Text(
-                                          'Action',
+                                    // SizedBox(
+                                    //   height: 10,
+                                    // ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: <Widget>[
+                                        Text(
+                                          'Name: ${storedocs[index]['name']}',
                                           style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16,
                                           ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              for (var i = 0; i < storedocs.length; i++) ...[
-                                TableRow(
-                                  children: [
-                                    TableCell(
-                                      child: Center(
-                                          child: Text(storedocs[i]['name'],
-                                              style:
-                                                  TextStyle(fontSize: 18.0))),
-                                    ),
-                                    TableCell(
-                                      child: Center(
-                                          child: Text(storedocs[i]['number'],
-                                              style:
-                                                  TextStyle(fontSize: 18.0))),
-                                    ),
-                                    TableCell(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          IconButton(
-                                            onPressed: () => {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UpdateStudentPage(
-                                                          id: storedocs[i]
-                                                              ['id']),
-                                                ),
-                                              )
-                                            },
-                                            icon: const Icon(
-                                              Icons.edit,
-                                              color: Colors.orangeAccent,
-                                            ),
+                                        IconButton(
+                                          highlightColor: Colors.red,
+                                          onPressed: () => {
+                                            deleteUser(storedocs[index]['id'])
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
                                           ),
-                                          IconButton(
-                                            onPressed: () => {
-                                              deleteUser(storedocs[i]['id'])
-                                            },
-                                            icon: const Icon(
-                                              Icons.delete,
-                                              color: Colors.red,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
+                                    // SizedBox(
+                                    //   height: 10,
+                                    // ),
+                                    // Text(
+                                    //   'Gender: ${studentList![index].gender}',
+                                    //   style: TextStyle(
+                                    //     fontSize: 16,
+                                    //   ),
+                                    // ),
+                                    // SizedBox(
+                                    //   height: 10,
+                                    // ),
+                                    // Text(
+                                    //   'Address: ${studentList![index].address}',
+                                    //   style: TextStyle(
+                                    //     fontSize: 16,
+                                    //   ),
+                                    // ),
                                   ],
                                 ),
-                              ],
+                              ),
+                            );
+                          })
+                      // Container(
+                      //   margin: const EdgeInsets.symmetric(
+                      //       horizontal: 10.0, vertical: 20.0),
+                      //   child: SingleChildScrollView(
+                      //     scrollDirection: Axis.vertical,
+                      //     child: Table(
+                      //       border: TableBorder.all(),
+                      //       columnWidths: const <int, TableColumnWidth>{
+                      //         1: FixedColumnWidth(140),
+                      //       },
+                      //       defaultVerticalAlignment:
+                      //           TableCellVerticalAlignment.middle,
+                      //       children: [
+                      //         // if (storedocs.isNotEmpty) ...{
+                      //         TableRow(
+                      //           children: [
+                      //             TableCell(
+                      //               child: Container(
+                      //                 color: const Color.fromARGB(
+                      //                     255, 207, 235, 255),
+                      //                 child: const Center(
+                      //                   child: Text(
+                      //                     'Name',
+                      //                     style: TextStyle(
+                      //                       fontSize: 20.0,
+                      //                       fontWeight: FontWeight.bold,
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             TableCell(
+                      //               child: Container(
+                      //                 color: const Color.fromARGB(
+                      //                     255, 207, 235, 255),
+                      //                 child: const Center(
+                      //                   child: Text(
+                      //                     'Enrollment',
+                      //                     style: TextStyle(
+                      //                       fontSize: 20.0,
+                      //                       fontWeight: FontWeight.bold,
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             TableCell(
+                      //               child: Container(
+                      //                 color: const Color.fromARGB(
+                      //                     255, 207, 235, 255),
+                      //                 child: const Center(
+                      //                   child: Text(
+                      //                     'Action',
+                      //                     style: TextStyle(
+                      //                       fontSize: 20.0,
+                      //                       fontWeight: FontWeight.bold,
+                      //                     ),
+                      //                   ),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //         for (var i = 0; i < storedocs.length; i++) ...[
+                      //           TableRow(
+                      //             children: [
+                      //               TableCell(
+                      //                 child: Center(
+                      //                     child: Text(storedocs[i]['name'],
+                      //                         style:
+                      //                             TextStyle(fontSize: 18.0))),
+                      //               ),
+                      //               TableCell(
+                      //                 child: Center(
+                      //                     child: Text(storedocs[i]['number'],
+                      //                         style:
+                      //                             TextStyle(fontSize: 18.0))),
+                      //               ),
+                      //               TableCell(
+                      //                 child: Row(
+                      //                   mainAxisAlignment:
+                      //                       MainAxisAlignment.center,
+                      //                   children: [
+                      //                     IconButton(
+                      //                       onPressed: () => {
+                      //                         Navigator.push(
+                      //                           context,
+                      //                           MaterialPageRoute(
+                      //                             builder: (context) =>
+                      //                                 UpdateStudentPage(
+                      //                                     id: storedocs[i]
+                      //                                         ['id']),
+                      //                           ),
+                      //                         )
+                      //                       },
+                      //                       icon: const Icon(
+                      //                         Icons.edit,
+                      //                         color: Colors.orangeAccent,
+                      //                       ),
+                      //                     ),
+                      //                     IconButton(
+                      //                       onPressed: () => {
+                      //                         deleteUser(storedocs[i]['id'])
+                      //                       },
+                      //                       icon: const Icon(
+                      //                         Icons.delete,
+                      //                         color: Colors.red,
+                      //                       ),
+                      //                     ),
+                      //                   ],
+                      //                 ),
+                      //               ),
+                      //             ],
+                      //           ),
+                      //         ],
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
+                      : Center(
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset(
+                                "assets/images/No data.png",
+                              ),
+                              const Text(
+                                "No data",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
                             ],
                           ),
                         ),
-                      ),
-                    } else ...{
-                      Image.asset(
-                        "assets/images/No data.png",
-                      ),
-                      const Text(
-                        "No data",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    }
-                  ])),
+
+              // )),
               floatingActionButton: FloatingActionButton(
                 // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
                 onPressed: () => {

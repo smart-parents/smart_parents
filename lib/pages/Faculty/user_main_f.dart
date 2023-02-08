@@ -6,8 +6,8 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 
-class UserMain extends StatefulWidget {
-  UserMain({Key? key}) : super(key: key);
+class UserMainF extends StatefulWidget {
+  UserMainF({Key? key}) : super(key: key);
   // void initState() {
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
   //     // SystemUiOverlay.bottom,
@@ -18,7 +18,7 @@ class UserMain extends StatefulWidget {
   _UserMainState createState() => _UserMainState();
 }
 
-class _UserMainState extends State<UserMain> {
+class _UserMainState extends State<UserMainF> {
   int _selectedIndex = 0;
   // final storage = new FlutterSecureStorage();
   static List<Widget> _widgetOptions = <Widget>[

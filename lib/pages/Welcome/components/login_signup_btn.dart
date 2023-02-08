@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:smart_parents/pages/check.dart';
+import 'package:smart_parents/pages/check.dart';
 import 'package:smart_parents/pages/option.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
@@ -19,7 +19,7 @@ class LoginAndSignupBtn extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (context) {
-                    return const Option();
+                    return const Check();
                   },
                 ),
               );

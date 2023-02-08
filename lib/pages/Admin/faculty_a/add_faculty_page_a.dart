@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
 
 class AddFacultyPage extends StatefulWidget {
-  AddFacultyPage({Key? key}) : super(key: key);
+  const AddFacultyPage({Key? key}) : super(key: key);
 // void initState() {
 //     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
 //       // SystemUiOverlay.bottom,
@@ -15,12 +17,20 @@ class AddFacultyPage extends StatefulWidget {
 
 class _AddFacultyPageState extends State<AddFacultyPage> {
   final _formKey = GlobalKey<FormState>();
-  final email = FirebaseAuth.instance.currentUser!.email;
-
+  final _prefs = SharedPreferences.getInstance();
+  String? email;
+  // final email = FirebaseAuth.instance.currentUser!.email;
   var faculty = "";
   var name = "";
   var department = "";
   var password = "";
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    login();
+  }
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
 
@@ -39,7 +49,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
     super.dispose();
   }
 
-  clearText() {
+  clearText() async {
     facultyController.clear();
     nameController.clear();
     departmentController.clear();
@@ -65,29 +75,26 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
 
   registration() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(
-              email: "$faculty@spf.com", password: password);
-      print(userCredential);
+      FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: "$faculty@spf.com", password: password);
+
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: Colors.lightBlueAccent,
           content: Text(
-            "Student Added.",
+            "Faculty Added.",
             style: TextStyle(fontSize: 20.0, color: Colors.black),
           ),
         ),
       );
       addUser();
       clearText();
-
-      // Navigator.pushReplacement(
+      // Navigator.push(
       //   context,
       //   MaterialPageRoute(
-      //     builder: (context) => LoginScreen(),
+      //     builder: (context) => const Faculty(),
       //   ),
       // );
-      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print(e);
       if (e.code == 'weak-password') {
@@ -102,22 +109,42 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
           ),
         );
       } else if (e.code == 'email-already-in-use') {
-        print("Student Already exists");
+        print("Faculty Already exists");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.lightBlueAccent,
             content: Text(
-              "Student Already exists",
+              "Faculty Already exists",
               style: TextStyle(fontSize: 18.0, color: Colors.black),
             ),
           ),
         );
       }
     }
+    Navigator.pop(context);
+  }
+
+  login() async {
+    FirebaseAuth.instance.signOut();
+    final SharedPreferences prefs = await _prefs;
+    email = prefs.getString('email');
+    String? pass = prefs.getString('pass');
+    print("signout");
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: "$email", password: "$pass")
+          .then(
+            (value) => print("login $email"),
+          );
+      print("login");
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    login();
     return Scaffold(
       appBar: AppBar(
         title: Text("Add New Faculty"),
@@ -125,7 +152,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
         leading: new IconButton(
           icon: new Icon(Icons.arrow_back),
           tooltip: "Back",
-          onPressed: () => Navigator.of(context).pop(),
+          onPressed: () => Navigator.pop(context),
         ),
         backgroundColor: const Color.fromARGB(255, 207, 235, 255),
       ),
@@ -240,6 +267,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                             // addUser();
                             // clearText();
                             registration();
+                            login();
                             // Navigator.pop(context);
                           });
                         }

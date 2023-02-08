@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
 import 'package:smart_parents/pages/Admin/notice_a.dart';
 import 'package:smart_parents/pages/Admin/student_a/student_a.dart';
@@ -11,8 +13,34 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final _prefs = SharedPreferences.getInstance();
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   login();
+  // }
+
+  login() async {
+    FirebaseAuth.instance.signOut();
+    print("signout");
+    final SharedPreferences prefs = await _prefs;
+    String? email = prefs.getString('email');
+    String? pass = prefs.getString('pass');
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: "$email", password: "$pass")
+          .then(
+            (value) => print("login $email"),
+          );
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    login();
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

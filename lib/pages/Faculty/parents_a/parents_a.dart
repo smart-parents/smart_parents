@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Faculty/parents_a/add_parents_page_a.dart';
 import 'package:smart_parents/pages/Faculty/parents_a/update_parents_page_a.dart';
 
@@ -33,6 +34,13 @@ class _ParentState extends State<Parent> {
     }
   }
 
+  @override
+  void initState() {
+    super.initState();
+    login();
+    myMethod();
+  }
+
   // For Deleting User
   CollectionReference parents =
       FirebaseFirestore.instance.collection('parents');
@@ -43,6 +51,25 @@ class _ParentState extends State<Parent> {
         .delete()
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
+  }
+
+  final _prefs = SharedPreferences.getInstance();
+  login() async {
+    FirebaseAuth.instance.signOut();
+    final SharedPreferences prefs = await _prefs;
+    String? email = prefs.getString('faculty');
+    String? pass = prefs.getString('pass');
+    print("signout");
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: "$email", password: "$pass")
+          .then(
+            (value) => print("login $email"),
+          );
+      print("login");
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
   }
 
   @override
