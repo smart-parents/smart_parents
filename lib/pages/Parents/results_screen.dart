@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:smart_parents/components/background.dart';
 
 class Results_screen extends StatefulWidget {
@@ -16,11 +14,12 @@ class _Results_screenState extends State<Results_screen> {
     return Background(
       child: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // Text('results'.toUpperCase()),
             const Align(
-              alignment: Alignment(-0.7, 0.1),
+              alignment: Alignment(-0.7, -1),
               child: Text(
                 'Results',
                 style: TextStyle(

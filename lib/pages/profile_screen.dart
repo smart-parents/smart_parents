@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/pages/option.dart';
 
 class Profile_screen extends StatefulWidget {
   const Profile_screen({super.key});
@@ -11,10 +11,29 @@ class Profile_screen extends StatefulWidget {
 }
 
 class _Profile_screenState extends State<Profile_screen> {
-  get fid => null;
+  String uid = FirebaseAuth.instance.currentUser!.uid;
+  String? email = FirebaseAuth.instance.currentUser!.email;
+  // get fid => null;
+  final _prefs = SharedPreferences.getInstance();
+  delete() async {
+    final SharedPreferences prefs = await _prefs;
+    final success = await prefs.clear();
+    print(success);
+  }
+
+  String? id;
+  main() {
+    if (FirebaseAuth.instance.currentUser != null) {
+      final email = FirebaseAuth.instance.currentUser!.email;
+      String em = email.toString();
+      String facid = em.substring(0, em.length - 8);
+      id = facid;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    main();
     return Center(
       child: Container(
         height: 590.0,
@@ -42,30 +61,76 @@ class _Profile_screenState extends State<Profile_screen> {
               ),
               // alignment: Alignment(0.0, -0.9),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  SizedBox(
-                    height: 100,
-                  ),
-                  Text(
-                    " User ID:$fid",
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          "User ID: $uid",
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
+                        Text(
+                          // alignment: Alignment(0.0, -0.8),
+                          "Mobile Number: $id",
+                          // ignore: prefer_const_constructors
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    // alignment: Alignment(0.0, -0.8),
-                    " User ID8: $fid",
-                    // ignore: prefer_const_constructors
-                    style: TextStyle(
-                      fontSize: 15,
-                      color: Color.fromARGB(255, 255, 255, 255),
+                  // Align(
+                  //   alignment: Alignment(0, 0),
+                  // child:
+                  Container(
+                    alignment: Alignment(0, 0),
+                    child: Row(
+                      // crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Icons.logout,
+                            color: Colors.white,
+                          ),
+                          onPressed: () async => {
+                            await FirebaseAuth.instance.signOut(),
+                            delete(),
+                            // await storage.delete(key: "uid"),
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const Option(),
+                                ),
+                                (route) => false)
+                          },
+                          tooltip: 'logout',
+                        ),
+                        Text(
+                          'Logout',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Color.fromARGB(255, 255, 255, 255),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
+                  // ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

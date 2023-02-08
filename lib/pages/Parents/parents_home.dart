@@ -21,7 +21,7 @@ class _Parents_homeState extends State<Parents_home> {
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
             child: ElevatedButton(
               onPressed: () => {
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
                     builder: (context) {
