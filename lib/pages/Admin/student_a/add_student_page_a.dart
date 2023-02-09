@@ -69,7 +69,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-              email: "$number@sp.com", password: password);
+              email: "$number@sps.com", password: password);
       print(userCredential);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(

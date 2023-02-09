@@ -32,28 +32,34 @@ class _UserMainState extends State<UserMainA> {
     });
   }
 
-  final _prefs = SharedPreferences.getInstance();
-  login() async {
-    FirebaseAuth.instance.signOut();
-    final SharedPreferences prefs = await _prefs;
-    String? email = prefs.getString('email');
-    String? pass = prefs.getString('pass');
-    print("signout");
-    try {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: "$email", password: "$pass")
-          .then(
-            (value) => print("login $email"),
-          );
-      print("login");
-    } on FirebaseAuthException catch (e) {
-      print(e);
-    }
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   login();
+  // }
+
+  // final _prefs = SharedPreferences.getInstance();
+  // login() async {
+  //   FirebaseAuth.instance.signOut();
+  //   final SharedPreferences prefs = await _prefs;
+  //   String? email = prefs.getString('email');
+  //   String? pass = prefs.getString('pass');
+  //   print("signout");
+  //   try {
+  //     FirebaseAuth.instance
+  //         .signInWithEmailAndPassword(email: "$email", password: "$pass")
+  //         .then(
+  //           (value) => print("login $email"),
+  //         );
+  //     print("login");
+  //   } on FirebaseAuthException catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
-    login();
+    // login();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(255, 207, 235, 255),

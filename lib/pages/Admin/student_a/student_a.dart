@@ -36,6 +36,7 @@ class _StudentState extends State<Student> {
     }
   }
 
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
@@ -46,14 +47,25 @@ class _StudentState extends State<Student> {
   // For Deleting User
   CollectionReference students =
       FirebaseFirestore.instance.collection('students');
-  Future<void> deleteUser(id) {
+  Future<void> deleteUser(id) async {
     // print("User Deleted $id");
+    // var student = await _auth.getUserByEmail( '@example.com');
+    // final stu = await "$id@example.com";
+
     return students
         .doc(id)
         .delete()
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
   }
+
+  // Future<void> delete(id) async {
+  //   // print("User Deleted $id");
+  //   // var student = await _auth.getUserByEmail( '@example.com');
+  //   // final stu = await "$id@example.com";
+  //   print(id);
+  //   await id?.delete();
+  // }
 
   final _prefs = SharedPreferences.getInstance();
   login() async {
@@ -138,9 +150,9 @@ class _StudentState extends State<Student> {
                                           MainAxisAlignment.spaceBetween,
                                       children: <Widget>[
                                         Text(
-                                          'Enrollment Number: ${storedocs[index]['number']}',
+                                          '${storedocs[index]['number']}',
                                           style: TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
@@ -173,13 +185,33 @@ class _StudentState extends State<Student> {
                                         Text(
                                           'Name: ${storedocs[index]['name']}',
                                           style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 15,
                                           ),
                                         ),
                                         IconButton(
                                           highlightColor: Colors.red,
-                                          onPressed: () => {
-                                            deleteUser(storedocs[index]['id'])
+                                          onPressed: () async {
+                                            try {
+                                              // await delete(storedocs[index]
+                                              //         ['number'] +
+                                              //     '@sps.com');
+                                              deleteUser(
+                                                  storedocs[index]['id']);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'Student deleted.')),
+                                              );
+                                            } catch (e) {
+                                              print(e);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                    content: Text(
+                                                        'Failed to delete student: $e')),
+                                              );
+                                            }
                                           },
                                           icon: const Icon(
                                             Icons.delete,

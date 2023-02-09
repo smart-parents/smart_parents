@@ -27,7 +27,6 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     login();
   }
@@ -144,7 +143,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
 
   @override
   Widget build(BuildContext context) {
-    login();
+    // login();
     return Scaffold(
       appBar: AppBar(
         title: Text("Add New Faculty"),
@@ -267,10 +266,10 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                             // addUser();
                             // clearText();
                             registration();
-                            login();
                             // Navigator.pop(context);
                           });
                         }
+                        login();
                       },
                       child: Text(
                         'Register',

@@ -15,6 +15,11 @@ class Faculty extends StatefulWidget {
 class _FacultyState extends State<Faculty> {
   // final Stream<QuerySnapshot> facultyStream =
   //     FirebaseFirestore.instance.collection('faculty').snapshots();
+  @override
+  void initState() {
+    super.initState();
+    login();
+  }
 
   Stream<QuerySnapshot>? facultyStream;
   void myMethod() {
@@ -61,7 +66,7 @@ class _FacultyState extends State<Faculty> {
   @override
   Widget build(BuildContext context) {
     myMethod();
-    login();
+    // login();
     return StreamBuilder<QuerySnapshot>(
         stream: facultyStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -220,15 +225,19 @@ class _FacultyState extends State<Faculty> {
                     ),
                   ),
                 } else ...{
-                  const Spacer(),
-                  const Text(
-                    "No data",
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                  Center(
+                    child: Column(
+                      children: <Widget>[
+                        Image.asset(
+                          "assets/images/No data.png",
+                        ),
+                        const Text(
+                          "No data",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
+                    ),
                   ),
-                  Image.asset(
-                    "assets/images/No data.png",
-                  ),
-                  const Spacer(),
                 }
               ])),
               floatingActionButton: FloatingActionButton(

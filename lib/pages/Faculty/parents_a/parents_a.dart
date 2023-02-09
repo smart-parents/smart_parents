@@ -74,7 +74,7 @@ class _ParentState extends State<Parent> {
 
   @override
   Widget build(BuildContext context) {
-    myMethod();
+    // myMethod();
     return StreamBuilder<QuerySnapshot>(
         stream: parentsStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
+import 'package:smart_parents/pages/profile_screen.dart';
 
 class UserMainF extends StatefulWidget {
   UserMainF({Key? key}) : super(key: key);
@@ -29,7 +30,7 @@ class _UserMainState extends State<UserMainF> {
     Text(
       'Index 3: chat',
     ),
-    Profile()
+    Profile_screen()
   ];
 
   void _onItemTapped(int index) {

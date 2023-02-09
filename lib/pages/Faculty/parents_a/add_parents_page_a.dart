@@ -16,8 +16,8 @@ class AddParentPage extends StatefulWidget {
 
 class _AddParentPageState extends State<AddParentPage> {
   final _formKey = GlobalKey<FormState>();
-  final email = FirebaseAuth.instance.currentUser!.email;
-
+  // final email = FirebaseAuth.instance.currentUser!.email;
+  String? email;
   var name = "";
   var number = "";
   var password = "";
@@ -121,7 +121,7 @@ class _AddParentPageState extends State<AddParentPage> {
   login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
-    String? email = prefs.getString('faculty');
+    email = prefs.getString('faculty');
     String? pass = prefs.getString('pass');
     print("signout");
     try {

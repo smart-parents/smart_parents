@@ -37,13 +37,13 @@ class _LoginFormState extends State<LoginForm> {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
-                email: "$number@sp.com", password: password);
+                email: "$number@sps.com", password: password);
         print(userCredential.user?.uid);
         // await storage.write(key: "uid", value: userCredential.user?.uid);
         final SharedPreferences prefs = await _prefs;
         await prefs.setString('uid', userCredential.user?.uid as String);
         await prefs.setString('role', 'student');
-        await prefs.setString('enumber', "$number@sp.com");
+        await prefs.setString('enumber', "$number@sps.com");
         await prefs.setString('pass', password);
         Navigator.pushReplacement(
           context,
