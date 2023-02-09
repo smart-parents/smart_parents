@@ -55,7 +55,8 @@ class _AddStudentPageState extends State<AddStudentPage> {
 
   Future<void> addUser() {
     return students
-        .add({
+        .doc(number)
+        .set({
           'name': name,
           'number': number,
           'password': password,

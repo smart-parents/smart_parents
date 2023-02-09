@@ -137,111 +137,287 @@ class _StudentState extends State<Student> {
                           itemCount: storedocs.length,
                           itemBuilder: (context, index) {
                             return Card(
-                              semanticContainer: true,
-                              // shadowColor: Colors.black,
-                              margin: EdgeInsets.all(10),
-                              child: Container(
-                                padding: EdgeInsets.all(10),
+                              elevation: 5,
+                              shadowColor: Colors.grey[200],
+                              child: Padding(
+                                padding: const EdgeInsets.all(15.0),
                                 child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
+                                  children: [
                                     Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Text(
-                                          '${storedocs[index]['number']}',
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                      children: [
+                                        SizedBox(
+                                          width: 10,
                                         ),
-                                        IconButton(
-                                          onPressed: () => {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    UpdateStudentPage(
-                                                        id: storedocs[index]
-                                                            ['id']),
+                                        Text(
+                                          '${index + 1}',
+                                        ),
+                                        // SizedBox(
+                                        //   width: 10,
+                                        // ),
+                                        Expanded(
+                                          child: Column(
+                                            children: <Widget>[
+                                              Text(
+                                                '${storedocs[index]['number']}',
+                                                // Enrollment[index],
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20.0),
                                               ),
-                                            )
-                                          },
-                                          icon: const Icon(
-                                            Icons.edit,
-                                            color: Colors.orangeAccent,
+                                              Text(
+                                                'Name: ${storedocs[index]['name']}',
+                                                // Students[index],
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 17.0),
+                                              ),
+                                              // Text(
+                                              //   studentvar[index].studentemail,
+                                              //   // StudentEmail[index],
+                                              //   style: TextStyle(
+                                              //       fontWeight: FontWeight.bold, fontSize: 13.0),
+                                              // ),
+                                            ],
                                           ),
+                                        ),
+                                        // SizedBox(
+                                        //   width: 10,
+                                        // ),
+                                        // ElevatedButton(
+                                        //   onPressed: () {},
+                                        //   child: Text("Remove"),
+                                        //   style: ElevatedButton.styleFrom(
+                                        //     primary: Colors.white,
+                                        //     onPrimary: Colors.grey[600],
+                                        //   ),
+                                        // ),
+                                        Column(
+                                          children: [
+                                            Text("Delete"),
+                                            IconButton(
+                                              highlightColor: Colors.red,
+                                              onPressed: () async {
+                                                try {
+                                                  // await delete(storedocs[index]
+                                                  //         ['number'] +
+                                                  //     '@sps.com');
+                                                  deleteUser(
+                                                      storedocs[index]['id']);
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                        content: Text(
+                                                            'Student deleted.')),
+                                                  );
+                                                } catch (e) {
+                                                  print(e);
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    SnackBar(
+                                                        content: Text(
+                                                            'Failed to delete student: $e')),
+                                                  );
+                                                }
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete,
+                                                color: Colors.red,
+                                              ),
+                                            ),
+                                            // Switch(
+                                            //   value: isActive[index],
+                                            //   onChanged: (bool newValue) {
+                                            //     setState(() {
+                                            //       isActive[index] = !isActive[index];
+                                            //     });
+                                            //   },
+                                            // ),
+                                          ],
                                         ),
                                       ],
                                     ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Text(
-                                          'Name: ${storedocs[index]['name']}',
-                                          style: TextStyle(
-                                            fontSize: 15,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          highlightColor: Colors.red,
-                                          onPressed: () async {
-                                            try {
-                                              // await delete(storedocs[index]
-                                              //         ['number'] +
-                                              //     '@sps.com');
-                                              deleteUser(
-                                                  storedocs[index]['id']);
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                const SnackBar(
-                                                    content: Text(
-                                                        'Student deleted.')),
-                                              );
-                                            } catch (e) {
-                                              print(e);
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(
-                                                SnackBar(
-                                                    content: Text(
-                                                        'Failed to delete student: $e')),
-                                              );
-                                            }
-                                          },
-                                          icon: const Icon(
-                                            Icons.delete,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ],
+                                    SizedBox(
+                                      height: 15,
                                     ),
+                                    // Row(
+                                    //   children: [
+                                    //     Expanded(
+                                    //       child: Column(
+                                    //         children: [
+                                    //           Text(
+                                    //             "Program : " + studentvar[index].program,
+                                    //             style: TextStyle(fontSize: 13),
+                                    //           ),
+                                    //           Text(
+                                    //             "Batch : " + studentvar[index].batch,
+                                    //             style: TextStyle(fontSize: 13),
+                                    //           )
+                                    //         ],
+                                    //       ),
+                                    //     ),
+                                    //     Expanded(
+                                    //       child: Column(
+                                    //         children: [
+                                    //           Text(
+                                    //             "Branch : " + studentvar[index].branch,
+                                    //             style: TextStyle(fontSize: 13),
+                                    //           ),
+                                    //           Text(
+                                    //             "Semester : " + studentvar[index].semester,
+                                    //             style: TextStyle(fontSize: 13),
+                                    //           )
+                                    //         ],
+                                    //       ),
+                                    //     ),
+                                    //     Expanded(
+                                    //       child: Column(
+                                    //         children: [
+                                    //           Text(
+                                    //             "Year : " + studentvar[index].studingInYear,
+                                    //             style: TextStyle(fontSize: 13),
+                                    //           ),
+                                    //         ],
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                     // SizedBox(
-                                    //   height: 10,
+                                    //   height: 15,
                                     // ),
-                                    // Text(
-                                    //   'Gender: ${studentList![index].gender}',
-                                    //   style: TextStyle(
-                                    //     fontSize: 16,
-                                    //   ),
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 10,
-                                    // ),
-                                    // Text(
-                                    //   'Address: ${studentList![index].address}',
-                                    //   style: TextStyle(
-                                    //     fontSize: 16,
-                                    //   ),
-                                    // ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UpdateStudentPage(
+                                                      id: storedocs[index]
+                                                          ['id'])),
+                                        );
+                                      },
+                                      child: Text("Edit"),
+                                      style: ElevatedButton.styleFrom(
+                                          primary: Colors.white,
+                                          onPrimary: Colors.grey[600],
+                                          shape: new RoundedRectangleBorder(
+                                              borderRadius:
+                                                  new BorderRadius.circular(
+                                                      10.0)),
+                                          fixedSize: Size(200, 40),
+                                          elevation: 5,
+                                          textStyle: const TextStyle(
+                                              fontSize: 17,
+                                              fontWeight: FontWeight.w500)),
+                                    )
                                   ],
                                 ),
                               ),
                             );
+                            // return Card(
+                            //   semanticContainer: true,
+                            //   // shadowColor: Colors.black,
+                            //   margin: EdgeInsets.all(10),
+                            //   child: Container(
+                            //     padding: EdgeInsets.all(10),
+                            //     child: Column(
+                            //       crossAxisAlignment: CrossAxisAlignment.start,
+                            //       children: <Widget>[
+                            //         Row(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.spaceBetween,
+                            //           children: <Widget>[
+                            //             Text(
+                            //               '${storedocs[index]['number']}',
+                            //               style: TextStyle(
+                            //                 fontSize: 20,
+                            //                 fontWeight: FontWeight.bold,
+                            //               ),
+                            //             ),
+                            //             IconButton(
+                            //               onPressed: () => {
+                            //                 Navigator.push(
+                            //                   context,
+                            //                   MaterialPageRoute(
+                            //                     builder: (context) =>
+                            //                         UpdateStudentPage(
+                            //                             id: storedocs[index]
+                            //                                 ['id']),
+                            //                   ),
+                            //                 )
+                            //               },
+                            //               icon: const Icon(
+                            //                 Icons.edit,
+                            //                 color: Colors.orangeAccent,
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //         // SizedBox(
+                            //         //   height: 10,
+                            //         // ),
+                            //         Row(
+                            //           mainAxisAlignment:
+                            //               MainAxisAlignment.spaceBetween,
+                            //           children: <Widget>[
+                            //             Text(
+                            //               'Name: ${storedocs[index]['name']}',
+                            //               style: TextStyle(
+                            //                 fontSize: 15,
+                            //               ),
+                            //             ),
+                            //             IconButton(
+                            //               highlightColor: Colors.red,
+                            //               onPressed: () async {
+                            //                 try {
+                            //                   // await delete(storedocs[index]
+                            //                   //         ['number'] +
+                            //                   //     '@sps.com');
+                            //                   deleteUser(
+                            //                       storedocs[index]['id']);
+                            //                   ScaffoldMessenger.of(context)
+                            //                       .showSnackBar(
+                            //                     const SnackBar(
+                            //                         content: Text(
+                            //                             'Student deleted.')),
+                            //                   );
+                            //                 } catch (e) {
+                            //                   print(e);
+                            //                   ScaffoldMessenger.of(context)
+                            //                       .showSnackBar(
+                            //                     SnackBar(
+                            //                         content: Text(
+                            //                             'Failed to delete student: $e')),
+                            //                   );
+                            //                 }
+                            //               },
+                            //               icon: const Icon(
+                            //                 Icons.delete,
+                            //                 color: Colors.red,
+                            //               ),
+                            //             ),
+                            //           ],
+                            //         ),
+                            //         // SizedBox(
+                            //   height: 10,
+                            // ),
+                            // Text(
+                            //   'Gender: ${studentList![index].gender}',
+                            //   style: TextStyle(
+                            //     fontSize: 16,
+                            //   ),
+                            // ),
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            // Text(
+                            //   'Address: ${studentList![index].address}',
+                            //   style: TextStyle(
+                            //     fontSize: 16,
+                            //   ),
+                            // ),
+                            //       ],
+                            //     ),
+                            //   ),
+                            // );
                           })
                       // Container(
                       //   margin: const EdgeInsets.symmetric(

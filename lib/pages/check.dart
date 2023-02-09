@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Faculty/user_main_f.dart';
-import 'package:smart_parents/pages/Parents/parents.dart';
+import 'package:smart_parents/pages/Parents/user_main_p.dart';
 import 'package:smart_parents/pages/Student/user_main_s.dart';
 // import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/pages/option.dart';
@@ -75,7 +75,7 @@ class _CheckState extends State<Check> {
             return UserMainS();
           }
           if (role == 'parents') {
-            return const ParentsScreen();
+            return  ParentsScreen();
           }
           return const Option();
         });

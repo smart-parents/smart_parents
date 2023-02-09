@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/option.dart';
 
-class Profile_screen extends StatefulWidget {
-  const Profile_screen({super.key});
+class Profile_screenF extends StatefulWidget {
+  const Profile_screenF({super.key});
 
   @override
-  State<Profile_screen> createState() => _Profile_screenState();
+  State<Profile_screenF> createState() => _Profile_screenFState();
 }
 
-class _Profile_screenState extends State<Profile_screen> {
+class _Profile_screenFState extends State<Profile_screenF> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   String? email = FirebaseAuth.instance.currentUser!.email;
   // get fid => null;
@@ -43,10 +43,10 @@ class _Profile_screenState extends State<Profile_screen> {
           children: [
             CircleAvatar(
               radius: 40,
-              backgroundImage: AssetImage('assets/Photo/Dhruvin.jpg'),
+              backgroundImage: AssetImage('assets/images/man.png'),
             ),
             Text(
-              'Dhruvin Katakiya',
+              'Faculty',
               style: TextStyle(
                 fontSize: 30,
                 color: Color.fromARGB(255, 0, 0, 0),
@@ -80,7 +80,7 @@ class _Profile_screenState extends State<Profile_screen> {
                         ),
                         Text(
                           // alignment: Alignment(0.0, -0.8),
-                          "Mobile Number: $id",
+                          "Faculty ID: $id",
                           // ignore: prefer_const_constructors
                           style: TextStyle(
                             fontSize: 20,

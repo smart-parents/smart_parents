@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
-import 'package:smart_parents/pages/profile_screen.dart';
+import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
 
 class UserMainF extends StatefulWidget {
   UserMainF({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class _UserMainState extends State<UserMainF> {
     Text(
       'Index 3: chat',
     ),
-    Profile_screen()
+    Profile_screenF()
   ];
 
   void _onItemTapped(int index) {
@@ -63,11 +63,11 @@ class _UserMainState extends State<UserMainF> {
         //   ],
         // ),
         title: const Text('Home'),
-        backgroundColor: Colors.blue.shade700,
+        backgroundColor: Color.fromARGB(255, 37, 86, 116),
+        foregroundColor: Colors.white,
       ),
       drawer: NavigationDrawer(),
       body: _widgetOptions.elementAt(_selectedIndex),
-
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: const Color.fromARGB(255, 207, 235, 255),
@@ -116,49 +116,6 @@ class _UserMainState extends State<UserMainF> {
           ),
         ),
       ),
-
-      // bottomNavigationBar: BottomNavyBar(
-      //   backgroundColor: Color.fromARGB(255, 207, 235, 255),
-      //   selectedIndex: _selectedIndex,
-      //   showElevation: true,
-      //   itemCornerRadius: 24,
-      //   curve: Curves.easeIn,
-      //   onItemSelected: _onItemTapped,
-      //   items: <BottomNavyBarItem>[
-      //     BottomNavyBarItem(
-      //       icon: Icon(Icons.home),
-      //       title: Text('Home'),
-      //       activeColor: Color.fromARGB(255, 37, 86, 116),
-      //       textAlign: TextAlign.center,
-      //     ),
-      //     BottomNavyBarItem(
-      //       icon: Icon(Icons.person),
-      //       title: Text('Profile'),
-      //       activeColor: Color.fromARGB(255, 37, 86, 116),
-      //       textAlign: TextAlign.center,
-      //     ),
-      //   ],
-      // ),
-
-      // bottomNavigationBar: BottomNavigationBar(
-      //   items: const <BottomNavigationBarItem>[
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.home),
-      //       label: 'Student Detail',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.person),
-      //       label: 'My Profile',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(Icons.settings),
-      //       label: 'Change Password',
-      //     ),
-      //   ],
-      //   currentIndex: _selectedIndex,
-      //   selectedItemColor: const Color.fromARGB(255, 177, 217, 250),
-      //   onTap: _onItemTapped,
-      // ),
     );
   }
 }
@@ -186,7 +143,7 @@ class NavigationDrawer extends StatelessWidget {
           // main(),
           // buildHeader(context),
           Material(
-              color: Colors.blue.shade700,
+              color: Color.fromARGB(255, 37, 86, 116),
               child: InkWell(
                   onTap: () {},
                   child: Container(
@@ -197,7 +154,7 @@ class NavigationDrawer extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 40,
-                          backgroundImage: AssetImage('assets/Photo/raj.png'),
+                          backgroundImage: AssetImage('assets/images/man.png'),
                         ),
                         SizedBox(height: 10),
                         Text(
@@ -227,28 +184,28 @@ class NavigationDrawer extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.paste),
-                  title: const Text("View Your Child Result"),
+                  leading: const Icon(Icons.calendar_today),
+                  title: const Text("Add Today's Attendence"),
                   onTap: () {},
                 ),
                 ListTile(
-                  leading: const Icon(Icons.money),
-                  title: const Text("View Fees Details"),
+                  leading: const Icon(Icons.calendar_month),
+                  title: const Text("Attendence Report"),
                   onTap: () {},
                 ),
                 ListTile(
-                  leading: const Icon(Icons.insert_drive_file_outlined),
-                  title: const Text("View Exam Info"),
+                  leading: const Icon(Icons.person_2_outlined),
+                  title: const Text("Add Parents"),
                   onTap: () {},
                 ),
                 ListTile(
-                  leading: const Icon(Icons.location_on_outlined),
-                  title: const Text("Get Your Child Location"),
+                  leading: const Icon(Icons.schedule_outlined),
+                  title: const Text("Schedule"),
                   onTap: () {},
                 ),
                 ListTile(
                   leading: const Icon(Icons.contact_page_outlined),
-                  title: const Text("Contact Faculty"),
+                  title: const Text("Contact Parents"),
                   onTap: () {},
                 ),
               ],

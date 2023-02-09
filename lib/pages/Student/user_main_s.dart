@@ -9,7 +9,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Student/dashboard_s.dart';
-import 'package:smart_parents/pages/profile_screen.dart';
+import 'package:smart_parents/pages/Student/profile_screen_s.dart';
 
 class UserMainS extends StatefulWidget {
   UserMainS({Key? key}) : super(key: key);
@@ -32,7 +32,7 @@ class _UserMainState extends State<UserMainS> {
     Text(
       'Index 3: chat',
     ),
-    Profile_screen()
+    Profile_screenS()
   ];
 
   void _onItemTapped(int index) {
@@ -188,12 +188,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                                 children: [
                                   CircleAvatar(
                                     radius: 40,
-                                    // backgroundImage: AssetImage('assets/Photo/raj.png'),
-                                    backgroundImage: image.image,
+                                    backgroundImage: AssetImage('assets/images/man.png'),
+                                    // backgroundImage: image.image,
                                   ),
                                   SizedBox(height: 10),
                                   Text(
-                                    'Raj Birari',
+                                    'Student',
                                     style: TextStyle(
                                         fontSize: 28, color: Colors.white),
                                   ),

@@ -111,141 +111,126 @@ class _ParentState extends State<Parent> {
                 title: const Text("Parents Details",
                     style: TextStyle(fontSize: 30.0)),
               ),
-              body: Center(
-                  child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                    // const Text("Student", style: TextStyle(fontSize: 30.0)),
-                    if (storedocs.isNotEmpty) ...{
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 20.0),
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: Table(
-                            border: TableBorder.all(),
-                            columnWidths: const <int, TableColumnWidth>{
-                              1: FixedColumnWidth(140),
-                            },
-                            defaultVerticalAlignment:
-                                TableCellVerticalAlignment.middle,
-                            children: [
-                              // if (storedocs.isNotEmpty) ...{
-                              TableRow(
-                                children: [
-                                  TableCell(
-                                    child: Container(
-                                      color: const Color.fromARGB(
-                                          255, 207, 235, 255),
-                                      child: const Center(
-                                        child: Text(
-                                          'Name',
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  TableCell(
-                                    child: Container(
-                                      color: const Color.fromARGB(
-                                          255, 207, 235, 255),
-                                      child: const Center(
-                                        child: Text(
-                                          'Mobile Number',
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  TableCell(
-                                    child: Container(
-                                      color: const Color.fromARGB(
-                                          255, 207, 235, 255),
-                                      child: const Center(
-                                        child: Text(
-                                          'Action',
-                                          style: TextStyle(
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              for (var i = 0; i < storedocs.length; i++) ...[
-                                TableRow(
+              body: storedocs.isNotEmpty
+                  ? ListView.builder(
+                      itemCount: storedocs.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 5,
+                          shadowColor: Colors.grey[200],
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Column(
+                              children: [
+                                Row(
                                   children: [
-                                    TableCell(
-                                      child: Center(
-                                          child: Text(storedocs[i]['name'],
-                                              style:
-                                                  TextStyle(fontSize: 18.0))),
+                                    SizedBox(
+                                      width: 10,
                                     ),
-                                    TableCell(
-                                      child: Center(
-                                          child: Text(storedocs[i]['number'],
-                                              style:
-                                                  TextStyle(fontSize: 18.0))),
+                                    Text(
+                                      '${index + 1}',
                                     ),
-                                    TableCell(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          IconButton(
-                                            onPressed: () => {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UpdateParentPage(
-                                                          id: storedocs[i]
-                                                              ['id']),
-                                                ),
-                                              )
-                                            },
-                                            icon: const Icon(
-                                              Icons.edit,
-                                              color: Colors.orangeAccent,
-                                            ),
+                                    Expanded(
+                                      child: Column(
+                                        children: <Widget>[
+                                          Text(
+                                            '${storedocs[index]['number']}',
+                                            // Enrollment[index],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20.0),
                                           ),
-                                          IconButton(
-                                            onPressed: () => {
-                                              deleteUser(storedocs[i]['id'])
-                                            },
-                                            icon: const Icon(
-                                              Icons.delete,
-                                              color: Colors.red,
-                                            ),
+                                          Text(
+                                            'Name: ${storedocs[index]['name']}',
+                                            // Students[index],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17.0),
                                           ),
                                         ],
                                       ),
                                     ),
+                                    Column(
+                                      children: [
+                                        Text("Delete"),
+                                        IconButton(
+                                          highlightColor: Colors.red,
+                                          onPressed: () async {
+                                            try {
+                                              // await delete(storedocs[index]
+                                              //         ['number'] +
+                                              //     '@sps.com');
+                                              deleteUser(
+                                                  storedocs[index]['id']);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                const SnackBar(
+                                                    content: Text(
+                                                        'Student deleted.')),
+                                              );
+                                            } catch (e) {
+                                              print(e);
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(
+                                                SnackBar(
+                                                    content: Text(
+                                                        'Failed to delete student: $e')),
+                                              );
+                                            }
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    
                                   ],
                                 ),
+                                SizedBox(
+                                  height: 15,
+                                ),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.of(context).push(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              UpdateParentPage(
+                                                  id: storedocs[index]['id'])),
+                                    );
+                                  },
+                                  child: Text("Edit"),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.white,
+                                      onPrimary: Colors.grey[600],
+                                      shape: new RoundedRectangleBorder(
+                                          borderRadius:
+                                              new BorderRadius.circular(10.0)),
+                                      fixedSize: Size(200, 40),
+                                      elevation: 5,
+                                      textStyle: const TextStyle(
+                                          fontSize: 17,
+                                          fontWeight: FontWeight.w500)),
+                                )
                               ],
-                            ],
+                            ),
                           ),
-                        ),
+                        );
+                      })
+                  : Center(
+                      child: Column(
+                        children: <Widget>[
+                          Image.asset(
+                            "assets/images/No data.png",
+                          ),
+                          const Text(
+                            "No data",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
-                    } else ...{
-                      Image.asset(
-                        "assets/images/No data.png",
-                      ),
-                      const Text(
-                        "No data",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                    }
-                  ])),
+                    ),
               floatingActionButton: FloatingActionButton(
                 // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
                 onPressed: () => {

@@ -4,7 +4,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
-import 'package:smart_parents/pages/profile_screen.dart';
+import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
 
 class ParentsScreen extends StatefulWidget {
   const ParentsScreen({super.key});
@@ -22,7 +22,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
     Text(
       'Index 3: chat',
     ),
-    Profile_screen()
+    Profile_screenP()
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -140,11 +140,11 @@ class NavigationDrawer extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 40,
-                          backgroundImage: AssetImage('assets/Photo/raj.png'),
+                                    backgroundImage: AssetImage('assets/images/man.png'),
                         ),
                         SizedBox(height: 10),
                         Text(
-                          'Raj Birari',
+                          'Parents',
                           style: TextStyle(fontSize: 28, color: Colors.white),
                         ),
                         Text(
