@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_parents/pages/Student/profile_screen_s.dart';
-import 'package:smart_parents/widgest/textfieldwidgetform.dart';
+// import 'package:smart_parents/pages/Student/profile_screen_s.dart';
+// import 'package:smart_parents/widgest/textfieldwidgetform.dart';
 
 class EditS extends StatefulWidget {
   final String id;
@@ -80,44 +80,153 @@ class _EditSState extends State<EditS> {
                   SizedBox(
                     height: 15,
                   ),
-                  TextFieldWidgetForm(
-                    initialValue: name,
-                    label: "Name",
-                    onChanged: (value) => name = value,
-                    text: "$name",
-                    // controller: name,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Text(
+                          "Name",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.0),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: TextFormField(
+                          // readOnly: true,
+                          initialValue: name,
+                          autofocus: false,
+                          onChanged: (value) => name = value,
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                  // TextFieldWidgetForm(
+                  //   initialValue: name,
+                  //   label: "Name",
+                  //   onChanged: (value) => name = value,
+                  //   text: "$name",
+                  //   // controller: name,
+                  // ),
+                  SizedBox(
+                    height: 15,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Text(
+                          "Email",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.0),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: TextFormField(
+                          // readOnly: true,
+                          initialValue: email,
+                          autofocus: false,
+                          onChanged: (value) => email = value,
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  TextFieldWidgetForm(
-                    initialValue: email,
-                    onChanged: (value) => email = value,
-                    label: "Email",
-                    text: "$email",
-                    // controller: email,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Text(
+                          "Enrollment Number",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.0),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: TextFormField(
+                          readOnly: true,
+                          initialValue: number,
+                          autofocus: false,
+                          onChanged: (value) => number = value,
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: 15,
                   ),
-                  TextFieldWidgetForm(
-                    initialValue: number,
-                    onChanged: (value) => number = value,
-                    readOnly: true,
-                    label: "Enrollment Number",
-                    text: "$number",
-                    // controller: number,
-                  ),
-                  SizedBox(
-                    height: 15,
-                  ),
-                  TextFieldWidgetForm(
-                    initialValue: mono,
-                    onChanged: (value) => mono = value,
-
-                    label: "Mobile Number",
-                    text: "$mono",
-                    // controller: mono,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Text(
+                          "Mobile Number",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.0),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: TextFormField(
+                          // readOnly: true,
+                          initialValue: mono,
+                          autofocus: false,
+                          onChanged: (value) => mono = value,
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: 20,
@@ -126,22 +235,74 @@ class _EditSState extends State<EditS> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Flexible(
-                        child: TextFieldWidgetForm(
-                          initialValue: year,
-                          onChanged: (value) => year = value,
-                          label: "Year",
-                          text: "$year",
-                          // controller: year,
+                        child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Text(
+                          "Year",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.0),
                         ),
                       ),
-                      Flexible(
-                        child: TextFieldWidgetForm(
-                          initialValue: branch,
-                          onChanged: (value) => branch = value,
-                          label: "Branch",
-                          text: "$branch",
-                          // controller: branch,
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: TextFormField(
+                          // readOnly: true,
+                          initialValue: year,
+                          autofocus: false,
+                          onChanged: (value) => year = value,
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
                         ),
+                      )
+                    ],
+                  ),
+                      ),
+                      Flexible(
+                        child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Text(
+                          "Branch",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.0),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: TextFormField(
+                          // readOnly: true,
+                          initialValue: branch,
+                          autofocus: false,
+                          onChanged: (value) => branch = value,
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                       ),
                     ],
                   ),
@@ -152,22 +313,74 @@ class _EditSState extends State<EditS> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Flexible(
-                        child: TextFieldWidgetForm(
-                          initialValue: sem,
-                        onChanged: (value) => sem = value,
-                          label: "Semester",
-                          text: "$sem",
-                          // controller: sem,
+                        child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Text(
+                          "Semester",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.0),
                         ),
                       ),
-                      Flexible(
-                        child: TextFieldWidgetForm(
-                          initialValue: batch,
-                        onChanged: (value) => batch = value,
-                          label: "Batch",
-                          text: "$batch",
-                          // controller: batch,
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: TextFormField(
+                          // readOnly: true,
+                          initialValue: sem,
+                          autofocus: false,
+                          onChanged: (value) => sem = value,
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
                         ),
+                      )
+                    ],
+                  ),
+                      ),
+                      Flexible(
+                        child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: Text(
+                          "Batch",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 18.0),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                        child: TextFormField(
+                          // readOnly: true,
+                          initialValue: batch,
+                          autofocus: false,
+                          onChanged: (value) => batch = value,
+                          style: TextStyle(fontSize: 20),
+                          decoration: InputDecoration(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                       ),
                     ],
                   ),
@@ -182,8 +395,6 @@ class _EditSState extends State<EditS> {
                                   updateUser(widget.id, name, email, mono, year,
                                       branch, sem, batch),
                                   Navigator.pop(context)
-                                 
-                                  
                                 }
                             },
                         child: Text(

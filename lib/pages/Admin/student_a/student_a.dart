@@ -239,51 +239,55 @@ class _StudentState extends State<Student> {
                                     SizedBox(
                                       height: 15,
                                     ),
-                                    // Row(
-                                    //   children: [
-                                    //     Expanded(
-                                    //       child: Column(
-                                    //         children: [
-                                    //           Text(
-                                    //             "Program : " + studentvar[index].program,
-                                    //             style: TextStyle(fontSize: 13),
-                                    //           ),
-                                    //           Text(
-                                    //             "Batch : " + studentvar[index].batch,
-                                    //             style: TextStyle(fontSize: 13),
-                                    //           )
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //     Expanded(
-                                    //       child: Column(
-                                    //         children: [
-                                    //           Text(
-                                    //             "Branch : " + studentvar[index].branch,
-                                    //             style: TextStyle(fontSize: 13),
-                                    //           ),
-                                    //           Text(
-                                    //             "Semester : " + studentvar[index].semester,
-                                    //             style: TextStyle(fontSize: 13),
-                                    //           )
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //     Expanded(
-                                    //       child: Column(
-                                    //         children: [
-                                    //           Text(
-                                    //             "Year : " + studentvar[index].studingInYear,
-                                    //             style: TextStyle(fontSize: 13),
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //   ],
-                                    // ),
-                                    // SizedBox(
-                                    //   height: 15,
-                                    // ),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'Branch : ${storedocs[index]['branch']}',
+                                                style: TextStyle(fontSize: 13),
+                                              ),
+                                              Text(
+                                                'Batch : ${storedocs[index]['batch']}',
+                                                style: TextStyle(fontSize: 13),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'email : ${storedocs[index]['email']}',
+                                                style: TextStyle(fontSize: 13),
+                                              ),
+                                              Text(
+                                               'Mo no. : ${storedocs[index]['mono']}',
+                                                style: TextStyle(fontSize: 13),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                'Sem : ${storedocs[index]['sem']}',
+                                                style: TextStyle(fontSize: 13),
+                                              ),
+                                              Text(
+                                               'Year : ${storedocs[index]['year']}',
+                                                style: TextStyle(fontSize: 13),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 15,
+                                    ),
                                     ElevatedButton(
                                       onPressed: () {
                                         Navigator.of(context).push(
