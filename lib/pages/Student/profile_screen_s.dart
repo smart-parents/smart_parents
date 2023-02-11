@@ -52,7 +52,16 @@ class _Profile_screenSState extends State<Profile_screenS> {
               child: CircularProgressIndicator(),
             );
           }
-          Center(
+          var data = snapshot.data!.data();
+              var number = data!['number'];
+              var name = data['name'];
+              var email = data['email'];
+              var mono = data['mono'];
+              var year = data['year'];
+              var branch = data['branch'];
+              var sem = data['sem'];
+              var batch = data['batch'];
+          return Center(
             child: Container(
               // height: 590.0,
               padding: const EdgeInsets.only(top: 20),
@@ -93,7 +102,7 @@ class _Profile_screenSState extends State<Profile_screenS> {
                               // ),
                               Text(
                                 // alignment: Alignment(0.0, -0.8),
-                                "Enrollment:",
+                                "Enrollment: $number",
                                 //  ${snapshot['number']}",
                                 // ignore: prefer_const_constructors
                                 style: TextStyle(
@@ -101,8 +110,71 @@ class _Profile_screenSState extends State<Profile_screenS> {
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
+                              SizedBox(
+                                height: 10,
+                              ),
                               Text(
-                                "User ID: $uid",
+                                "Email: $email",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Name: $name",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Mobile: $mono",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Branch: $branch",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Batch: $batch",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Semester: $sem",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Year: $year",
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),

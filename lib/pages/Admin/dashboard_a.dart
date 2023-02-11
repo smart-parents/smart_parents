@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
+import 'package:smart_parents/pages/Admin/fees.dart';
 import 'package:smart_parents/pages/Admin/notice_a.dart';
 import 'package:smart_parents/pages/Admin/student_a/student_a.dart';
 import 'package:smart_parents/pages/Admin/notification.dart';
@@ -124,7 +125,7 @@ class _DashboardState extends State<Dashboard> {
               onPressed: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const NotificationA()),
+                  MaterialPageRoute(builder: (context) => const Fees()),
                 ),
               },
               style: ElevatedButton.styleFrom(

@@ -15,8 +15,6 @@ class TextFieldWidgetForm extends StatefulWidget {
     required this.text,
     required this.onChanged,
     controller,
-    initialValue,
-    readOnly,
   }) : super(key: key);
 
   @override
@@ -25,13 +23,12 @@ class TextFieldWidgetForm extends StatefulWidget {
 
 class _TextFieldWidgetFormState extends State<TextFieldWidgetForm> {
   late final TextEditingController controller;
-  String? initialValue;
-  late bool readOnly;
+  // String? initialValue;
+  // late bool readOnly;
   @override
   void initState() {
     super.initState();
     controller = TextEditingController(text: widget.text);
-    readOnly = false;
     // initialValue = String();
   }
 
@@ -58,8 +55,8 @@ class _TextFieldWidgetFormState extends State<TextFieldWidgetForm> {
           Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: TextFormField(
-              readOnly: readOnly,
-              initialValue: initialValue,
+              // readOnly: readOnly,
+              // initialValue: initialValue,
               style: TextStyle(fontSize: 20),
               decoration: InputDecoration(
                 contentPadding:

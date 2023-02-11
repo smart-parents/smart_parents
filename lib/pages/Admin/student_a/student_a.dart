@@ -245,6 +245,20 @@ class _StudentState extends State<Student> {
                                           child: Column(
                                             children: [
                                               Text(
+                                                'email : ${storedocs[index]['email']}',
+                                                style: TextStyle(fontSize: 13),
+                                              ),
+                                              Text(
+                                               'Mo: ${storedocs[index]['mono']}',
+                                                style: TextStyle(fontSize: 13),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Expanded(
+                                          child: Column(
+                                            children: [
+                                              Text(
                                                 'Branch : ${storedocs[index]['branch']}',
                                                 style: TextStyle(fontSize: 13),
                                               ),
@@ -255,20 +269,7 @@ class _StudentState extends State<Student> {
                                             ],
                                           ),
                                         ),
-                                        Expanded(
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                'email : ${storedocs[index]['email']}',
-                                                style: TextStyle(fontSize: 13),
-                                              ),
-                                              Text(
-                                               'Mo no. : ${storedocs[index]['mono']}',
-                                                style: TextStyle(fontSize: 13),
-                                              )
-                                            ],
-                                          ),
-                                        ),
+                                        
                                         Expanded(
                                           child: Column(
                                             children: [
