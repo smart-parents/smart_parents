@@ -184,7 +184,7 @@ class UserPrefrences {
   );
   static var student = Student(
     studentEnrollmentNo: "2019btcs002",
-    studentName: "Abhinay",
+    studentName: "Raj",
     studentemail: "2019btcs002@@Student.com",
     semester: "V",
     batch: "B1",
@@ -195,7 +195,7 @@ class UserPrefrences {
   static List<Student> studentlist = [
     Student(
       studentEnrollmentNo: "2019btcs002",
-      studentName: "Abhinay",
+      studentName: "Raj",
       studentemail: "2019btcs002@@Student.com",
       semester: "V",
       batch: "B1",
@@ -297,6 +297,56 @@ class UserPrefrences {
       studentEnrollmentNo: Enrollment[9],
       studentName: Students[9],
       studentemail: StudentEmail[9],
+      semester: Semester[4],
+      batch: Batch[0],
+      branch: Branch[0],
+      studingInYear: CollegeYear[0],
+      // program: Program[0]
+    ),
+    Student(
+      studentEnrollmentNo: Enrollment[10],
+      studentName: Students[10],
+      studentemail: StudentEmail[10],
+      semester: Semester[4],
+      batch: Batch[0],
+      branch: Branch[0],
+      studingInYear: CollegeYear[0],
+      // program: Program[0]
+    ),
+    Student(
+      studentEnrollmentNo: Enrollment[11],
+      studentName: Students[11],
+      studentemail: StudentEmail[11],
+      semester: Semester[4],
+      batch: Batch[0],
+      branch: Branch[0],
+      studingInYear: CollegeYear[0],
+      // program: Program[0]
+    ),
+    Student(
+      studentEnrollmentNo: Enrollment[12],
+      studentName: Students[12],
+      studentemail: StudentEmail[12],
+      semester: Semester[4],
+      batch: Batch[0],
+      branch: Branch[0],
+      studingInYear: CollegeYear[0],
+      // program: Program[0]
+    ),
+    Student(
+      studentEnrollmentNo: Enrollment[13],
+      studentName: Students[13],
+      studentemail: StudentEmail[13],
+      semester: Semester[4],
+      batch: Batch[0],
+      branch: Branch[0],
+      studingInYear: CollegeYear[0],
+      // program: Program[0]
+    ),
+    Student(
+      studentEnrollmentNo: Enrollment[14],
+      studentName: Students[14],
+      studentemail: StudentEmail[14],
       semester: Semester[4],
       batch: Batch[0],
       branch: Branch[0],

@@ -86,8 +86,10 @@ class _Profile_screenSState extends State<Profile_screenS> {
           return Center(
             child: Container(
               // height: 590.0,
-              padding: const EdgeInsets.only(top: 20),
-              width: 414.0,
+              padding: const EdgeInsets.only(top: 4.5),
+              // width: 414.0,
+              height: MediaQuery.of(context).size.width * 590.0,
+              width: MediaQuery.of(context).size.width * 380.0,
               color: Colors.blue[50],
               child: Column(
                 children: [
@@ -103,8 +105,11 @@ class _Profile_screenSState extends State<Profile_screenS> {
                     ),
                   ),
                   Container(
-                    height: 470.0,
-                    width: 365.0,
+                    // height: 470.0,
+                    // width: 365.0,
+                    margin:
+                        const EdgeInsets.only(left: 25, right: 25, bottom: 25),
+                    height: MediaQuery.of(context).size.height * 0.6,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
                       color: Color.fromARGB(255, 37, 86, 116),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/department_a/depart_a.dart';
+import 'package:smart_parents/pages/Admin/dropdown.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
 import 'package:smart_parents/pages/Admin/fees.dart';
 import 'package:smart_parents/pages/Admin/notice_a.dart';
@@ -128,7 +129,7 @@ class _DashboardState extends State<Dashboard> {
               onPressed: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => NoticeForm()),
+                  MaterialPageRoute(builder: (context) => DropdownDemo()),
                 ),
               },
               style: ElevatedButton.styleFrom(

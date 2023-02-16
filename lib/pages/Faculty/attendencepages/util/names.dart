@@ -52,24 +52,24 @@ List<String> Subject = [
   "Machine Learning"
 ];
 List<String> Students = [
-  "Aardhya",
-  "Aashiv",
-  "Aayush",
-  "Abhinay",
-  "Aditya",
-  "Ashish Kumar Singh Sengar",
-  "Akshat",
-  "Alabhya",
-  "Anand",
-  "Anirudh",
-  "Archana ",
-  "Archit",
+  "Bhavik",
+  "Jay",
+  "Mahek",
+  "Alis",
+  "Dhruvin",
+  "Harshil",
+  "harsh",
+  "meet",
+  "Heet",
+  "Vhisv",
+  "Aarya ",
+  "Dharmik",
   "Arpit",
-  "Charudatta",
-  "Dipesh",
-  "Divesh",
-  "Dushyant",
-  "Devanshu"
+  "Jash",
+  "Dharmil"
+  // "",
+  // "Dushyant",
+  // "Devanshu"
 ];
 List<String> Month = ["Janurary", "Feburary", "March"];
 List<String> Date = [
@@ -90,10 +90,10 @@ List<String> Date = [
   "15",
   "16",
   "17",
-  "18",
-  "19",
-  "20",
-  "21"
+  "18"
+  // "19",
+  // "20",
+  // "21"
 ];
 List<String> CollegeYear = [
   "1st",
@@ -116,10 +116,10 @@ List<String> Enrollment = [
   "2019btcs013",
   "2019btcs014",
   "2019btcs015",
-  "2019btcs016",
-  "2019btcs017",
-  "2019btcs018",
-  "2019btcs019"
+  "2019btcs016"
+  // "2019btcs017",
+  // "2019btcs018",
+  // "2019btcs019"
 ];
 List<String> StudentEmail = [
   "2019btcs001@student.suas.ac.in",
@@ -137,10 +137,10 @@ List<String> StudentEmail = [
   "2019btcs013@student.suas.ac.in",
   "2019btcs014@student.suas.ac.in",
   "2019btcs015@student.suas.ac.in",
-  "2019btcs016@student.suas.ac.in",
-  "2019btcs017@student.suas.ac.in",
-  "2019btcs018@student.suas.ac.in",
-  "2019btcs019@student.suas.ac.in"
+  "2019btcs016@student.suas.ac.in"
+  // "2019btcs017@student.suas.ac.in",
+  // "2019btcs018@student.suas.ac.in",
+  // "2019btcs019@student.suas.ac.in"
 ];
 List<String> FacultyDOB = ["11/11/99"];
 List<String> FacultiesID = [
@@ -164,10 +164,7 @@ List<bool> StudentisActive = [
   true,
   true,
   true,
-  true,
-  true,
-  true,
-  true,
+  true
 ];
 List<bool> FacultiesisActive = [
   true,

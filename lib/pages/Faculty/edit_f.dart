@@ -155,13 +155,6 @@ class _EditFState extends State<EditF> {
                       )
                     ],
                   ),
-                  // TextFieldWidgetForm(
-                  //   initialValue: name,
-                  //   label: "Name",
-                  //   onChanged: (value) => name = value,
-                  //   text: "$name",
-                  //   // controller: name,
-                  // ),
                   SizedBox(
                     height: 15,
                   ),
@@ -201,39 +194,7 @@ class _EditFState extends State<EditF> {
                   SizedBox(
                     height: 15,
                   ),
-                  // Column(
-                  //   crossAxisAlignment: CrossAxisAlignment.start,
-                  //   children: [
-                  //     Padding(
-                  //       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                  //       child: Text(
-                  //         "Enrollment Number",
-                  //         style: TextStyle(
-                  //             fontWeight: FontWeight.bold, fontSize: 18.0),
-                  //       ),
-                  //     ),
-                  //     const SizedBox(
-                  //       height: 5,
-                  //     ),
-                  //     Padding(
-                  //       padding: const EdgeInsets.only(left: 20.0, right: 20.0),
-                  //       child: TextFormField(
-                  //         readOnly: true,
-                  //         initialValue: number,
-                  //         autofocus: false,
-                  //         onChanged: (value) => number = value,
-                  //         style: TextStyle(fontSize: 20),
-                  //         decoration: InputDecoration(
-                  //           contentPadding: EdgeInsets.symmetric(
-                  //               vertical: 2, horizontal: 10),
-                  //           border: OutlineInputBorder(
-                  //             borderRadius: BorderRadius.circular(12),
-                  //           ),
-                  //         ),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
+                  
                   SizedBox(
                     height: 15,
                   ),
@@ -273,10 +234,7 @@ class _EditFState extends State<EditF> {
                   SizedBox(
                     height: 20,
                   ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: <Widget>[
-                  // Flexible(child:
+                
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -294,7 +252,7 @@ class _EditFState extends State<EditF> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: TextFormField(
-                          // readOnly: true,
+                          readOnly: true,
                           // initialValue: dob,
                           autofocus: false,
                           keyboardType: TextInputType.datetime,

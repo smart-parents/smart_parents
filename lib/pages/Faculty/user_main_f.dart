@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/pages/Faculty/Chat/chatpage.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
 
@@ -19,15 +19,17 @@ class UserMainF extends StatefulWidget {
 
 class _UserMainState extends State<UserMainF> {
   int _selectedIndex = 0;
+
   // final storage = new FlutterSecureStorage();
   static List<Widget> _widgetOptions = <Widget>[
     Dashboard(),
     Text(
       'Index 2: schedule',
     ),
-    Text(
-      'Index 3: chat',
-    ),
+    // Text(
+    //   'Index 3: chat',
+    // ),
+    Chatpage(),
     ProfileF()
   ];
 

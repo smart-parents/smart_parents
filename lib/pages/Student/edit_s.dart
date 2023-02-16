@@ -289,7 +289,7 @@ class _EditSState extends State<EditS> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: TextFormField(
-                          // readOnly: true,
+                          readOnly: true,
                           // initialValue: dob,
                           autofocus: false,
                           keyboardType: TextInputType.datetime,

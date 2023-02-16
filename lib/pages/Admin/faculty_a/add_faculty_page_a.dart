@@ -121,6 +121,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
         );
       }
     }
+    login();
     Navigator.pop(context);
   }
 

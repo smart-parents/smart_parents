@@ -58,7 +58,8 @@ class _AddDepartPageState extends State<AddDepartPage> {
 
   Future<void> addUser() {
     return department
-        .add({'name': name, 'departmentId': departmentId, 'admin': email})
+        .doc("${departmentId}_$email")
+        .set({'name': name, 'departmentId': departmentId, 'admin': email})
         .then((value) => print('department Added'))
         .catchError((error) => print('Failed to Add department: $error'));
   }
