@@ -94,7 +94,6 @@ class _LoginFormState extends State<LoginForm> {
     }
   }
 
-
   bool _showPassword = false;
 
   void _togglePasswordVisibility() {

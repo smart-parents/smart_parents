@@ -290,26 +290,26 @@ class _EditSState extends State<EditS> {
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: TextFormField(
                           // readOnly: true,
-                        // initialValue: dob,
-                        autofocus: false,
-                        keyboardType: TextInputType.datetime,
-                        style: const TextStyle(fontSize: 20),
-                        controller: _dobController,
-                        onTap: () => _selectDate(context),
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return 'Please enter your date of birth';
-                          }
-                          return null;
-                        },
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.calendar_today),
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 2, horizontal: 10),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                          // initialValue: dob,
+                          autofocus: false,
+                          keyboardType: TextInputType.datetime,
+                          style: const TextStyle(fontSize: 20),
+                          controller: _dobController,
+                          onTap: () => _selectDate(context),
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please enter your date of birth';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.calendar_today),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 10),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
                           ),
-                        ),
                         ),
                       )
                     ],

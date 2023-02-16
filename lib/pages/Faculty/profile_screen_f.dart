@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Faculty/edit_f.dart';
 import 'package:smart_parents/pages/option.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class ProfileF extends StatefulWidget {
   ProfileF({Key? key}) : super(key: key);
 
@@ -15,7 +16,6 @@ class ProfileF extends StatefulWidget {
 class _ProfileFState extends State<ProfileF> {
   String? em;
   final _prefs = SharedPreferences.getInstance();
-
 
   @override
   void initState() {
@@ -59,8 +59,6 @@ class _ProfileFState extends State<ProfileF> {
       print(e);
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {

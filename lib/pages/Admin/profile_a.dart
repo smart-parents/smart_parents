@@ -16,10 +16,8 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
- 
   String? em;
   final _prefs = SharedPreferences.getInstance();
-
 
   @override
   void initState() {
@@ -38,7 +36,7 @@ class _ProfileState extends State<Profile> {
     if (FirebaseAuth.instance.currentUser != null) {
       String? email = FirebaseAuth.instance.currentUser!.email;
       String em = email.toString();
-      id = em; 
+      id = em;
     }
   }
 

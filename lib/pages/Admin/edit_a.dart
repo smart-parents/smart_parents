@@ -14,18 +14,12 @@ class _EditAState extends State<EditA> {
   final _formKey = GlobalKey<FormState>();
 
   // Updaing Student
-  CollectionReference students =
-      FirebaseFirestore.instance.collection('Admin');
+  CollectionReference students = FirebaseFirestore.instance.collection('Admin');
 
   Future<void> updateUser(id, name, email, mono) {
     return students
         .doc(id)
-        .update(({
-          'name': name,
-          'email': email,
-          'mono': mono
-          
-        }))
+        .update(({'name': name, 'email': email, 'mono': mono}))
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
   }
