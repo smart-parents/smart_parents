@@ -61,7 +61,8 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
 
   Future<void> addUser() {
     return facultys
-        .add({
+        .doc(faculty)
+        .set({
           'faculty': faculty,
           'name': name,
           'department': department,

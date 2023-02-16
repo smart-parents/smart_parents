@@ -53,14 +53,36 @@ class _Profile_screenSState extends State<Profile_screenS> {
             );
           }
           var data = snapshot.data!.data();
-              var number = data!['number'];
-              var name = data['name'];
-              var email = data['email'];
-              var mono = data['mono'];
-              var year = data['year'];
-              var branch = data['branch'];
-              var sem = data['sem'];
-              var batch = data['batch'];
+          var number = data!['number'];
+          var name = data['name'];
+          var email = data['email'];
+          var mono = data['mono'];
+          var year = data['year'];
+          var branch = data['branch'];
+          var sem = data['sem'];
+          var batch = data['batch'];
+          var dob = data['dob'];
+          var age = data['age'];
+          if (dob != null) {
+            Timestamp timestamp = snapshot.data!['dob'];
+            DateTime dateTime = timestamp.toDate();
+            dob = '${dateTime.day}-${dateTime.month}-${dateTime.year}';
+            List<String> dobParts = dob.split('-');
+            int day = int.parse(dobParts[0]);
+            int month = int.parse(dobParts[1]);
+            int year = int.parse(dobParts[2]);
+
+// Create a DateTime object with the DOB
+            DateTime dobDateTime = DateTime(year, month, day);
+
+// Calculate the age
+            DateTime now = DateTime.now();
+            Duration ageDuration = now.difference(dobDateTime);
+            age = (ageDuration.inDays / 365).floor();
+
+// Print the age
+            print('Age: $age');
+          }
           return Center(
             child: Container(
               // height: 590.0,
@@ -135,6 +157,26 @@ class _Profile_screenSState extends State<Profile_screenS> {
                               ),
                               Text(
                                 "Mobile: $mono",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "DOB: $dob",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Age: $age",
                                 style: TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),

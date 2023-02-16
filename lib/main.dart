@@ -17,9 +17,9 @@ void main() async {
   } else {
     Firebase.initializeApp();
   }
-  // runApp(ImageFromFirebase(imagePath: 'raj.png'));
   runApp(const MyApp());
 }
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

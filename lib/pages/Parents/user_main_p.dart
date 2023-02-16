@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
@@ -140,7 +139,7 @@ class NavigationDrawer extends StatelessWidget {
                       children: [
                         CircleAvatar(
                           radius: 40,
-                                    backgroundImage: AssetImage('assets/images/man.png'),
+                          backgroundImage: AssetImage('assets/images/man.png'),
                         ),
                         SizedBox(height: 10),
                         Text(

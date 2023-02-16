@@ -54,7 +54,8 @@ class _AddParentPageState extends State<AddParentPage> {
 
   Future<void> addUser() {
     return parents
-        .add({
+        .doc(number)
+        .set({
           'name': name,
           'number': number,
           'password': password,

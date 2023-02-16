@@ -1,74 +1,65 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_parents/pages/Admin/faculty_a/add_faculty_page_a.dart';
-import 'package:smart_parents/pages/Admin/faculty_a/update_faculty_page_a.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/pages/Admin/department_a/add_depart_a.dart';
+import 'package:smart_parents/pages/Admin/department_a/update_department_a.dart';
 
-class Faculty extends StatefulWidget {
-  const Faculty({Key? key}) : super(key: key);
+class Department extends StatefulWidget {
+  const Department({Key? key}) : super(key: key);
 
   @override
-  State<Faculty> createState() => _FacultyState();
+  State<Department> createState() => _DepartmentState();
 }
 
-class _FacultyState extends State<Faculty> {
+class _DepartmentState extends State<Department> {
   // final Stream<QuerySnapshot> facultyStream =
   //     FirebaseFirestore.instance.collection('faculty').snapshots();
   @override
   void initState() {
     super.initState();
-    login();
+    // login();
   }
 
-  Stream<QuerySnapshot>? facultyStream;
+  // Stream<QuerySnapshot>? departmentStream;
+  // final _prefs = SharedPreferences.getInstance();
+  // login() async {
+  //   final SharedPreferences prefs = await _prefs;
+  //   String? email = prefs.getString('email');
+  //   print(email);
+  //   departmentStream = FirebaseFirestore.instance
+  //       .collection('department')
+  //       .where("admin", isEqualTo: email)
+  //       .snapshots();
+  // }
+  Stream<QuerySnapshot>? departmentStream;
   void myMethod() {
     if (FirebaseAuth.instance.currentUser != null) {
       final email = FirebaseAuth.instance.currentUser!.email;
-      facultyStream = FirebaseFirestore.instance
-          .collection('faculty')
+      departmentStream = FirebaseFirestore.instance
+          .collection('department')
           .where("admin", isEqualTo: email)
           .snapshots();
     }
   }
 
   // For Deleting User
-  CollectionReference facultys =
-      FirebaseFirestore.instance.collection('faculty');
+  CollectionReference department =
+      FirebaseFirestore.instance.collection('department');
   Future<void> deleteUser(id) {
     // print("User Deleted $id");
-    return facultys
+    return department
         .doc(id)
         .delete()
-        .then((value) => print('User Deleted'))
-        .catchError((error) => print('Failed to Delete user: $error'));
-  }
-
-  final _prefs = SharedPreferences.getInstance();
-  login() async {
-    FirebaseAuth.instance.signOut();
-    final SharedPreferences prefs = await _prefs;
-    String? email = prefs.getString('email');
-    String? pass = prefs.getString('pass');
-    print("signout");
-    try {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: "$email", password: "$pass")
-          .then(
-            (value) => print("login $email"),
-          );
-      print("login");
-    } on FirebaseAuthException catch (e) {
-      print(e);
-    }
+        .then((value) => print('department Deleted'))
+        .catchError((error) => print('Failed to Delete department: $error'));
   }
 
   @override
   Widget build(BuildContext context) {
-    myMethod();
     // login();
+    myMethod();
     return StreamBuilder<QuerySnapshot>(
-        stream: facultyStream,
+        stream: departmentStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             print('Something went Wrong');
@@ -99,7 +90,7 @@ class _FacultyState extends State<Faculty> {
                   tooltip: "Back",
                   onPressed: () => Navigator.of(context).pop(),
                 ),
-                title: const Text("Faculty Details",
+                title: const Text("Department Details",
                     style: TextStyle(fontSize: 30.0)),
               ),
               body: storedocs.isNotEmpty
@@ -125,7 +116,7 @@ class _FacultyState extends State<Faculty> {
                                       child: Column(
                                         children: <Widget>[
                                           Text(
-                                            '${storedocs[index]['faculty']}',
+                                            '${storedocs[index]['departmentId']}',
                                             // Enrollment[index],
                                             style: TextStyle(
                                                 fontWeight: FontWeight.bold,
@@ -157,7 +148,7 @@ class _FacultyState extends State<Faculty> {
                                                   .showSnackBar(
                                                 const SnackBar(
                                                     content: Text(
-                                                        'Faculty deleted.')),
+                                                        'Department deleted.')),
                                               );
                                             } catch (e) {
                                               print(e);
@@ -165,7 +156,7 @@ class _FacultyState extends State<Faculty> {
                                                   .showSnackBar(
                                                 SnackBar(
                                                     content: Text(
-                                                        'Failed to delete student: $e')),
+                                                        'Failed to delete Department: $e')),
                                               );
                                             }
                                           },
@@ -178,24 +169,24 @@ class _FacultyState extends State<Faculty> {
                                     ),
                                   ],
                                 ),
-                                SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        children: [
-                                          Text(
-                                            "Department : " +
-                                                storedocs[index]['department'],
-                                            style: TextStyle(fontSize: 13),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // SizedBox(
+                                //   height: 15,
+                                // ),
+                                // Row(
+                                //   children: [
+                                //     Expanded(
+                                //       child: Column(
+                                //         children: [
+                                //           Text(
+                                //             "Department : " +
+                                //                 storedocs[index]['department'],
+                                //             style: TextStyle(fontSize: 13),
+                                //           ),
+                                //         ],
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                                 SizedBox(
                                   height: 15,
                                 ),
@@ -204,7 +195,7 @@ class _FacultyState extends State<Faculty> {
                                     Navigator.of(context).push(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              UpdateFacultyPage(
+                                              UpdateDepartPage(
                                                   id: storedocs[index]['id'])),
                                     );
                                   },
@@ -245,7 +236,7 @@ class _FacultyState extends State<Faculty> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddFacultyPage(),
+                      builder: (context) => const AddDepartPage(),
                     ),
                   )
                 },

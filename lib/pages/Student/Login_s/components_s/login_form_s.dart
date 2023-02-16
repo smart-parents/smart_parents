@@ -2,9 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/components/constants.dart';
-// import 'package:smart_parents/pages/Student/forgot_password_s.dart';
 import 'package:smart_parents/pages/Student/user_main_s.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,6 +18,11 @@ class LoginForm extends StatefulWidget {
 }
 
 class _LoginFormState extends State<LoginForm> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   final _formKey = GlobalKey<FormState>();
   var number = "";
   var password = "";
@@ -90,6 +93,7 @@ class _LoginFormState extends State<LoginForm> {
       );
     }
   }
+
 
   bool _showPassword = false;
 

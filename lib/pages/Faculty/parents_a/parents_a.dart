@@ -185,7 +185,6 @@ class _ParentState extends State<Parent> {
                                         ),
                                       ],
                                     ),
-                                    
                                   ],
                                 ),
                                 SizedBox(

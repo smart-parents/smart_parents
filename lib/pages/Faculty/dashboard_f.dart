@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdown1.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdownpage2.dart';
 import 'package:smart_parents/pages/Faculty/parents_a/parents_a.dart';
 
@@ -45,7 +46,16 @@ class _DashboardState extends State<Dashboard> {
             // margin: const EdgeInsets.all(20),
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
             child: ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return MyDropdownMenu();
+                    },
+                  ),
+                )
+              },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
                 backgroundColor: const Color.fromARGB(255, 37, 86, 116),

@@ -1,20 +1,29 @@
+// import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/pages/Faculty/edit_f.dart';
 import 'package:smart_parents/pages/option.dart';
-
-class Profile_screenF extends StatefulWidget {
-  const Profile_screenF({super.key});
+import 'package:shared_preferences/shared_preferences.dart';
+class ProfileF extends StatefulWidget {
+  ProfileF({Key? key}) : super(key: key);
 
   @override
-  State<Profile_screenF> createState() => _Profile_screenFState();
+  _ProfileFState createState() => _ProfileFState();
 }
 
-class _Profile_screenFState extends State<Profile_screenF> {
-  String uid = FirebaseAuth.instance.currentUser!.uid;
-  String? email = FirebaseAuth.instance.currentUser!.email;
-  // get fid => null;
+class _ProfileFState extends State<ProfileF> {
+  String? em;
   final _prefs = SharedPreferences.getInstance();
+
+
+  @override
+  void initState() {
+    super.initState();
+    main();
+    login();
+  }
+
   delete() async {
     final SharedPreferences prefs = await _prefs;
     final success = await prefs.clear();
@@ -24,116 +33,267 @@ class _Profile_screenFState extends State<Profile_screenF> {
   String? id;
   main() {
     if (FirebaseAuth.instance.currentUser != null) {
-      final email = FirebaseAuth.instance.currentUser!.email;
-      String em = email.toString();
-      String facid = em.substring(0, em.length - 8);
+      String? email = FirebaseAuth.instance.currentUser!.email;
+      String ema = email.toString();
+      String facid = ema.substring(0, ema.length - 8);
       id = facid;
+      print(id);
     }
   }
 
+  login() async {
+    FirebaseAuth.instance.signOut();
+    final SharedPreferences prefs = await _prefs;
+    em = prefs.getString('faculty');
+    print("em=$em");
+    String? pass = prefs.getString('pass');
+    print("signout");
+    try {
+      FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: "$em", password: "$pass")
+          .then(
+            (value) => print("login $em"),
+          );
+      print("login");
+    } on FirebaseAuthException catch (e) {
+      print(e);
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
-    main();
-    return Center(
-      child: Container(
-        height: 590.0,
-        width: 414.0,
-        color: Colors.blue[50],
-        child: Column(
-          children: [
-            CircleAvatar(
-              radius: 40,
-              backgroundImage: AssetImage('assets/images/man.png'),
-            ),
-            Text(
-              'Faculty',
-              style: TextStyle(
-                fontSize: 30,
-                color: Color.fromARGB(255, 0, 0, 0),
-              ),
-            ),
-            Container(
-              height: 470.0,
-              width: 365.0,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(18),
-                color: Color.fromARGB(255, 37, 86, 116),
-              ),
-              // alignment: Alignment(0.0, -0.9),
+    // main();
+    // login();
+    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        future: FirebaseFirestore.instance.collection('faculty').doc(id).get(),
+        builder: (_, snapshot) {
+          if (snapshot.hasError) {
+            print('Something Went Wrong');
+          }
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          var data = snapshot.data!.data();
+          var faculty = data!['faculty'];
+          var email = data['email'];
+          var name = data['name'];
+          var mono = data['mono'];
+          var dob = data['dob'];
+          var age = data['age'];
+          if (dob != null) {
+            Timestamp timestamp = snapshot.data!['dob'];
+            DateTime dateTime = timestamp.toDate();
+            dob = '${dateTime.day}-${dateTime.month}-${dateTime.year}';
+            List<String> dobParts = dob.split('-');
+            int day = int.parse(dobParts[0]);
+            int month = int.parse(dobParts[1]);
+            int year = int.parse(dobParts[2]);
+
+// Create a DateTime object with the DOB
+            DateTime dobDateTime = DateTime(year, month, day);
+
+// Calculate the age
+            DateTime now = DateTime.now();
+            Duration ageDuration = now.difference(dobDateTime);
+            age = (ageDuration.inDays / 365).floor();
+
+// Print the age
+            print('Age: $age');
+          }
+          // var dob = data['dob'];
+          return Center(
+            child: Container(
+              // height: 590.0,
+              padding: const EdgeInsets.only(top: 20),
+              width: 414.0,
+              color: Colors.blue[50],
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: AssetImage('assets/images/man.png'),
+                  ),
+                  Text(
+                    'Faculty',
+                    style: TextStyle(
+                      fontSize: 30,
+                      color: Color.fromARGB(255, 0, 0, 0),
+                    ),
+                  ),
                   Container(
+                    height: 470.0,
+                    width: 365.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      color: Color.fromARGB(255, 37, 86, 116),
+                    ),
+                    // alignment: Alignment(0.0, -0.9),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Text(
-                          "User ID: $uid",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        ),
-                        Text(
-                          // alignment: Alignment(0.0, -0.8),
-                          "Faculty ID: $id",
-                          // ignore: prefer_const_constructors
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromARGB(255, 255, 255, 255),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Align(
-                  //   alignment: Alignment(0, 0),
-                  // child:
-                  Container(
-                    alignment: Alignment(0, 0),
-                    child: Row(
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        IconButton(
-                          icon: Icon(
-                            Icons.logout,
-                            color: Colors.white,
-                          ),
-                          onPressed: () async => {
-                            await FirebaseAuth.instance.signOut(),
-                            delete(),
-                            // await storage.delete(key: "uid"),
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const Option(),
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsets.only(left: 15, top: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 30,
+                              ),
+                              Text(
+                                // alignment: Alignment(0.0, -0.8),
+                                "Faculty Id: $faculty",
+                                //  ${snapshot['number']}",
+                                // ignore: prefer_const_constructors
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
                                 ),
-                                (route) => false)
-                          },
-                          tooltip: 'logout',
-                        ),
-                        Text(
-                          'Logout',
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Color.fromARGB(255, 255, 255, 255),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Email: $email",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Name: $name",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Mobile: $mono",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "DOB: $dob",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Age: $age",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Text(
+                              //   "Semester: $sem",
+                              //   style: TextStyle(
+                              //     fontSize: 20,
+                              //     color: Color.fromARGB(255, 255, 255, 255),
+                              //   ),
+                              // ),
+                              // SizedBox(
+                              //   height: 10,
+                              // ),
+                              // Text(
+                              //   "Year: $year",
+                              //   style: TextStyle(
+                              //     fontSize: 20,
+                              //     color: Color.fromARGB(255, 255, 255, 255),
+                              //   ),
+                              // ),
+                            ],
                           ),
                         ),
+                        // Align(
+                        //   alignment: Alignment(0, 0),
+                        // child:
+                        Container(
+                          alignment: Alignment(0, 0),
+                          child: Row(
+                            // crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              TextButton.icon(
+                                onPressed: () async => {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditF(
+                                        id: "$id",
+                                      ),
+                                    ),
+                                  ) // (route) => false)
+                                },
+                                icon: Icon(
+                                  Icons.info_outline,
+                                  color: Colors.white,
+                                ),
+                                label: Text(
+                                  'Edit Profile',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                  ),
+                                ),
+                              ),
+                              TextButton.icon(
+                                onPressed: () async => {
+                                  await FirebaseAuth.instance.signOut(),
+                                  delete(),
+                                  // await storage.delete(key: "uid"),
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const Option(),
+                                      ),
+                                      (route) => false)
+                                },
+                                icon: Icon(
+                                  Icons.logout,
+                                  color: Colors.white,
+                                ),
+                                label: Text(
+                                  'Logout',
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // ),
                       ],
                     ),
                   ),
-                  // ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }

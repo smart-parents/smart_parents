@@ -1,4 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+// Initialize the Cloud Firestore
+// final firestore = FirebaseFirestore.instance;
+
+// void getStringList() async {
+//   QuerySnapshot snapshot = await firestore.collection("department").get();
+//   List<String> Branch = <String>[];
+//   snapshot.docs.forEach((doc) {
+//     var data = doc.data() as Map<String, dynamic>;
+//     Branch.add(data["name"]);
+//   });
+//   print(Branch);
+// }
+final firestore = FirebaseFirestore.instance;
+
+// List<String> Branc = [];
+// void getStringList() async {
+//   QuerySnapshot snapshot = await firestore.collection("department").get();
+//   Branc = <String>[];
+//   for (var doc in snapshot.docs) {
+//     var data = doc.data() as Map<String, dynamic>;
+//     Branc.add(data["name"]);
+//   }
+//   print(Branc);
+// }
 
 // List<String> Program = ["Computer", "IT", "Mechanical", "Civil"];
 // List<String> School = [
@@ -17,7 +43,8 @@ List<String> Semester = [
   "8",
 ];
 List<String> Batch = ["A", "B", "C", "All"];
-List<String> Branch = ["Computer", "IT", "Mechanical", "Civil"];
+
+List<String> Branch = ["IT", "Comp"];
 List<String> Subject = [
   "Artificial Intelegence",
   "TOC",

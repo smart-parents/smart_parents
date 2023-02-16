@@ -75,7 +75,7 @@ class _CheckState extends State<Check> {
             return UserMainS();
           }
           if (role == 'parents') {
-            return  ParentsScreen();
+            return ParentsScreen();
           }
           return const Option();
         });

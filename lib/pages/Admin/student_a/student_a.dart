@@ -249,7 +249,7 @@ class _StudentState extends State<Student> {
                                                 style: TextStyle(fontSize: 13),
                                               ),
                                               Text(
-                                               'Mo: ${storedocs[index]['mono']}',
+                                                'Mo: ${storedocs[index]['mono']}',
                                                 style: TextStyle(fontSize: 13),
                                               )
                                             ],
@@ -269,7 +269,6 @@ class _StudentState extends State<Student> {
                                             ],
                                           ),
                                         ),
-                                        
                                         Expanded(
                                           child: Column(
                                             children: [
@@ -278,7 +277,7 @@ class _StudentState extends State<Student> {
                                                 style: TextStyle(fontSize: 13),
                                               ),
                                               Text(
-                                               'Year : ${storedocs[index]['year']}',
+                                                'Year : ${storedocs[index]['year']}',
                                                 style: TextStyle(fontSize: 13),
                                               )
                                             ],

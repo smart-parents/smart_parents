@@ -21,7 +21,6 @@ class _NoticeFormState extends State<NoticeForm> {
       ),
       body: Form(
         key: _formKey,
-        
         child: Column(
           children: [
             // const TextField(
