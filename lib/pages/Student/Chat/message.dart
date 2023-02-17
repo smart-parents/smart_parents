@@ -43,9 +43,9 @@ class _messagesState extends State<messages> {
             return Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 8),
               child: Column(
-                crossAxisAlignment: email == qs['email']
-                    ? CrossAxisAlignment.end
-                    : CrossAxisAlignment.start,
+                crossAxisAlignment: email != qs['email']
+                    ? CrossAxisAlignment.start
+                    : CrossAxisAlignment.end,
                 children: [
                   SizedBox(
                     width: 300,

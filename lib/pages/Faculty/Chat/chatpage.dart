@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'message.dart';
@@ -12,10 +12,9 @@ class Chatpage extends StatefulWidget {
 }
 
 class _ChatpageState extends State<Chatpage> {
- String? email;
+ String email='';
   final _prefs = SharedPreferences.getInstance();
   login() async {
-    FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
     email = prefs.getString('faculty')!;
   }
@@ -28,35 +27,39 @@ class _ChatpageState extends State<Chatpage> {
   }
 
   final fs = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
+  // final _auth = FirebaseAuth.instance;
   final TextEditingController message = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Chat with student',
-        ),
-        // actions: [
-        //   MaterialButton(
-        //     onPressed: () {
-        //       _auth.signOut().whenComplete(() {
-        //         Navigator.pushReplacement(
-        //           context,
-        //           MaterialPageRoute(
-        //             builder: (context) => Home(),
-        //           ),
-        //         );
-        //       });
-        //     },
-        //     child: Text(
-        //       "signOut",
-        //     ),
-        //   ),
-        // ],
-      ),
-      body: SingleChildScrollView(
+    return 
+    // Scaffold(
+    //   appBar: AppBar(
+    //     title: const Text(
+    //       'Chat with student',
+    //     ),
+    //     // actions: [
+    //     //   MaterialButton(
+    //     //     onPressed: () {
+    //     //       _auth.signOut().whenComplete(() {
+    //     //         Navigator.pushReplacement(
+    //     //           context,
+    //     //           MaterialPageRoute(
+    //     //             builder: (context) => Home(),
+    //     //           ),
+    //     //         );
+    //     //       });
+    //     //     },
+    //     //     child: Text(
+    //     //       "signOut",
+    //     //     ),
+    //     //   ),
+    //     // ],
+    //   ),
+    //   body: 
+      SingleChildScrollView(
+        physics: BouncingScrollPhysics(),
+
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -64,7 +67,7 @@ class _ChatpageState extends State<Chatpage> {
             Container(
               height: MediaQuery.of(context).size.height * 0.7,
               child: messages(
-                email: "$email",
+                email:email,
               ),
             ),
             Row(
@@ -112,7 +115,7 @@ class _ChatpageState extends State<Chatpage> {
             ),
           ],
         ),
-      ),
+      // ),
     );
   }
 }

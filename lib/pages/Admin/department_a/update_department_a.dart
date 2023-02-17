@@ -62,8 +62,9 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
                 );
               }
               var data = snapshot.data!.data();
-              var name = data!['name'];
-              var departmentId = data['departmentId'];
+              var departmentId = data!['departmentId'];
+              var name = data['name'];
+              // var semno = data['semno'];
               return Padding(
                 padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                 child: ListView(
@@ -113,6 +114,27 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
                         },
                       ),
                     ),
+                    // Container(
+                    //   margin: EdgeInsets.symmetric(vertical: 10.0),
+                    //   child: TextFormField(
+                    //     initialValue: semno,
+                    //     autofocus: false,
+                    //     onChanged: (value) => semno = value,
+                    //     decoration: InputDecoration(
+                    //       labelText: 'Sem Number: ',
+                    //       labelStyle: TextStyle(fontSize: 20.0),
+                    //       border: OutlineInputBorder(),
+                    //       errorStyle: TextStyle(
+                    //           color: Colors.lightBlueAccent, fontSize: 15),
+                    //     ),
+                    //     validator: (value) {
+                    //       if (value == null || value.isEmpty) {
+                    //         return 'Please Enter Sem Number';
+                    //       }
+                    //       return null;
+                    //     },
+                    //   ),
+                    // ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -123,7 +145,8 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
                               updateUser(
                                 widget.id,
                                 name,
-                                departmentId,
+                                departmentId
+                                // semno,
                               );
                               Navigator.pop(context);
                             }

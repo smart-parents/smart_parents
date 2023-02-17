@@ -129,6 +129,13 @@ class _DepartmentState extends State<Department> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 17.0),
                                           ),
+                                          Text(
+                                            'SEM: ${storedocs[index]['semno']}',
+                                            // Students[index],
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 17.0),
+                                          ),
                                         ],
                                       ),
                                     ),

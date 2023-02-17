@@ -1,12 +1,15 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_parents/pages/Admin/student_a/add_student_page_a.dart';
-import 'package:smart_parents/pages/Admin/student_a/update_student_page_a.dart';
+// import 'package:smart_parents/pages/Admin/Notice_a/add_Notice_page_a.dart';
+// import 'package:smart_parents/pages/Admin/Notice_a/update_Notice_page_a.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/pages/Admin/dropdown.dart';
 
-class Student extends StatefulWidget {
-  const Student({Key? key}) : super(key: key);
+class Notice extends StatefulWidget {
+  const Notice({Key? key}) : super(key: key);
 
   // void initState() {
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
@@ -15,20 +18,20 @@ class Student extends StatefulWidget {
   // }
 
   @override
-  State<Student> createState() => _StudentState();
+  State<Notice> createState() => _NoticeState();
 }
 
-class _StudentState extends State<Student> {
+class _NoticeState extends State<Notice> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
-  // static Stream<QuerySnapshot> studentsStream =
-  //     FirebaseFirestore.instance.collection('students').snapshots();
-  late Stream<QuerySnapshot> studentsStream;
+  // static Stream<QuerySnapshot> NoticesStream =
+  //     FirebaseFirestore.instance.collection('Notices').snapshots();
+  late Stream<QuerySnapshot> NoticesStream;
   void myMethod() {
     if (FirebaseAuth.instance.currentUser != null) {
       final email = FirebaseAuth.instance.currentUser!.email;
-      studentsStream = FirebaseFirestore.instance
-          .collection('students')
+      NoticesStream = FirebaseFirestore.instance
+          .collection('Notices')
           .where("admin", isEqualTo: email)
           .snapshots();
     }
@@ -38,20 +41,19 @@ class _StudentState extends State<Student> {
   @override
   void initState() {
     super.initState();
-    login();
+    // login();
     myMethod();
   }
 
   // For Deleting User
-  CollectionReference students =
-      FirebaseFirestore.instance.collection('students');
+  CollectionReference Notices =
+      FirebaseFirestore.instance.collection('Notices');
   Future<void> deleteUser(id) async {
     // print("User Deleted $id");
-    // var student = await _auth.getUserByEmail( '@example.com');
+    // var Notice = await _auth.getUserByEmail( '@example.com');
     // final stu = await "$id@example.com";
 
-    return students
-        .doc(id)
+    return Notices.doc(id)
         .delete()
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
@@ -59,37 +61,37 @@ class _StudentState extends State<Student> {
 
   // Future<void> delete(id) async {
   //   // print("User Deleted $id");
-  //   // var student = await _auth.getUserByEmail( '@example.com');
+  //   // var Notice = await _auth.getUserByEmail( '@example.com');
   //   // final stu = await "$id@example.com";
   //   print(id);
   //   await id?.delete();
   // }
 
-  final _prefs = SharedPreferences.getInstance();
-  login() async {
-    FirebaseAuth.instance.signOut();
-    final SharedPreferences prefs = await _prefs;
-    String? email = prefs.getString('email');
-    String? pass = prefs.getString('pass');
-    print("signout");
-    try {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: "$email", password: "$pass")
-          .then(
-            (value) => print("login $email"),
-          );
-      print("login");
-    } on FirebaseAuthException catch (e) {
-      print(e);
-    }
-  }
+  // final _prefs = SharedPreferences.getInstance();
+  // login() async {
+  //   FirebaseAuth.instance.signOut();
+  //   final SharedPreferences prefs = await _prefs;
+  //   String? email = prefs.getString('email');
+  //   String? pass = prefs.getString('pass');
+  //   print("signout");
+  //   try {
+  //     FirebaseAuth.instance
+  //         .signInWithEmailAndPassword(email: "$email", password: "$pass")
+  //         .then(
+  //           (value) => print("login $email"),
+  //         );
+  //     print("login");
+  //   } on FirebaseAuthException catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
     // login();
     // myMethod();
     return StreamBuilder<QuerySnapshot>(
-        stream: studentsStream,
+        stream: NoticesStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             print('Something went Wrong');
@@ -121,7 +123,7 @@ class _StudentState extends State<Student> {
                   tooltip: "Back",
                   onPressed: () => Navigator.of(context).pop(),
                 ),
-                title: const Text("Student Details",
+                title: const Text("Notice Details",
                     style: TextStyle(fontSize: 30.0)),
               ),
               body:
@@ -129,7 +131,7 @@ class _StudentState extends State<Student> {
                   //     child: Column(
                   //         // mainAxisAlignment: MainAxisAlignment.center,
                   //         children: <Widget>[
-                  // const Text("Student", style: TextStyle(fontSize: 30.0)),
+                  // const Text("Notice", style: TextStyle(fontSize: 30.0)),
                   storedocs.isNotEmpty
                       ? ListView.builder(
                           itemCount: storedocs.length,
@@ -156,22 +158,22 @@ class _StudentState extends State<Student> {
                                           child: Column(
                                             children: <Widget>[
                                               Text(
-                                                '${storedocs[index]['number']}',
+                                                '${storedocs[index]['Topic']}',
                                                 // Enrollment[index],
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 20.0),
                                               ),
                                               Text(
-                                                'Name: ${storedocs[index]['name']}',
-                                                // Students[index],
+                                                'Subject: ${storedocs[index]['Subject']}',
+                                                // Notices[index],
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 17.0),
                                               ),
                                               // Text(
-                                              //   studentvar[index].studentemail,
-                                              //   // StudentEmail[index],
+                                              //   Noticevar[index].Noticeemail,
+                                              //   // NoticeEmail[index],
                                               //   style: TextStyle(
                                               //       fontWeight: FontWeight.bold, fontSize: 13.0),
                                               // ),
@@ -205,7 +207,7 @@ class _StudentState extends State<Student> {
                                                       .showSnackBar(
                                                     const SnackBar(
                                                         content: Text(
-                                                            'Student deleted.')),
+                                                            'Notice deleted.')),
                                                   );
                                                 } catch (e) {
                                                   print(e);
@@ -213,7 +215,7 @@ class _StudentState extends State<Student> {
                                                       .showSnackBar(
                                                     SnackBar(
                                                         content: Text(
-                                                            'Failed to delete student: $e')),
+                                                            'Failed to delete Notice: $e')),
                                                   );
                                                 }
                                               },
@@ -243,73 +245,78 @@ class _StudentState extends State<Student> {
                                           child: Column(
                                             children: [
                                               Text(
-                                                'email : ${storedocs[index]['email']}',
+                                                'Date : ${storedocs[index]['Date']}',
                                                 style: TextStyle(fontSize: 13),
                                               ),
-                                              Text(
-                                                'Mo: ${storedocs[index]['mono']}',
-                                                style: TextStyle(fontSize: 13),
-                                              )
+                                              // Text(
+                                              //  'Mo: ${storedocs[index]['mono']}',
+                                              //   style: TextStyle(fontSize: 13),
+                                              // )
                                             ],
                                           ),
                                         ),
-                                        Expanded(
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                'Branch : ${storedocs[index]['branch']}',
-                                                style: TextStyle(fontSize: 13),
-                                              ),
-                                              Text(
-                                                'Batch : ${storedocs[index]['batch']}',
-                                                style: TextStyle(fontSize: 13),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                'Sem : ${storedocs[index]['sem']}',
-                                                style: TextStyle(fontSize: 13),
-                                              ),
-                                              Text(
-                                                'Year : ${storedocs[index]['year']}',
-                                                style: TextStyle(fontSize: 13),
-                                              )
-                                            ],
-                                          ),
-                                        ),
+                                        //     Expanded(
+                                        //       child: Column(
+                                        //         children: [
+                                        //           Text(
+                                        //             'Branch : ${storedocs[index]['branch']}',
+                                        //             style: TextStyle(fontSize: 13),
+                                        //           ),
+                                        //           Text(
+                                        //             'Batch : ${storedocs[index]['batch']}',
+                                        //             style: TextStyle(fontSize: 13),
+                                        //           )
+                                        //         ],
+                                        //       ),
+                                        //     ),
+
+                                        //     Expanded(
+                                        //       child: Column(
+                                        //         children: [
+                                        //           Text(
+                                        //             'Sem : ${storedocs[index]['sem']}',
+                                        //             style: TextStyle(fontSize: 13),
+                                        //           ),
+                                        //           Text(
+                                        //            'Year : ${storedocs[index]['year']}',
+                                        //             style: TextStyle(fontSize: 13),
+                                        //           )
+                                        //         ],
+                                        //       ),
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        // SizedBox(
+                                        //   height: 15,
+                                        // ),
+                                        ElevatedButton(
+                                          onPressed: () {},
+                                          // {
+                                          //   Navigator.of(context).push(
+                                          //     MaterialPageRoute(
+                                          //         builder: (context) =>
+                                          //             UpdateNoticePage(
+                                          //                 id: storedocs[index]
+                                          //                     ['id']
+                                          //   )),
+                                          //   );
+                                          // },
+                                          child: Text("Edit"),
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.white,
+                                              onPrimary: Colors.grey[600],
+                                              shape: new RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      new BorderRadius.circular(
+                                                          10.0)),
+                                              fixedSize: Size(200, 40),
+                                              elevation: 5,
+                                              textStyle: const TextStyle(
+                                                  fontSize: 17,
+                                                  fontWeight: FontWeight.w500)),
+                                        )
                                       ],
                                     ),
-                                    SizedBox(
-                                      height: 15,
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context).push(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  UpdateStudentPage(
-                                                      id: storedocs[index]
-                                                          ['id'])),
-                                        );
-                                      },
-                                      child: Text("Edit"),
-                                      style: ElevatedButton.styleFrom(
-                                          primary: Colors.white,
-                                          onPrimary: Colors.grey[600],
-                                          shape: new RoundedRectangleBorder(
-                                              borderRadius:
-                                                  new BorderRadius.circular(
-                                                      10.0)),
-                                          fixedSize: Size(200, 40),
-                                          elevation: 5,
-                                          textStyle: const TextStyle(
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.w500)),
-                                    )
                                   ],
                                 ),
                               ),
@@ -340,7 +347,7 @@ class _StudentState extends State<Student> {
                             //                   context,
                             //                   MaterialPageRoute(
                             //                     builder: (context) =>
-                            //                         UpdateStudentPage(
+                            //                         UpdateNoticePage(
                             //                             id: storedocs[index]
                             //                                 ['id']),
                             //                   ),
@@ -379,7 +386,7 @@ class _StudentState extends State<Student> {
                             //                       .showSnackBar(
                             //                     const SnackBar(
                             //                         content: Text(
-                            //                             'Student deleted.')),
+                            //                             'Notice deleted.')),
                             //                   );
                             //                 } catch (e) {
                             //                   print(e);
@@ -387,7 +394,7 @@ class _StudentState extends State<Student> {
                             //                       .showSnackBar(
                             //                     SnackBar(
                             //                         content: Text(
-                            //                             'Failed to delete student: $e')),
+                            //                             'Failed to delete Notice: $e')),
                             //                   );
                             //                 }
                             //               },
@@ -402,7 +409,7 @@ class _StudentState extends State<Student> {
                             //   height: 10,
                             // ),
                             // Text(
-                            //   'Gender: ${studentList![index].gender}',
+                            //   'Gender: ${NoticeList![index].gender}',
                             //   style: TextStyle(
                             //     fontSize: 16,
                             //   ),
@@ -411,7 +418,7 @@ class _StudentState extends State<Student> {
                             //   height: 10,
                             // ),
                             // Text(
-                            //   'Address: ${studentList![index].address}',
+                            //   'Address: ${NoticeList![index].address}',
                             //   style: TextStyle(
                             //     fontSize: 16,
                             //   ),
@@ -510,7 +517,7 @@ class _StudentState extends State<Student> {
                       //                           context,
                       //                           MaterialPageRoute(
                       //                             builder: (context) =>
-                      //                                 UpdateStudentPage(
+                      //                                 UpdateNoticePage(
                       //                                     id: storedocs[i]
                       //                                         ['id']),
                       //                           ),
@@ -561,7 +568,7 @@ class _StudentState extends State<Student> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => AddStudentPage(),
+                      builder: (context) => DropdownDemo(),
                     ),
                   )
                 },

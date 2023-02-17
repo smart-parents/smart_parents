@@ -4,7 +4,7 @@ import 'package:smart_parents/pages/Admin/department_a/depart_a.dart';
 import 'package:smart_parents/pages/Admin/dropdown.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
 import 'package:smart_parents/pages/Admin/fees.dart';
-import 'package:smart_parents/pages/Admin/notice_a.dart';
+import 'package:smart_parents/pages/Admin/notice_dash.dart';
 import 'package:smart_parents/pages/Admin/student_a/student_a.dart';
 
 class Dashboard extends StatefulWidget {
@@ -129,7 +129,7 @@ class _DashboardState extends State<Dashboard> {
               onPressed: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DropdownDemo()),
+                  MaterialPageRoute(builder: (context) => Notice()),
                 ),
               },
               style: ElevatedButton.styleFrom(

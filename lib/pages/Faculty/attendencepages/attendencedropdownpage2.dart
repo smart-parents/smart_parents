@@ -28,6 +28,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
   String _start = '';
   String _end = '';
   String? Branch;
+  // String? Semester;
   @override
   Widget build(BuildContext context) {
     // String semesterdropdownValue = Semester[0];
@@ -57,6 +58,8 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
             // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
             final items =
                 snapshot.data!.docs.map((doc) => doc.get('name')).toList();
+            // final semester =
+            //     snapshot.data!.docs.map((doc) => doc.get('semno')).toList();
             return ListView(
               physics: BouncingScrollPhysics(),
               children: [
@@ -131,17 +134,76 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                     SizedBox(
                       height: 20,
                     ),
-                    dropdown(
-                        DropdownValue: yeardropdownValue,
-                        sTring: CollegeYear,
-                        Hint: "Year"),
+                    
+                    // Container(
+                    //   child: Column(
+                    //     children: [
+                    //       const Text(
+                    //         "Semester",
+                    //         style: TextStyle(fontSize: 20),
+                    //       ),
+                    //       SizedBox(
+                    //         height: 5,
+                    //       ),
+                    //       Container(
+                    //         padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    //         decoration: BoxDecoration(
+                    //             color: Colors.grey[100],
+                    //             borderRadius: BorderRadius.circular(15.0),
+                    //             border: Border.all(
+                    //                 color: Colors.grey,
+                    //                 style: BorderStyle.solid,
+                    //                 width: 0.80),
+                    //             boxShadow: [
+                    //               BoxShadow(
+                    //                 color: Colors.grey,
+                    //                 offset: const Offset(
+                    //                   5.0,
+                    //                   5.0,
+                    //                 ),
+                    //                 blurRadius: 5.0,
+                    //                 spreadRadius: 1.0,
+                    //               ),
+                    //             ]),
+                    //         child: DropdownButton<String>(
+                    //           isExpanded: true,
+                    //           // hint: Text(hint,style: TextStyle(color: Colors.black),),
+                    //           value: Semester,
+                    //           hint: const Text('Select an item'),
+                    //           icon: const Icon(
+                    //               Icons.keyboard_arrow_down_outlined),
+                    //           elevation: 16,
+                    //           dropdownColor: Colors.grey[100],
+                    //           style: const TextStyle(color: Colors.black),
+                    //           underline:
+                    //               Container(height: 0, color: Colors.black),
+                    //           onChanged: (value) {
+                    //             setState(() {
+                    //               Semester = value;
+                    //             });
+                    //           },
+                    //           items: semester.map((item) {
+                    //             return DropdownMenuItem<String>(
+                    //               value: item,
+                    //               child: Text(item),
+                    //             );
+                    //           }).toList(),
+                    //         ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                     dropdown(
+                        DropdownValue: semesterdropdownValue,
+                        sTring: Semester,
+                        Hint: "Semester"),
                     SizedBox(
                       height: 20,
                     ),
                     dropdown(
-                        DropdownValue: semesterdropdownValue,
-                        sTring: Semester,
-                        Hint: "Semester"),
+                        DropdownValue: yeardropdownValue,
+                        sTring: CollegeYear,
+                        Hint: "Year"),
                     SizedBox(
                       height: 20,
                     ),

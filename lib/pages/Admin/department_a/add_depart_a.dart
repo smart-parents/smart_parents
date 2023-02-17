@@ -21,6 +21,7 @@ class _AddDepartPageState extends State<AddDepartPage> {
   // final email = FirebaseAuth.instance.currentUser!.email;
   var name = "";
   var departmentId = "";
+  var semno = "";
 
   @override
   void initState() {
@@ -32,18 +33,21 @@ class _AddDepartPageState extends State<AddDepartPage> {
 
   final nameController = TextEditingController();
   final departmentController = TextEditingController();
+  // final semnoController = TextEditingController();
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     nameController.dispose();
     departmentController.dispose();
+    // semnoController.dispose();
     super.dispose();
   }
 
   clearText() async {
     nameController.clear();
     departmentController.clear();
+    // semnoController.clear();
   }
 
   final _prefs = SharedPreferences.getInstance();
@@ -59,7 +63,12 @@ class _AddDepartPageState extends State<AddDepartPage> {
   Future<void> addUser() {
     return department
         .doc("${departmentId}_$email")
-        .set({'name': name, 'departmentId': departmentId, 'admin': email})
+        .set({
+          'name': name,
+          'departmentId': departmentId,
+          // 'semno': semno,
+          'admin': email
+        })
         .then((value) => print('department Added'))
         .catchError((error) => print('Failed to Add department: $error'));
   }
@@ -135,7 +144,12 @@ class _AddDepartPageState extends State<AddDepartPage> {
                   decoration: InputDecoration(
                     labelText: 'Department Id: ',
                     labelStyle: TextStyle(fontSize: 20.0),
-                    border: OutlineInputBorder(),
+                    // border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     errorStyle:
                         TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
                   ),
@@ -158,7 +172,12 @@ class _AddDepartPageState extends State<AddDepartPage> {
                   decoration: InputDecoration(
                     labelText: 'Department Name: ',
                     labelStyle: TextStyle(fontSize: 20.0),
-                    border: OutlineInputBorder(),
+                    // border: OutlineInputBorder(),
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                     errorStyle:
                         TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
                   ),
@@ -171,6 +190,47 @@ class _AddDepartPageState extends State<AddDepartPage> {
                   },
                 ),
               ),
+              // Container(
+              //   margin: EdgeInsets.symmetric(vertical: 10.0),
+              //   child:TextFormField(
+              //     // autofocus: false,
+              //      initialValue: semno,
+                   
+              //     autofocus: false,
+              //     onChanged: (value) => semno = value,
+              //     style: TextStyle(fontSize: 20),
+              //     decoration: InputDecoration(
+              //       labelText: 'Sem Number: ',
+              //       labelStyle: TextStyle(fontSize: 20.0),
+              //       contentPadding:
+              //           EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //     )
+              //   ),
+              
+              // ),
+              const SizedBox(
+                height: 5,
+              ),
+              // // Padding(
+              // //   padding: const EdgeInsets.only(left: 10.0, right: 10.0),
+              //   child: TextFormField(
+              //     // readOnly: true,
+              //     initialValue: semno,
+              //     autofocus: false,
+              //     onChanged: (value) => semno = value,
+              //     style: TextStyle(fontSize: 20),
+              //     decoration: InputDecoration(
+              //       contentPadding:
+              //           EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+              //       border: OutlineInputBorder(
+              //         borderRadius: BorderRadius.circular(12),
+              //       ),
+              //     ),
+              //   ),
+              
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
