@@ -1,5 +1,6 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Initialize the Cloud Firestore
 // final firestore = FirebaseFirestore.instance;
@@ -13,7 +14,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 //   });
 //   print(Branch);
 // }
-final firestore = FirebaseFirestore.instance;
+// final firestore = FirebaseFirestore.instance;
 
 // List<String> Branc = [];
 // void getStringList() async {
@@ -44,13 +45,8 @@ List<String> Semester = [
 ];
 List<String> Batch = ["A", "B", "C", "All"];
 
-List<String> Branch = ["IT", "Comp"];
-List<String> Subject = [
-  "Artificial Intelegence",
-  "TOC",
-  "CCS",
-  "Machine Learning"
-];
+// List<String> Branch = ["IT", "Comp"];
+List<String> Subject = ["AJava", "WNS", "Android", "PHP"];
 List<String> Students = [
   "Bhavik",
   "Jay",
@@ -249,7 +245,7 @@ String batchdropdownValue = Batch[0];
 String subjectdropdownValue = Subject[0];
 String yeardropdownValue = CollegeYear[0];
 // String programdropdownValue = Program[0];
-String branchdropdownValue = Branch[0];
+// String branchdropdownValue = Branch[0];
 String facultiesdropdownValue = Faculties[0];
 Map<String, String> values = {
   // programdropdownValue: "MBA",
@@ -258,6 +254,6 @@ Map<String, String> values = {
   // schooldropdownValue: "SCSIT",
   subjectdropdownValue: "Artificial Intelegence",
   yeardropdownValue: "3rd",
-  branchdropdownValue: "Mecha",
+  // branchdropdownValue: "Mecha",
   facultiesdropdownValue: "Neha Gupta",
 };

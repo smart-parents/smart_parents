@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
@@ -20,15 +20,15 @@ class _AttendencePageState extends State<AttendencePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
-        title: Text("Attendence"),
+        leading: const BackButton(),
+        title: const Text("Attendence"),
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 15.0,
           ),
-          Center(
+          const Center(
             child: Text(
               "Select those who are present and \n     long press for more options",
               style: TextStyle(
@@ -37,14 +37,14 @@ class _AttendencePageState extends State<AttendencePage> {
                   fontWeight: FontWeight.w600),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Container(
+          SizedBox(
             height: 550,
             width: 400,
             // color: Colors.orange,
-            child: new ListView.builder(
+            child: ListView.builder(
                 itemCount: studentvar.length,
                 itemBuilder: (BuildContext context, int index) =>
                     buildAttendenceCard(context, index)),
@@ -52,7 +52,7 @@ class _AttendencePageState extends State<AttendencePage> {
 
             // )),
           ),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
           //
@@ -82,8 +82,8 @@ class _AttendencePageState extends State<AttendencePage> {
                 ],
               ),
             ),
+            style: ElevatedButton.styleFrom(fixedSize: const Size(300, 40)),
             child: const Text('Submit'),
-            style: ElevatedButton.styleFrom(fixedSize: Size(300, 40)),
           ),
           // ElevatedButton(
           //     onPressed: () => {
@@ -113,7 +113,7 @@ class _AttendencePageState extends State<AttendencePage> {
 
     return FocusedMenuHolder(
       menuWidth: MediaQuery.of(context).size.width * 0.75,
-      duration: Duration(milliseconds: 350),
+      duration: const Duration(milliseconds: 350),
       animateMenuItems: true,
       onPressed: () {
         setState(() {
@@ -126,7 +126,7 @@ class _AttendencePageState extends State<AttendencePage> {
       },
       menuItems: <FocusedMenuItem>[
         FocusedMenuItem(
-            title: Text(
+            title: const Text(
               "Present",
               style: TextStyle(
                   color: Colors.white,
@@ -145,7 +145,7 @@ class _AttendencePageState extends State<AttendencePage> {
             backgroundColor: const Color(0xff00CE2D)),
         //00CE2D
         FocusedMenuItem(
-            title: Text(
+            title: const Text(
               "Absent",
               style: TextStyle(
                   color: Colors.white,
@@ -161,48 +161,46 @@ class _AttendencePageState extends State<AttendencePage> {
               //   MaterialPageRoute(builder: (context) => EditProfilePage()),
               // );
             },
-            backgroundColor: Color(0xffff0800)),
-        FocusedMenuItem(
-            title: Text(
-              "Leave",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold),
-            ),
-            onPressed: () {
-              setState(() {
-                ChangeState(isSelectedList, index, 2);
-                ChangeColor(isSelectedList, index);
-              });
-              // Navigator.of(this.context).push(
-              //   MaterialPageRoute(builder: (context) => ChangePassword()),
-              // );
-            },
-            backgroundColor: const Color(0xffffc100))
+            backgroundColor: const Color(0xffff0800)),
+        // FocusedMenuItem(
+        //     title: const Text(
+        //       "Leave",
+        //       style: TextStyle(
+        //           color: Colors.white,
+        //           fontSize: 15,
+        //           fontWeight: FontWeight.bold),
+        //     ),
+        //     onPressed: () {
+        //       setState(() {
+        //         ChangeState(isSelectedList, index, 2);
+        //         ChangeColor(isSelectedList, index);
+        //       });
+        //       // Navigator.of(this.context).push(
+        //       //   MaterialPageRoute(builder: (context) => ChangePassword()),
+        //       // );
+        //     },
+        //     backgroundColor: const Color(0xffffc100))
       ],
-      child: new Container(
-        child: Card(
-          color: attendencecolor[index],
-          elevation: 2,
-          shadowColor: Colors.grey[200],
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              children: <Widget>[
-                Text(
-                  index2.toString(),
-                  style: TextStyle(fontSize: 20),
-                ),
-                SizedBox(
-                  width: 25,
-                ),
-                Text(
-                  studentvar[index].studentName,
-                  style: TextStyle(fontSize: 20),
-                ),
-              ],
-            ),
+      child: Card(
+        color: attendencecolor[index],
+        elevation: 2,
+        shadowColor: Colors.grey[200],
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            children: <Widget>[
+              Text(
+                index2.toString(),
+                style: const TextStyle(fontSize: 20),
+              ),
+              const SizedBox(
+                width: 25,
+              ),
+              Text(
+                studentvar[index].studentName,
+                style: const TextStyle(fontSize: 20),
+              ),
+            ],
           ),
         ),
       ),
@@ -222,15 +220,15 @@ class _AttendencePageState extends State<AttendencePage> {
   void ChangeColor(List<int> isSelectedList, int index) {
     if (isSelectedList[index] == 1) {
       attendencecolor[index] = const Color(0xff00CE2D);
-      // print("changed to : "+ isSelectedList.toString());
+      print("changed to : $isSelectedList");
+      // } else {
+      //   if (isSelectedList[index] == 2) {
+      //     attendencecolor[index] = const Color(0xffffc100);
+      // print("changed to : $isSelectedList");
     } else {
-      if (isSelectedList[index] == 2) {
-        attendencecolor[index] = const Color(0xffffc100);
-        // print("changed to : "+ isSelectedList.toString());
-      } else {
-        attendencecolor[index] = const Color(0xffff0800);
-        // print("changed to : "+ isSelectedList.toString());
-      }
+      attendencecolor[index] = const Color(0xffff0800);
+      print("changed to : $isSelectedList");
     }
+    // }
   }
 }

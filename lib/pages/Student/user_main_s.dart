@@ -1,9 +1,7 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-// import 'package:smart_parents/pages/Admin/dashboard_a.dart';
-// import 'package:smart_parents/pages/Admin/profile_a.dart';
-// import 'package:smart_parents/pages/Admin/change_password_a.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Student/Chat/chatpage.dart';
@@ -11,7 +9,7 @@ import 'package:smart_parents/pages/Student/dashboard_s.dart';
 import 'package:smart_parents/pages/Student/profile_screen_s.dart';
 
 class UserMainS extends StatefulWidget {
-  UserMainS({Key? key}) : super(key: key);
+  const UserMainS({Key? key}) : super(key: key);
   // void initState() {
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
   //     // SystemUiOverlay.bottom,
@@ -25,11 +23,11 @@ class UserMainS extends StatefulWidget {
 class _UserMainState extends State<UserMainS> {
   int _selectedIndex = 0;
   // final storage = new FlutterSecureStorage();
-  static List<Widget> _widgetOptions = <Widget>[
-    Dashboard(),
-    Attendance_screen(),
-  chatpage(),
-    Profile_screenS()
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Dashboard(),
+    const Attendance_screen(),
+    const Chatpage(),
+    const Profile_screenS()
   ];
 
   void _onItemTapped(int index) {
@@ -63,9 +61,9 @@ class _UserMainState extends State<UserMainS> {
         //   ),
         // ),
         title: const Text('Home'),
-        backgroundColor: Colors.blue.shade700,
+        // backgroundColor: Colors.blue.shade700,
       ),
-      drawer: NavigationDrawer(
+      drawer: const NavigationDrawer(
         imagePath: 'Jay Photo.jpg',
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
@@ -83,15 +81,15 @@ class _UserMainState extends State<UserMainS> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-              rippleColor: Color.fromARGB(255, 37, 86, 116),
-              hoverColor: Color.fromARGB(255, 37, 86, 116),
+              rippleColor: const Color.fromARGB(255, 37, 86, 116),
+              hoverColor: const Color.fromARGB(255, 37, 86, 116),
               // gap: 8,
               activeColor: Colors.white,
               iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               // tabMargin: EdgeInsets.symmetric(horizontal: 50),
               // duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Color.fromARGB(255, 37, 86, 116),
+              tabBackgroundColor: const Color.fromARGB(255, 37, 86, 116),
               color: Colors.black,
               tabs: const [
                 GButton(
@@ -123,7 +121,7 @@ class _UserMainState extends State<UserMainS> {
 
 class NavigationDrawer extends StatefulWidget {
   final String imagePath;
-  NavigationDrawer({required this.imagePath});
+  const NavigationDrawer({super.key, required this.imagePath});
 
   @override
   _NavigationDrawerState createState() => _NavigationDrawerState();
@@ -182,80 +180,78 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           bottom: 24),
                       child: Column(
                         children: [
-                          CircleAvatar(
+                          const CircleAvatar(
                             radius: 40,
                             backgroundImage:
                                 AssetImage('assets/images/man.png'),
                             // backgroundImage: image.image,
                           ),
-                          SizedBox(height: 10),
-                          Text(
+                          const SizedBox(height: 10),
+                          const Text(
                             'Student',
                             style: TextStyle(fontSize: 28, color: Colors.white),
                           ),
                           Text(
                             "$fid",
-                            style: TextStyle(fontSize: 15, color: Colors.white),
+                            style: const TextStyle(
+                                fontSize: 15, color: Colors.white),
                           )
                         ],
                       ),
                     ))),
             // buildMenuItems(context),
-            Container(
-              //padding: const EdgeInsets.all(15),
-              child: Wrap(
-                runSpacing: 10,
-                children: [
-                  ListTile(
-                      leading: const Icon(Icons.home_outlined),
-                      title: const Text("Home"),
-                      onTap: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const Dashboard(),
-                        ));
-                      }),
-                  ListTile(
-                    leading: const Icon(Icons.timelapse),
-                    title: const Text("Classes Schedule"),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.calendar_month_rounded),
-                    title: const Text("See Attendence"),
+            Wrap(
+              runSpacing: 10,
+              children: [
+                ListTile(
+                    leading: const Icon(Icons.home_outlined),
+                    title: const Text("Home"),
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const Attendance_screen(),
+                        builder: (context) => const Dashboard(),
                       ));
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.paste),
-                    title: const Text("Results"),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.pages_outlined),
-                    title: const Text("Study Material"),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.insert_drive_file_outlined),
-                    title: const Text("Exam Info"),
-                    onTap: () {},
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.money),
-                    title: const Text("Fee Details"),
-                    onTap: () {},
-                  ),
-                  const Divider(color: Colors.black54),
-                  ListTile(
-                    leading: const Icon(Icons.contact_page_outlined),
-                    title: const Text("contact With Faculty"),
-                    onTap: () {},
-                  ),
-                ],
-              ),
+                    }),
+                ListTile(
+                  leading: const Icon(Icons.timelapse),
+                  title: const Text("Classes Schedule"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.calendar_month_rounded),
+                  title: const Text("See Attendence"),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const Attendance_screen(),
+                    ));
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.paste),
+                  title: const Text("Results"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.pages_outlined),
+                  title: const Text("Study Material"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.insert_drive_file_outlined),
+                  title: const Text("Exam Info"),
+                  onTap: () {},
+                ),
+                ListTile(
+                  leading: const Icon(Icons.money),
+                  title: const Text("Fee Details"),
+                  onTap: () {},
+                ),
+                const Divider(color: Colors.black54),
+                ListTile(
+                  leading: const Icon(Icons.contact_page_outlined),
+                  title: const Text("contact With Faculty"),
+                  onTap: () {},
+                ),
+              ],
             ),
           ],
         ),

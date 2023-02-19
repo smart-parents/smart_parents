@@ -1,3 +1,5 @@
+// ignore_for_file: camel_case_types
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -92,11 +94,11 @@ class _Profile_screenPState extends State<Profile_screenP> {
               color: Colors.blue[50],
               child: Column(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 40,
                     backgroundImage: AssetImage('assets/images/man.png'),
                   ),
-                  Text(
+                  const Text(
                     'Parents',
                     style: TextStyle(
                       fontSize: 30,
@@ -112,7 +114,7 @@ class _Profile_screenPState extends State<Profile_screenP> {
                     // width: MediaQuery.of(context).size.width * 2.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
-                      color: Color.fromARGB(255, 37, 86, 116),
+                      color: const Color.fromARGB(255, 37, 86, 116),
                     ),
                     // alignment: Alignment(0.0, -0.9),
                     child: Column(
@@ -134,45 +136,46 @@ class _Profile_screenPState extends State<Profile_screenP> {
                                 // ignore: prefer_const_constructors
                                 style: TextStyle(
                                   fontSize: 20,
-                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "Email: $email",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "Name: $name",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "Dob: $dob",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "Age: $age",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
@@ -213,61 +216,58 @@ class _Profile_screenPState extends State<Profile_screenP> {
                         // Align(
                         //   alignment: Alignment(0, 0),
                         // child:
-                        Container(
-                          alignment: Alignment(0, 0),
-                          child: Row(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              TextButton.icon(
-                                onPressed: () async => {
-                                  Navigator.push(
+                        Row(
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () async => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditP(
+                                      id: "$id",
+                                    ),
+                                  ),
+                                ) // (route) => false)
+                              },
+                              icon: const Icon(
+                                Icons.info_outline,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
+                                'Edit Profile',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                            ),
+                            TextButton.icon(
+                              onPressed: () async => {
+                                await FirebaseAuth.instance.signOut(),
+                                delete(),
+                                // await storage.delete(key: "uid"),
+                                Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => EditP(
-                                        id: "$id",
-                                      ),
+                                      builder: (context) => const Option(),
                                     ),
-                                  ) // (route) => false)
-                                },
-                                icon: Icon(
-                                  Icons.info_outline,
-                                  color: Colors.white,
-                                ),
-                                label: Text(
-                                  'Edit Profile',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                  ),
+                                    (route) => false)
+                              },
+                              icon: const Icon(
+                                Icons.logout,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
+                                'Logout',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              TextButton.icon(
-                                onPressed: () async => {
-                                  await FirebaseAuth.instance.signOut(),
-                                  delete(),
-                                  // await storage.delete(key: "uid"),
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const Option(),
-                                      ),
-                                      (route) => false)
-                                },
-                                icon: Icon(
-                                  Icons.logout,
-                                  color: Colors.white,
-                                ),
-                                label: Text(
-                                  'Logout',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         // ),
                       ],

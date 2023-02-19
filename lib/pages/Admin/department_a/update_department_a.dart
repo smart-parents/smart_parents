@@ -1,9 +1,11 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UpdateDepartPage extends StatefulWidget {
   final String id;
-  UpdateDepartPage({Key? key, required this.id}) : super(key: key);
+  const UpdateDepartPage({Key? key, required this.id}) : super(key: key);
 // void initState() {
 //     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
 //       // SystemUiOverlay.bottom,
@@ -35,14 +37,14 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Update Department"),
+        title: const Text("Update Department"),
         automaticallyImplyLeading: false,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
           tooltip: "Back",
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: const Color.fromARGB(255, 207, 235, 255),
+        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
       ),
       body: Form(
           key: _form1Key,
@@ -66,17 +68,18 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
               var name = data['name'];
               // var semno = data['semno'];
               return Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                 child: ListView(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextFormField(
                         maxLength: 2,
                         initialValue: departmentId,
                         autofocus: false,
                         onChanged: (value) => departmentId = value,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Department Id: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
@@ -94,12 +97,12 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextFormField(
                         initialValue: name,
                         autofocus: false,
                         onChanged: (value) => name = value,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Name: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
@@ -142,12 +145,9 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
                           onPressed: () {
                             // Validate returns true if the form is valid, otherwise false.
                             if (_form1Key.currentState!.validate()) {
-                              updateUser(
-                                widget.id,
-                                name,
-                                departmentId
-                                // semno,
-                              );
+                              updateUser(widget.id, name, departmentId
+                                  // semno,
+                                  );
                               Navigator.pop(context);
                             }
                           },

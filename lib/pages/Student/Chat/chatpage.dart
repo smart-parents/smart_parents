@@ -1,18 +1,21 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'message.dart';
 
-class chatpage extends StatefulWidget {
+class Chatpage extends StatefulWidget {
+  const Chatpage({super.key});
+
   // String email;
-  // chatpage({required this.email});
+  // Chatpage({required this.email});
   @override
-  _chatpageState createState() => _chatpageState();
+  _ChatpageState createState() => _ChatpageState();
 }
 
-class _chatpageState extends State<chatpage> {
-  // _chatpageState({required this.email});
+class _ChatpageState extends State<Chatpage> {
+  // _ChatpageState({required this.email});
   String email = '';
   final _prefs = SharedPreferences.getInstance();
   login() async {
@@ -29,7 +32,7 @@ class _chatpageState extends State<chatpage> {
 
   final fs = FirebaseFirestore.instance;
   // final _auth = FirebaseAuth.instance;
-  final TextEditingController message = new TextEditingController();
+  final TextEditingController message = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,14 +45,14 @@ class _chatpageState extends State<chatpage> {
         //   ),
         //   body:
         SingleChildScrollView(
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height * 0.7,
-            child: messages(
+            child: Messages(
               email: email,
             ),
           ),
@@ -67,14 +70,16 @@ class _chatpageState extends State<chatpage> {
                         left: 14.0, bottom: 8.0, top: 8.0),
                     focusedBorder: OutlineInputBorder(
                       // borderSide: new BorderSide(color: Colors.purple),
-                      borderRadius: new BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     enabledBorder: UnderlineInputBorder(
                       // borderSide: new BorderSide(color: Colors.purple),
-                      borderRadius: new BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  validator: (value) {},
+                  validator: (value) {
+                    return null;
+                  },
                   onSaved: (value) {
                     message.text = value!;
                   },
@@ -92,7 +97,7 @@ class _chatpageState extends State<chatpage> {
                     message.clear();
                   }
                 },
-                icon: Icon(Icons.send_sharp),
+                icon: const Icon(Icons.send_sharp),
               ),
             ],
           ),

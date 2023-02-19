@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, non_constant_identifier_names
+
 import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 
 class Faculty {
@@ -31,7 +33,7 @@ class Student {
   final String semester;
   // final String program;
   final String batch;
-  final String branch;
+  // final String branch;
   final String studingInYear;
   bool isActive;
 
@@ -41,7 +43,7 @@ class Student {
     required this.studentemail,
     required this.semester,
     required this.batch,
-    required this.branch,
+    // required this.branch,
     required this.studingInYear,
     // required this.program,
     this.isActive = true,
@@ -188,7 +190,7 @@ class UserPrefrences {
     studentemail: "2019btcs002@@Student.com",
     semester: "V",
     batch: "B1",
-    branch: "C.S.I.T.",
+    // branch: "C.S.I.T.",
     studingInYear: "3rd",
     // program: "Btech"
   );
@@ -199,7 +201,7 @@ class UserPrefrences {
       studentemail: "2019btcs002@@Student.com",
       semester: "V",
       batch: "B1",
-      branch: "C.S.I.T.",
+      // branch: "C.S.I.T.",
       studingInYear: "3rd",
       // program: "Btech"
     ),
@@ -209,7 +211,7 @@ class UserPrefrences {
       studentemail: StudentEmail[0],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -219,7 +221,7 @@ class UserPrefrences {
       studentemail: StudentEmail[1],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -229,7 +231,7 @@ class UserPrefrences {
       studentemail: StudentEmail[2],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -239,7 +241,7 @@ class UserPrefrences {
       studentemail: StudentEmail[3],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -249,7 +251,7 @@ class UserPrefrences {
       studentemail: StudentEmail[4],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -259,7 +261,7 @@ class UserPrefrences {
       studentemail: StudentEmail[5],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -269,7 +271,7 @@ class UserPrefrences {
       studentemail: StudentEmail[6],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -279,7 +281,7 @@ class UserPrefrences {
       studentemail: StudentEmail[7],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -289,7 +291,7 @@ class UserPrefrences {
       studentemail: StudentEmail[8],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -299,7 +301,7 @@ class UserPrefrences {
       studentemail: StudentEmail[9],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -309,7 +311,7 @@ class UserPrefrences {
       studentemail: StudentEmail[10],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -319,7 +321,7 @@ class UserPrefrences {
       studentemail: StudentEmail[11],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -329,7 +331,7 @@ class UserPrefrences {
       studentemail: StudentEmail[12],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -339,7 +341,7 @@ class UserPrefrences {
       studentemail: StudentEmail[13],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),
@@ -349,7 +351,7 @@ class UserPrefrences {
       studentemail: StudentEmail[14],
       semester: Semester[4],
       batch: Batch[0],
-      branch: Branch[0],
+      // branch: Branch[0],
       studingInYear: CollegeYear[0],
       // program: Program[0]
     ),

@@ -1,10 +1,12 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
 import 'package:smart_parents/pages/Admin/Signup_a/signup_screen_a.dart';
 
 class ForgotPassword extends StatefulWidget {
-  ForgotPassword({Key? key}) : super(key: key);
+  const ForgotPassword({Key? key}) : super(key: key);
 // void initState() {
 //     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
 //       // SystemUiOverlay.bottom,
@@ -34,7 +36,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           backgroundColor: Colors.lightBlueAccent,
           content: Text(
             'Password Reset Email has been sent !',
@@ -46,7 +48,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
             backgroundColor: Colors.lightBlueAccent,
             content: Text(
               'No user found for that email.',
@@ -62,20 +64,20 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 207, 235, 255),
+        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         automaticallyImplyLeading: false,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
           tooltip: "Back",
           onPressed: () => Navigator.of(context).pop(),
         ),
-        title: Text("Reset Password"),
+        title: const Text("Reset Password"),
       ),
       body: Column(
         children: [
           Container(
-            margin: EdgeInsets.only(top: 20.0),
-            child: Text(
+            margin: const EdgeInsets.only(top: 20.0),
+            child: const Text(
               'Reset Link will be sent to your email id !',
               style: TextStyle(fontSize: 20.0),
             ),
@@ -84,14 +86,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             child: Form(
               key: _formKey,
               child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                 child: ListView(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextFormField(
                         autofocus: false,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Email: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
@@ -109,74 +112,70 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         },
                       ),
                     ),
-                    Container(
-                      // margin: EdgeInsets.only(left: 60.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              // Validate returns true if the form is valid, otherwise false.
-                              if (_formKey.currentState!.validate()) {
-                                setState(() {
-                                  email = emailController.text;
-                                });
-                                resetPassword();
-                              }
-                            },
-                            child: Text(
-                              'Send Email',
-                              style: TextStyle(fontSize: 18.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            // Validate returns true if the form is valid, otherwise false.
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                email = emailController.text;
+                              });
+                              resetPassword();
+                            }
+                          },
+                          child: const Text(
+                            'Send Email',
+                            style: TextStyle(fontSize: 18.0),
+                          ),
+                        ),
+                        TextButton(
+                          onPressed: () => {
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                PageRouteBuilder(
+                                  pageBuilder: (context, a, b) =>
+                                      const LoginScreen(),
+                                  transitionDuration:
+                                      const Duration(seconds: 0),
+                                ),
+                                (route) => false)
+                          },
+                          child: const Text(
+                            'Login',
+                            style: TextStyle(
+                              decoration: TextDecoration.underline,
+                              fontWeight: FontWeight.bold,
                             ),
                           ),
-                          TextButton(
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text("Don't have an Account? "),
+                        TextButton(
                             onPressed: () => {
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  PageRouteBuilder(
-                                    pageBuilder: (context, a, b) =>
-                                        LoginScreen(),
-                                    transitionDuration: Duration(seconds: 0),
-                                  ),
-                                  (route) => false)
-                            },
-                            child: Text(
-                              'Login',
+                                  Navigator.pushAndRemoveUntil(
+                                      context,
+                                      PageRouteBuilder(
+                                        pageBuilder: (context, a, b) =>
+                                            const SignUpScreen(),
+                                        transitionDuration:
+                                            const Duration(seconds: 0),
+                                      ),
+                                      (route) => false)
+                                },
+                            child: const Text(
+                              'Signup',
                               style: TextStyle(
                                 decoration: TextDecoration.underline,
                                 fontWeight: FontWeight.bold,
                               ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text("Don't have an Account? "),
-                          TextButton(
-                              onPressed: () => {
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        PageRouteBuilder(
-                                          pageBuilder: (context, a, b) =>
-                                              SignUpScreen(),
-                                          transitionDuration:
-                                              Duration(seconds: 0),
-                                        ),
-                                        (route) => false)
-                                  },
-                              child: Text(
-                                'Signup',
-                                style: TextStyle(
-                                  decoration: TextDecoration.underline,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ))
-                        ],
-                      ),
+                            ))
+                      ],
                     )
                   ],
                 ),

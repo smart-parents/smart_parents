@@ -66,16 +66,16 @@ class _CheckState extends State<Check> {
                 child: const Center(child: CircularProgressIndicator()));
           }
           if (role == 'admin') {
-            return UserMainA();
+            return const UserMainA();
           }
           if (role == 'faculty') {
-            return UserMainF();
+            return const UserMainF();
           }
           if (role == 'student') {
-            return UserMainS();
+            return const UserMainS();
           }
           if (role == 'parents') {
-            return ParentsScreen();
+            return const ParentsScreen();
           }
           return const Option();
         });

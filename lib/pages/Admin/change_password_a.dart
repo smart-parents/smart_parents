@@ -1,9 +1,11 @@
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, empty_catches
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
 
 class ChangePassword extends StatefulWidget {
-  ChangePassword({Key? key}) : super(key: key);
+  const ChangePassword({Key? key}) : super(key: key);
   // void initState() {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
   //   // SystemUiOverlay.bottom,
@@ -37,10 +39,10 @@ class _ChangePasswordState extends State<ChangePassword> {
       FirebaseAuth.instance.signOut();
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => LoginScreen()),
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
       );
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           backgroundColor: Colors.lightBlueAccent,
           content: Text(
             'Your Password has been Changed. Login again !',
@@ -56,15 +58,15 @@ class _ChangePasswordState extends State<ChangePassword> {
     return Form(
       key: _formKey,
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         child: ListView(
           children: [
             Container(
-              margin: EdgeInsets.symmetric(vertical: 10.0),
+              margin: const EdgeInsets.symmetric(vertical: 10.0),
               child: TextFormField(
                 autofocus: false,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'New Password: ',
                   hintText: 'Enter New Password',
                   labelStyle: TextStyle(fontSize: 20.0),
@@ -91,7 +93,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   changePassword();
                 }
               },
-              child: Text(
+              child: const Text(
                 'Change Password',
                 style: TextStyle(fontSize: 18.0),
               ),

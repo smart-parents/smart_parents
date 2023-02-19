@@ -1,6 +1,5 @@
-// ignore_for_file: depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names
 
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencePage.dart';
@@ -23,7 +22,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
   // TimeOfDay selectedEndTime = TimeOfDay.now();
 
 // bool _chooseClass = true;
-  DateTime _current = DateTime.now();
+  final DateTime _current = DateTime.now();
   String _date = '';
   String _start = '';
   String _end = '';
@@ -38,22 +37,22 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
     // String datedropdownValue = Date[0];
     // String monthdropdownValue = Month[0];
     // String yeardropdownValue = Year[0];
-    dynamic fieldTextStyle = TextStyle(
+    dynamic fieldTextStyle = const TextStyle(
         color: Colors.cyan, fontSize: 17, fontWeight: FontWeight.w400);
 
 // Initialize the Cloud Firestore
 
     return Scaffold(
       appBar: AppBar(
-        leading: BackButton(),
-        title: Text("Attendence"),
+        leading: const BackButton(),
+        title: const Text("Attendence"),
       ),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
           future: FirebaseFirestore.instance.collection('department').get(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             }
             // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
             final items =
@@ -61,80 +60,78 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
             // final semester =
             //     snapshot.data!.docs.map((doc) => doc.get('semno')).toList();
             return ListView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               children: [
                 Padding(
                   padding: const EdgeInsets.all(10.0),
                   child: Column(children: [
-                    SizedBox(
+                    const SizedBox(
                       height: 30,
                     ),
                     // dropdown(
                     //     DropdownValue: items.toString(),
                     //     sTring: Branch,
                     //     Hint: "Branch"),
-                    Container(
-                      child: Column(
-                        children: [
-                          const Text(
-                            "Branch",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          Container(
-                            padding: EdgeInsets.symmetric(horizontal: 10.0),
-                            decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                                borderRadius: BorderRadius.circular(15.0),
-                                border: Border.all(
-                                    color: Colors.grey,
-                                    style: BorderStyle.solid,
-                                    width: 0.80),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.grey,
-                                    offset: const Offset(
-                                      5.0,
-                                      5.0,
-                                    ),
-                                    blurRadius: 5.0,
-                                    spreadRadius: 1.0,
+                    Column(
+                      children: [
+                        const Text(
+                          "Branch",
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                          decoration: BoxDecoration(
+                              color: Colors.grey[100],
+                              borderRadius: BorderRadius.circular(15.0),
+                              border: Border.all(
+                                  color: Colors.grey,
+                                  style: BorderStyle.solid,
+                                  width: 0.80),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(
+                                    5.0,
+                                    5.0,
                                   ),
-                                ]),
-                            child: DropdownButton<String>(
-                              isExpanded: true,
-                              // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                              value: Branch,
-                              hint: const Text('Select an item'),
-                              icon: const Icon(
-                                  Icons.keyboard_arrow_down_outlined),
-                              elevation: 16,
-                              dropdownColor: Colors.grey[100],
-                              style: const TextStyle(color: Colors.black),
-                              underline:
-                                  Container(height: 0, color: Colors.black),
-                              onChanged: (value) {
-                                setState(() {
-                                  Branch = value;
-                                });
-                              },
-                              items: items.map((item) {
-                                return DropdownMenuItem<String>(
-                                  value: item,
-                                  child: Text(item),
-                                );
-                              }).toList(),
-                            ),
+                                  blurRadius: 5.0,
+                                  spreadRadius: 1.0,
+                                ),
+                              ]),
+                          child: DropdownButton<String>(
+                            isExpanded: true,
+                            // hint: Text(hint,style: TextStyle(color: Colors.black),),
+                            value: Branch,
+                            hint: const Text('Select an item'),
+                            icon:
+                                const Icon(Icons.keyboard_arrow_down_outlined),
+                            elevation: 16,
+                            dropdownColor: Colors.grey[100],
+                            style: const TextStyle(color: Colors.black),
+                            underline:
+                                Container(height: 0, color: Colors.black),
+                            onChanged: (value) {
+                              setState(() {
+                                Branch = value;
+                              });
+                            },
+                            items: items.map((item) {
+                              return DropdownMenuItem<String>(
+                                value: item,
+                                child: Text(item),
+                              );
+                            }).toList(),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
-                    
+
                     // Container(
                     //   child: Column(
                     //     children: [
@@ -193,40 +190,40 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                     //     ],
                     //   ),
                     // ),
-                     dropdown(
+                    dropdown(
                         DropdownValue: semesterdropdownValue,
                         sTring: Semester,
                         Hint: "Semester"),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     dropdown(
                         DropdownValue: yeardropdownValue,
                         sTring: CollegeYear,
                         Hint: "Year"),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     dropdown(
                         DropdownValue: batchdropdownValue,
                         sTring: Batch,
                         Hint: "Batch"),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     dropdown(
                         DropdownValue: subjectdropdownValue,
                         sTring: Subject,
                         Hint: "Subject"),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.calendar_today,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Expanded(
@@ -235,7 +232,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                     'Choose Date',
                                     style: fieldTextStyle,
                                   )
-                                : Text('$_date', style: fieldTextStyle)),
+                                : Text(_date, style: fieldTextStyle)),
                         IconButton(
                           icon: Icon(
                             Icons.edit,
@@ -244,7 +241,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                           onPressed: () {
                             DatePicker.showDatePicker(
                               context,
-                              theme: DatePickerTheme(
+                              theme: const DatePickerTheme(
                                 containerHeight: 350,
                                 backgroundColor: Colors.white,
                               ),
@@ -263,15 +260,15 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.access_time,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Expanded(
@@ -281,7 +278,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                     style: fieldTextStyle,
                                   )
                                 : Text(
-                                    '$_start',
+                                    _start,
                                     style: fieldTextStyle,
                                   )),
                         IconButton(
@@ -292,7 +289,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                           onPressed: () {
                             DatePicker.showTime12hPicker(
                               context,
-                              theme: DatePickerTheme(
+                              theme: const DatePickerTheme(
                                 containerHeight: 300,
                                 backgroundColor: Colors.white,
                               ),
@@ -307,15 +304,15 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
                       children: <Widget>[
-                        Icon(
+                        const Icon(
                           Icons.access_time,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         Expanded(
@@ -325,7 +322,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                     style: fieldTextStyle,
                                   )
                                 : Text(
-                                    '$_end',
+                                    _end,
                                     style: fieldTextStyle,
                                   )),
                         IconButton(
@@ -336,7 +333,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                           onPressed: () {
                             DatePicker.showTime12hPicker(
                               context,
-                              theme: DatePickerTheme(
+                              theme: const DatePickerTheme(
                                 containerHeight: 240,
                                 backgroundColor: Colors.white,
                               ),
@@ -351,14 +348,14 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                         )
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Center(
                       child: Container(
                         // height: 300,
                         width: 350,
-                        padding: EdgeInsets.symmetric(horizontal: 10.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
                             color: Colors.grey[100],
                             borderRadius: BorderRadius.circular(15.0),
@@ -366,10 +363,10 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                 color: Colors.grey,
                                 style: BorderStyle.solid,
                                 width: 0.80),
-                            boxShadow: [
+                            boxShadow: const [
                               BoxShadow(
                                 color: Colors.grey,
-                                offset: const Offset(
+                                offset: Offset(
                                   5.0,
                                   5.0,
                                 ),
@@ -380,14 +377,19 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                         child: Center(
                           child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               // Text("Time",style: TextStyle(fontSize: 30),),
-                              Text(
-                                "${_current.toLocal()}".split(' ')[0],
-                                style: TextStyle(fontSize: 30),
-                              ),
+                              _date.isEmpty
+                                  ? Text(
+                                      "${_current.toLocal()}".split(' ')[0],
+                                      style: const TextStyle(fontSize: 30),
+                                    )
+                                  : Text(
+                                      _date,
+                                      style: const TextStyle(fontSize: 30),
+                                    ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Row(
@@ -432,10 +434,10 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                             Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      AttendencePage()),
+                                                      const AttendencePage()),
                                             );
                                           },
-                                          child: Text("Take Attendence")),
+                                          child: const Text("Take Attendence")),
                                     ),
                                   ],
                                 ),

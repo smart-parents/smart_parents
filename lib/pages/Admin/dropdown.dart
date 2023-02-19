@@ -1,3 +1,5 @@
+// ignore_for_file: non_constant_identifier_names
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
@@ -26,7 +28,7 @@ class _DropdownDemoState extends State<DropdownDemo> {
             future: FirebaseFirestore.instance.collection('department').get(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return CircularProgressIndicator();
+                return const CircularProgressIndicator();
               }
               // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
               final items =
@@ -61,86 +63,84 @@ class _DropdownDemoState extends State<DropdownDemo> {
                   //     });
                   //   },
                   // ),ListView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Column(
                         children: [
-                          SizedBox(
+                          const SizedBox(
                             height: 30,
                           ),
                           // dropdown(
                           //     DropdownValue: items.toString(),
                           //     sTring: Branch,
                           //     Hint: "Branch"),
-                          Container(
-                            child: Column(
-                              children: [
-                                const Text(
-                                  "Branch",
-                                  style: TextStyle(fontSize: 20),
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Container(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 10.0),
-                                  decoration: BoxDecoration(
-                                      color: Colors.grey[100],
-                                      borderRadius: BorderRadius.circular(15.0),
-                                      border: Border.all(
-                                          color: Colors.grey,
-                                          style: BorderStyle.solid,
-                                          width: 0.80),
-                                      boxShadow: [
-                                        BoxShadow(
-                                          color: Colors.grey,
-                                          offset: const Offset(
-                                            5.0,
-                                            5.0,
-                                          ),
-                                          blurRadius: 5.0,
-                                          spreadRadius: 1.0,
+                          Column(
+                            children: [
+                              const Text(
+                                "Branch",
+                                style: TextStyle(fontSize: 20),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10.0),
+                                decoration: BoxDecoration(
+                                    color: Colors.grey[100],
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    border: Border.all(
+                                        color: Colors.grey,
+                                        style: BorderStyle.solid,
+                                        width: 0.80),
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        color: Colors.grey,
+                                        offset: Offset(
+                                          5.0,
+                                          5.0,
                                         ),
-                                      ]),
-                                  child: DropdownButton<String>(
-                                    isExpanded: true,
-                                    // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                                    value: Branch,
-                                    hint: const Text('Select an item'),
-                                    icon: const Icon(
-                                        Icons.keyboard_arrow_down_outlined),
-                                    elevation: 16,
-                                    dropdownColor: Colors.grey[100],
-                                    style: const TextStyle(color: Colors.black),
-                                    underline: Container(
-                                        height: 0, color: Colors.black),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        Branch = value;
-                                      });
-                                    },
-                                    items: items.map((item) {
-                                      return DropdownMenuItem<String>(
-                                        value: item,
-                                        child: Text(item),
-                                      );
-                                    }).toList(),
-                                  ),
+                                        blurRadius: 5.0,
+                                        spreadRadius: 1.0,
+                                      ),
+                                    ]),
+                                child: DropdownButton<String>(
+                                  isExpanded: true,
+                                  // hint: Text(hint,style: TextStyle(color: Colors.black),),
+                                  value: Branch,
+                                  hint: const Text('Select an item'),
+                                  icon: const Icon(
+                                      Icons.keyboard_arrow_down_outlined),
+                                  elevation: 16,
+                                  dropdownColor: Colors.grey[100],
+                                  style: const TextStyle(color: Colors.black),
+                                  underline:
+                                      Container(height: 0, color: Colors.black),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      Branch = value;
+                                    });
+                                  },
+                                  items: items.map((item) {
+                                    return DropdownMenuItem<String>(
+                                      value: item,
+                                      child: Text(item),
+                                    );
+                                  }).toList(),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           dropdown(
                               DropdownValue: semesterdropdownValue,
                               sTring: Semester,
                               Hint: "Semester"),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           TextFormField(
@@ -187,7 +187,7 @@ class _DropdownDemoState extends State<DropdownDemo> {
                           //         });
                           //       },
                           //     ),
-                          SizedBox(
+                          const SizedBox(
                             height: 20,
                           ),
                           // Text(

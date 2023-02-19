@@ -1,8 +1,8 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-// import 'package:smart_parents/pages/Student/profile_screen_s.dart';
-// import 'package:smart_parents/widgest/textfieldwidgetform.dart';
 
 class EditS extends StatefulWidget {
   final String id;
@@ -78,10 +78,10 @@ class _EditSState extends State<EditS> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          foregroundColor: Colors.white,
-          backgroundColor: Color.fromARGB(255, 37, 86, 116),
-          leading: BackButton(),
-          title: Text('STUDENT DETAILS')),
+          // foregroundColor: Colors.white,
+          // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          leading: const BackButton(),
+          title: const Text('STUDENT DETAILS')),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -111,21 +111,21 @@ class _EditSState extends State<EditS> {
               var batch = data['batch'];
               return Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  Text(
+                  const Text(
                     'EDIT',
                     style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text(
                           "Name",
                           style: TextStyle(
@@ -142,9 +142,9 @@ class _EditSState extends State<EditS> {
                           initialValue: name,
                           autofocus: false,
                           onChanged: (value) => name = value,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 2, horizontal: 10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -161,14 +161,14 @@ class _EditSState extends State<EditS> {
                   //   text: "$name",
                   //   // controller: name,
                   // ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text(
                           "Email",
                           style: TextStyle(
@@ -185,9 +185,9 @@ class _EditSState extends State<EditS> {
                           initialValue: email,
                           autofocus: false,
                           onChanged: (value) => email = value,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 2, horizontal: 10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -197,14 +197,14 @@ class _EditSState extends State<EditS> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text(
                           "Enrollment Number",
                           style: TextStyle(
@@ -221,9 +221,9 @@ class _EditSState extends State<EditS> {
                           initialValue: number,
                           autofocus: false,
                           onChanged: (value) => number = value,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 2, horizontal: 10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -233,14 +233,14 @@ class _EditSState extends State<EditS> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text(
                           "Mobile Number",
                           style: TextStyle(
@@ -257,9 +257,9 @@ class _EditSState extends State<EditS> {
                           initialValue: mono,
                           autofocus: false,
                           onChanged: (value) => mono = value,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 2, horizontal: 10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -269,14 +269,14 @@ class _EditSState extends State<EditS> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text(
                           "DOB",
                           style: TextStyle(
@@ -303,8 +303,8 @@ class _EditSState extends State<EditS> {
                             return null;
                           },
                           decoration: InputDecoration(
-                            prefixIcon: Icon(Icons.calendar_today),
-                            contentPadding: EdgeInsets.symmetric(
+                            prefixIcon: const Icon(Icons.calendar_today),
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 2, horizontal: 10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -314,7 +314,7 @@ class _EditSState extends State<EditS> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -324,9 +324,8 @@ class _EditSState extends State<EditS> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0, right: 20.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
                               child: Text(
                                 "Year",
                                 style: TextStyle(
@@ -345,9 +344,9 @@ class _EditSState extends State<EditS> {
                                 initialValue: year,
                                 autofocus: false,
                                 onChanged: (value) => year = value,
-                                style: TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 20),
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 2, horizontal: 10),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
@@ -362,9 +361,8 @@ class _EditSState extends State<EditS> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0, right: 20.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
                               child: Text(
                                 "Branch",
                                 style: TextStyle(
@@ -383,9 +381,9 @@ class _EditSState extends State<EditS> {
                                 initialValue: branch,
                                 autofocus: false,
                                 onChanged: (value) => branch = value,
-                                style: TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 20),
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 2, horizontal: 10),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
@@ -398,7 +396,7 @@ class _EditSState extends State<EditS> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(
@@ -408,9 +406,8 @@ class _EditSState extends State<EditS> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0, right: 20.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
                               child: Text(
                                 "Semester",
                                 style: TextStyle(
@@ -429,9 +426,9 @@ class _EditSState extends State<EditS> {
                                 initialValue: sem,
                                 autofocus: false,
                                 onChanged: (value) => sem = value,
-                                style: TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 20),
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 2, horizontal: 10),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
@@ -446,9 +443,8 @@ class _EditSState extends State<EditS> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0, right: 20.0),
+                            const Padding(
+                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
                               child: Text(
                                 "Batch",
                                 style: TextStyle(
@@ -467,9 +463,9 @@ class _EditSState extends State<EditS> {
                                 initialValue: batch,
                                 autofocus: false,
                                 onChanged: (value) => batch = value,
-                                style: TextStyle(fontSize: 20),
+                                style: const TextStyle(fontSize: 20),
                                 decoration: InputDecoration(
-                                  contentPadding: EdgeInsets.symmetric(
+                                  contentPadding: const EdgeInsets.symmetric(
                                       vertical: 2, horizontal: 10),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(12),
@@ -482,7 +478,7 @@ class _EditSState extends State<EditS> {
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Center(
@@ -495,15 +491,16 @@ class _EditSState extends State<EditS> {
                                   Navigator.pop(context)
                                 }
                             },
-                        child: Text(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 37, 86, 116),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          fixedSize: const Size(300, 60),
+                        ),
+                        child: const Text(
                           "Confirm",
                           style: TextStyle(color: Colors.white),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 37, 86, 116),
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0)),
-                          fixedSize: Size(300, 60),
                         )),
                   )
                 ],

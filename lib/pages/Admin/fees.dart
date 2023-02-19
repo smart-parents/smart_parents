@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 import 'package:smart_parents/widgest/textfieldwidgetform.dart';
 
@@ -23,19 +25,19 @@ class _FeesState extends State<Fees> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 123, 180, 204),
-          leading: BackButton(),
-          title: Text('Fees Notification')),
+          // backgroundColor: const Color.fromARGB(255, 123, 180, 204),
+          leading: const BackButton(),
+          title: const Text('Fees Notification')),
       body: SingleChildScrollView(
           child: Column(children: [
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
-        Text(
+        const Text(
           'Students Details',
           style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         TextFieldWidgetForm(
@@ -43,7 +45,7 @@ class _FeesState extends State<Fees> {
           onChanged: (yuu) {},
           text: "",
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         TextFieldWidgetForm(
@@ -51,7 +53,7 @@ class _FeesState extends State<Fees> {
           onChanged: (yuu) {},
           text: "",
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         TextFieldWidgetForm(
@@ -59,7 +61,7 @@ class _FeesState extends State<Fees> {
           onChanged: (yuu) {},
           text: "",
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Row(
@@ -81,7 +83,7 @@ class _FeesState extends State<Fees> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         Row(
@@ -103,7 +105,7 @@ class _FeesState extends State<Fees> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 15,
         ),
         TextFieldWidgetForm(
@@ -111,7 +113,7 @@ class _FeesState extends State<Fees> {
           onChanged: (yuu) {},
           text: "",
         ),
-        SizedBox(
+        const SizedBox(
           height: 20,
         ),
         Center(
@@ -139,7 +141,7 @@ class _FeesState extends State<Fees> {
                   ),
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 20,
               ),
               Expanded(

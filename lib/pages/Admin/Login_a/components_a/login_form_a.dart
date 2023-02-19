@@ -1,8 +1,9 @@
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/already_have_an_account_acheck.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/Signup_a/signup_screen_a.dart';
 import 'package:smart_parents/pages/Admin/forgot_password_a.dart';
@@ -50,14 +51,14 @@ class _LoginFormState extends State<LoginForm> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => UserMainA(),
+            builder: (context) => const UserMainA(),
           ),
         );
       } on FirebaseAuthException catch (e) {
         if (e.code == 'user-not-found') {
           print("No User Found for that Email");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "No User Found for that Email",
@@ -68,7 +69,7 @@ class _LoginFormState extends State<LoginForm> {
         } else if (e.code == 'wrong-password') {
           print("Wrong Password Provided by User");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "Wrong Password Provided by User",
@@ -81,7 +82,7 @@ class _LoginFormState extends State<LoginForm> {
     } else {
       print("No User Found for that Email");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           backgroundColor: Colors.lightBlueAccent,
           content: Text(
             "No User Found for that Email",
@@ -163,8 +164,8 @@ class _LoginFormState extends State<LoginForm> {
                       _showPassword ? Icons.visibility : Icons.visibility_off),
                   onPressed: _togglePasswordVisibility,
                 ),
-                errorStyle:
-                    TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+                errorStyle: const TextStyle(
+                    color: Colors.lightBlueAccent, fontSize: 15),
               ),
               controller: passwordController,
               validator: (value) {
@@ -200,7 +201,7 @@ class _LoginFormState extends State<LoginForm> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ForgotPassword()),
+                            builder: (context) => const ForgotPassword()),
                       );
                     },
                     child: const Text(

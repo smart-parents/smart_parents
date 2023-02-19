@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +53,7 @@ class _LoginFormState extends State<LoginForm> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => UserMainS(),
+            builder: (context) => const UserMainS(),
           ),
         );
       } on FirebaseAuthException catch (e) {
@@ -59,7 +61,7 @@ class _LoginFormState extends State<LoginForm> {
         if (e.code == 'user-not-found') {
           print("No User Found for that Enrollment number");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "No User Found for that Enrollment number",
@@ -70,7 +72,7 @@ class _LoginFormState extends State<LoginForm> {
         } else if (e.code == 'wrong-password') {
           print("Wrong Password Provided by User");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "Wrong Password Provided by User",
@@ -83,7 +85,7 @@ class _LoginFormState extends State<LoginForm> {
     } else {
       print("No Student Found for that Enrollment number");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           backgroundColor: Colors.lightBlueAccent,
           content: Text(
             "No Student Found for that Enrollment number",
@@ -161,8 +163,8 @@ class _LoginFormState extends State<LoginForm> {
                       _showPassword ? Icons.visibility : Icons.visibility_off),
                   onPressed: _togglePasswordVisibility,
                 ),
-                errorStyle:
-                    TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+                errorStyle: const TextStyle(
+                    color: Colors.lightBlueAccent, fontSize: 15),
               ),
               controller: passwordController,
               validator: (value) {

@@ -39,9 +39,20 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Smart Parents',
             theme: ThemeData(
-              primarySwatch: Colors.lightBlue,
-              backgroundColor: Colors.white,
-              scaffoldBackgroundColor: Colors.white,
+              // scaffoldBackgroundColor: const Color(0xFF255674),
+              colorScheme: ColorScheme.fromSwatch(
+                  primarySwatch: const MaterialColor(0xFF255674, {
+                50: Color(0xFFE5EDF5),
+                100: Color(0xFFBFD3E2),
+                200: Color(0xFF93B5CC),
+                300: Color(0xFF6597B5),
+                400: Color(0xFF417FA5),
+                500: Color(0xFF1D678E),
+                600: Color(0xFF195E84),
+                700: Color(0xFF145473),
+                800: Color(0xFF0F4E63),
+                900: Color(0xFF083F4B),
+              })).copyWith(background: Colors.white),
             ),
             debugShowCheckedModeBanner: false,
             home: const TimeImage(),

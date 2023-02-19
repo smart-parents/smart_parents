@@ -1,8 +1,9 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
 
 class AddFacultyPage extends StatefulWidget {
   const AddFacultyPage({Key? key}) : super(key: key);
@@ -148,10 +149,10 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
     // login();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add New Faculty"),
+        title: const Text("Add New Faculty"),
         automaticallyImplyLeading: false,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
           tooltip: "Back",
           onPressed: () => Navigator.pop(context),
         ),
@@ -160,15 +161,15 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
           child: ListView(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
                   maxLength: 4,
                   autofocus: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Faculty Id: ',
                     labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
@@ -188,10 +189,10 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
                   autofocus: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Name: ',
                     labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
@@ -208,11 +209,11 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
                   maxLength: 2,
                   autofocus: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Department Id: ',
                     labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
@@ -232,11 +233,11 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
                   autofocus: false,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Password: ',
                     labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
@@ -252,42 +253,41 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                   },
                 ),
               ),
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, otherwise false.
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            faculty = facultyController.text;
-                            name = nameController.text;
-                            department = departmentController.text;
-                            password = passwordController.text;
-                            // addUser();
-                            // clearText();
-                            registration();
-                            // Navigator.pop(context);
-                          });
-                        }
-                        login();
-                      },
-                      child: Text(
-                        'Register',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Validate returns true if the form is valid, otherwise false.
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          faculty = facultyController.text;
+                          name = nameController.text;
+                          department = departmentController.text;
+                          password = passwordController.text;
+                          // addUser();
+                          // clearText();
+                          registration();
+                          // Navigator.pop(context);
+                        });
+                      }
+                      login();
+                    },
+                    child: const Text(
+                      'Register',
+                      style: TextStyle(fontSize: 18.0),
                     ),
-                    ElevatedButton(
-                      onPressed: () => {clearText()},
-                      child: Text(
-                        'Reset',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => {clearText()},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueGrey),
+                    child: const Text(
+                      'Reset',
+                      style: TextStyle(fontSize: 18.0),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               )
             ],
           ),

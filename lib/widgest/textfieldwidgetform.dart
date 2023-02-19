@@ -1,5 +1,7 @@
 // import 'dart:ffi';
 
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
 
 class TextFieldWidgetForm extends StatefulWidget {
@@ -46,7 +48,8 @@ class _TextFieldWidgetFormState extends State<TextFieldWidgetForm> {
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: Text(
               widget.label,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
+              style:
+                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 18.0),
             ),
           ),
           const SizedBox(
@@ -57,10 +60,10 @@ class _TextFieldWidgetFormState extends State<TextFieldWidgetForm> {
             child: TextFormField(
               // readOnly: readOnly,
               // initialValue: initialValue,
-              style: TextStyle(fontSize: 20),
+              style: const TextStyle(fontSize: 20),
               decoration: InputDecoration(
                 contentPadding:
-                    EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                    const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),

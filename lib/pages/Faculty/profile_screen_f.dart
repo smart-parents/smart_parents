@@ -1,4 +1,5 @@
-// import 'dart:async';
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,7 @@ import 'package:smart_parents/pages/option.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileF extends StatefulWidget {
-  ProfileF({Key? key}) : super(key: key);
+  const ProfileF({Key? key}) : super(key: key);
 
   @override
   _ProfileFState createState() => _ProfileFState();
@@ -112,11 +113,11 @@ class _ProfileFState extends State<ProfileF> {
               color: Colors.blue[50],
               child: Column(
                 children: [
-                  CircleAvatar(
+                  const CircleAvatar(
                     radius: 40,
                     backgroundImage: AssetImage('assets/images/man.png'),
                   ),
-                  Text(
+                  const Text(
                     'Faculty',
                     style: TextStyle(
                       fontSize: 30,
@@ -131,7 +132,7 @@ class _ProfileFState extends State<ProfileF> {
                     height: MediaQuery.of(context).size.height * 0.6,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
-                      color: Color.fromARGB(255, 37, 86, 116),
+                      color: const Color.fromARGB(255, 37, 86, 116),
                     ),
                     // alignment: Alignment(0.0, -0.9),
                     child: Column(
@@ -143,7 +144,7 @@ class _ProfileFState extends State<ProfileF> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 30,
                               ),
                               Text(
@@ -153,55 +154,56 @@ class _ProfileFState extends State<ProfileF> {
                                 // ignore: prefer_const_constructors
                                 style: TextStyle(
                                   fontSize: 20,
-                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  color:
+                                      const Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "Email: $email",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "Name: $name",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "Mobile: $mono",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "DOB: $dob",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               Text(
                                 "Age: $age",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
                                 ),
@@ -232,61 +234,58 @@ class _ProfileFState extends State<ProfileF> {
                         // Align(
                         //   alignment: Alignment(0, 0),
                         // child:
-                        Container(
-                          alignment: Alignment(0, 0),
-                          child: Row(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              TextButton.icon(
-                                onPressed: () async => {
-                                  Navigator.push(
+                        Row(
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            TextButton.icon(
+                              onPressed: () async => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => EditF(
+                                      id: "$id",
+                                    ),
+                                  ),
+                                ) // (route) => false)
+                              },
+                              icon: const Icon(
+                                Icons.info_outline,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
+                                'Edit Profile',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                            ),
+                            TextButton.icon(
+                              onPressed: () async => {
+                                await FirebaseAuth.instance.signOut(),
+                                delete(),
+                                // await storage.delete(key: "uid"),
+                                Navigator.pushAndRemoveUntil(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => EditF(
-                                        id: "$id",
-                                      ),
+                                      builder: (context) => const Option(),
                                     ),
-                                  ) // (route) => false)
-                                },
-                                icon: Icon(
-                                  Icons.info_outline,
-                                  color: Colors.white,
-                                ),
-                                label: Text(
-                                  'Edit Profile',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                  ),
+                                    (route) => false)
+                              },
+                              icon: const Icon(
+                                Icons.logout,
+                                color: Colors.white,
+                              ),
+                              label: const Text(
+                                'Logout',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
-                              TextButton.icon(
-                                onPressed: () async => {
-                                  await FirebaseAuth.instance.signOut(),
-                                  delete(),
-                                  // await storage.delete(key: "uid"),
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const Option(),
-                                      ),
-                                      (route) => false)
-                                },
-                                icon: Icon(
-                                  Icons.logout,
-                                  color: Colors.white,
-                                ),
-                                label: Text(
-                                  'Logout',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color.fromARGB(255, 255, 255, 255),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                         // ),
                       ],

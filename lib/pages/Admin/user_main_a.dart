@@ -1,13 +1,13 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/dashboard_a.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Admin/change_password_a.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
 class UserMainA extends StatefulWidget {
-  UserMainA({Key? key}) : super(key: key);
+  const UserMainA({Key? key}) : super(key: key);
   // void initState() {
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
   //     // SystemUiOverlay.bottom,
@@ -21,10 +21,10 @@ class UserMainA extends StatefulWidget {
 class _UserMainState extends State<UserMainA> {
   int _selectedIndex = 0;
   // final storage = new FlutterSecureStorage();
-  static List<Widget> _widgetOptions = <Widget>[
-    Dashboard(),
-    Profile(),
-    ChangePassword(),
+  static final List<Widget> _widgetOptions = <Widget>[
+    const Dashboard(),
+    const Profile(),
+    const ChangePassword(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -62,7 +62,7 @@ class _UserMainState extends State<UserMainA> {
     // login();
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(255, 207, 235, 255),
+        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         automaticallyImplyLeading: false,
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,15 +112,15 @@ class _UserMainState extends State<UserMainA> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-              rippleColor: Color.fromARGB(255, 37, 86, 116),
-              hoverColor: Color.fromARGB(255, 37, 86, 116),
+              rippleColor: const Color.fromARGB(255, 37, 86, 116),
+              hoverColor: const Color.fromARGB(255, 37, 86, 116),
               // gap: 8,
               activeColor: Colors.white,
               iconSize: 24,
-              padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               // tabMargin: EdgeInsets.symmetric(horizontal: 50),
               // duration: Duration(milliseconds: 400),
-              tabBackgroundColor: Color.fromARGB(255, 37, 86, 116),
+              tabBackgroundColor: const Color.fromARGB(255, 37, 86, 116),
               color: Colors.black,
               tabs: const [
                 GButton(

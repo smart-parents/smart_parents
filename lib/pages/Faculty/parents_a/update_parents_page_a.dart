@@ -1,9 +1,11 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class UpdateParentPage extends StatefulWidget {
   final String id;
-  UpdateParentPage({Key? key, required this.id}) : super(key: key);
+  const UpdateParentPage({Key? key, required this.id}) : super(key: key);
 // void initState() {
 //     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
 //       // SystemUiOverlay.bottom,
@@ -32,14 +34,14 @@ class _UpdateParentPageState extends State<UpdateParentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Update Student"),
+        title: const Text("Update Student"),
         automaticallyImplyLeading: false,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
           tooltip: "Back",
           onPressed: () => Navigator.of(context).pop(),
         ),
-        backgroundColor: const Color.fromARGB(255, 207, 235, 255),
+        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
       ),
       body: Form(
           key: _formKey,
@@ -63,16 +65,17 @@ class _UpdateParentPageState extends State<UpdateParentPage> {
               var number = data['number'];
               var password = data['password'];
               return Padding(
-                padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                 child: ListView(
                   children: [
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextFormField(
                         initialValue: name,
                         autofocus: false,
                         onChanged: (value) => name = value,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Name: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
@@ -88,13 +91,13 @@ class _UpdateParentPageState extends State<UpdateParentPage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextFormField(
                         maxLength: 12,
                         initialValue: number,
                         autofocus: false,
                         onChanged: (value) => number = value,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Enrollment Number: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
@@ -112,13 +115,13 @@ class _UpdateParentPageState extends State<UpdateParentPage> {
                       ),
                     ),
                     Container(
-                      margin: EdgeInsets.symmetric(vertical: 10.0),
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextFormField(
                         initialValue: password,
                         autofocus: false,
                         onChanged: (value) => password = value,
                         obscureText: true,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: 'Password: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
@@ -133,34 +136,32 @@ class _UpdateParentPageState extends State<UpdateParentPage> {
                         },
                       ),
                     ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ElevatedButton(
-                            onPressed: () {
-                              // Validate returns true if the form is valid, otherwise false.
-                              if (_formKey.currentState!.validate()) {
-                                updateUser(widget.id, name, number, password);
-                                Navigator.pop(context);
-                              }
-                            },
-                            child: const Text(
-                              'Update',
-                              style: TextStyle(fontSize: 18.0),
-                            ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            // Validate returns true if the form is valid, otherwise false.
+                            if (_formKey.currentState!.validate()) {
+                              updateUser(widget.id, name, number, password);
+                              Navigator.pop(context);
+                            }
+                          },
+                          child: const Text(
+                            'Update',
+                            style: TextStyle(fontSize: 18.0),
                           ),
-                          // ElevatedButton(
-                          //   onPressed: () => {},
-                          //   style: ElevatedButton.styleFrom(
-                          //       backgroundColor: Colors.blueGrey),
-                          //   child: const Text(
-                          //     'Reset',
-                          //     style: TextStyle(fontSize: 18.0),
-                          //   ),
-                          // ),
-                        ],
-                      ),
+                        ),
+                        // ElevatedButton(
+                        //   onPressed: () => {},
+                        //   style: ElevatedButton.styleFrom(
+                        //       backgroundColor: Colors.blueGrey),
+                        //   child: const Text(
+                        //     'Reset',
+                        //     style: TextStyle(fontSize: 18.0),
+                        //   ),
+                        // ),
+                      ],
                     )
                   ],
                 ),

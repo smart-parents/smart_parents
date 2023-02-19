@@ -1,8 +1,9 @@
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/user_main_f.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -47,7 +48,7 @@ class _LoginFormState extends State<LoginForm> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => UserMainF(),
+            builder: (context) => const UserMainF(),
           ),
         );
       } on FirebaseAuthException catch (e) {
@@ -55,7 +56,7 @@ class _LoginFormState extends State<LoginForm> {
         if (e.code == 'user-not-found') {
           print("No User Found for that Enrollment number");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "No User Found for that Enrollment number",
@@ -66,7 +67,7 @@ class _LoginFormState extends State<LoginForm> {
         } else if (e.code == 'wrong-password') {
           print("Wrong Password Provided by User");
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "Wrong Password Provided by User",
@@ -79,7 +80,7 @@ class _LoginFormState extends State<LoginForm> {
     } else {
       print("No Faculty Found for that Faculty ID");
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           backgroundColor: Colors.lightBlueAccent,
           content: Text(
             "No faculty Found for that Faculty ID",
@@ -122,7 +123,7 @@ class _LoginFormState extends State<LoginForm> {
             decoration: const InputDecoration(
               hintText: "Your Faculty ID",
               prefixIcon: Padding(
-                padding: const EdgeInsets.all(defaultPadding),
+                padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
               errorStyle:

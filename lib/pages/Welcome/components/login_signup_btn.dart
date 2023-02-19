@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/check.dart';
-import 'package:smart_parents/pages/option.dart';
 
 class LoginAndSignupBtn extends StatelessWidget {
   const LoginAndSignupBtn({

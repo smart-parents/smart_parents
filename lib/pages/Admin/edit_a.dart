@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 // import 'package:smart_parents/pages/Student/profile_screen_s.dart';
@@ -28,10 +30,10 @@ class _EditAState extends State<EditA> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          foregroundColor: Colors.white,
-          backgroundColor: Color.fromARGB(255, 37, 86, 116),
-          leading: BackButton(),
-          title: Text('ADMIN DETAILS')),
+          // foregroundColor: Colors.white,
+          // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          leading: const BackButton(),
+          title: const Text('ADMIN DETAILS')),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
@@ -56,21 +58,21 @@ class _EditAState extends State<EditA> {
               var mono = data['mono'];
               return Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  Text(
+                  const Text(
                     'EDIT',
                     style: TextStyle(fontSize: 21, fontWeight: FontWeight.bold),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text(
                           "Name",
                           style: TextStyle(
@@ -87,9 +89,9 @@ class _EditAState extends State<EditA> {
                           initialValue: name,
                           autofocus: false,
                           onChanged: (value) => name = value,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 2, horizontal: 10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -99,14 +101,14 @@ class _EditAState extends State<EditA> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text(
                           "Email",
                           style: TextStyle(
@@ -123,9 +125,9 @@ class _EditAState extends State<EditA> {
                           initialValue: email,
                           autofocus: false,
                           onChanged: (value) => email = value,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 2, horizontal: 10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -135,17 +137,17 @@ class _EditAState extends State<EditA> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
-                  SizedBox(
-                    height: 15,
-                  ),
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 20.0, right: 20.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 20.0, right: 20.0),
                         child: Text(
                           "Mobile Number",
                           style: TextStyle(
@@ -162,9 +164,9 @@ class _EditAState extends State<EditA> {
                           initialValue: mono,
                           autofocus: false,
                           onChanged: (value) => mono = value,
-                          style: TextStyle(fontSize: 20),
+                          style: const TextStyle(fontSize: 20),
                           decoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 2, horizontal: 10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -174,7 +176,7 @@ class _EditAState extends State<EditA> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Center(
@@ -186,15 +188,16 @@ class _EditAState extends State<EditA> {
                                   Navigator.pop(context)
                                 }
                             },
-                        child: Text(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              const Color.fromARGB(255, 37, 86, 116),
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0)),
+                          fixedSize: const Size(300, 60),
+                        ),
+                        child: const Text(
                           "Confirm",
                           style: TextStyle(color: Colors.white),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color.fromARGB(255, 37, 86, 116),
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0)),
-                          fixedSize: Size(300, 60),
                         )),
                   )
                 ],

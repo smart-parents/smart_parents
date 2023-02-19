@@ -1,7 +1,8 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/department_a/depart_a.dart';
-import 'package:smart_parents/pages/Admin/dropdown.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
 import 'package:smart_parents/pages/Admin/fees.dart';
 import 'package:smart_parents/pages/Admin/notice_dash.dart';
@@ -15,7 +16,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  final _prefs = SharedPreferences.getInstance();
+  // final _prefs = SharedPreferences.getInstance();
 
   // @override
   // void initState() {
@@ -129,7 +130,7 @@ class _DashboardState extends State<Dashboard> {
               onPressed: () => {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Notice()),
+                  MaterialPageRoute(builder: (context) => const Notice()),
                 ),
               },
               style: ElevatedButton.styleFrom(

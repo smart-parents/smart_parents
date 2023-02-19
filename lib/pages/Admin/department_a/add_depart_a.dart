@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -121,37 +123,37 @@ class _AddDepartPageState extends State<AddDepartPage> {
     // login();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add New Department"),
+        title: const Text("Add New Department"),
         automaticallyImplyLeading: false,
-        leading: new IconButton(
-          icon: new Icon(Icons.arrow_back),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
           tooltip: "Back",
           onPressed: () => Navigator.pop(context),
         ),
-        backgroundColor: const Color.fromARGB(255, 207, 235, 255),
+        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
       ),
       body: Form(
         key: _formKey,
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
           child: ListView(
             children: [
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
                   maxLength: 2,
                   autofocus: false,
                   decoration: InputDecoration(
                     labelText: 'Department Id: ',
-                    labelStyle: TextStyle(fontSize: 20.0),
+                    labelStyle: const TextStyle(fontSize: 20.0),
                     // border: OutlineInputBorder(),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    errorStyle:
-                        TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+                    errorStyle: const TextStyle(
+                        color: Colors.lightBlueAccent, fontSize: 15),
                   ),
                   keyboardType: TextInputType.number,
                   controller: departmentController,
@@ -166,20 +168,20 @@ class _AddDepartPageState extends State<AddDepartPage> {
                 ),
               ),
               Container(
-                margin: EdgeInsets.symmetric(vertical: 10.0),
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
                   autofocus: false,
                   decoration: InputDecoration(
                     labelText: 'Department Name: ',
-                    labelStyle: TextStyle(fontSize: 20.0),
+                    labelStyle: const TextStyle(fontSize: 20.0),
                     // border: OutlineInputBorder(),
                     contentPadding:
-                        EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                        const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    errorStyle:
-                        TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+                    errorStyle: const TextStyle(
+                        color: Colors.lightBlueAccent, fontSize: 15),
                   ),
                   controller: nameController,
                   validator: (value) {
@@ -195,7 +197,7 @@ class _AddDepartPageState extends State<AddDepartPage> {
               //   child:TextFormField(
               //     // autofocus: false,
               //      initialValue: semno,
-                   
+
               //     autofocus: false,
               //     onChanged: (value) => semno = value,
               //     style: TextStyle(fontSize: 20),
@@ -209,7 +211,7 @@ class _AddDepartPageState extends State<AddDepartPage> {
               //       ),
               //     )
               //   ),
-              
+
               // ),
               const SizedBox(
                 height: 5,
@@ -230,43 +232,42 @@ class _AddDepartPageState extends State<AddDepartPage> {
               //       ),
               //     ),
               //   ),
-              
-              Container(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        // Validate returns true if the form is valid, otherwise false.
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            name = nameController.text;
-                            departmentId = departmentController.text;
-                            addUser();
-                            clearText();
-                            // registration();
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text('Department Added.')));
-                          });
-                        }
-                      },
-                      child: Text(
-                        'Register',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      // Validate returns true if the form is valid, otherwise false.
+                      if (_formKey.currentState!.validate()) {
+                        setState(() {
+                          name = nameController.text;
+                          departmentId = departmentController.text;
+                          addUser();
+                          clearText();
+                          // registration();
+                          Navigator.pop(context);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content: Text('Department Added.')));
+                        });
+                      }
+                    },
+                    child: const Text(
+                      'Register',
+                      style: TextStyle(fontSize: 18.0),
                     ),
-                    ElevatedButton(
-                      onPressed: () => {clearText()},
-                      child: Text(
-                        'Reset',
-                        style: TextStyle(fontSize: 18.0),
-                      ),
-                      style: ElevatedButton.styleFrom(primary: Colors.blueGrey),
+                  ),
+                  ElevatedButton(
+                    onPressed: () => {clearText()},
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blueGrey),
+                    child: const Text(
+                      'Reset',
+                      style: TextStyle(fontSize: 18.0),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               )
             ],
           ),
