@@ -44,6 +44,14 @@ class _FacultyState extends State<Faculty> {
         .catchError((error) => print('Failed to Delete user: $error'));
   }
 
+  Future<void> updateStatus(id, _status) {
+    return facultys
+        .doc(id)
+        .update({'status': _status})
+        .then((value) => print('Status: $_status'))
+        .catchError((error) => print('Failed to update status: $error'));
+  }
+
   final _prefs = SharedPreferences.getInstance();
   login() async {
     FirebaseAuth.instance.signOut();
@@ -101,8 +109,20 @@ class _FacultyState extends State<Faculty> {
                 tooltip: "Back",
                 onPressed: () => Navigator.of(context).pop(),
               ),
-              title: const Text("Faculty Details",
-                  style: TextStyle(fontSize: 30.0)),
+              title: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text("Faculty Details",
+                      style: TextStyle(fontSize: 30.0)),
+                  //    IconButton(
+                  //   icon: const Icon(Icons.sort_rounded),
+                  //   tooltip: "Filter",
+                  //   onPressed: () => AlertDialog(
+
+                  //   ),
+                  // ),
+                ],
+              ),
             ),
             body: storedocs.isNotEmpty
                 ? ListView.builder(
@@ -145,35 +165,26 @@ class _FacultyState extends State<Faculty> {
                                   ),
                                   Column(
                                     children: [
-                                      const Text("Delete"),
-                                      IconButton(
-                                        highlightColor: Colors.red,
-                                        onPressed: () async {
-                                          try {
-                                            // await delete(storedocs[index]
-                                            //         ['number'] +
-                                            //     '@sps.com');
-                                            deleteUser(storedocs[index]['id']);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content:
-                                                      Text('Faculty deleted.')),
-                                            );
-                                          } catch (e) {
-                                            print(e);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                  content: Text(
-                                                      'Failed to delete student: $e')),
-                                            );
-                                          }
+                                      Switch(
+                                        value: storedocs[index]['status'],
+                                        onChanged: (value) {
+                                          setState(() {
+                                            // _status = value;
+                                            updateStatus(
+                                                storedocs[index]['id'], value);
+                                          });
                                         },
-                                        icon: const Icon(
-                                          Icons.delete,
-                                          color: Colors.red,
-                                        ),
+                                      ),
+                                      Text(
+                                        storedocs[index]['status']
+                                            ? 'Active'
+                                            : 'Disactive',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: storedocs[index]['status']
+                                                ? Colors.green
+                                                : Colors.red),
                                       ),
                                     ],
                                   ),
@@ -188,7 +199,21 @@ class _FacultyState extends State<Faculty> {
                                     child: Column(
                                       children: [
                                         Text(
-                                          "Department: ${storedocs[index]['department']}",
+                                          'email : ${storedocs[index]['email']}',
+                                          style: const TextStyle(fontSize: 13),
+                                        ),
+                                        Text(
+                                          'Mo: ${storedocs[index]['mono']}',
+                                          style: const TextStyle(fontSize: 13),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          'Branch : ${storedocs[index]['branch']}',
                                           style: const TextStyle(fontSize: 13),
                                         ),
                                       ],

@@ -45,6 +45,7 @@ class _LoginFormState extends State<LoginForm> {
         await prefs.setString('role', 'faculty');
         await prefs.setString('faculty', "$faculty@spf.com");
         await prefs.setString('pass', password);
+        await prefs.setString('id', faculty);
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

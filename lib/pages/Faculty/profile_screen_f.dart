@@ -129,7 +129,7 @@ class _ProfileFState extends State<ProfileF> {
                     // width: 365.0,
                     margin:
                         const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-                    height: MediaQuery.of(context).size.height * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.5,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
                       color: const Color.fromARGB(255, 37, 86, 116),
@@ -144,9 +144,9 @@ class _ProfileFState extends State<ProfileF> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const SizedBox(
-                                height: 30,
-                              ),
+                              // const SizedBox(
+                              //   height: 10,
+                              // ),
                               Text(
                                 // alignment: Alignment(0.0, -0.8),
                                 "Faculty Id: $faculty",

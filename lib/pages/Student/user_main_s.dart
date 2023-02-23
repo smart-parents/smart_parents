@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Student/Chat/chatpage.dart';
+import 'package:smart_parents/pages/Student/chat.dart';
 import 'package:smart_parents/pages/Student/dashboard_s.dart';
 import 'package:smart_parents/pages/Student/profile_screen_s.dart';
 
@@ -26,7 +27,7 @@ class _UserMainState extends State<UserMainS> {
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Attendance_screen(),
-    const Chatpage(),
+    ChatScreen(),
     const Profile_screenS()
   ];
 

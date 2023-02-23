@@ -6,11 +6,6 @@ import 'package:flutter/material.dart';
 class UpdateStudentPage extends StatefulWidget {
   final String id;
   const UpdateStudentPage({Key? key, required this.id}) : super(key: key);
-// void initState() {
-//     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-//       // SystemUiOverlay.bottom,
-//     ]);
-// }
   @override
   _UpdateStudentPageState createState() => _UpdateStudentPageState();
 }

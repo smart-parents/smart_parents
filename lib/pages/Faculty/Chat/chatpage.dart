@@ -15,7 +15,7 @@ class Chatpage extends StatefulWidget {
 }
 
 class _ChatpageState extends State<Chatpage> {
-  String email = '';
+  String? email;
   final _prefs = SharedPreferences.getInstance();
   login() async {
     final SharedPreferences prefs = await _prefs;
@@ -70,7 +70,7 @@ class _ChatpageState extends State<Chatpage> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.7,
             child: Messages(
-              email: email,
+              email: email!,
             ),
           ),
           Row(

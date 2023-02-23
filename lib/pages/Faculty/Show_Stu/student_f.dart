@@ -1,47 +1,42 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, library_private_types_in_public_api
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_parents/pages/Admin/student_a/add_student_page_a.dart';
-import 'package:smart_parents/pages/Admin/student_a/update_student_page_a.dart';
 import 'package:flutter/material.dart';
 
-class Student extends StatefulWidget {
-  const Student({Key? key}) : super(key: key);
-
-  // void initState() {
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //     // SystemUiOverlay.bottom,
-  //   ]);
-  // }
-
+class StudentF extends StatefulWidget {
+  final String branch;
+  const StudentF({Key? key, required this.branch}) : super(key: key);
   @override
-  State<Student> createState() => _StudentState();
+  _StudentFState createState() => _StudentFState();
 }
 
-class _StudentState extends State<Student> {
+class _StudentFState extends State<StudentF> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
   // static Stream<QuerySnapshot> studentsStream =
   //     FirebaseFirestore.instance.collection('students').snapshots();
-  late Stream<QuerySnapshot> studentsStream;
-
-  void myMethod() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      final email = FirebaseAuth.instance.currentUser!.email;
-      studentsStream = FirebaseFirestore.instance
-          .collection('students')
-          .where("admin", isEqualTo: email)
-          .snapshots();
-    }
+  // late Stream<QuerySnapshot> studentsStream;
+  final _prefs = SharedPreferences.getInstance();
+  var admin;
+  Future<void> myMethod() async {
+    final SharedPreferences prefs = await _prefs;
+    var id = prefs.getString('id');
+    DocumentSnapshot userSnapshot =
+        await FirebaseFirestore.instance.collection('faculty').doc(id).get();
+    admin = userSnapshot.get('admin');
+    // final email = FirebaseAuth.instance.currentUser!.email;
+    // studentsStream = FirebaseFirestore.instance
+    //     .collection('students')
+    //     .where("admin", isEqualTo: admin)
+    //     .snapshots();
   }
 
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
-    login();
+    // login();
     myMethod();
     // statusDocument.get().then((doc) {
     //   if (doc.exists) {
@@ -55,66 +50,17 @@ class _StudentState extends State<Student> {
   // For Deleting User
   CollectionReference students =
       FirebaseFirestore.instance.collection('students');
-  Future<void> deleteUser(id) async {
-    // print("User Deleted $id");
-    // var student = await _auth.getUserByEmail( '@example.com');
-    // final stu = await "$id@example.com";
-
-    return students
-        .doc(id)
-        .delete()
-        .then((value) => print('User Deleted'))
-        .catchError((error) => print('Failed to Delete user: $error'));
-  }
-
-  // bool _status = false;
-
-  // final statusCollection = FirebaseFirestore.instance.collection('students');
-
-  // void updateStatus(bool status) {
-  //   statusDocument.update({'status': status});
-  // }
-
-  Future<void> updateStatus(id, _status) {
-    return students
-        .doc(id)
-        .update({'status': _status})
-        .then((value) => print('Status: $_status'))
-        .catchError((error) => print('Failed to update status: $error'));
-  }
-  // Future<void> delete(id) async {
-  //   // print("User Deleted $id");
-  //   // var student = await _auth.getUserByEmail( '@example.com');
-  //   // final stu = await "$id@example.com";
-  //   print(id);
-  //   await id?.delete();
-  // }
-
-  final _prefs = SharedPreferences.getInstance();
-  login() async {
-    FirebaseAuth.instance.signOut();
-    final SharedPreferences prefs = await _prefs;
-    String? email = prefs.getString('email');
-    String? pass = prefs.getString('pass');
-    print("signout");
-    try {
-      FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: "$email", password: "$pass")
-          .then(
-            (value) => print("login $email"),
-          );
-      print("login");
-    } on FirebaseAuthException catch (e) {
-      print(e);
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     // login();
     // myMethod();
     return StreamBuilder<QuerySnapshot>(
-        stream: studentsStream,
+        stream: FirebaseFirestore.instance
+            .collection('students')
+            .where("admin", isEqualTo: admin)
+            .where("branch", isEqualTo: widget.branch)
+            .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
             print('Something went Wrong');
@@ -221,17 +167,17 @@ class _StudentState extends State<Student> {
                                     // ),
                                     Column(
                                       children: [
-                                        Switch(
-                                          value: storedocs[index]['status'],
-                                          onChanged: (value) {
-                                            setState(() {
-                                              // _status = value;
-                                              updateStatus(
-                                                  storedocs[index]['id'],
-                                                  value);
-                                            });
-                                          },
-                                        ),
+                                        // Switch(
+                                        //   value: storedocs[index]['status'],
+                                        //   onChanged: (value) {
+                                        //     setState(() {
+                                        //       // _status = value;
+                                        //       updateStatus(
+                                        //           storedocs[index]['id'],
+                                        //           value);
+                                        //     });
+                                        //   },
+                                        // ),
                                         Text(
                                           storedocs[index]['status']
                                               ? 'Active'
@@ -301,32 +247,32 @@ class _StudentState extends State<Student> {
                                       ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                UpdateStudentPage(
-                                                    id: storedocs[index]
-                                                        ['id'])),
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                        foregroundColor: Colors.grey[600],
-                                        backgroundColor: Colors.white,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10.0)),
-                                        fixedSize: const Size(200, 40),
-                                        elevation: 5,
-                                        textStyle: const TextStyle(
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w500)),
-                                    child: const Text("Edit"),
-                                  )
+                                  // const SizedBox(
+                                  //   height: 15,
+                                  // ),
+                                  // ElevatedButton(
+                                  //   onPressed: () {
+                                  //     Navigator.of(context).push(
+                                  //       MaterialPageRoute(
+                                  //           builder: (context) =>
+                                  //               UpdateStudentPage(
+                                  //                   id: storedocs[index]
+                                  //                       ['id'])),
+                                  //     );
+                                  //   },
+                                  //   style: ElevatedButton.styleFrom(
+                                  //       foregroundColor: Colors.grey[600],
+                                  //       backgroundColor: Colors.white,
+                                  //       shape: RoundedRectangleBorder(
+                                  //           borderRadius:
+                                  //               BorderRadius.circular(10.0)),
+                                  //       fixedSize: const Size(200, 40),
+                                  //       elevation: 5,
+                                  //       textStyle: const TextStyle(
+                                  //           fontSize: 17,
+                                  //           fontWeight: FontWeight.w500)),
+                                  //   child: const Text("Edit"),
+                                  // )
                                 ],
                               ),
                             ),
@@ -572,18 +518,18 @@ class _StudentState extends State<Student> {
                       ),
 
             // )),
-            floatingActionButton: FloatingActionButton(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
-              onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddStudentPage(),
-                  ),
-                )
-              },
-              child: const Icon(Icons.add),
-            ),
+            // floatingActionButton: FloatingActionButton(
+            //   // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
+            //   onPressed: () => {
+            //     Navigator.push(
+            //       context,
+            //       MaterialPageRoute(
+            //         builder: (context) => const AddStudentPage(),
+            //       ),
+            //     )
+            //   },
+            //   child: const Icon(Icons.add),
+            // ),
             // ),
           );
         });

@@ -3,9 +3,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:smart_parents/pages/Faculty/Chat/chatpage.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
+import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
+import 'package:smart_parents/pages/Faculty/chat.dart';
 
 class UserMainF extends StatefulWidget {
   const UserMainF({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _UserMainState extends State<UserMainF> {
     // Text(
     //   'Index 3: chat',
     // ),
-    const Chatpage(),
+     ChatScreen(),
     const ProfileF()
   ];
 
@@ -208,6 +209,15 @@ class NavigationDrawer extends StatelessWidget {
                 leading: const Icon(Icons.contact_page_outlined),
                 title: const Text("Contact Parents"),
                 onTap: () {},
+              ),
+              ListTile(
+                leading: const Icon(Icons.home_outlined),
+                title: const Text("Show Student"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Show_stu(),
+                  ));
+                },
               ),
             ],
           ),
