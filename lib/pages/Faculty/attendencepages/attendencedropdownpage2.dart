@@ -537,9 +537,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                               children: [
                                 Expanded(
                                     child: Text("Year : $yeardropdownValue")),
-                                Expanded(
-                                    child:
-                                        Text("Subject : $Sub"))
+                                Expanded(child: Text("Subject : $Sub"))
                               ],
                             ),
                           ),

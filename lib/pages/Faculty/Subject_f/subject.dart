@@ -34,6 +34,7 @@ class _SubjectState extends State<Subject> {
           .snapshots();
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -54,7 +55,6 @@ class _SubjectState extends State<Subject> {
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -149,7 +149,8 @@ class _SubjectState extends State<Subject> {
                                           Text(
                                             'Branch: ${storedocs[index]['branch']}',
                                             style: TextStyle(
-                                                fontWeight: FontWeight.bold, fontSize: 13.0),
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13.0),
                                           ),
                                         ],
                                       ),
@@ -178,17 +179,17 @@ class _SubjectState extends State<Subject> {
                                     //         });
                                     //       },
                                     //     ),
-                                        // Text(
-                                        //   storedocs[index]['status']
-                                        //       ? 'Active'
-                                        //       : 'Disactive',
-                                        //   style: TextStyle(
-                                        //       fontWeight: FontWeight.bold,
-                                        //       fontSize: 15,
-                                        //       color: storedocs[index]['status']
-                                        //           ? Colors.green
-                                        //           : Colors.red),
-                                        // ),
+                                    // Text(
+                                    //   storedocs[index]['status']
+                                    //       ? 'Active'
+                                    //       : 'Disactive',
+                                    //   style: TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       fontSize: 15,
+                                    //       color: storedocs[index]['status']
+                                    //           ? Colors.green
+                                    //           : Colors.red),
+                                    // ),
                                     //   ],
                                     // ),
                                   ]),
