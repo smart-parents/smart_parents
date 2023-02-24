@@ -25,11 +25,13 @@ class _AddStudentPageState extends State<AddStudentPage> {
   var number = "";
   var password = "";
   String? Branch;
+  var sem;
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
   final nameController = TextEditingController();
   final numberController = TextEditingController();
   final passwordController = TextEditingController();
+  final semController = TextEditingController();
 
   @override
   void dispose() {
@@ -37,6 +39,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
     nameController.dispose();
     numberController.dispose();
     passwordController.dispose();
+    semController.dispose();
     super.dispose();
   }
 
@@ -44,6 +47,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
     nameController.clear();
     numberController.clear();
     passwordController.clear();
+    semController.clear();
   }
 
   @override
@@ -65,7 +69,8 @@ class _AddStudentPageState extends State<AddStudentPage> {
           'password': password,
           'admin': email,
           'branch': Branch,
-          'status': true
+          'status': true,
+          'sem': sem
         })
         .then((value) => print('student Added'))
         .catchError((error) => print('Failed to Add user: $error'));
@@ -266,6 +271,30 @@ class _AddStudentPageState extends State<AddStudentPage> {
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10.0),
                         child: TextFormField(
+                          maxLength: 1,
+                          autofocus: false,
+                          decoration: const InputDecoration(
+                            labelText: 'Semester: ',
+                            labelStyle: TextStyle(fontSize: 20.0),
+                            border: OutlineInputBorder(),
+                            errorStyle: TextStyle(
+                                color: Colors.lightBlueAccent, fontSize: 15),
+                          ),
+                          keyboardType: TextInputType.number,
+                          controller: semController,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please Enter Semester';
+                            } else if (value.length != 1) {
+                              return 'Please Enter Valid Semester';
+                            }
+                            return null;
+                          },
+                        ),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10.0),
+                        child: TextFormField(
                           autofocus: false,
                           obscureText: true,
                           decoration: const InputDecoration(
@@ -295,6 +324,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
                                   name = nameController.text;
                                   number = numberController.text;
                                   password = passwordController.text;
+                                  sem = semController.text;
                                   registration();
                                   // Navigator.pop(context);
                                 });

@@ -9,7 +9,9 @@ import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 // import 'package:smart_parents/pages/Faculty/attendencepages/util/userPrefrences.dart';
 
 class AttendencePage extends StatefulWidget {
-  const AttendencePage({Key? key}) : super(key: key);
+  const AttendencePage({Key? key, required this.branch, required this.sem}) : super(key: key);
+  final String branch;
+  final String sem;
 
   @override
   _AttendencePageState createState() => _AttendencePageState();
@@ -53,6 +55,8 @@ class _AttendencePageState extends State<AttendencePage> {
         await FirebaseFirestore.instance
             .collection('students')
             .where("admin", isEqualTo: admin)
+            .where("branch", isEqualTo: widget.branch)
+            .where("sem", isEqualTo: widget.sem)
             .where('status', isEqualTo: true)
             .get();
 
@@ -97,8 +101,8 @@ class _AttendencePageState extends State<AttendencePage> {
             height: 20,
           ),
           SizedBox(
-            height: 550,
-            width: 400,
+            height: MediaQuery.of(context).size.height * 0.65,
+            // width: MediaQuery.of(context).size.height * 0.5,
             // color: Colors.orange,
             child: ListView.builder(
                 itemCount: studentvar.length,
@@ -169,8 +173,9 @@ class _AttendencePageState extends State<AttendencePage> {
 
     return FocusedMenuHolder(
       menuWidth: MediaQuery.of(context).size.width * 0.75,
-      duration: const Duration(milliseconds: 350),
+      // duration: const Duration(milliseconds: 350),
       animateMenuItems: true,
+      openWithTap: true,
       onPressed: () {
         setState(() {
           ChangeState(isSelectedList, index, 1);
@@ -239,6 +244,7 @@ class _AttendencePageState extends State<AttendencePage> {
       ],
       child: Card(
         color: attendencecolor[index],
+        // color: Colors.green,
         elevation: 2,
         shadowColor: Colors.grey[200],
         child: Padding(

@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 
 class StudentF extends StatefulWidget {
   final String branch;
-  const StudentF({Key? key, required this.branch}) : super(key: key);
+  final String sem;
+  const StudentF({Key? key, required this.branch, required this.sem}) : super(key: key);
   @override
   _StudentFState createState() => _StudentFState();
 }
@@ -59,6 +60,7 @@ class _StudentFState extends State<StudentF> {
         stream: FirebaseFirestore.instance
             .collection('students')
             .where("admin", isEqualTo: admin)
+            .where("sem", isEqualTo: widget.sem)
             .where("branch", isEqualTo: widget.branch)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

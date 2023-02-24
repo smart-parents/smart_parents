@@ -212,7 +212,7 @@ class _Show_stuState extends State<Show_stu> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                StudentF(branch: "$Branch")),
+                                                StudentF(branch: "$Branch",sem: "$semesterdropdownValue")),
                                       );
                                     },
                                     child: const Text("Show Student")),

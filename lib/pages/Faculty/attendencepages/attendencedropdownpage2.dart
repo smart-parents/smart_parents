@@ -468,6 +468,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                             backgroundColor: Colors.white,
                           ),
                           showTitleActions: true,
+                          // showSecondsColumn: false,
                           onConfirm: (time) {
                             setState(() {
                               _end = DateFormat.jm().format(time);
@@ -560,7 +561,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const AttendencePage()),
+                                                  AttendencePage(branch: "$Branch",sem: "$semesterdropdownValue")),
                                         );
                                       },
                                       child: const Text("Take Attendence")),
