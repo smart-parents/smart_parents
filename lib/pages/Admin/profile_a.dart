@@ -104,7 +104,7 @@ class _ProfileState extends State<Profile> {
                     // width: 365.0,
                     margin:
                         const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-                    height: MediaQuery.of(context).size.height * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.5,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
                       color: const Color.fromARGB(255, 37, 86, 116),

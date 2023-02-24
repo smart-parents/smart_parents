@@ -1,10 +1,12 @@
 // ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
-import 'package:smart_parents/pages/Faculty/attendencepages/util/userPrefrences.dart';
+// import 'package:smart_parents/pages/Faculty/attendencepages/util/userPrefrences.dart';
 
 class AttendencePage extends StatefulWidget {
   const AttendencePage({Key? key}) : super(key: key);
@@ -13,8 +15,62 @@ class AttendencePage extends StatefulWidget {
   _AttendencePageState createState() => _AttendencePageState();
 }
 
+class Name {
+  final String id;
+  final String name;
+
+  Name(this.id, this.name);
+}
+
 class _AttendencePageState extends State<AttendencePage> {
-  final studentvar = UserPrefrences.studentlist;
+  late String _selectedNameId;
+  List<Name> studentvar = [];
+
+  @override
+  void initState() {
+    super.initState();
+    myMethod();
+    _fetchNames();
+  }
+
+  final _prefs = SharedPreferences.getInstance();
+  var admin;
+  Future<void> myMethod() async {
+    final SharedPreferences prefs = await _prefs;
+    var id = prefs.getString('id');
+    DocumentSnapshot userSnapshot =
+        await FirebaseFirestore.instance.collection('faculty').doc(id).get();
+    admin = userSnapshot.get('admin');
+    // final email = FirebaseAuth.instance.currentUser!.email;
+    // studentsStream = FirebaseFirestore.instance
+    //     .collection('students')
+    //     .where("admin", isEqualTo: admin)
+    //     .snapshots();
+  }
+
+  Future<void> _fetchNames() async {
+    final QuerySnapshot<Map<String, dynamic>> namesSnapshot =
+        await FirebaseFirestore.instance
+            .collection('students')
+            .where("admin", isEqualTo: admin)
+            .where('status', isEqualTo: true)
+            .get();
+
+    final List<Name> names = [];
+
+    for (final DocumentSnapshot<Map<String, dynamic>> namesSnapshot
+        in namesSnapshot.docs) {
+      final Name name = Name(namesSnapshot.id, namesSnapshot.data()!['name']);
+      names.add(name);
+    }
+
+    setState(() {
+      studentvar = names;
+      _selectedNameId = studentvar[0].id;
+    });
+  }
+
+  // final studentvar = UserPrefrences.studentlist;
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +253,7 @@ class _AttendencePageState extends State<AttendencePage> {
                 width: 25,
               ),
               Text(
-                studentvar[index].studentName,
+                "${studentvar[index].id}-${studentvar[index].name}",
                 style: const TextStyle(fontSize: 20),
               ),
             ],

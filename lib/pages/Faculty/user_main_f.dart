@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
 import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
@@ -208,7 +209,11 @@ class NavigationDrawer extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.contact_page_outlined),
                 title: const Text("Contact Parents"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Subject(),
+                  ));
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.home_outlined),

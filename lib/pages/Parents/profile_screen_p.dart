@@ -110,7 +110,7 @@ class _Profile_screenPState extends State<Profile_screenP> {
                     // width: 365.0,
                     margin:
                         const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-                    height: MediaQuery.of(context).size.height * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.5,
                     // width: MediaQuery.of(context).size.width * 2.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
