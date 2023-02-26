@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/dashboard_a.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Admin/change_password_a.dart';
@@ -8,12 +9,6 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 
 class UserMainA extends StatefulWidget {
   const UserMainA({Key? key}) : super(key: key);
-  // void initState() {
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //     // SystemUiOverlay.bottom,
-  //   ]);
-  // }
-
   @override
   _UserMainState createState() => _UserMainState();
 }
@@ -100,7 +95,7 @@ class _UserMainState extends State<UserMainA> {
 
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 207, 235, 255),
+          color: kPrimaryLightColor,
           boxShadow: [
             BoxShadow(
               blurRadius: 20,
@@ -112,15 +107,15 @@ class _UserMainState extends State<UserMainA> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-              rippleColor: const Color.fromARGB(255, 37, 86, 116),
-              hoverColor: const Color.fromARGB(255, 37, 86, 116),
+              // rippleColor: const Color.fromARGB(255, 37, 86, 116),
+              // hoverColor: const Color.fromARGB(255, 37, 86, 116),
               // gap: 8,
               activeColor: Colors.white,
               iconSize: 24,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               // tabMargin: EdgeInsets.symmetric(horizontal: 50),
               // duration: Duration(milliseconds: 400),
-              tabBackgroundColor: const Color.fromARGB(255, 37, 86, 116),
+              tabBackgroundColor: kPrimaryColor,
               color: Colors.black,
               tabs: const [
                 GButton(

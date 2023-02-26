@@ -1,4 +1,4 @@
-// ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names
+// ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +9,8 @@ import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 // import 'package:smart_parents/pages/Faculty/attendencepages/util/userPrefrences.dart';
 
 class AttendencePage extends StatefulWidget {
-  const AttendencePage({Key? key, required this.branch, required this.sem}) : super(key: key);
+  const AttendencePage({Key? key, required this.branch, required this.sem})
+      : super(key: key);
   final String branch;
   final String sem;
 
@@ -25,7 +26,7 @@ class Name {
 }
 
 class _AttendencePageState extends State<AttendencePage> {
-  late String _selectedNameId;
+  // late String _selectedNameId;
   List<Name> studentvar = [];
 
   @override
@@ -41,20 +42,14 @@ class _AttendencePageState extends State<AttendencePage> {
     final SharedPreferences prefs = await _prefs;
     var id = prefs.getString('id');
     DocumentSnapshot userSnapshot =
-        await FirebaseFirestore.instance.collection('faculty').doc(id).get();
+        await FirebaseFirestore.instance.collection('Admin/$admin/faculty').doc(id).get();
     admin = userSnapshot.get('admin');
-    // final email = FirebaseAuth.instance.currentUser!.email;
-    // studentsStream = FirebaseFirestore.instance
-    //     .collection('students')
-    //     .where("admin", isEqualTo: admin)
-    //     .snapshots();
   }
 
   Future<void> _fetchNames() async {
     final QuerySnapshot<Map<String, dynamic>> namesSnapshot =
         await FirebaseFirestore.instance
             .collection('students')
-            .where("admin", isEqualTo: admin)
             .where("branch", isEqualTo: widget.branch)
             .where("sem", isEqualTo: widget.sem)
             .where('status', isEqualTo: true)
@@ -70,7 +65,7 @@ class _AttendencePageState extends State<AttendencePage> {
 
     setState(() {
       studentvar = names;
-      _selectedNameId = studentvar[0].id;
+      // _selectedNameId = studentvar[0].id;
     });
   }
 

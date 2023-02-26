@@ -132,7 +132,7 @@ class _FeesState extends State<Fees> {
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),
-                    backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                    // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                     minimumSize: const Size(150, 50),
                   ),
                   child: const Text(
@@ -158,7 +158,7 @@ class _FeesState extends State<Fees> {
                   },
                   style: ElevatedButton.styleFrom(
                     shape: const StadiumBorder(),
-                    backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                    // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                     minimumSize: const Size(150, 50),
                   ),
                   child: const Text(

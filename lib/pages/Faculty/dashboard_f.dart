@@ -35,7 +35,7 @@ class _DashboardState extends State<Dashboard> {
               },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
-                backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
               child: const Text(
@@ -60,7 +60,7 @@ class _DashboardState extends State<Dashboard> {
               },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
-                backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
               child: const Text(
@@ -85,7 +85,7 @@ class _DashboardState extends State<Dashboard> {
               },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
-                backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
               child: const Text(
@@ -101,7 +101,7 @@ class _DashboardState extends State<Dashboard> {
               onPressed: () => {},
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
-                backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                 minimumSize: const Size(250, 50),
               ),
               child: const Text(

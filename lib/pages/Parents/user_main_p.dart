@@ -3,6 +3,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
@@ -55,7 +56,6 @@ class _ParentsScreenState extends State<ParentsScreen> {
         //     ],
         //   ),
         title: const Text('Home'),
-        // backgroundColor: Colors.blue.shade700,
       ),
       drawer: NavigationDrawer(),
       body: _widgetOptions.elementAt(_selectedIndex),
@@ -73,13 +73,13 @@ class _ParentsScreenState extends State<ParentsScreen> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-              rippleColor: const Color.fromARGB(255, 37, 86, 116),
-              hoverColor: const Color.fromARGB(255, 37, 86, 116),
+              // rippleColor: const Color.fromARGB(255, 37, 86, 116),
+              // hoverColor: const Color.fromARGB(255, 37, 86, 116),
               activeColor: Colors.white,
               iconSize: 24,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              tabBackgroundColor: const Color.fromARGB(255, 37, 86, 116),
-              color: Colors.black,
+              tabBackgroundColor: kPrimaryColor,
+              // color: Colors.black,
               tabs: const [
                 GButton(
                   icon: Icons.home,
@@ -130,7 +130,7 @@ class NavigationDrawer extends StatelessWidget {
         children: <Widget>[
           // buildHeader(context),
           Material(
-              color: Colors.blue.shade700,
+              color: kPrimaryColor,
               child: InkWell(
                   onTap: () {},
                   child: Container(

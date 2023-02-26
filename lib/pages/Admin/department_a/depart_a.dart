@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/department_a/add_depart_a.dart';
 import 'package:smart_parents/pages/Admin/department_a/update_department_a.dart';
 
@@ -12,39 +12,21 @@ class Department extends StatefulWidget {
 }
 
 class _DepartmentState extends State<Department> {
-  // final Stream<QuerySnapshot> facultyStream =
-  //     FirebaseFirestore.instance.collection('faculty').snapshots();
   @override
   void initState() {
     super.initState();
     // login();
   }
 
-  // Stream<QuerySnapshot>? departmentStream;
-  // final _prefs = SharedPreferences.getInstance();
-  // login() async {
-  //   final SharedPreferences prefs = await _prefs;
-  //   String? email = prefs.getString('email');
-  //   print(email);
-  //   departmentStream = FirebaseFirestore.instance
-  //       .collection('department')
-  //       .where("admin", isEqualTo: email)
-  //       .snapshots();
-  // }
-  Stream<QuerySnapshot>? departmentStream;
-  void myMethod() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      final email = FirebaseAuth.instance.currentUser!.email;
+  Stream<QuerySnapshot>
       departmentStream = FirebaseFirestore.instance
-          .collection('department')
-          .where("admin", isEqualTo: email)
+          .collection('Admin/$admin/department')
           .snapshots();
-    }
-  }
+ 
 
   // For Deleting User
   CollectionReference department =
-      FirebaseFirestore.instance.collection('department');
+      FirebaseFirestore.instance.collection('Admin/$admin/department');
   Future<void> deleteUser(id) {
     // print("User Deleted $id");
     return department
@@ -57,7 +39,6 @@ class _DepartmentState extends State<Department> {
   @override
   Widget build(BuildContext context) {
     // login();
-    myMethod();
     return StreamBuilder<QuerySnapshot>(
         stream: departmentStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -131,13 +112,13 @@ class _DepartmentState extends State<Department> {
                                               fontWeight: FontWeight.bold,
                                               fontSize: 17.0),
                                         ),
-                                        Text(
-                                          'SEM: ${storedocs[index]['semno']}',
-                                          // Students[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17.0),
-                                        ),
+                                        // Text(
+                                        //   'SEM: ${storedocs[index]['semno']}',
+                                        //   // Students[index],
+                                        //   style: const TextStyle(
+                                        //       fontWeight: FontWeight.bold,
+                                        //       fontSize: 17.0),
+                                        // ),
                                       ],
                                     ),
                                   ),
@@ -195,9 +176,9 @@ class _DepartmentState extends State<Department> {
                               //     ),
                               //   ],
                               // ),
-                              const SizedBox(
-                                height: 15,
-                              ),
+                              // const SizedBox(
+                              //   height: 15,
+                              // ),
                               ElevatedButton(
                                 onPressed: () {
                                   Navigator.of(context).push(

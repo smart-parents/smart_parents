@@ -4,6 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/add_faculty_page_a.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/update_faculty_page_a.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class Faculty extends StatefulWidget {
   const Faculty({Key? key}) : super(key: key);
@@ -13,28 +14,18 @@ class Faculty extends StatefulWidget {
 }
 
 class _FacultyState extends State<Faculty> {
-  // final Stream<QuerySnapshot> facultyStream =
-  //     FirebaseFirestore.instance.collection('faculty').snapshots();
   @override
   void initState() {
     super.initState();
     login();
   }
 
-  Stream<QuerySnapshot>? facultyStream;
-  void myMethod() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      final email = FirebaseAuth.instance.currentUser!.email;
-      facultyStream = FirebaseFirestore.instance
-          .collection('faculty')
-          .where("admin", isEqualTo: email)
-          .snapshots();
-    }
-  }
+  Stream<QuerySnapshot>? facultyStream =
+      FirebaseFirestore.instance.collection('Admin/$admin/faculty').snapshots();
 
   // For Deleting User
   CollectionReference facultys =
-      FirebaseFirestore.instance.collection('faculty');
+      FirebaseFirestore.instance.collection('Admin/$admin/faculty');
   Future<void> deleteUser(id) {
     // print("User Deleted $id");
     return facultys
@@ -44,11 +35,17 @@ class _FacultyState extends State<Faculty> {
         .catchError((error) => print('Failed to Delete user: $error'));
   }
 
-  Future<void> updateStatus(id, _status) {
-    return facultys
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  Future<void> updateStatus(id, status) async {
+    facultys
         .doc(id)
-        .update({'status': _status})
-        .then((value) => print('Status: $_status'))
+        .update({'status': status})
+        .then((value) => print('Status: $status'))
+        .catchError((error) => print('Failed to update status: $error'));
+    users
+        .doc(id)
+        .update({'status': status})
+        .then((value) => print('Status: $status'))
         .catchError((error) => print('Failed to update status: $error'));
   }
 
@@ -73,7 +70,6 @@ class _FacultyState extends State<Faculty> {
 
   @override
   Widget build(BuildContext context) {
-    myMethod();
     // login();
     return StreamBuilder<QuerySnapshot>(
         stream: facultyStream,
@@ -111,9 +107,8 @@ class _FacultyState extends State<Faculty> {
               ),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const Text("Faculty Details",
-                      style: TextStyle(fontSize: 30.0)),
+                children: const [
+                  Text("Faculty Details", style: TextStyle(fontSize: 30.0)),
                   //    IconButton(
                   //   icon: const Icon(Icons.sort_rounded),
                   //   tooltip: "Filter",

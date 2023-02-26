@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencePage.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
@@ -42,13 +43,6 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
   String _end = '';
   String? Branch;
   String? Sub;
-  // String? Semester;
-  // Future<QuerySnapshot> async {
-  //   final QuerySnapshot<Map<String, dynamic>> depart =
-  //       await FirebaseFirestore.instance.collection('department').get();
-  //   final QuerySnapshot<Map<String, dynamic>> sub =
-  //       await FirebaseFirestore.instance.collection('subject').get();
-  // }
   List<Department> _departments = [];
   List<Subject> _subjects = [];
 
@@ -59,11 +53,11 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
     _fetchSubjects();
   }
 
-  late String _selectedDepartmentId;
-  late String _selectedSubjectId;
+  // late String _selectedDepartmentId;
+  // late String _selectedSubjectId;
   Future<void> _fetchDepartments() async {
     final QuerySnapshot<Map<String, dynamic>> departmentsSnapshot =
-        await FirebaseFirestore.instance.collection('department').get();
+        await FirebaseFirestore.instance.collection('Admin/$admin/department').get();
 
     final List<Department> departments = [];
 
@@ -76,13 +70,13 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
 
     setState(() {
       _departments = departments;
-      _selectedDepartmentId = _departments[0].id;
+      // _selectedDepartmentId = _departments[0].id;
     });
   }
 
   Future<void> _fetchSubjects() async {
     final QuerySnapshot<Map<String, dynamic>> subjectSnapshot =
-        await FirebaseFirestore.instance.collection('subject').get();
+        await FirebaseFirestore.instance.collection('Admin/$admin/subject').get();
 
     final List<Subject> subjects = [];
 
@@ -95,7 +89,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
 
     setState(() {
       _subjects = subjects;
-      _selectedSubjectId = _subjects[0].id;
+      // _selectedSubjectId = _subjects[0].id;
     });
   }
 
@@ -120,27 +114,6 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
       ),
       body: Center(
         child:
-            //  FutureBuilder<QuerySnapshot>(
-            //   future: FirebaseFirestore.instance.collection('department').get(),
-            //   builder: (context, snapshot) {
-            //     if (!snapshot.hasData) {
-            //       return const CircularProgressIndicator();
-            //     }
-            // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
-            // final items =
-            //     snapshot.data!.docs.map((doc) => doc.get('name')).toList();
-            // final QuerySnapshot<Map<String, dynamic>> depart =
-            //     FirebaseFirestore.instance.collection('department').get()
-            //         as QuerySnapshot<Map<String, dynamic>>;
-            // final items = depart.docs.map((doc) => doc.get('name')).toList();
-            // final QuerySnapshot<Map<String, dynamic>> sub =
-            //     FirebaseFirestore.instance.collection('subject').get()
-            //         as QuerySnapshot<Map<String, dynamic>>;
-            // final item = sub.docs.map((doc) => doc.get('sub_name')).toList();
-
-            // final semester =
-            //     snapshot.data!.docs.map((doc) => doc.get('semno')).toList();
-            // return
             ListView(
           physics: const BouncingScrollPhysics(),
           children: [
@@ -560,8 +533,10 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                       onPressed: () {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  AttendencePage(branch: "$Branch",sem: "$semesterdropdownValue")),
+                                              builder: (context) => AttendencePage(
+                                                  branch: "$Branch",
+                                                  sem:
+                                                      semesterdropdownValue)),
                                         );
                                       },
                                       child: const Text("Take Attendence")),

@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Constants {
@@ -7,12 +9,16 @@ class Constants {
   static String projectId = "smart-parents-df1cf";
 }
 
-const kPrimaryColor = Color(0xFF5BB8FC);
-const kPrimaryLightColor = Color(0xFFF1E6FF);
+var admin = FirebaseAuth.instance.currentUser!.email;
+// var admin =
+//     FirebaseFirestore.instance.collection('Users').doc(email).snapshots();
+
+const kPrimaryColor = Color(0xFF255674);
+const kPrimaryLightColor = Color(0xFFCFEBFF);
 
 const double defaultPadding = 10.0;
 const kSendButtonTextStyle = TextStyle(
-  color: Color.fromARGB(255, 37, 86, 116),
+  color: kPrimaryColor,
   // Color.fromARGB(255, 207, 235, 255),
   // Colors.lightBlueAccent,
   fontWeight: FontWeight.bold,
@@ -28,6 +34,6 @@ const kMessageTextFieldDecoration = InputDecoration(
 
 const kMessageContainerDecoration = BoxDecoration(
   border: Border(
-    top: BorderSide(color: Color.fromARGB(255, 37, 86, 116), width: 2.0),
+    top: BorderSide(color: kPrimaryColor, width: 2.0),
   ),
 );

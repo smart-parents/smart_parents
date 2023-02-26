@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/student_a/add_student_page_a.dart';
 import 'package:smart_parents/pages/Admin/student_a/update_student_page_a.dart';
 import 'package:flutter/material.dart';
@@ -10,51 +11,25 @@ import 'package:flutter/material.dart';
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
 
-  // void initState() {
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //     // SystemUiOverlay.bottom,
-  //   ]);
-  // }
-
   @override
   State<Student> createState() => _StudentState();
 }
 
 class _StudentState extends State<Student> {
-  // final email = FirebaseAuth.instance.currentUser!.email;
-
-  // static Stream<QuerySnapshot> studentsStream =
-  //     FirebaseFirestore.instance.collection('students').snapshots();
-  late Stream<QuerySnapshot> studentsStream;
-
-  void myMethod() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      final email = FirebaseAuth.instance.currentUser!.email;
-      studentsStream = FirebaseFirestore.instance
-          .collection('students')
-          .where("admin", isEqualTo: email)
-          .snapshots();
-    }
-  }
+  Stream<QuerySnapshot> studentsStream = FirebaseFirestore.instance
+      .collection('Admin/$admin/students')
+      .snapshots();
 
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
     login();
-    myMethod();
-    // statusDocument.get().then((doc) {
-    //   if (doc.exists) {
-    //     setState(() {
-    //       _status = doc.data()['status'] ?? false;
-    //     });
-    //   }
-    // });
   }
 
   // For Deleting User
   CollectionReference students =
-      FirebaseFirestore.instance.collection('students');
+      FirebaseFirestore.instance.collection('Admin/$admin/students');
   Future<void> deleteUser(id) async {
     // print("User Deleted $id");
     // var student = await _auth.getUserByEmail( '@example.com');
@@ -69,17 +44,20 @@ class _StudentState extends State<Student> {
 
   // bool _status = false;
 
-  // final statusCollection = FirebaseFirestore.instance.collection('students');
-
   // void updateStatus(bool status) {
   //   statusDocument.update({'status': status});
   // }
-
-  Future<void> updateStatus(id, _status) {
-    return students
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  Future<void> updateStatus(id, status) async {
+    students
         .doc(id)
-        .update({'status': _status})
-        .then((value) => print('Status: $_status'))
+        .update({'status': status})
+        .then((value) => print('Status: $status'))
+        .catchError((error) => print('Failed to update status: $error'));
+    users
+        .doc(id)
+        .update({'status': status})
+        .then((value) => print('Status: $status'))
         .catchError((error) => print('Failed to update status: $error'));
   }
   // Future<void> delete(id) async {

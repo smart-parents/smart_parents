@@ -2,15 +2,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class UpdateFacultyPage extends StatefulWidget {
   final String id;
   const UpdateFacultyPage({Key? key, required this.id}) : super(key: key);
-// void initState() {
-//     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-//       // SystemUiOverlay.bottom,
-//     ]);
-// }
   @override
   _UpdateFacultyPageState createState() => _UpdateFacultyPageState();
 }
@@ -20,15 +16,15 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
 
   // Updaing Student
   CollectionReference facultys =
-      FirebaseFirestore.instance.collection('faculty');
+      FirebaseFirestore.instance.collection('Admin/$admin/faculty');
 
-  Future<void> updateUser(id, faculty, name, department, password) {
+  Future<void> updateUser(id, faculty, name, branch, password) {
     return facultys
         .doc(id)
         .update({
           'faculty': faculty,
           'name': name,
-          'department': department,
+          'branch': branch,
           'password': password
         })
         .then((value) => print("User Updated"))
@@ -53,7 +49,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
           // Getting Specific Data by ID
           child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             future: FirebaseFirestore.instance
-                .collection('faculty')
+                .collection('Admin/$admin/faculty')
                 .doc(widget.id)
                 .get(),
             builder: (_, snapshot) {
@@ -68,7 +64,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
               var data = snapshot.data!.data();
               var name = data!['name'];
               var faculty = data['faculty'];
-              var department = data['department'];
+              var branch = data['branch'];
               var password = data['password'];
               return Padding(
                 padding:
@@ -78,6 +74,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextFormField(
+                        readOnly: true,
                         maxLength: 4,
                         initialValue: faculty,
                         autofocus: false,
@@ -123,12 +120,13 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextFormField(
-                        maxLength: 2,
-                        initialValue: department,
+                        readOnly: true,
+                        // maxLength: 2,
+                        initialValue: branch,
                         autofocus: false,
-                        onChanged: (value) => department = value,
+                        onChanged: (value) => branch = value,
                         decoration: const InputDecoration(
-                          labelText: 'Department Id: ',
+                          labelText: 'Branch: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
                           errorStyle: TextStyle(
@@ -137,9 +135,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please Enter Department Id';
-                          } else if (value.length != 2) {
-                            return 'Please Enter Valid Department Id';
-                          }
+                          } 
                           return null;
                         },
                       ),
@@ -173,7 +169,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                           onPressed: () {
                             // Validate returns true if the form is valid, otherwise false.
                             if (_form1Key.currentState!.validate()) {
-                              updateUser(widget.id, faculty, name, department,
+                              updateUser(widget.id, faculty, name, branch,
                                   password);
                               Navigator.pop(context);
                             }

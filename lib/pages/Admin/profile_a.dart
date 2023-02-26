@@ -4,10 +4,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/edit_a.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:smart_parents/pages/option.dart';
-// import 'dart:html' as html;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Profile extends StatefulWidget {
@@ -25,6 +24,7 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
     login();
+    main();
   }
 
   delete() async {
@@ -37,8 +37,7 @@ class _ProfileState extends State<Profile> {
   main() {
     if (FirebaseAuth.instance.currentUser != null) {
       String? email = FirebaseAuth.instance.currentUser!.email;
-      String em = email.toString();
-      id = em;
+      id = email.toString();
     }
   }
 
@@ -62,8 +61,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    login();
-    main();
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
         future: FirebaseFirestore.instance.collection('Admin').doc(id).get(),
         builder: (_, snapshot) {
@@ -81,11 +78,11 @@ class _ProfileState extends State<Profile> {
           var mono = data['mono'];
           return Center(
             child: Container(
-              padding: const EdgeInsets.only(top: 4.5),
+              padding: const EdgeInsets.only(top: 25),
               // width: 414.0,
-              height: MediaQuery.of(context).size.width * 590.0,
-              width: MediaQuery.of(context).size.width * 380.0,
-              color: Colors.blue[50],
+              // height: MediaQuery.of(context).size.width * 590.0,
+              // width: MediaQuery.of(context).size.width * 380.0,
+              // color: Colors.blue[50],
               child: Column(
                 children: [
                   const CircleAvatar(
@@ -96,19 +93,18 @@ class _ProfileState extends State<Profile> {
                     'Admin',
                     style: TextStyle(
                       fontSize: 30,
-                      color: Color.fromARGB(255, 0, 0, 0),
+                      // color: Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),
                   Container(
                     // height: 470.0,
                     // width: 365.0,
                     margin:
-                        const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-                    height: MediaQuery.of(context).size.height * 0.5,
+                        const EdgeInsets.only(left: 25, right: 25),
+                    height: MediaQuery.of(context).size.height * 0.6,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(18),
-                      color: const Color.fromARGB(255, 37, 86, 116),
-                    ),
+                        borderRadius: BorderRadius.circular(18),
+                        color: kPrimaryColor),
                     // alignment: Alignment(0.0, -0.9),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

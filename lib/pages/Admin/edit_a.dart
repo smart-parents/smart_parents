@@ -189,15 +189,15 @@ class _EditAState extends State<EditA> {
                                 }
                             },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              const Color.fromARGB(255, 37, 86, 116),
+                          // backgroundColor:
+                          //     const Color.fromARGB(255, 37, 86, 116),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
-                          fixedSize: const Size(300, 60),
+                          // fixedSize: const Size(300, 60),
                         ),
                         child: const Text(
                           "Confirm",
-                          style: TextStyle(color: Colors.white),
+                          style: TextStyle(color: Colors.white,fontSize: 20),
                         )),
                   )
                 ],

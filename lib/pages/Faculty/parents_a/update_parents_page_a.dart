@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class UpdateParentPage extends StatefulWidget {
   final String id;
@@ -20,7 +21,7 @@ class _UpdateParentPageState extends State<UpdateParentPage> {
 
   // Updaing Student
   CollectionReference students =
-      FirebaseFirestore.instance.collection('students');
+      FirebaseFirestore.instance.collection('Admin/$admin/parents');
 
   Future<void> updateUser(id, name, number, password) {
     return students
@@ -48,7 +49,7 @@ class _UpdateParentPageState extends State<UpdateParentPage> {
           // Getting Specific Data by ID
           child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             future: FirebaseFirestore.instance
-                .collection('students')
+                .collection('Admin/$admin/parents')
                 .doc(widget.id)
                 .get(),
             builder: (_, snapshot) {

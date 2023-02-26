@@ -1,10 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
-
+import 'package:smart_parents/components/constants.dart';
 class DropdownDemo extends StatefulWidget {
   const DropdownDemo({Key? key}) : super(key: key);
   @override
@@ -12,8 +13,6 @@ class DropdownDemo extends StatefulWidget {
 }
 
 class _DropdownDemoState extends State<DropdownDemo> {
-  // String dropdownValue = 'Branch';
-  //String dropdownValue2 = 'Sem';
 
   String? Branch;
   final _formKey = GlobalKey<FormState>();
@@ -25,12 +24,13 @@ class _DropdownDemoState extends State<DropdownDemo> {
       ),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance.collection('department').get(),
+            future: FirebaseFirestore.instance
+                .collection('Admin/$admin/department')
+                .get(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const CircularProgressIndicator();
               }
-              // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
               final items =
                   snapshot.data!.docs.map((doc) => doc.get('name')).toList();
               return ListView(

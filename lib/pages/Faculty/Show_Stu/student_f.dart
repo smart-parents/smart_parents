@@ -1,13 +1,15 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, library_private_types_in_public_api
+// ignore_for_file: no_leading_underscores_for_local_identifiers, library_private_types_in_public_api, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+
+import '../../../components/constants.dart';
 
 class StudentF extends StatefulWidget {
   final String branch;
   final String sem;
-  const StudentF({Key? key, required this.branch, required this.sem}) : super(key: key);
+  const StudentF({Key? key, required this.branch, required this.sem})
+      : super(key: key);
   @override
   _StudentFState createState() => _StudentFState();
 }
@@ -15,30 +17,14 @@ class StudentF extends StatefulWidget {
 class _StudentFState extends State<StudentF> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
-  // static Stream<QuerySnapshot> studentsStream =
-  //     FirebaseFirestore.instance.collection('students').snapshots();
   // late Stream<QuerySnapshot> studentsStream;
-  final _prefs = SharedPreferences.getInstance();
-  var admin;
-  Future<void> myMethod() async {
-    final SharedPreferences prefs = await _prefs;
-    var id = prefs.getString('id');
-    DocumentSnapshot userSnapshot =
-        await FirebaseFirestore.instance.collection('faculty').doc(id).get();
-    admin = userSnapshot.get('admin');
-    // final email = FirebaseAuth.instance.currentUser!.email;
-    // studentsStream = FirebaseFirestore.instance
-    //     .collection('students')
-    //     .where("admin", isEqualTo: admin)
-    //     .snapshots();
-  }
+  
 
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   @override
   void initState() {
     super.initState();
     // login();
-    myMethod();
     // statusDocument.get().then((doc) {
     //   if (doc.exists) {
     //     setState(() {
@@ -50,7 +36,7 @@ class _StudentFState extends State<StudentF> {
 
   // For Deleting User
   CollectionReference students =
-      FirebaseFirestore.instance.collection('students');
+      FirebaseFirestore.instance.collection('Admin/$admin/students');
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +44,7 @@ class _StudentFState extends State<StudentF> {
     // myMethod();
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
-            .collection('students')
-            .where("admin", isEqualTo: admin)
+            .collection('Admin/$admin/students')
             .where("sem", isEqualTo: widget.sem)
             .where("branch", isEqualTo: widget.branch)
             .snapshots(),

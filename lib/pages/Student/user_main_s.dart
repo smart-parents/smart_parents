@@ -3,9 +3,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
-import 'package:smart_parents/pages/Student/Chat/chatpage.dart';
-import 'package:smart_parents/pages/Student/chat.dart';
+import 'package:smart_parents/pages/Student/chat_s.dart';
 import 'package:smart_parents/pages/Student/dashboard_s.dart';
 import 'package:smart_parents/pages/Student/profile_screen_s.dart';
 
@@ -27,7 +27,7 @@ class _UserMainState extends State<UserMainS> {
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Attendance_screen(),
-    ChatScreen(),
+    const ChatScreen(),
     const Profile_screenS()
   ];
 
@@ -62,7 +62,6 @@ class _UserMainState extends State<UserMainS> {
         //   ),
         // ),
         title: const Text('Home'),
-        // backgroundColor: Colors.blue.shade700,
       ),
       drawer: const NavigationDrawer(
         imagePath: 'Jay Photo.jpg',
@@ -82,16 +81,16 @@ class _UserMainState extends State<UserMainS> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-              rippleColor: const Color.fromARGB(255, 37, 86, 116),
-              hoverColor: const Color.fromARGB(255, 37, 86, 116),
+              // rippleColor: const Color.fromARGB(255, 37, 86, 116),
+              // hoverColor: const Color.fromARGB(255, 37, 86, 116),
               // gap: 8,
               activeColor: Colors.white,
               iconSize: 24,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               // tabMargin: EdgeInsets.symmetric(horizontal: 50),
               // duration: Duration(milliseconds: 400),
-              tabBackgroundColor: const Color.fromARGB(255, 37, 86, 116),
-              color: Colors.black,
+              tabBackgroundColor: kPrimaryColor,
+              // color: Colors.black,
               tabs: const [
                 GButton(
                   icon: Icons.home,
@@ -172,7 +171,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           children: <Widget>[
             // buildHeader(context),
             Material(
-                color: Colors.blue.shade700,
+                color: kPrimaryColor,
                 child: InkWell(
                     onTap: () {},
                     child: Container(

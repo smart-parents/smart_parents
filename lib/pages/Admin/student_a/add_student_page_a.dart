@@ -1,9 +1,10 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class AddStudentPage extends StatefulWidget {
   const AddStudentPage({Key? key}) : super(key: key);
@@ -18,8 +19,6 @@ class AddStudentPage extends StatefulWidget {
 
 class _AddStudentPageState extends State<AddStudentPage> {
   final _formKey = GlobalKey<FormState>();
-  // final email = FirebaseAuth.instance.currentUser!.email;
-  String? email;
 
   var name = "";
   var number = "";
@@ -56,22 +55,26 @@ class _AddStudentPageState extends State<AddStudentPage> {
     login();
   }
 
-  // Adding Student
-  CollectionReference students =
-      FirebaseFirestore.instance.collection('students');
-
-  Future<void> addUser() {
-    return students
+  Future<void> addUser() async {
+    CollectionReference students =
+        FirebaseFirestore.instance.collection('Admin/$admin/students');
+    students
         .doc(number)
         .set({
           'name': name,
           'number': number,
           'password': password,
-          'admin': email,
           'branch': Branch,
           'status': true,
           'sem': sem
         })
+        .then((value) => print('student Added'))
+        .catchError((error) => print('Failed to Add user: $error'));
+
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    users
+        .doc(number)
+        .set({'id': number, 'role': 'student', 'status': true})
         .then((value) => print('student Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }
@@ -93,13 +96,6 @@ class _AddStudentPageState extends State<AddStudentPage> {
       );
       addUser();
       clearText();
-
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => LoginScreen(),
-      //   ),
-      // );
       Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -133,7 +129,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
   login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
-    email = prefs.getString('email');
+    String? email = prefs.getString('email');
     String? pass = prefs.getString('pass');
     print("signout");
     try {
@@ -163,7 +159,9 @@ class _AddStudentPageState extends State<AddStudentPage> {
       ),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance.collection('department').get(),
+            future: FirebaseFirestore.instance
+                .collection('Admin/$admin/department')
+                .get(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const CircularProgressIndicator();

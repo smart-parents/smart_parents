@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class AddParentPage extends StatefulWidget {
   const AddParentPage({Key? key}) : super(key: key);
@@ -52,7 +53,7 @@ class _AddParentPageState extends State<AddParentPage> {
 
   // Adding Student
   CollectionReference parents =
-      FirebaseFirestore.instance.collection('parents');
+      FirebaseFirestore.instance.collection('Admin/$admin/parents');
 
   Future<void> addUser() {
     return parents
@@ -63,6 +64,15 @@ class _AddParentPageState extends State<AddParentPage> {
           'password': password,
           'admin': email
         })
+        .then((value) => print('parent Added'))
+        .catchError((error) => print('Failed to Add user: $error'));
+  }
+
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  Future<void> addUsers() {
+    return users
+        .doc(number)
+        .set({'id': number, 'role': 'parents', 'status': true})
         .then((value) => print('parent Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }
@@ -83,8 +93,8 @@ class _AddParentPageState extends State<AddParentPage> {
         ),
       );
       addUser();
+      addUsers();
       clearText();
-
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(

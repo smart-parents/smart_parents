@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/edit_p.dart';
 import 'package:smart_parents/pages/option.dart';
 
@@ -33,10 +34,6 @@ class _Profile_screenPState extends State<Profile_screenP> {
       String em = email.toString();
       String facid = em.substring(0, em.length - 8);
       id = facid;
-      // snapshot = FirebaseFirestore.instance
-      //     .collection('students')
-      //     .where('number', isEqualTo: "$id")
-      //     .get();
     }
   }
 
@@ -44,7 +41,7 @@ class _Profile_screenPState extends State<Profile_screenP> {
   Widget build(BuildContext context) {
     main();
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        future: FirebaseFirestore.instance.collection('parents').doc(id).get(),
+        future: FirebaseFirestore.instance.collection('Admin/$admin/parents').doc(id).get(),
         builder: (_, snapshot) {
           if (snapshot.hasError) {
             print('Something Went Wrong');
@@ -87,11 +84,11 @@ class _Profile_screenPState extends State<Profile_screenP> {
           }
           return Center(
             child: Container(
-              padding: const EdgeInsets.only(top: 4.5),
+              padding: const EdgeInsets.only(top: 25),
               // width: 414.0,
-              height: MediaQuery.of(context).size.height * 10.0,
-              width: MediaQuery.of(context).size.width * 10.0,
-              color: Colors.blue[50],
+              // height: MediaQuery.of(context).size.height * 10.0,
+              // width: MediaQuery.of(context).size.width * 10.0,
+              // color: Colors.blue[50],
               child: Column(
                 children: [
                   const CircleAvatar(
@@ -109,12 +106,12 @@ class _Profile_screenPState extends State<Profile_screenP> {
                     // height: 470.0,
                     // width: 365.0,
                     margin:
-                        const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-                    height: MediaQuery.of(context).size.height * 0.5,
+                        const EdgeInsets.only(left: 25, right: 25),
+                    height: MediaQuery.of(context).size.height * 0.6,
                     // width: MediaQuery.of(context).size.width * 2.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
-                      color: const Color.fromARGB(255, 37, 86, 116),
+                      color:kPrimaryColor,
                     ),
                     // alignment: Alignment(0.0, -0.9),
                     child: Column(

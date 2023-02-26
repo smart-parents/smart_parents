@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/parents_a/add_parents_page_a.dart';
 import 'package:smart_parents/pages/Faculty/parents_a/update_parents_page_a.dart';
 
@@ -21,29 +22,18 @@ class Parent extends StatefulWidget {
 class _ParentState extends State<Parent> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
-  // static Stream<QuerySnapshot> parentsStream =
-  //     FirebaseFirestore.instance.collection('students').snapshots();
-  late Stream<QuerySnapshot> parentsStream;
-  void myMethod() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      final email = FirebaseAuth.instance.currentUser!.email;
-      parentsStream = FirebaseFirestore.instance
-          .collection('parents')
-          .where("admin", isEqualTo: email)
-          .snapshots();
-    }
-  }
+  Stream<QuerySnapshot> parentsStream =
+      FirebaseFirestore.instance.collection('Admin/$admin/parents').snapshots();
 
   @override
   void initState() {
     super.initState();
     login();
-    myMethod();
   }
 
   // For Deleting User
   CollectionReference parents =
-      FirebaseFirestore.instance.collection('parents');
+      FirebaseFirestore.instance.collection('Admin/$admin/parents');
   Future<void> deleteUser(id) {
     // print("User Deleted $id");
     return parents

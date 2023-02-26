@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_typing_uninitialized_variables, library_private_types_in_public_api, must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +13,8 @@ var id;
 List<Map<String?, String>> messages = [];
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   // static String id = 'chat_screen';
   @override
   _ChatScreenState createState() => _ChatScreenState();
@@ -29,9 +33,9 @@ class _ChatScreenState extends State<ChatScreen> {
     getUserName();
   }
 
-  Future<void> getCurrentUser() async {
+  Future<void> getCurrentUser()  async {
     try {
-      loggedInUser = await _auth.currentUser!;
+      loggedInUser = _auth.currentUser!;
     } catch (e) {
       print(e);
     }
@@ -42,7 +46,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final SharedPreferences prefs = await _prefs;
     id = prefs.getString('id');
     DocumentSnapshot userSnapshot =
-        await FirebaseFirestore.instance.collection('faculty').doc(id).get();
+        await _fireStore.collection('Admin/$admin/students').doc(id).get();
     loggedName = userSnapshot.get('name');
   }
 
@@ -82,7 +86,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       messageText = value;
                     },
                     decoration: kMessageTextFieldDecoration,
-                    style: TextStyle(color: Colors.black),
+                    style: const TextStyle(color: Colors.black),
                   ),
                 ),
                 TextButton(
@@ -95,28 +99,28 @@ class _ChatScreenState extends State<ChatScreen> {
                       messageTextController.clear();
 
                       _fireStore
-                          .collection('messages')
+                          .collection('Admin/$admin/messages')
                           .doc('chatCollection')
                           .get()
                           .then((value) => {
                                 if (value.exists)
                                   {
                                     _fireStore
-                                        .collection('messages')
+                                        .collection('Admin/$admin/messages')
                                         .doc('chatCollection')
                                         .update({'chat1': messages})
                                   }
                                 else
                                   {
                                     _fireStore
-                                        .collection('messages')
+                                        .collection('Admin/$admin/messages')
                                         .doc('chatCollection')
                                         .set({'chat1': messages})
                                   }
                               });
                     }
                   },
-                  child: Text(
+                  child: const Text(
                     'Send',
                     style: kSendButtonTextStyle,
                   ),
@@ -134,6 +138,8 @@ class _ChatScreenState extends State<ChatScreen> {
 class CustomStreamBuilder extends StatelessWidget {
   late ScrollController _scrollController;
 
+  CustomStreamBuilder({super.key});
+
   void scroll() {
     _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -145,14 +151,14 @@ class CustomStreamBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     print(loggedInUser);
     return StreamBuilder<QuerySnapshot>(
-      stream: _fireStore.collection('messages').snapshots(),
+      stream: _fireStore.collection('Admin/$admin/messages').snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           print(snapshot.error);
         } else if (!snapshot.hasData) {
           return const Center(
               child: CircularProgressIndicator(
-                  backgroundColor: Color.fromARGB(255, 37, 86, 116)));
+                  backgroundColor: kPrimaryColor));
         } else {
           messages = [];
 
@@ -203,8 +209,8 @@ class CustomStreamBuilder extends StatelessWidget {
 }
 
 class MessageBubble extends StatelessWidget {
-  MessageBubble(
-      {required this.messageText,
+  const MessageBubble(
+      {super.key, required this.messageText,
       required this.messageSender,
       required this.isMineMessage});
 
@@ -217,7 +223,7 @@ class MessageBubble extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.all(
+        padding: const EdgeInsets.all(
           10.0,
         ),
         child: Column(
@@ -227,26 +233,26 @@ class MessageBubble extends StatelessWidget {
           children: [
             Text(
               messageSender,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 13.0,
                 color: Colors.black38,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 4.0,
             ),
             Container(
-              constraints: BoxConstraints(
+              constraints: const BoxConstraints(
                 maxWidth: 250,
               ),
               child: Material(
                 borderRadius: BorderRadius.circular(15.0),
                 elevation: 5.0,
                 color: isMineMessage == true
-                    ? const Color.fromARGB(255, 37, 86, 116)
-                    : const Color.fromARGB(255, 207, 235, 255),
+                    ? kPrimaryColor
+                    : kPrimaryLightColor,
                 child: Padding(
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     vertical: 10.0,
                     horizontal: 10,
                   ),

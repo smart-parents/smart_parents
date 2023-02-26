@@ -30,8 +30,9 @@ class _LoginFormState extends State<LoginForm> {
 
   check() async {
     final snapShot = await FirebaseFirestore.instance
-        .collection('faculty')
-        .where('faculty', isEqualTo: faculty)
+        .collection('Users')
+        .where('id', isEqualTo: faculty)
+        .where('role', isEqualTo: 'faculty')
         .where('status', isEqualTo: true)
         .get();
     if (snapShot.docs.isNotEmpty) {

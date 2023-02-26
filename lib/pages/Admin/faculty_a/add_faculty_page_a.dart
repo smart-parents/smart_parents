@@ -1,17 +1,13 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class AddFacultyPage extends StatefulWidget {
   const AddFacultyPage({Key? key}) : super(key: key);
-// void initState() {
-//     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-//       // SystemUiOverlay.bottom,
-//     ]);
-// }
   @override
   _AddFacultyPageState createState() => _AddFacultyPageState();
 }
@@ -19,11 +15,9 @@ class AddFacultyPage extends StatefulWidget {
 class _AddFacultyPageState extends State<AddFacultyPage> {
   final _formKey = GlobalKey<FormState>();
   final _prefs = SharedPreferences.getInstance();
-  String? email;
-  // final email = FirebaseAuth.instance.currentUser!.email;
   var faculty = "";
   var name = "";
-  var Branch;
+  var branch;
   var password = "";
 
   @override
@@ -57,21 +51,25 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
   }
 
   // Adding Student
-  CollectionReference facultys =
-      FirebaseFirestore.instance.collection('faculty');
-
-  Future<void> addUser() {
-    return facultys
+  Future<void> addUser() async {
+    CollectionReference facultys =
+        FirebaseFirestore.instance.collection('Admin/$admin/faculty');
+    facultys
         .doc(faculty)
         .set({
           'faculty': faculty,
           'name': name,
-          // 'department': department,
           'password': password,
-          'admin': email,
-          'branch': Branch,
+          'branch': branch,
           'status': true
         })
+        .then((value) => print('faculty Added'))
+        .catchError((error) => print('Failed to Add user: $error'));
+        
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    users
+        .doc(faculty)
+        .set({'id': faculty, 'role': 'faculty', 'status': true})
         .then((value) => print('faculty Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }
@@ -92,12 +90,6 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
       );
       addUser();
       clearText();
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => const Faculty(),
-      //   ),
-      // );
     } on FirebaseAuthException catch (e) {
       print(e);
       if (e.code == 'weak-password') {
@@ -131,7 +123,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
   login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
-    email = prefs.getString('email');
+    String? email = prefs.getString('email');
     String? pass = prefs.getString('pass');
     print("signout");
     try {
@@ -162,7 +154,9 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
         ),
         body: Center(
           child: FutureBuilder<QuerySnapshot>(
-              future: FirebaseFirestore.instance.collection('department').get(),
+              future: FirebaseFirestore.instance
+                  .collection('Admin/$admin/department')
+                  .get(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const CircularProgressIndicator();
@@ -201,7 +195,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                           child: DropdownButton<String>(
                             isExpanded: true,
                             // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                            value: Branch,
+                            value: branch,
                             hint: const Text('Select an item'),
                             icon:
                                 const Icon(Icons.keyboard_arrow_down_outlined),
@@ -212,7 +206,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                                 Container(height: 0, color: Colors.black),
                             onChanged: (value) {
                               setState(() {
-                                Branch = value;
+                                branch = value;
                               });
                             },
                             items: items.map((item) {

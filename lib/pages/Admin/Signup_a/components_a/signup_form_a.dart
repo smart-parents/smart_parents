@@ -76,13 +76,21 @@ class _SignUpFormState extends State<SignUpForm> {
         .catchError((error) => print('Failed to Add user: $error'));
   }
 
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  Future<void> addUsers() {
+    return users
+        .doc(email)
+        .set({'id': email, 'role': 'admin', 'status': true})
+        .then((value) => print('admin Added'))
+        .catchError((error) => print('Failed to Add user: $error'));
+  }
+
   registration() async {
     if (password == confirmPassword) {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         print(userCredential);
-
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: Colors.lightBlueAccent,
@@ -93,6 +101,7 @@ class _SignUpFormState extends State<SignUpForm> {
           ),
         );
         addUser();
+        addUsers();
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -156,7 +165,7 @@ class _SignUpFormState extends State<SignUpForm> {
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
-              cursorColor: kPrimaryColor,
+              // cursorColor: kPrimaryColor,
               onSaved: (email) {},
               decoration: const InputDecoration(
                 hintText: "Your email",
@@ -180,7 +189,7 @@ class _SignUpFormState extends State<SignUpForm> {
               child: TextFormField(
                 textInputAction: TextInputAction.next,
                 obscureText: !_showPassword,
-                cursorColor: kPrimaryColor,
+                // cursorColor: kPrimaryColor,
                 decoration: InputDecoration(
                   hintText: "Your password",
                   prefixIcon: Padding(
@@ -219,7 +228,7 @@ class _SignUpFormState extends State<SignUpForm> {
               child: TextFormField(
                 textInputAction: TextInputAction.done,
                 obscureText: !_showPassword,
-                cursorColor: kPrimaryColor,
+                // cursorColor: kPrimaryColor,
                 decoration: InputDecoration(
                   hintText: "Confirm Your password",
                   prefixIcon: Padding(

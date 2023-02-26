@@ -2,15 +2,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class UpdateDepartPage extends StatefulWidget {
   final String id;
   const UpdateDepartPage({Key? key, required this.id}) : super(key: key);
-// void initState() {
-//     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-//       // SystemUiOverlay.bottom,
-//     ]);
-// }
   @override
   _UpdateDepartPageState createState() => _UpdateDepartPageState();
 }
@@ -20,7 +16,7 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
 
   // Updaing Student
   CollectionReference department =
-      FirebaseFirestore.instance.collection('department');
+      FirebaseFirestore.instance.collection('Admin/$admin/department');
 
   Future<void> updateUser(id, name, departmentId) {
     return department
@@ -51,7 +47,7 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
           // Getting Specific Data by ID
           child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             future: FirebaseFirestore.instance
-                .collection('department')
+                .collection('Admin/$admin/department')
                 .doc(widget.id)
                 .get(),
             builder: (_, snapshot) {

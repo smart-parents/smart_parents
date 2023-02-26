@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class EditP extends StatefulWidget {
   final String id;
@@ -16,7 +17,7 @@ class _EditPState extends State<EditP> {
 
   // Updaing Student
   CollectionReference parents =
-      FirebaseFirestore.instance.collection('parents');
+      FirebaseFirestore.instance.collection('Admin/$admin/parents');
 
   Future<void> updateUser(id, name, email, dob) {
     return parents
@@ -58,7 +59,7 @@ class _EditPState extends State<EditP> {
 
     // Retrieve the date of birth value from Firestore
     FirebaseFirestore.instance
-        .collection('parents')
+        .collection('Admin/$admin/parents')
         .doc(widget.id)
         .get()
         .then((snapshot) {
@@ -89,7 +90,7 @@ class _EditPState extends State<EditP> {
           // Getting Specific Data by ID
           child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             future: FirebaseFirestore.instance
-                .collection('parents')
+                .collection('Admin/$admin/parents')
                 .doc(widget.id)
                 .get(),
             builder: (_, snapshot) {
@@ -492,15 +493,15 @@ class _EditPState extends State<EditP> {
                                   }
                               },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor:
-                                const Color.fromARGB(255, 37, 86, 116),
+                            // backgroundColor:
+                            //     const Color.fromARGB(255, 37, 86, 116),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(10.0)),
-                            fixedSize: const Size(300, 60),
+                            // fixedSize: const Size(300, 60),
                           ),
                           child: const Text(
                             "Confirm",
-                            style: TextStyle(color: Colors.white),
+                            style: TextStyle(color: Colors.white,fontSize: 20),
                           )),
                     )
                   ],

@@ -1,7 +1,8 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names, camel_case_types
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Show_Stu/student_f.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
@@ -19,10 +20,10 @@ class _Show_stuState extends State<Show_stu> {
   // TimeOfDay selectedEndTime = TimeOfDay.now();
 
 // bool _chooseClass = true;
-  final DateTime _current = DateTime.now();
-  String _date = '';
-  String _start = '';
-  String _end = '';
+  // final DateTime _current = DateTime.now();
+  // String _date = '';
+  // String _start = '';
+  // String _end = '';
   String? Branch;
   // String? Semester;
   @override
@@ -34,8 +35,8 @@ class _Show_stuState extends State<Show_stu> {
     // String datedropdownValue = Date[0];
     // String monthdropdownValue = Month[0];
     // String yeardropdownValue = Year[0];
-    dynamic fieldTextStyle = const TextStyle(
-        color: Colors.cyan, fontSize: 17, fontWeight: FontWeight.w400);
+    // dynamic fieldTextStyle = const TextStyle(
+    //     color: Colors.cyan, fontSize: 17, fontWeight: FontWeight.w400);
 
 // Initialize the Cloud Firestore
 
@@ -46,7 +47,7 @@ class _Show_stuState extends State<Show_stu> {
       ),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance.collection('department').get(),
+            future: FirebaseFirestore.instance.collection('Admin/$admin/department').get(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const CircularProgressIndicator();
@@ -211,8 +212,9 @@ class _Show_stuState extends State<Show_stu> {
                                     onPressed: () {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
-                                            builder: (context) =>
-                                                StudentF(branch: "$Branch",sem: "$semesterdropdownValue")),
+                                            builder: (context) => StudentF(
+                                                branch: "$Branch",
+                                                sem: semesterdropdownValue)),
                                       );
                                     },
                                     child: const Text("Show Student")),

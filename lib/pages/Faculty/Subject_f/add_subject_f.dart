@@ -1,9 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class AddSubject extends StatefulWidget {
   const AddSubject({Key? key}) : super(key: key);
@@ -44,7 +43,7 @@ class _AddSubjectState extends State<AddSubject> {
 
   // Adding Student
   CollectionReference subject =
-      FirebaseFirestore.instance.collection('subject');
+      FirebaseFirestore.instance.collection('Admin/$admin/subject');
 
   Future<void> addUser() {
     return subject
@@ -73,7 +72,7 @@ class _AddSubjectState extends State<AddSubject> {
       ),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance.collection('department').get(),
+            future: FirebaseFirestore.instance.collection('Admin/$admin/department').get(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const CircularProgressIndicator();

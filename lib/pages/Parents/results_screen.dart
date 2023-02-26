@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/background.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class Results_screen extends StatefulWidget {
   const Results_screen({super.key});
@@ -14,7 +15,8 @@ class _Results_screenState extends State<Results_screen> {
   @override
   Widget build(BuildContext context) {
     return Background(
-      child: Center(
+      child: 
+      Center(
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -27,7 +29,8 @@ class _Results_screenState extends State<Results_screen> {
                 style: TextStyle(
                     height: 5,
                     fontSize: 30.0,
-                    color: Color.fromARGB(255, 37, 86, 116)),
+                    color: kPrimaryColor
+                    ),
               ),
             ),
             Container(
@@ -46,7 +49,7 @@ class _Results_screenState extends State<Results_screen> {
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                  // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                   minimumSize: const Size(250, 50),
                 ),
                 child: const Text(
@@ -71,7 +74,7 @@ class _Results_screenState extends State<Results_screen> {
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                  // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                   minimumSize: const Size(250, 50),
                 ),
                 child: const Text(
@@ -96,7 +99,7 @@ class _Results_screenState extends State<Results_screen> {
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                  // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                   minimumSize: const Size(250, 50),
                 ),
                 child: const Text(
@@ -121,7 +124,7 @@ class _Results_screenState extends State<Results_screen> {
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                  // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                   minimumSize: const Size(250, 50),
                 ),
                 child: const Text(
@@ -146,7 +149,7 @@ class _Results_screenState extends State<Results_screen> {
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                  // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                   minimumSize: const Size(250, 50),
                 ),
                 child: const Text(
@@ -171,7 +174,7 @@ class _Results_screenState extends State<Results_screen> {
                 },
                 style: ElevatedButton.styleFrom(
                   shape: const StadiumBorder(),
-                  backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+                  // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                   minimumSize: const Size(250, 50),
                 ),
                 child: const Text(

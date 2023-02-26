@@ -3,7 +3,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class AddDepartPage extends StatefulWidget {
   const AddDepartPage({Key? key}) : super(key: key);
@@ -18,16 +19,13 @@ class AddDepartPage extends StatefulWidget {
 
 class _AddDepartPageState extends State<AddDepartPage> {
   final _formKey = GlobalKey<FormState>();
-  // final _prefs = SharedPreferences.getInstance();
-  String? email;
-  // final email = FirebaseAuth.instance.currentUser!.email;
   var name = "";
   var departmentId = "";
   var semno = "";
 
   @override
   void initState() {
-    login();
+    // login();
     super.initState();
   }
   // Create a text controller and use it to retrieve the current value
@@ -52,24 +50,22 @@ class _AddDepartPageState extends State<AddDepartPage> {
     // semnoController.clear();
   }
 
-  final _prefs = SharedPreferences.getInstance();
-  login() async {
-    final SharedPreferences prefs = await _prefs;
-    email = prefs.getString('email');
-  }
+  // final _prefs = SharedPreferences.getInstance();
+  // login() async {
+  //   final SharedPreferences prefs = await _prefs;
+  //    = prefs.getString('email');
+  // }
 
   // Adding Student
   CollectionReference department =
-      FirebaseFirestore.instance.collection('department');
+      FirebaseFirestore.instance.collection('Admin/$admin/department');
 
   Future<void> addUser() {
     return department
-        .doc("${departmentId}_$email")
+        .doc("${departmentId}_$admin")
         .set({
           'name': name,
           'departmentId': departmentId,
-          // 'semno': semno,
-          'admin': email
         })
         .then((value) => print('department Added'))
         .catchError((error) => print('Failed to Add department: $error'));

@@ -1,8 +1,8 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/add_subject_f.dart';
 
 class Subject extends StatefulWidget {
@@ -21,29 +21,17 @@ class Subject extends StatefulWidget {
 class _SubjectState extends State<Subject> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
-  // static Stream<QuerySnapshot> studentsStream =
-  //     FirebaseFirestore.instance.collection('students').snapshots();
-  late Stream<QuerySnapshot> subjectStream;
-
-  void myMethod() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      // final email = FirebaseAuth.instance.currentUser!.email;
-      subjectStream = FirebaseFirestore.instance
-          .collection('subject')
-          // .where("admin", isEqualTo: email)
-          .snapshots();
-    }
-  }
+  Stream<QuerySnapshot> subjectStream =
+      FirebaseFirestore.instance.collection('Admin/$admin/subject').snapshots();
 
   @override
   void initState() {
     super.initState();
-    myMethod();
   }
 
   // For Deleting User
   CollectionReference students =
-      FirebaseFirestore.instance.collection('subject');
+      FirebaseFirestore.instance.collection('Admin/$admin/subject');
   Future<void> deleteUser(id) async {
     // print("User Deleted $id");
     // var student = await _auth.getUserByEmail( '@example.com');
@@ -148,7 +136,7 @@ class _SubjectState extends State<Subject> {
                                           ),
                                           Text(
                                             'Branch: ${storedocs[index]['branch']}',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 13.0),
                                           ),

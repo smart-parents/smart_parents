@@ -1,6 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -12,6 +13,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
+    // print(admin);
     return Scaffold(
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -19,7 +21,7 @@ class _DashboardState extends State<Dashboard> {
           Text(
             "Your Today's Classes",
             textAlign: TextAlign.left,
-            style: TextStyle(fontSize: 15.0, color: Colors.black),
+            style: TextStyle(fontSize: 15.0, color: kPrimaryColor),
           ),
           SizedBox(width: 200, height: 200),
           //   Container(
@@ -38,7 +40,7 @@ class _DashboardState extends State<Dashboard> {
           //       },
           //       style: ElevatedButton.styleFrom(
           //         shape: const StadiumBorder(),
-          //         backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          //        // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
           //         minimumSize: const Size(150, 40),
           //       ),
           //       child: const Text(
@@ -63,7 +65,7 @@ class _DashboardState extends State<Dashboard> {
           //       },
           //       style: ElevatedButton.styleFrom(
           //         shape: const StadiumBorder(),
-          //         backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          //         //backgroundColor: const Color.fromARGB(255, 37, 86, 116),
           //         minimumSize: const Size(150, 40),
           //       ),
           //       child: const Text(
@@ -79,7 +81,7 @@ class _DashboardState extends State<Dashboard> {
           //       onPressed: () => {},
           //       style: ElevatedButton.styleFrom(
           //         shape: const StadiumBorder(),
-          //         backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          //         //backgroundColor: const Color.fromARGB(255, 37, 86, 116),
           //         minimumSize: const Size(150, 40),
           //       ),
           //       child: const Text(
@@ -106,7 +108,7 @@ class _DashboardState extends State<Dashboard> {
           //             )*/
           //           },
           //           style: ElevatedButton.styleFrom(
-          //             backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          //             //backgroundColor: const Color.fromARGB(255, 37, 86, 116),
           //             minimumSize: const Size(150, 80),
           //           ),
           //           child: const Text(
@@ -121,7 +123,7 @@ class _DashboardState extends State<Dashboard> {
           //         child: ElevatedButton(
           //           onPressed: () => {},
           //           style: ElevatedButton.styleFrom(
-          //             backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          //             //backgroundColor: const Color.fromARGB(255, 37, 86, 116),
           //             minimumSize: const Size(150, 80),
           //           ),
           //           child: const Text(
@@ -150,7 +152,7 @@ class _DashboardState extends State<Dashboard> {
           //             )*/
           //           },
           //           style: ElevatedButton.styleFrom(
-          //             backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          //            // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
           //             minimumSize: const Size(150, 80),
           //           ),
           //           child: const Text(
@@ -165,7 +167,7 @@ class _DashboardState extends State<Dashboard> {
           //         child: ElevatedButton(
           //           onPressed: () => {},
           //           style: ElevatedButton.styleFrom(
-          //             backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          //             //backgroundColor: const Color.fromARGB(255, 37, 86, 116),
           //             minimumSize: const Size(150, 80),
           //           ),
           //           child: const Text(

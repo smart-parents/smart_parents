@@ -33,21 +33,21 @@ class _LoginFormState extends State<LoginForm> {
 
   check() async {
     final snapShot = await FirebaseFirestore.instance
-        .collection('Admin')
-        .where('email', isEqualTo: email)
+        .collection('Users')
+        .where('id', isEqualTo: email)
+        .where('role', isEqualTo: 'admin')
+        .where('status', isEqualTo: true)
         .get();
     if (snapShot.docs.isNotEmpty) {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
-        print(userCredential.user?.uid);
-        // await storage.write(key: email, value: password);
+        print(userCredential.user!.uid);
         final SharedPreferences prefs = await _prefs;
-        await prefs.setString('uid', userCredential.user?.uid as String);
+        await prefs.setString('uid', userCredential.user!.uid);
         await prefs.setString('role', 'admin');
         await prefs.setString('email', email);
         await prefs.setString('pass', password);
-
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
@@ -207,7 +207,6 @@ class _LoginFormState extends State<LoginForm> {
                     child: const Text(
                       "Forgot Password ?",
                       style: TextStyle(
-                          color: kPrimaryColor,
                           fontWeight: FontWeight.bold,
                           decoration: TextDecoration.underline),
                     )),

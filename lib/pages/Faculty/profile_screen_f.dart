@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/edit_f.dart';
 import 'package:smart_parents/pages/option.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -61,12 +62,14 @@ class _ProfileFState extends State<ProfileF> {
     }
   }
 
+  var admin = 'd@gm.co';
   @override
   Widget build(BuildContext context) {
-    // main();
-    // login();
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        future: FirebaseFirestore.instance.collection('faculty').doc(id).get(),
+        future: FirebaseFirestore.instance
+            .collection('Admin/$admin/faculty')
+            .doc(id)
+            .get(),
         builder: (_, snapshot) {
           if (snapshot.hasError) {
             print('Something Went Wrong');
@@ -82,6 +85,7 @@ class _ProfileFState extends State<ProfileF> {
           var name = data['name'];
           var mono = data['mono'];
           var dob = data['dob'];
+          var branch = data['branch'];
           var age = data['age'];
           if (dob != null) {
             Timestamp timestamp = snapshot.data!['dob'];
@@ -91,26 +95,20 @@ class _ProfileFState extends State<ProfileF> {
             int day = int.parse(dobParts[0]);
             int month = int.parse(dobParts[1]);
             int year = int.parse(dobParts[2]);
-
-// Create a DateTime object with the DOB
             DateTime dobDateTime = DateTime(year, month, day);
-
-// Calculate the age
             DateTime now = DateTime.now();
             Duration ageDuration = now.difference(dobDateTime);
             age = (ageDuration.inDays / 365).floor();
-
-// Print the age
             print('Age: $age');
           }
           // var dob = data['dob'];
           return Center(
             child: Container(
-              padding: const EdgeInsets.only(top: 4.5),
-              // width: 414.0,
-              height: MediaQuery.of(context).size.width * 590.0,
-              width: MediaQuery.of(context).size.width * 380.0,
-              color: Colors.blue[50],
+              // padding: const EdgeInsets.only(top: 10),
+              padding: const EdgeInsets.only(top: 25),
+              // height: MediaQuery.of(context).size.width * 590.0,
+              // width: MediaQuery.of(context).size.width * 380.0,
+              // color: kPrimaryLightColor,
               child: Column(
                 children: [
                   const CircleAvatar(
@@ -121,18 +119,17 @@ class _ProfileFState extends State<ProfileF> {
                     'Faculty',
                     style: TextStyle(
                       fontSize: 30,
-                      color: Color.fromARGB(255, 0, 0, 0),
+                      // color: Color.fromARGB(255, 0, 0, 0),
                     ),
                   ),
                   Container(
                     // height: 470.0,
                     // width: 365.0,
-                    margin:
-                        const EdgeInsets.only(left: 25, right: 25, bottom: 25),
-                    height: MediaQuery.of(context).size.height * 0.5,
+                    margin: const EdgeInsets.only(left: 25, right: 25),
+                    height: MediaQuery.of(context).size.height * 0.6,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
-                      color: const Color.fromARGB(255, 37, 86, 116),
+                      color: kPrimaryColor,
                     ),
                     // alignment: Alignment(0.0, -0.9),
                     child: Column(
@@ -203,6 +200,16 @@ class _ProfileFState extends State<ProfileF> {
                               ),
                               Text(
                                 "Age: $age",
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  color: Color.fromARGB(255, 255, 255, 255),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Text(
+                                "Branch: $branch",
                                 style: const TextStyle(
                                   fontSize: 20,
                                   color: Color.fromARGB(255, 255, 255, 255),
