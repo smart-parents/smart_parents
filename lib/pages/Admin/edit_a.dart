@@ -197,7 +197,7 @@ class _EditAState extends State<EditA> {
                         ),
                         child: const Text(
                           "Confirm",
-                          style: TextStyle(color: Colors.white,fontSize: 20),
+                          style: TextStyle(color: Colors.white, fontSize: 20),
                         )),
                   )
                 ],

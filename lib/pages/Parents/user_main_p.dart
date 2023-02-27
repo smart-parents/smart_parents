@@ -26,6 +26,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
     adminget();
     super.initState();
   }
+
   adminget() async {
     final SharedPreferences prefs = await _prefs;
     var pid = prefs.getString('id');
@@ -39,6 +40,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
       }
     }
   }
+
   static final List<Widget> _widgetOptions = <Widget>[
     const Parents_home(),
     const Attendance_screen(),

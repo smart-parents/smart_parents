@@ -20,7 +20,9 @@ class _MyDropdownMenuState extends State<MyDropdownMenu> {
       appBar: AppBar(title: const Text('My Dropdown Menu')),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
-          future: FirebaseFirestore.instance.collection('Admin/$admin/department').get(),
+          future: FirebaseFirestore.instance
+              .collection('Admin/$admin/department')
+              .get(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();

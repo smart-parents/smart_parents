@@ -99,8 +99,7 @@ class _ProfileState extends State<Profile> {
                   Container(
                     // height: 470.0,
                     // width: 365.0,
-                    margin:
-                        const EdgeInsets.only(left: 25, right: 25),
+                    margin: const EdgeInsets.only(left: 25, right: 25),
                     height: MediaQuery.of(context).size.height * 0.55,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(18),

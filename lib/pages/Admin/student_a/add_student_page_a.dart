@@ -74,7 +74,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     users
         .doc(number)
-        .set({'id': number, 'role': 'student', 'status': true,'admin':admin})
+        .set({'id': number, 'role': 'student', 'status': true, 'admin': admin})
         .then((value) => print('student Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }

@@ -41,8 +41,10 @@ class _AttendencePageState extends State<AttendencePage> {
   Future<void> myMethod() async {
     final SharedPreferences prefs = await _prefs;
     var id = prefs.getString('id');
-    DocumentSnapshot userSnapshot =
-        await FirebaseFirestore.instance.collection('Admin/$admin/faculty').doc(id).get();
+    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+        .collection('Admin/$admin/faculty')
+        .doc(id)
+        .get();
     admin = userSnapshot.get('admin');
   }
 

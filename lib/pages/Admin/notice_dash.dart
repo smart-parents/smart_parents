@@ -13,12 +13,10 @@ class Notice extends StatefulWidget {
 }
 
 class _NoticeState extends State<Notice> {
-   Stream<QuerySnapshot> 
-      noticesStream = FirebaseFirestore.instance
-          .collection('Admin/$admin/Notices')
-          .snapshots();
-    CollectionReference  Notices = FirebaseFirestore.instance.collection('Admin/$admin/Notices');
-
+  Stream<QuerySnapshot> noticesStream =
+      FirebaseFirestore.instance.collection('Admin/$admin/Notices').snapshots();
+  CollectionReference Notices =
+      FirebaseFirestore.instance.collection('Admin/$admin/Notices');
 
   @override
   void initState() {
@@ -26,8 +24,7 @@ class _NoticeState extends State<Notice> {
   }
 
   Future<void> deleteUser(id) async {
-    return Notices
-        .doc(id)
+    return Notices.doc(id)
         .delete()
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));

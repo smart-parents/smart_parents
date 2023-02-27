@@ -18,11 +18,9 @@ class _DepartmentState extends State<Department> {
     // login();
   }
 
-  Stream<QuerySnapshot>
-      departmentStream = FirebaseFirestore.instance
-          .collection('Admin/$admin/department')
-          .snapshots();
- 
+  Stream<QuerySnapshot> departmentStream = FirebaseFirestore.instance
+      .collection('Admin/$admin/department')
+      .snapshots();
 
   // For Deleting User
   CollectionReference department =

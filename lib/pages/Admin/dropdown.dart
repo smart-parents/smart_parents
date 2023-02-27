@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 import 'package:smart_parents/components/constants.dart';
+
 class DropdownDemo extends StatefulWidget {
   const DropdownDemo({Key? key}) : super(key: key);
   @override
@@ -13,7 +14,6 @@ class DropdownDemo extends StatefulWidget {
 }
 
 class _DropdownDemoState extends State<DropdownDemo> {
-
   String? Branch;
   final _formKey = GlobalKey<FormState>();
   @override

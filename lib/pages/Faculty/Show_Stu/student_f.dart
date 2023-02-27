@@ -18,7 +18,6 @@ class _StudentFState extends State<StudentF> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
   // late Stream<QuerySnapshot> studentsStream;
-  
 
   // final FirebaseAuth _auth = FirebaseAuth.instance;
   @override

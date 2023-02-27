@@ -501,7 +501,7 @@ class _EditPState extends State<EditP> {
                           ),
                           child: const Text(
                             "Confirm",
-                            style: TextStyle(color: Colors.white,fontSize: 20),
+                            style: TextStyle(color: Colors.white, fontSize: 20),
                           )),
                     )
                   ],

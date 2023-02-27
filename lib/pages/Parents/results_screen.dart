@@ -15,8 +15,7 @@ class _Results_screenState extends State<Results_screen> {
   @override
   Widget build(BuildContext context) {
     return Background(
-      child: 
-      Center(
+      child: Center(
         child: Column(
           // crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
@@ -26,11 +25,8 @@ class _Results_screenState extends State<Results_screen> {
               alignment: Alignment(-0.7, -1),
               child: Text(
                 'Results',
-                style: TextStyle(
-                    height: 5,
-                    fontSize: 30.0,
-                    color: kPrimaryColor
-                    ),
+                style:
+                    TextStyle(height: 5, fontSize: 30.0, color: kPrimaryColor),
               ),
             ),
             Container(

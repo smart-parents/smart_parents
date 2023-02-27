@@ -57,7 +57,9 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
   // late String _selectedSubjectId;
   Future<void> _fetchDepartments() async {
     final QuerySnapshot<Map<String, dynamic>> departmentsSnapshot =
-        await FirebaseFirestore.instance.collection('Admin/$admin/department').get();
+        await FirebaseFirestore.instance
+            .collection('Admin/$admin/department')
+            .get();
 
     final List<Department> departments = [];
 
@@ -76,7 +78,9 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
 
   Future<void> _fetchSubjects() async {
     final QuerySnapshot<Map<String, dynamic>> subjectSnapshot =
-        await FirebaseFirestore.instance.collection('Admin/$admin/subject').get();
+        await FirebaseFirestore.instance
+            .collection('Admin/$admin/subject')
+            .get();
 
     final List<Subject> subjects = [];
 
@@ -113,8 +117,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
         title: const Text("Attendence"),
       ),
       body: Center(
-        child:
-            ListView(
+        child: ListView(
           physics: const BouncingScrollPhysics(),
           children: [
             Padding(
@@ -533,10 +536,11 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                       onPressed: () {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: (context) => AttendencePage(
-                                                  branch: "$Branch",
-                                                  sem:
-                                                      semesterdropdownValue)),
+                                              builder: (context) =>
+                                                  AttendencePage(
+                                                      branch: "$Branch",
+                                                      sem:
+                                                          semesterdropdownValue)),
                                         );
                                       },
                                       child: const Text("Take Attendence")),

@@ -47,7 +47,9 @@ class _Show_stuState extends State<Show_stu> {
       ),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance.collection('Admin/$admin/department').get(),
+            future: FirebaseFirestore.instance
+                .collection('Admin/$admin/department')
+                .get(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const CircularProgressIndicator();

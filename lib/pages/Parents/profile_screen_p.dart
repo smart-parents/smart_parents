@@ -41,7 +41,10 @@ class _Profile_screenPState extends State<Profile_screenP> {
   Widget build(BuildContext context) {
     main();
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        future: FirebaseFirestore.instance.collection('Admin/$admin/parents').doc(id).get(),
+        future: FirebaseFirestore.instance
+            .collection('Admin/$admin/parents')
+            .doc(id)
+            .get(),
         builder: (_, snapshot) {
           if (snapshot.hasError) {
             print('Something Went Wrong');
@@ -105,13 +108,12 @@ class _Profile_screenPState extends State<Profile_screenP> {
                   Container(
                     // height: 470.0,
                     // width: 365.0,
-                    margin:
-                        const EdgeInsets.only(left: 25, right: 25),
+                    margin: const EdgeInsets.only(left: 25, right: 25),
                     height: MediaQuery.of(context).size.height * 0.55,
                     // width: MediaQuery.of(context).size.width * 2.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(18),
-                      color:kPrimaryColor,
+                      color: kPrimaryColor,
                     ),
                     // alignment: Alignment(0.0, -0.9),
                     child: Column(

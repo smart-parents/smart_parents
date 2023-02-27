@@ -72,7 +72,7 @@ class _AddParentPageState extends State<AddParentPage> {
   Future<void> addUsers() {
     return users
         .doc(number)
-        .set({'id': number, 'role': 'parents', 'status': true,'admin':admin})
+        .set({'id': number, 'role': 'parents', 'status': true, 'admin': admin})
         .then((value) => print('parent Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }

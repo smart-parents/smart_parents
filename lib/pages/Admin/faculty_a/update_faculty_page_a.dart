@@ -135,7 +135,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Please Enter Department Id';
-                          } 
+                          }
                           return null;
                         },
                       ),
@@ -169,8 +169,8 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                           onPressed: () {
                             // Validate returns true if the form is valid, otherwise false.
                             if (_form1Key.currentState!.validate()) {
-                              updateUser(widget.id, faculty, name, branch,
-                                  password);
+                              updateUser(
+                                  widget.id, faculty, name, branch, password);
                               Navigator.pop(context);
                             }
                           },

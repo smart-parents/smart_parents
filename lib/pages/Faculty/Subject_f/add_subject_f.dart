@@ -72,7 +72,9 @@ class _AddSubjectState extends State<AddSubject> {
       ),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance.collection('Admin/$admin/department').get(),
+            future: FirebaseFirestore.instance
+                .collection('Admin/$admin/department')
+                .get(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
                 return const CircularProgressIndicator();
