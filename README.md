@@ -8,5 +8,3 @@
 </p>
 
 Final year project 'Smart Parents'.
-
-## Getting Started
