@@ -1,8 +1,10 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
@@ -18,6 +20,25 @@ class ParentsScreen extends StatefulWidget {
 class _ParentsScreenState extends State<ParentsScreen> {
   int _selectedIndex = 0;
   // final storage = new FlutterSecureStorage();
+  final _prefs = SharedPreferences.getInstance();
+  @override
+  void initState() {
+    adminget();
+    super.initState();
+  }
+  adminget() async {
+    final SharedPreferences prefs = await _prefs;
+    var pid = prefs.getString('id');
+    final snapShot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('id', isEqualTo: pid)
+        .get();
+    if (snapShot.docs.isNotEmpty) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in snapShot.docs) {
+        admin = doc.get('admin');
+      }
+    }
+  }
   static final List<Widget> _widgetOptions = <Widget>[
     const Parents_home(),
     const Attendance_screen(),

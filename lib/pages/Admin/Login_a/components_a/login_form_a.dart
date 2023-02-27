@@ -43,6 +43,9 @@ class _LoginFormState extends State<LoginForm> {
         UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(email: email, password: password);
         print(userCredential.user!.uid);
+        for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapShot.docs) {
+          admin = doc.get('admin');
+        }
         final SharedPreferences prefs = await _prefs;
         await prefs.setString('uid', userCredential.user!.uid);
         await prefs.setString('role', 'admin');

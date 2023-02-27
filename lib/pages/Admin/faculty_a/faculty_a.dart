@@ -99,12 +99,13 @@ class _FacultyState extends State<Faculty> {
               Scaffold(
             appBar: AppBar(
               // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                tooltip: "Back",
-                onPressed: () => Navigator.of(context).pop(),
-              ),
+              // automaticallyImplyLeading: false,
+              leading: const BackButton(),
+              // leading: IconButton(
+              //   icon: const Icon(Icons.arrow_back),
+              //   tooltip: "Back",
+              //   onPressed: () => Navigator.of(context).pop(),
+              // ),
               title: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [

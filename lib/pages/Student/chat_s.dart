@@ -33,7 +33,7 @@ class _ChatScreenState extends State<ChatScreen> {
     getUserName();
   }
 
-  Future<void> getCurrentUser()  async {
+  Future<void> getCurrentUser() async {
     try {
       loggedInUser = _auth.currentUser!;
     } catch (e) {
@@ -90,6 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 TextButton(
+                  // TextButton.icon(
                   onPressed: () {
                     if (messageText != '') {
                       Map<String?, String> messageMap = {
@@ -120,6 +121,11 @@ class _ChatScreenState extends State<ChatScreen> {
                               });
                     }
                   },
+                  // icon: const Icon(Icons.send),
+                  // label: const Text(
+                  //   'Send',
+                  //   style: kSendButtonTextStyle,
+                  // ),
                   child: const Text(
                     'Send',
                     style: kSendButtonTextStyle,
@@ -157,8 +163,7 @@ class CustomStreamBuilder extends StatelessWidget {
           print(snapshot.error);
         } else if (!snapshot.hasData) {
           return const Center(
-              child: CircularProgressIndicator(
-                  backgroundColor: kPrimaryColor));
+              child: CircularProgressIndicator(backgroundColor: kPrimaryColor));
         } else {
           messages = [];
 
@@ -210,7 +215,8 @@ class CustomStreamBuilder extends StatelessWidget {
 
 class MessageBubble extends StatelessWidget {
   const MessageBubble(
-      {super.key, required this.messageText,
+      {super.key,
+      required this.messageText,
       required this.messageSender,
       required this.isMineMessage});
 
@@ -248,9 +254,8 @@ class MessageBubble extends StatelessWidget {
               child: Material(
                 borderRadius: BorderRadius.circular(15.0),
                 elevation: 5.0,
-                color: isMineMessage == true
-                    ? kPrimaryColor
-                    : kPrimaryLightColor,
+                color:
+                    isMineMessage == true ? kPrimaryColor : kPrimaryLightColor,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 10.0,

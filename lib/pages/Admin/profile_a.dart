@@ -101,7 +101,7 @@ class _ProfileState extends State<Profile> {
                     // width: 365.0,
                     margin:
                         const EdgeInsets.only(left: 25, right: 25),
-                    height: MediaQuery.of(context).size.height * 0.6,
+                    height: MediaQuery.of(context).size.height * 0.55,
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(18),
                         color: kPrimaryColor),
@@ -111,7 +111,7 @@ class _ProfileState extends State<Profile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Container(
-                          margin: const EdgeInsets.only(left: 15, top: 20),
+                          margin: const EdgeInsets.only(left: 15, top: 15),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

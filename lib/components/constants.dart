@@ -1,17 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+// ignore_for_file: prefer_typing_uninitialized_variables
 import 'package:flutter/material.dart';
 
 class Constants {
-  static String appId = "1:1088705041732:web:21b5aa5fdba3011ba27311";
-  static String apiKey = "AIzaSyCr3zJj1nErI-2vKhNh1O-kRU1_QBQDeKE";
-  static String messagingSenderId = "1088705041732";
-  static String projectId = "smart-parents-df1cf";
+  static String appId = "1:581206730087:web:e3d782874866d2ff8fbbc2";
+  static String apiKey = "AIzaSyAOUD8giZV2XdhMM4XEwtCwzPdNeDbcY2w";
+  static String messagingSenderId = "581206730087";
+  static String projectId = "smart-parents-11c8b";
 }
 
-var admin = FirebaseAuth.instance.currentUser!.email;
-// var admin =
-//     FirebaseFirestore.instance.collection('Users').doc(email).snapshots();
+var admin;
 
 const kPrimaryColor = Color(0xFF255674);
 const kPrimaryLightColor = Color(0xFFCFEBFF);

@@ -90,6 +90,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
                 TextButton(
+                  // TextButton.icon(
                   onPressed: () {
                     if (messageText != '') {
                       Map<String?, String> messageMap = {
@@ -120,6 +121,11 @@ class _ChatScreenState extends State<ChatScreen> {
                               });
                     }
                   },
+                  // icon: const Icon(Icons.send),
+                  // label: const Text(
+                  //   'Send',
+                  //   style: kSendButtonTextStyle,
+                  // ),
                   child: const Text(
                     'Send',
                     style: kSendButtonTextStyle,

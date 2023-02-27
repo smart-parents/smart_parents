@@ -80,7 +80,7 @@ class _SignUpFormState extends State<SignUpForm> {
   Future<void> addUsers() {
     return users
         .doc(email)
-        .set({'id': email, 'role': 'admin', 'status': true})
+        .set({'id': email, 'role': 'admin', 'status': true, 'admin': email})
         .then((value) => print('admin Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }

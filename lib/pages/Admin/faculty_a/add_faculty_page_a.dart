@@ -65,11 +65,11 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
         })
         .then((value) => print('faculty Added'))
         .catchError((error) => print('Failed to Add user: $error'));
-        
+
     CollectionReference users = FirebaseFirestore.instance.collection('Users');
     users
         .doc(faculty)
-        .set({'id': faculty, 'role': 'faculty', 'status': true})
+        .set({'id': faculty, 'role': 'faculty', 'status': true, 'admin': admin})
         .then((value) => print('faculty Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }

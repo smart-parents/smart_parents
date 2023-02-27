@@ -1,41 +1,33 @@
 {
   "project_info": {
-    "project_number": "1088705041732",
-    "project_id": "smart-parents-df1cf",
-    "storage_bucket": "smart-parents-df1cf.appspot.com"
+    "project_number": "581206730087",
+    "project_id": "smart-parents-11c8b",
+    "storage_bucket": "smart-parents-11c8b.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1088705041732:android:8a6bdd80a4f30ddfa27311",
+        "mobilesdk_app_id": "1:581206730087:android:d25080bc11fa532c8fbbc2",
         "android_client_info": {
           "package_name": "com.example.smart_parents"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1088705041732-uqd3pahp3sdsk1prsen05vra1o3l6470.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.smart_parents",
-            "certificate_hash": "37813820042f2dbf9d070f492e9eb2383a003aad"
-          }
-        },
-        {
-          "client_id": "1088705041732-c65mmhv8ehf0ef9ke43ue0s79jjkf600.apps.googleusercontent.com",
+          "client_id": "581206730087-mqaucg3ckrahqrf24js3t0v8dtbc124u.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD9gDkW2K3xkexolZsRinajYONZPMFRaog"
+          "current_key": "AIzaSyBTX0QsUYa-wJsXUkCiiqO_eOPGUPjFHjE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1088705041732-c65mmhv8ehf0ef9ke43ue0s79jjkf600.apps.googleusercontent.com",
+              "client_id": "581206730087-mqaucg3ckrahqrf24js3t0v8dtbc124u.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

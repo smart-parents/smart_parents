@@ -1,8 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Student/chat_s.dart';
@@ -23,6 +25,26 @@ class UserMainS extends StatefulWidget {
 
 class _UserMainState extends State<UserMainS> {
   int _selectedIndex = 0;
+  final _prefs = SharedPreferences.getInstance();
+  @override
+  void initState() {
+    adminget();
+    super.initState();
+  }
+  adminget() async {
+    final SharedPreferences prefs = await _prefs;
+    var pid = prefs.getString('id');
+    final snapShot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('id', isEqualTo: pid)
+        .get();
+    if (snapShot.docs.isNotEmpty) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in snapShot.docs) {
+        admin = doc.get('admin');
+      }
+    }
+  }
+
   // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),

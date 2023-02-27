@@ -41,6 +41,9 @@ class _LoginFormState extends State<LoginForm> {
             .signInWithEmailAndPassword(
                 email: "$faculty@spf.com", password: password);
         print(userCredential.user?.uid);
+        for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapShot.docs) {
+        admin = doc.get('admin');
+      }
         // await storage.write(key: "uid", value: userCredential.user?.uid);
         final SharedPreferences prefs = await _prefs;
         await prefs.setString('uid', userCredential.user?.uid as String);

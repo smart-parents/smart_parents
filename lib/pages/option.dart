@@ -34,47 +34,6 @@ class _OptionState extends State<Option> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       IconButton(
-                        icon: Image.asset('assets/images/Faculty.png'),
-                        // iconSize: height,
-                        iconSize: screenWidth * 0.4,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreenF()),
-                          );
-                        },
-                      ),
-                      const Text("Faculty", style: TextStyle(fontSize: 20.0)),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
-                        icon: Image.asset('assets/images/Parents.png'),
-                        // iconSize: height,
-                        iconSize: screenWidth * 0.4,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const LoginScreenP()),
-                          );
-                        },
-                      ),
-                      const Text("Parents", style: TextStyle(fontSize: 20.0)),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      IconButton(
                         icon: Image.asset('assets/images/Admin.png'),
                         // iconSize: height,
                         iconSize: screenWidth * 0.4,
@@ -109,6 +68,47 @@ class _OptionState extends State<Option> {
                   ),
                 ],
               ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: Image.asset('assets/images/Faculty.png'),
+                        // iconSize: height,
+                        iconSize: screenWidth * 0.4,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreenF()),
+                          );
+                        },
+                      ),
+                      const Text("Faculty", style: TextStyle(fontSize: 20.0)),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      IconButton(
+                        icon: Image.asset('assets/images/Parents.png'),
+                        // iconSize: height,
+                        iconSize: screenWidth * 0.4,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreenP()),
+                          );
+                        },
+                      ),
+                      const Text("Parents", style: TextStyle(fontSize: 20.0)),
+                    ],
+                  ),
+                ],
+              ),
             ],
           ),
           desktop: const DesktopOption(),
@@ -135,40 +135,6 @@ class DesktopOption extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
-              icon: Image.asset('assets/images/Faculty.png'),
-              // iconSize: height,
-              iconSize: screenWidth * 0.2,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreenF()),
-                );
-              },
-            ),
-            const Text("Faculty", style: TextStyle(fontSize: 20.0)),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
-              icon: Image.asset('assets/images/Parents.png'),
-              // iconSize: height,
-              iconSize: screenWidth * 0.2,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginScreenP()),
-                );
-              },
-            ),
-            const Text("Parents", style: TextStyle(fontSize: 20.0)),
-          ],
-        ),
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            IconButton(
               icon: Image.asset('assets/images/Admin.png'),
               // iconSize: height,
               iconSize: screenWidth * 0.2,
@@ -186,6 +152,23 @@ class DesktopOption extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             IconButton(
+              icon: Image.asset('assets/images/Faculty.png'),
+              // iconSize: height,
+              iconSize: screenWidth * 0.2,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreenF()),
+                );
+              },
+            ),
+            const Text("Faculty", style: TextStyle(fontSize: 20.0)),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
               icon: Image.asset('assets/images/Student.png'),
               // iconSize: height,
               iconSize: screenWidth * 0.2,
@@ -197,6 +180,23 @@ class DesktopOption extends StatelessWidget {
               },
             ),
             const Text("Student", style: TextStyle(fontSize: 20.0)),
+          ],
+        ),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              icon: Image.asset('assets/images/Parents.png'),
+              // iconSize: height,
+              iconSize: screenWidth * 0.2,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreenP()),
+                );
+              },
+            ),
+            const Text("Parents", style: TextStyle(fontSize: 20.0)),
           ],
         ),
       ],

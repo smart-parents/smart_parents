@@ -13,7 +13,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    // print(admin);
+    print(admin);
     return Scaffold(
         body: Column(
             mainAxisAlignment: MainAxisAlignment.center,
