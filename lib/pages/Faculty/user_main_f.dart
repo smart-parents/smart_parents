@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/pages/Faculty/Schedule/schedule_u.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
@@ -50,9 +51,7 @@ class _UserMainState extends State<UserMainF> {
   // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
-    const Text(
-      'Index 2: schedule',
-    ),
+    const MyCarouselSlider(),
     const ChatScreen(),
     const ProfileF()
   ];
