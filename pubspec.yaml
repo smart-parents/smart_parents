@@ -8,6 +8,8 @@ version: 1.0.0+1
 environment:
   sdk: '>=2.19.2 <3.0.0'
 
+# flutter pub get
+# flutter pub upgrade
 # flutter pub upgrade --major-versions
 # flutter pub outdated
 dependencies:
@@ -39,7 +41,6 @@ flutter_icons:
   android: true
   # android: "launcher_icon"
   ios: true
-  remove_alpha_ios: true
   image_path: "assets/images/Final.png"
   web:
     generate: true
