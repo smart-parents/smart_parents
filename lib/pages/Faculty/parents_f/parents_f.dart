@@ -23,7 +23,8 @@ class _ParentState extends State<Parent> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
   Stream<QuerySnapshot> parentsStream =
-      FirebaseFirestore.instance.collection('Admin/$admin/parents').snapshots();
+      FirebaseFirestore.instance.collection('Admin/$admin/parents')
+      .where('branch',isEqualTo: branch).snapshots();
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _ParentState extends State<Parent> {
   // For Deleting User
   CollectionReference parents =
       FirebaseFirestore.instance.collection('Admin/$admin/parents');
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
   Future<void> deleteUser(id) {
     // print("User Deleted $id");
     return parents
@@ -41,6 +43,18 @@ class _ParentState extends State<Parent> {
         .delete()
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
+  }
+  void updateStatus(id, status)  {
+    parents
+        .doc(id)
+        .update({'status': status})
+        .then((value) => print('Status: $status'))
+        .catchError((error) => print('Failed to update status: $error'));
+    users
+        .doc(id)
+        .update({'status': status})
+        .then((value) => print('Status: $status'))
+        .catchError((error) => print('Failed to update status: $error'));
   }
 
   final _prefs = SharedPreferences.getInstance();
@@ -144,38 +158,63 @@ class _ParentState extends State<Parent> {
                                   ),
                                   Column(
                                     children: [
-                                      const Text("Delete"),
-                                      IconButton(
-                                        highlightColor: Colors.red,
-                                        onPressed: () async {
-                                          try {
-                                            // await delete(storedocs[index]
-                                            //         ['number'] +
-                                            //     '@sps.com');
-                                            deleteUser(storedocs[index]['id']);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content:
-                                                      Text('Student deleted.')),
-                                            );
-                                          } catch (e) {
-                                            print(e);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                  content: Text(
-                                                      'Failed to delete student: $e')),
-                                            );
-                                          }
+                                      Switch(
+                                        value: storedocs[index]['status'],
+                                        onChanged: ( value) {
+                                          setState(() {
+                                            // _status = value;
+                                            updateStatus(
+                                                storedocs[index]['id'], value);
+                                          });
                                         },
-                                        icon: const Icon(
-                                          Icons.delete,
-                                          color: Colors.red,
-                                        ),
+                                      ),
+                                      Text(
+                                        storedocs[index]['status']
+                                            ? 'Active'
+                                            : 'Disactive',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 15,
+                                            color: storedocs[index]['status']
+                                                ? Colors.green
+                                                : Colors.red),
                                       ),
                                     ],
                                   ),
+                                  // Column(
+                                  //   children: [
+                                  //     const Text("Delete"),
+                                  //     IconButton(
+                                  //       highlightColor: Colors.red,
+                                  //       onPressed: () async {
+                                  //         try {
+                                  //           // await delete(storedocs[index]
+                                  //           //         ['number'] +
+                                  //           //     '@sps.com');
+                                  //           deleteUser(storedocs[index]['id']);
+                                  //           ScaffoldMessenger.of(context)
+                                  //               .showSnackBar(
+                                  //             const SnackBar(
+                                  //                 content:
+                                  //                     Text('Student deleted.')),
+                                  //           );
+                                  //         } catch (e) {
+                                  //           print(e);
+                                  //           ScaffoldMessenger.of(context)
+                                  //               .showSnackBar(
+                                  //             SnackBar(
+                                  //                 content: Text(
+                                  //                     'Failed to delete student: $e')),
+                                  //           );
+                                  //         }
+                                  //       },
+                                  //       icon: const Icon(
+                                  //         Icons.delete,
+                                  //         color: Colors.red,
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                               const SizedBox(

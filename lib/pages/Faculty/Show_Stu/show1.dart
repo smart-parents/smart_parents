@@ -46,20 +46,22 @@ class _Show_stuState extends State<Show_stu> {
         title: const Text("Student Details"),
       ),
       body: Center(
-        child: FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance
-                .collection('Admin/$admin/department')
-                .get(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const CircularProgressIndicator();
-              }
-              // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
-              // final items =
-              //     snapshot.data!.docs.map((doc) => doc.get('name')).toList();
-              // final semester =
-              //     snapshot.data!.docs.map((doc) => doc.get('semno')).toList();
-              return ListView(
+        child: 
+        // FutureBuilder<QuerySnapshot>(
+        //     future: FirebaseFirestore.instance
+        //         .collection('Admin/$admin/department')
+        //         .get(),
+        //     builder: (context, snapshot) {
+        //       if (!snapshot.hasData) {
+        //         return const CircularProgressIndicator();
+        //       }
+        //       // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
+        //       // final items =
+        //       //     snapshot.data!.docs.map((doc) => doc.get('name')).toList();
+        //       // final semester =
+        //       //     snapshot.data!.docs.map((doc) => doc.get('semno')).toList();
+        //       return 
+              ListView(
                   physics: const BouncingScrollPhysics(),
                   children: [
                     Padding(
@@ -225,8 +227,8 @@ class _Show_stuState extends State<Show_stu> {
                         ),
                       ]),
                     )
-                  ]);
-            }),
+                  ]),
+            // }),
       ),
     );
   }

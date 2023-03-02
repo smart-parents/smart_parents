@@ -63,9 +63,9 @@ class _AddParentPageState extends State<AddParentPage> {
           'name': name,
           'number': number,
           'password': password,
-          'admin': email,
-          'branch':branch,
+          'branch': branch,
           'child': child,
+          'status': true,
         })
         .then((value) => print('parent Added'))
         .catchError((error) => print('Failed to Add user: $error'));
@@ -150,6 +150,13 @@ class _AddParentPageState extends State<AddParentPage> {
     } on FirebaseAuthException catch (e) {
       print(e);
     }
+  }
+
+  bool showPassword = false;
+  void _togglePasswordVisibility() {
+    setState(() {
+      showPassword = !showPassword;
+    });
   }
 
   @override
@@ -296,11 +303,23 @@ class _AddParentPageState extends State<AddParentPage> {
                             margin: const EdgeInsets.symmetric(vertical: 10.0),
                             child: TextFormField(
                               autofocus: false,
-                              obscureText: true,
-                              decoration: const InputDecoration(
+                              obscureText: !showPassword,
+                              decoration: InputDecoration(
                                 labelText: 'Password: ',
                                 labelStyle: TextStyle(fontSize: 20.0),
                                 border: OutlineInputBorder(),
+                                prefixIcon: Padding(
+                                  padding: EdgeInsets.all(defaultPadding),
+                                  child: Icon(showPassword
+                                      ? Icons.lock_open
+                                      : Icons.lock_outline),
+                                ),
+                                suffixIcon: IconButton(
+                                  icon: Icon(showPassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off),
+                                  onPressed: _togglePasswordVisibility,
+                                ),
                                 errorStyle: TextStyle(
                                     color: Colors.lightBlueAccent,
                                     fontSize: 15),

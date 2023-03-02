@@ -37,38 +37,38 @@ class _ReportGenrationState extends State<ReportGenration> {
   // String _end = '';
   String? Branch;
   String? Sub;
-  List<Department> _departments = [];
+  // List<Department> _departments = [];
   List<Subject> _subjects = [];
 
   @override
   void initState() {
     super.initState();
-    _fetchDepartments();
+    // _fetchDepartments();
     _fetchSubjects();
   }
 
   // late String _selectedDepartmentId;
   // late String _selectedSubjectId;
-  Future<void> _fetchDepartments() async {
-    final QuerySnapshot<Map<String, dynamic>> departmentsSnapshot =
-        await FirebaseFirestore.instance
-            .collection('Admin/$admin/department')
-            .get();
+  // Future<void> _fetchDepartments() async {
+  //   final QuerySnapshot<Map<String, dynamic>> departmentsSnapshot =
+  //       await FirebaseFirestore.instance
+  //           .collection('Admin/$admin/department')
+  //           .get();
 
-    final List<Department> departments = [];
+  //   final List<Department> departments = [];
 
-    for (final DocumentSnapshot<Map<String, dynamic>> departmentSnapshot
-        in departmentsSnapshot.docs) {
-      final Department department =
-          Department(departmentSnapshot.id, departmentSnapshot.data()!['name']);
-      departments.add(department);
-    }
+  //   for (final DocumentSnapshot<Map<String, dynamic>> departmentSnapshot
+  //       in departmentsSnapshot.docs) {
+  //     final Department department =
+  //         Department(departmentSnapshot.id, departmentSnapshot.data()!['name']);
+  //     departments.add(department);
+  //   }
 
-    setState(() {
-      _departments = departments;
-      // _selectedDepartmentId = _departments[0].id;
-    });
-  }
+  //   setState(() {
+  //     _departments = departments;
+  //     // _selectedDepartmentId = _departments[0].id;
+  //   });
+  // }
 
   DateTime selectedDate = DateTime.now();
   DateTime selectedDate2 = DateTime.now();
@@ -76,6 +76,7 @@ class _ReportGenrationState extends State<ReportGenration> {
     final QuerySnapshot<Map<String, dynamic>> subjectSnapshot =
         await FirebaseFirestore.instance
             .collection('Admin/$admin/subject')
+            .where('branch',isEqualTo: branch)
             .get();
 
     final List<Subject> subjects = [];
@@ -143,60 +144,60 @@ class _ReportGenrationState extends State<ReportGenration> {
                 //     DropdownValue: items.toString(),
                 //     sTring: Branch,
                 //     Hint: "Branch"),
-                Column(
-                  children: [
-                    const Text(
-                      "Branch",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      decoration: BoxDecoration(
-                          color: Colors.grey[100],
-                          borderRadius: BorderRadius.circular(15.0),
-                          border: Border.all(
-                              color: Colors.grey,
-                              style: BorderStyle.solid,
-                              width: 0.80),
-                          boxShadow: const [
-                            BoxShadow(
-                              color: Colors.grey,
-                              offset: Offset(
-                                5.0,
-                                5.0,
-                              ),
-                              blurRadius: 5.0,
-                              spreadRadius: 1.0,
-                            ),
-                          ]),
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                        value: Branch,
-                        hint: const Text('Select an item'),
-                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                        elevation: 16,
-                        dropdownColor: Colors.grey[100],
-                        style: const TextStyle(color: Colors.black),
-                        underline: Container(height: 0, color: Colors.black),
-                        onChanged: (value) {
-                          setState(() {
-                            Branch = value;
-                          });
-                        },
-                        items: _departments.map((item) {
-                          return DropdownMenuItem<String>(
-                            value: item.name,
-                            child: Text(item.name),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ],
-                ),
+                // Column(
+                //   children: [
+                //     const Text(
+                //       "Branch",
+                //       style: TextStyle(fontSize: 20),
+                //     ),
+                //     const SizedBox(
+                //       height: 5,
+                //     ),
+                //     Container(
+                //       padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                //       decoration: BoxDecoration(
+                //           color: Colors.grey[100],
+                //           borderRadius: BorderRadius.circular(15.0),
+                //           border: Border.all(
+                //               color: Colors.grey,
+                //               style: BorderStyle.solid,
+                //               width: 0.80),
+                //           boxShadow: const [
+                //             BoxShadow(
+                //               color: Colors.grey,
+                //               offset: Offset(
+                //                 5.0,
+                //                 5.0,
+                //               ),
+                //               blurRadius: 5.0,
+                //               spreadRadius: 1.0,
+                //             ),
+                //           ]),
+                //       child: DropdownButton<String>(
+                //         isExpanded: true,
+                //         // hint: Text(hint,style: TextStyle(color: Colors.black),),
+                //         value: Branch,
+                //         hint: const Text('Select an item'),
+                //         icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                //         elevation: 16,
+                //         dropdownColor: Colors.grey[100],
+                //         style: const TextStyle(color: Colors.black),
+                //         underline: Container(height: 0, color: Colors.black),
+                //         onChanged: (value) {
+                //           setState(() {
+                //             Branch = value;
+                //           });
+                //         },
+                //         items: _departments.map((item) {
+                //           return DropdownMenuItem<String>(
+                //             value: item.name,
+                //             child: Text(item.name),
+                //           );
+                //         }).toList(),
+                //       ),
+                //     ),
+                //   ],
+                // ),
                 const SizedBox(
                   height: 20,
                 ),

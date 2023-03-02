@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-import 'package:flutter/material.dart';
 
 // Initialize the Cloud Firestore
 // final firestore = FirebaseFirestore.instance;
@@ -92,9 +91,9 @@ List<String> Date = [
   // "21"
 ];
 List<String> CollegeYear = [
-  "1st",
-  "2nd",
-  "3rd",
+  "2020",
+  "2021",
+  "2022",
 ];
 List<String> Enrollment = [
   "2019btcs001",

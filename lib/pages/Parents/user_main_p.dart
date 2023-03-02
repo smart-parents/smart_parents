@@ -7,6 +7,7 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
+import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
 
@@ -39,6 +40,27 @@ class _ParentsScreenState extends State<ParentsScreen> {
         admin = doc.get('admin');
       }
     }
+    var child;
+    final snaphot = await FirebaseFirestore.instance
+        .collection('Admin/$admin/parents')
+        .where('number', isEqualTo: pid)
+        .get();
+    if (snaphot.docs.isNotEmpty) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in snaphot.docs) {
+        branch = doc.get('branch');
+        child = doc.get('child');
+      }
+    }
+    print(branch);final snahot = await FirebaseFirestore.instance
+        .collection('Admin/$admin/students')
+        .where('number', isEqualTo: child)
+        .get();
+    if (snahot.docs.isNotEmpty) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in snahot.docs) {
+        sem = doc.get('sem');
+      }
+    }
+    print(sem);
   }
 
   static final List<Widget> _widgetOptions = <Widget>[
@@ -183,15 +205,15 @@ class NavigationDrawer extends StatelessWidget {
           Wrap(
             runSpacing: 10,
             children: [
-              ListTile(
-                leading: const Icon(Icons.home_outlined),
-                title: const Text("Home"),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Parents_home(),
-                  ));
-                },
-              ),
+              // ListTile(
+              //   leading: const Icon(Icons.home_outlined),
+              //   title: const Text("Home"),
+              //   onTap: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //       builder: (context) => const Parents_home(),
+              //     ));
+              //   },
+              // ),
               ListTile(
                 leading: const Icon(Icons.paste),
                 title: const Text("View Your Child Result"),
@@ -199,8 +221,12 @@ class NavigationDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.money),
-                title: const Text("View Fees Details"),
-                onTap: () {},
+                title: const Text("Notice"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Notice(),
+                  ));
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.insert_drive_file_outlined),

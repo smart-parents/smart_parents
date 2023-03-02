@@ -217,7 +217,7 @@ class NavigationDrawer extends StatelessWidget {
               ),
               ListTile(
                 leading: const Icon(Icons.contact_page_outlined),
-                title: const Text("Contact Parents"),
+                title: const Text("Subjects"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const Subject(),

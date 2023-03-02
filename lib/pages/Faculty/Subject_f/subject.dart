@@ -21,8 +21,10 @@ class Subject extends StatefulWidget {
 class _SubjectState extends State<Subject> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
-  Stream<QuerySnapshot> subjectStream =
-      FirebaseFirestore.instance.collection('Admin/$admin/subject').snapshots();
+  Stream<QuerySnapshot> subjectStream = FirebaseFirestore.instance
+      .collection('Admin/$admin/subject')
+      .where('branch', isEqualTo: branch)
+      .snapshots();
 
   @override
   void initState() {
@@ -30,14 +32,14 @@ class _SubjectState extends State<Subject> {
   }
 
   // For Deleting User
-  CollectionReference students =
+  CollectionReference subject =
       FirebaseFirestore.instance.collection('Admin/$admin/subject');
   Future<void> deleteUser(id) async {
     // print("User Deleted $id");
     // var student = await _auth.getUserByEmail( '@example.com');
     // final stu = await "$id@example.com";
 
-    return students
+    return subject
         .doc(id)
         .delete()
         .then((value) => print('User Deleted'))
@@ -140,12 +142,95 @@ class _SubjectState extends State<Subject> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 13.0),
                                           ),
+                                          Text(
+                                            'Sem: ${storedocs[index]['sem']}',
+                                            style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 13.0),
+                                          ),
                                         ],
                                       ),
                                     ),
+
                                     // SizedBox(
                                     //   width: 10,
                                     // ),
+                                    Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        const Text("Delete"),
+                                        IconButton(
+                                          highlightColor: Colors.red,
+                                          onPressed: () async {
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text("Confirm Delete"),
+                                                  content: Text(
+                                                      "Are you sure you want to delete this item?"),
+                                                  actions: [
+                                                    TextButton(
+                                                      child: Text("CANCEL"),
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child: Text("DELETE"),
+                                                      onPressed: () {
+                                                        // Perform the deletion here
+                                                        // ...
+                                                        try {
+                                                          // await delete(storedocs[index]
+                                                          //         ['number'] +
+                                                          //     '@sps.com');
+                                                          deleteUser(
+                                                              storedocs[index]
+                                                                  ['id']);
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            const SnackBar(
+                                                                content: Text(
+                                                                    'Notice deleted.')),
+                                                          );
+                                                        } catch (e) {
+                                                          print(e);
+                                                          ScaffoldMessenger.of(
+                                                                  context)
+                                                              .showSnackBar(
+                                                            SnackBar(
+                                                                content: Text(
+                                                                    'Failed to delete Notice: $e')),
+                                                          );
+                                                        }
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          },
+                                          icon: const Icon(
+                                            Icons.delete,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                        // Switch(
+                                        //   value: isActive[index],
+                                        //   onChanged: (bool newValue) {
+                                        //     setState(() {
+                                        //       isActive[index] = !isActive[index];
+                                        //     });
+                                        //   },
+                                        // ),
+                                      ],
+                                    ),
                                     // ElevatedButton(
                                     //   onPressed: () {},
                                     //   child: Text("Remove"),

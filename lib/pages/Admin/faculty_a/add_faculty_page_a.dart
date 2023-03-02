@@ -138,6 +138,13 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
     }
   }
 
+  bool showPassword = false;
+  void _togglePasswordVisibility() {
+    setState(() {
+      showPassword = !showPassword;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // login();
@@ -268,11 +275,23 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                           margin: const EdgeInsets.symmetric(vertical: 10.0),
                           child: TextFormField(
                             autofocus: false,
-                            obscureText: true,
-                            decoration: const InputDecoration(
+                            obscureText: !showPassword,
+                            decoration: InputDecoration(
                               labelText: 'Password: ',
                               labelStyle: TextStyle(fontSize: 20.0),
                               border: OutlineInputBorder(),
+                              prefixIcon: Padding(
+                                padding: EdgeInsets.all(defaultPadding),
+                                child: Icon(showPassword
+                                    ? Icons.lock_open
+                                    : Icons.lock_outline),
+                              ),
+                              suffixIcon: IconButton(
+                                icon: Icon(showPassword
+                                    ? Icons.visibility
+                                    : Icons.visibility_off),
+                                onPressed: _togglePasswordVisibility,
+                              ),
                               errorStyle: TextStyle(
                                   color: Colors.lightBlueAccent, fontSize: 15),
                             ),
