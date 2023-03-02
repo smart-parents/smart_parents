@@ -41,31 +41,31 @@ class _Attendance_screenState extends State<Attendance_screen> {
               ),
             ),
           ),
-          Container(
-            // margin: const EdgeInsets.all(20),
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
-            child: ElevatedButton(
-              onPressed: () => {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) {
-                //       return const Faculty();
-                //     },
-                //   ),
-                // )
-              },
-              style: ElevatedButton.styleFrom(
-                shape: const StadiumBorder(),
-                // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
-                minimumSize: const Size(250, 50),
-              ),
-              child: const Text(
-                'Monthly Attendance',
-                style: TextStyle(fontSize: 20.0, color: Colors.white),
-              ),
-            ),
-          ),
+          // Container(
+          //   // margin: const EdgeInsets.all(20),
+          //   margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
+          //   child: ElevatedButton(
+          //     onPressed: () => {
+          //       // Navigator.push(
+          //       //   context,
+          //       //   MaterialPageRoute(
+          //       //     builder: (context) {
+          //       //       return const Faculty();
+          //       //     },
+          //       //   ),
+          //       // )
+          //     },
+          //   //   style: ElevatedButton.styleFrom(
+          //   //     shape: const StadiumBorder(),
+          //   //     // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
+          //   //     minimumSize: const Size(250, 50),
+          //   //   ),
+          //   //   child: const Text(
+          //   //     'Monthly Attendance',
+          //   //     style: TextStyle(fontSize: 20.0, color: Colors.white),
+          //   //   ),
+          //   // ),
+          // ),
           Container(
             // margin: const EdgeInsets.all(20),
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),

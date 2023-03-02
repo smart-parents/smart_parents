@@ -1,9 +1,9 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdown1.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdownpage2.dart';
-import 'package:smart_parents/pages/Faculty/parents_a/parents_a.dart';
+import 'package:smart_parents/pages/Faculty/parents_f/parents_f.dart';
+import 'package:smart_parents/pages/Faculty/report_f/reportGenration.dart';
 
 import 'Schedule/schedule_u.dart';
 
@@ -55,7 +55,7 @@ class _DashboardState extends State<Dashboard> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return const MyDropdownMenu();
+                      return const ReportGenration();
                     },
                   ),
                 )

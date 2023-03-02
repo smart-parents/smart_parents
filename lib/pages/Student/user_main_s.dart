@@ -9,6 +9,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Student/chat_s.dart';
 import 'package:smart_parents/pages/Student/dashboard_s.dart';
+import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
 import 'package:smart_parents/pages/Student/profile_screen_s.dart';
 
 class UserMainS extends StatefulWidget {
@@ -44,6 +45,17 @@ class _UserMainState extends State<UserMainS> {
         admin = doc.get('admin');
       }
     }
+    final snaphot = await FirebaseFirestore.instance
+        .collection('Admin/$admin/students')
+        .where('number', isEqualTo: pid)
+        .get();
+    if (snaphot.docs.isNotEmpty) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in snaphot.docs) {
+        branch = doc.get('branch');
+        sem = doc.get('sem');
+      }
+    }
+    print(branch);
   }
 
   // final storage = new FlutterSecureStorage();
@@ -226,19 +238,19 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             Wrap(
               runSpacing: 10,
               children: [
-                ListTile(
-                    leading: const Icon(Icons.home_outlined),
-                    title: const Text("Home"),
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const Dashboard(),
-                      ));
-                    }),
-                ListTile(
-                  leading: const Icon(Icons.timelapse),
-                  title: const Text("Classes Schedule"),
-                  onTap: () {},
-                ),
+                // ListTile(
+                //     leading: const Icon(Icons.home_outlined),
+                //     title: const Text("Home"),
+                //     onTap: () {
+                //       Navigator.of(context).push(MaterialPageRoute(
+                //         builder: (context) => const Dashboard(),
+                //       ));
+                //     }),
+                // ListTile(
+                //   leading: const Icon(Icons.timelapse),
+                //   title: const Text("Classes Schedule"),
+                //   onTap: () {},
+                // ),
                 ListTile(
                   leading: const Icon(Icons.calendar_month_rounded),
                   title: const Text("See Attendence"),
@@ -248,6 +260,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     ));
                   },
                 ),
+                
                 ListTile(
                   leading: const Icon(Icons.paste),
                   title: const Text("Results"),
@@ -265,8 +278,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 ),
                 ListTile(
                   leading: const Icon(Icons.money),
-                  title: const Text("Fee Details"),
-                  onTap: () {},
+                  title: const Text("Notices"),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const Notice(),
+                    ));
+                  },
                 ),
                 const Divider(color: Colors.black54),
                 ListTile(

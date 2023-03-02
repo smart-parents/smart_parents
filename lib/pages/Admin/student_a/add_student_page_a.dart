@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names, prefer_typing_uninitialized_variables
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names, prefer_typing_uninitialized_variables, no_leading_underscores_for_local_identifiers
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -143,9 +143,16 @@ class _AddStudentPageState extends State<AddStudentPage> {
       print(e);
     }
   }
+ bool showPassword = false;
+    void _togglePasswordVisibility() {
+      setState(() {
+        showPassword = !showPassword;
+      });
+    }
 
   @override
   Widget build(BuildContext context) {
+   
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add New Student"),
@@ -294,11 +301,25 @@ class _AddStudentPageState extends State<AddStudentPage> {
                         margin: const EdgeInsets.symmetric(vertical: 10.0),
                         child: TextFormField(
                           autofocus: false,
-                          obscureText: true,
-                          decoration: const InputDecoration(
+                          obscureText: !showPassword,
+                          keyboardType: TextInputType.visiblePassword,
+                          textInputAction: TextInputAction.done,
+                          decoration:  InputDecoration(
                             labelText: 'Password: ',
                             labelStyle: TextStyle(fontSize: 20.0),
                             border: OutlineInputBorder(),
+                            prefixIcon: Padding(
+                              padding:  EdgeInsets.all(defaultPadding),
+                              child: Icon(showPassword
+                                  ? Icons.lock_open
+                                  : Icons.lock_outline),
+                            ),
+                            suffixIcon: IconButton(
+                              icon: Icon(showPassword
+                                  ? Icons.visibility
+                                  : Icons.visibility_off),
+                              onPressed: _togglePasswordVisibility,
+                            ),
                             errorStyle: TextStyle(
                                 color: Colors.lightBlueAccent, fontSize: 15),
                           ),

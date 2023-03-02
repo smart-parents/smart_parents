@@ -4,14 +4,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 // import 'package:smart_parents/pages/Faculty/attendencepages/util/userPrefrences.dart';
 
 class AttendencePage extends StatefulWidget {
-  const AttendencePage({Key? key, required this.branch, required this.sem})
-      : super(key: key);
-  final String branch;
+  const AttendencePage({Key? key, required this.sem}) : super(key: key);
   final String sem;
 
   @override
@@ -28,45 +26,52 @@ class Name {
 class _AttendencePageState extends State<AttendencePage> {
   // late String _selectedNameId;
   List<Name> studentvar = [];
+  List<int> attd = [];
+  List color = [];
 
   @override
   void initState() {
     super.initState();
-    myMethod();
+    // myMethod();
     _fetchNames();
   }
 
-  final _prefs = SharedPreferences.getInstance();
-  var admin;
-  Future<void> myMethod() async {
-    final SharedPreferences prefs = await _prefs;
-    var id = prefs.getString('id');
-    DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-        .collection('Admin/$admin/faculty')
-        .doc(id)
-        .get();
-    admin = userSnapshot.get('admin');
-  }
+  // final _prefs = SharedPreferences.getInstance();
+  // var admin;
+  // Future<void> myMethod() async {
+  //   final SharedPreferences prefs = await _prefs;
+  //   var id = prefs.getString('id');
+  //   DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+  //       .collection('Admin/$admin/faculty')
+  //       .doc(id)
+  //       .get();
+  //   admin = userSnapshot.get('admin');
+  // }
 
   Future<void> _fetchNames() async {
     final QuerySnapshot<Map<String, dynamic>> namesSnapshot =
         await FirebaseFirestore.instance
-            .collection('students')
-            .where("branch", isEqualTo: widget.branch)
+            .collection('Admin/$admin/students')
+            .where("branch", isEqualTo: branch)
             .where("sem", isEqualTo: widget.sem)
             .where('status', isEqualTo: true)
             .get();
 
     final List<Name> names = [];
-
+    final List<int> ad = [];
+    final List co = [];
     for (final DocumentSnapshot<Map<String, dynamic>> namesSnapshot
         in namesSnapshot.docs) {
       final Name name = Name(namesSnapshot.id, namesSnapshot.data()!['name']);
       names.add(name);
+      ad.add(1);
+      co.add(const Color(0xff00CE2D));
     }
 
     setState(() {
       studentvar = names;
+      attd = ad;
+      color = co;
       // _selectedNameId = studentvar[0].id;
     });
   }
@@ -172,11 +177,16 @@ class _AttendencePageState extends State<AttendencePage> {
       menuWidth: MediaQuery.of(context).size.width * 0.75,
       // duration: const Duration(milliseconds: 350),
       animateMenuItems: true,
-      openWithTap: true,
+      // openWithTap: true,
       onPressed: () {
         setState(() {
-          ChangeState(isSelectedList, index, 1);
-          ChangeColor(isSelectedList, index);
+          if (attd[index] == 1) {
+            ChangeState(attd, index, 0);
+            ChangeColor(attd, index);
+          } else {
+            ChangeState(attd, index, 1);
+            ChangeColor(attd, index);
+          }
         });
         // Navigator.of(this.context).push(
         // MaterialPageRoute(builder: (context) => ProfilePage()),
@@ -193,8 +203,8 @@ class _AttendencePageState extends State<AttendencePage> {
             ),
             onPressed: () {
               setState(() {
-                ChangeState(isSelectedList, index, 1);
-                ChangeColor(isSelectedList, index);
+                ChangeState(attd, index, 1);
+                ChangeColor(attd, index);
               });
               // Navigator.of(this.context).push(
               //   MaterialPageRoute(builder: (context) => ProfilePage()),
@@ -212,8 +222,8 @@ class _AttendencePageState extends State<AttendencePage> {
             ),
             onPressed: () {
               setState(() {
-                ChangeState(isSelectedList, index, 0);
-                ChangeColor(isSelectedList, index);
+                ChangeState(attd, index, 0);
+                ChangeColor(attd, index);
               });
               // Navigator.of(this.context).push(
               //   MaterialPageRoute(builder: (context) => EditProfilePage()),
@@ -240,7 +250,7 @@ class _AttendencePageState extends State<AttendencePage> {
         //     backgroundColor: const Color(0xffffc100))
       ],
       child: Card(
-        color: attendencecolor[index],
+        color: color[index],
         // color: Colors.green,
         elevation: 2,
         shadowColor: Colors.grey[200],
@@ -271,21 +281,21 @@ class _AttendencePageState extends State<AttendencePage> {
   }
 
   void ResetState() {
-    for (int state = 0; state < attendencecolor.length; state++) {
-      attendencecolor[state] = Colors.white;
+    for (int state = 0; state < color.length; state++) {
+      color[state] = Colors.white;
     }
   }
 
   void ChangeColor(List<int> isSelectedList, int index) {
     if (isSelectedList[index] == 1) {
-      attendencecolor[index] = const Color(0xff00CE2D);
+      color[index] = const Color(0xff00CE2D);
       print("changed to : $isSelectedList");
       // } else {
       //   if (isSelectedList[index] == 2) {
       //     attendencecolor[index] = const Color(0xffffc100);
       // print("changed to : $isSelectedList");
     } else {
-      attendencecolor[index] = const Color(0xffff0800);
+      color[index] = const Color(0xffff0800);
       print("changed to : $isSelectedList");
     }
     // }

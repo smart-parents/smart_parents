@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Admin/department_a/depart_a.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
 import 'package:smart_parents/pages/Admin/fees.dart';
-import 'package:smart_parents/pages/Admin/notice_dash.dart';
+import 'package:smart_parents/pages/Admin/notice_a/notice_dash.dart';
 import 'package:smart_parents/pages/Admin/student_a/student_a.dart';
 
 class Dashboard extends StatefulWidget {

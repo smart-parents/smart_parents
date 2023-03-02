@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -7,14 +7,16 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
-class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
+
+class MyCarouselSlider extends StatefulWidget {
+  const MyCarouselSlider({super.key});
 
   @override
-  _DashboardState createState() => _DashboardState();
+  _MyCarouselSliderState createState() => _MyCarouselSliderState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class _MyCarouselSliderState extends State<MyCarouselSlider> {
   late List<DateTime> dates;
   int _selectedIndex = 0;
 
@@ -42,32 +44,30 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    print(admin);
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: kPrimaryColor,
-      // appBar: AppBar(
-      //   // leading: const BackButton(),
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   title: Text(
-      //     'Schedule',
-      //     style: GoogleFonts.oswald(fontSize: 30),
-      //   ),
-      //   centerTitle: true,
-      // ),
+      appBar: AppBar(
+        leading: const BackButton(),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        title: Text(
+          'Schedule',
+          style: GoogleFonts.oswald(fontSize: 30),
+        ),
+        centerTitle: true,
+      ),
       body: Column(children: [
         Container(
           // padding: const EdgeInsets.only(top: 55.0),
-          // margin: const EdgeInsets.only(top: 50),
+          margin: const EdgeInsets.only(top: 50),
           child: CarouselSlider(
             options: CarouselOptions(
               enlargeCenterPage: true,
               initialPage:
                   _selectedIndex, // Set the initial page to the current day index
               enableInfiniteScroll: false,
-              height: 150,
-              // height: MediaQuery.of(context).size.height * 0.17,
+              height: MediaQuery.of(context).size.height * 0.25,
               viewportFraction: 1 / 5,
               onPageChanged: (index, reason) {
                 setState(() {
@@ -141,7 +141,7 @@ class _DashboardState extends State<Dashboard> {
                       size: 40,
                     ),
                   ],
-                )
+                ),
                 // ListView(children: [
                 //   Text(
                 //     "Selected date: ${DateFormat.yMMMMd().format(dates[_selectedIndex])}",

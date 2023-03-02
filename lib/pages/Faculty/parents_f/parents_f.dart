@@ -3,8 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/parents_a/add_parents_page_a.dart';
-import 'package:smart_parents/pages/Faculty/parents_a/update_parents_page_a.dart';
+import 'package:smart_parents/pages/Faculty/parents_f/add_parents_page_f.dart';
+import 'package:smart_parents/pages/Faculty/parents_f/update_parents_page_f.dart';
 
 class Parent extends StatefulWidget {
   const Parent({Key? key}) : super(key: key);

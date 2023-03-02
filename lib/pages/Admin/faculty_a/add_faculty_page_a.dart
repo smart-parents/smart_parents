@@ -51,7 +51,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
   }
 
   // Adding Student
-  Future<void> addUser() async {
+  void addUser() {
     CollectionReference facultys =
         FirebaseFirestore.instance.collection('Admin/$admin/faculty');
     facultys

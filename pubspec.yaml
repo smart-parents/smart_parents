@@ -29,6 +29,8 @@ dependencies:
   focused_menu: ^1.0.5
   carousel_slider: ^4.2.1
   google_fonts: ^4.0.3
+  pdf: ^3.8.1
+  printing: ^5.9.1
 
 dev_dependencies:
   flutter_test:

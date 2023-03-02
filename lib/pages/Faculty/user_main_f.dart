@@ -46,6 +46,17 @@ class _UserMainState extends State<UserMainF> {
         admin = doc.get('admin');
       }
     }
+    print(admin);
+    final snaphot = await FirebaseFirestore.instance
+        .collection('Admin/$admin/faculty')
+        .where('faculty', isEqualTo: pid)
+        .get();
+    if (snaphot.docs.isNotEmpty) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in snaphot.docs) {
+        branch = doc.get('branch');
+      }
+    }
+    print(branch);
   }
 
   // final storage = new FlutterSecureStorage();

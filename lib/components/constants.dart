@@ -9,6 +9,8 @@ class Constants {
 }
 
 var admin;
+var branch;
+var sem;
 
 const kPrimaryColor = Color(0xFF255674);
 const kPrimaryLightColor = Color(0xFFCFEBFF);

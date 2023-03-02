@@ -39,7 +39,6 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Smart Parents',
             theme: ThemeData(
-              // scaffoldBackgroundColor: const Color(0xFF255674),
               colorScheme: ColorScheme.fromSwatch(
                   primarySwatch: const MaterialColor(0xFF255674, {
                 50: Color(0xFFE5EDF5),

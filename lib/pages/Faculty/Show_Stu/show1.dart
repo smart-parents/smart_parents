@@ -55,8 +55,8 @@ class _Show_stuState extends State<Show_stu> {
                 return const CircularProgressIndicator();
               }
               // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
-              final items =
-                  snapshot.data!.docs.map((doc) => doc.get('name')).toList();
+              // final items =
+              //     snapshot.data!.docs.map((doc) => doc.get('name')).toList();
               // final semester =
               //     snapshot.data!.docs.map((doc) => doc.get('semno')).toList();
               return ListView(
@@ -72,66 +72,66 @@ class _Show_stuState extends State<Show_stu> {
                         //     DropdownValue: items.toString(),
                         //     sTring: Branch,
                         //     Hint: "Branch"),
-                        Column(
-                          children: [
-                            const Text(
-                              "Branch",
-                              style: TextStyle(fontSize: 20),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 10.0),
-                              decoration: BoxDecoration(
-                                  color: Colors.grey[100],
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  border: Border.all(
-                                      color: Colors.grey,
-                                      style: BorderStyle.solid,
-                                      width: 0.80),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.grey,
-                                      offset: Offset(
-                                        5.0,
-                                        5.0,
-                                      ),
-                                      blurRadius: 5.0,
-                                      spreadRadius: 1.0,
-                                    ),
-                                  ]),
-                              child: DropdownButton<String>(
-                                isExpanded: true,
-                                // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                                value: Branch,
-                                hint: const Text('Select an item'),
-                                icon: const Icon(
-                                    Icons.keyboard_arrow_down_outlined),
-                                elevation: 16,
-                                dropdownColor: Colors.grey[100],
-                                style: const TextStyle(color: Colors.black),
-                                underline:
-                                    Container(height: 0, color: Colors.black),
-                                onChanged: (value) {
-                                  setState(() {
-                                    Branch = value;
-                                  });
-                                },
-                                items: items.map((item) {
-                                  return DropdownMenuItem<String>(
-                                    value: item,
-                                    child: Text(item),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        // Column(
+                        //   children: [
+                        //     const Text(
+                        //       "Branch",
+                        //       style: TextStyle(fontSize: 20),
+                        //     ),
+                        //     const SizedBox(
+                        //       height: 5,
+                        //     ),
+                        //     Container(
+                        //       padding:
+                        //           const EdgeInsets.symmetric(horizontal: 10.0),
+                        //       decoration: BoxDecoration(
+                        //           color: Colors.grey[100],
+                        //           borderRadius: BorderRadius.circular(15.0),
+                        //           border: Border.all(
+                        //               color: Colors.grey,
+                        //               style: BorderStyle.solid,
+                        //               width: 0.80),
+                        //           boxShadow: const [
+                        //             BoxShadow(
+                        //               color: Colors.grey,
+                        //               offset: Offset(
+                        //                 5.0,
+                        //                 5.0,
+                        //               ),
+                        //               blurRadius: 5.0,
+                        //               spreadRadius: 1.0,
+                        //             ),
+                        //           ]),
+                        //       child: DropdownButton<String>(
+                        //         isExpanded: true,
+                        //         // hint: Text(hint,style: TextStyle(color: Colors.black),),
+                        //         value: Branch,
+                        //         hint: const Text('Select an item'),
+                        //         icon: const Icon(
+                        //             Icons.keyboard_arrow_down_outlined),
+                        //         elevation: 16,
+                        //         dropdownColor: Colors.grey[100],
+                        //         style: const TextStyle(color: Colors.black),
+                        //         underline:
+                        //             Container(height: 0, color: Colors.black),
+                        //         onChanged: (value) {
+                        //           setState(() {
+                        //             Branch = value;
+                        //           });
+                        //         },
+                        //         items: items.map((item) {
+                        //           return DropdownMenuItem<String>(
+                        //             value: item,
+                        //             child: Text(item),
+                        //           );
+                        //         }).toList(),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
 
                         // Container(
                         //   child: Column(
@@ -215,7 +215,6 @@ class _Show_stuState extends State<Show_stu> {
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => StudentF(
-                                                branch: "$Branch",
                                                 sem: semesterdropdownValue)),
                                       );
                                     },
