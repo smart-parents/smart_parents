@@ -22,9 +22,10 @@ class Parent extends StatefulWidget {
 class _ParentState extends State<Parent> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
-  Stream<QuerySnapshot> parentsStream =
-      FirebaseFirestore.instance.collection('Admin/$admin/parents')
-      .where('branch',isEqualTo: branch).snapshots();
+  Stream<QuerySnapshot> parentsStream = FirebaseFirestore.instance
+      .collection('Admin/$admin/parents')
+      .where('branch', isEqualTo: branch)
+      .snapshots();
 
   @override
   void initState() {
@@ -44,7 +45,8 @@ class _ParentState extends State<Parent> {
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
   }
-  void updateStatus(id, status)  {
+
+  void updateStatus(id, status) {
     parents
         .doc(id)
         .update({'status': status})
@@ -160,7 +162,7 @@ class _ParentState extends State<Parent> {
                                     children: [
                                       Switch(
                                         value: storedocs[index]['status'],
-                                        onChanged: ( value) {
+                                        onChanged: (value) {
                                           setState(() {
                                             // _status = value;
                                             updateStatus(

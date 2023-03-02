@@ -76,7 +76,7 @@ class _ReportGenrationState extends State<ReportGenration> {
     final QuerySnapshot<Map<String, dynamic>> subjectSnapshot =
         await FirebaseFirestore.instance
             .collection('Admin/$admin/subject')
-            .where('branch',isEqualTo: branch)
+            .where('branch', isEqualTo: branch)
             .get();
 
     final List<Subject> subjects = [];
@@ -359,7 +359,10 @@ class _ReportGenrationState extends State<ReportGenration> {
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => reportt(list: [], sem: '',)),
+                              builder: (context) => reportt(
+                                    list: [],
+                                    sem: '',
+                                  )),
                         );
                       },
                       child: Text("Genrate Report"),

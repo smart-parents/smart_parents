@@ -1,6 +1,5 @@
 // ignore_for_file: non_constant_identifier_names
 
-
 // Initialize the Cloud Firestore
 // final firestore = FirebaseFirestore.instance;
 

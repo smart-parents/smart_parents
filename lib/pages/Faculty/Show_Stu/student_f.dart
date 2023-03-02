@@ -7,8 +7,7 @@ import '../../../components/constants.dart';
 
 class StudentF extends StatefulWidget {
   final String sem;
-  const StudentF({Key? key,  required this.sem})
-      : super(key: key);
+  const StudentF({Key? key, required this.sem}) : super(key: key);
   @override
   _StudentFState createState() => _StudentFState();
 }

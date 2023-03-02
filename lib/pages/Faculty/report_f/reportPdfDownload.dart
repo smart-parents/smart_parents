@@ -28,7 +28,7 @@ class _ReportPdfDownloadPageState extends State<ReportPdfDownloadPage> {
             child: Container(
               height: 300,
               width: 300,
-             child: Image.asset('assets/images/PdfDownload.png'),
+              child: Image.asset('assets/images/PdfDownload.png'),
             ),
           ),
           SizedBox(

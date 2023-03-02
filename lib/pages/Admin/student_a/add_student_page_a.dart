@@ -143,16 +143,16 @@ class _AddStudentPageState extends State<AddStudentPage> {
       print(e);
     }
   }
- bool showPassword = false;
-    void _togglePasswordVisibility() {
-      setState(() {
-        showPassword = !showPassword;
-      });
-    }
+
+  bool showPassword = false;
+  void _togglePasswordVisibility() {
+    setState(() {
+      showPassword = !showPassword;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-   
     return Scaffold(
       appBar: AppBar(
         title: const Text("Add New Student"),
@@ -304,12 +304,12 @@ class _AddStudentPageState extends State<AddStudentPage> {
                           obscureText: !showPassword,
                           keyboardType: TextInputType.visiblePassword,
                           textInputAction: TextInputAction.done,
-                          decoration:  InputDecoration(
+                          decoration: InputDecoration(
                             labelText: 'Password: ',
                             labelStyle: TextStyle(fontSize: 20.0),
                             border: OutlineInputBorder(),
                             prefixIcon: Padding(
-                              padding:  EdgeInsets.all(defaultPadding),
+                              padding: EdgeInsets.all(defaultPadding),
                               child: Icon(showPassword
                                   ? Icons.lock_open
                                   : Icons.lock_outline),

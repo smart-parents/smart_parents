@@ -260,7 +260,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     ));
                   },
                 ),
-                
+
                 ListTile(
                   leading: const Icon(Icons.paste),
                   title: const Text("Results"),

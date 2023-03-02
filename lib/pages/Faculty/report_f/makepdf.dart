@@ -15,7 +15,7 @@ class reportt extends StatefulWidget {
 class _reporttState extends State<reportt> {
   List list;
   // String clas;
-  
+
   String sem;
 
   _reporttState({required this.list, required this.sem});
@@ -141,7 +141,7 @@ class _reporttState extends State<reportt> {
                             ),
                           ),
                         ]),
-                        pw.Column(
+                    pw.Column(
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(
@@ -151,7 +151,7 @@ class _reporttState extends State<reportt> {
                             ),
                           ),
                         ]),
-                        pw.Column(
+                    pw.Column(
                         mainAxisAlignment: pw.MainAxisAlignment.center,
                         children: [
                           pw.Text(

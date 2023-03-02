@@ -51,7 +51,8 @@ class _ParentsScreenState extends State<ParentsScreen> {
         child = doc.get('child');
       }
     }
-    print(branch);final snahot = await FirebaseFirestore.instance
+    print(branch);
+    final snahot = await FirebaseFirestore.instance
         .collection('Admin/$admin/students')
         .where('number', isEqualTo: child)
         .get();
