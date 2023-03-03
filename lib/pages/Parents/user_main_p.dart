@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -154,8 +155,23 @@ class _ParentsScreenState extends State<ParentsScreen> {
   }
 }
 
-class NavigationDrawer extends StatelessWidget {
-  NavigationDrawer({Key? key}) : super(key: key);
+class NavigationDrawer extends StatefulWidget {
+  const NavigationDrawer({super.key});
+
+  @override
+  _NavigationDrawerState createState() => _NavigationDrawerState();
+}
+
+class _NavigationDrawerState extends State<NavigationDrawer> {
+  // NavigationDrawer({Key? key}) : super(key: key);
+  @override
+  void initState() {
+    super.initState();
+    main();
+    _loadPhotoUrl();
+    // _image = _getImage();
+  }
+
   String? fid;
   main() {
     if (FirebaseAuth.instance.currentUser != null) {
@@ -163,6 +179,55 @@ class NavigationDrawer extends StatelessWidget {
       String em = email.toString();
       String facid = em.substring(0, em.length - 8);
       fid = facid;
+    }
+  }
+
+  // bool _uploading = false;
+  String? _imageUrl;
+
+  void _loadPhotoUrl() async {
+    // final user = FirebaseAuth.instance.currentUser;
+    final doc = await FirebaseFirestore.instance
+        .collection('Admin/$admin/parents')
+        .doc(fid)
+        .get();
+    setState(() {
+      _imageUrl = doc.data()!['photoUrl'];
+    });
+  }
+
+  Widget _buildPhotoWidget() {
+    if (_imageUrl != null) {
+      return CachedNetworkImage(
+        imageUrl: _imageUrl!,
+        placeholder: (context, url) => const CircularProgressIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+      );
+    } else {
+      return Stack(
+        children: [
+          Image.asset('assets/images/man.png', fit: BoxFit.cover),
+          // Positioned.fill(
+          //   child: Material(
+          //     color: Colors.transparent,
+          //     child: InkWell(
+          //       onTap: _pickImage,
+          //       child: Center(
+          //         child: Text(
+          //           _imageUrl != null
+          //               ? 'Tap to update photo'
+          //               : 'Tap to add photo',
+          //           style: const TextStyle(
+          //               color: Colors.white,
+          //               fontSize: 16,
+          //               fontWeight: FontWeight.bold),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
+        ],
+      );
     }
   }
 
@@ -185,9 +250,20 @@ class NavigationDrawer extends StatelessWidget {
                         bottom: 24),
                     child: Column(
                       children: [
-                        const CircleAvatar(
-                          radius: 40,
-                          backgroundImage: AssetImage('assets/images/man.png'),
+                        // const CircleAvatar(
+                        //   radius: 40,
+                        //   backgroundImage: AssetImage('assets/images/man.png'),
+                        // ),
+                        Container(
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.grey, width: 2),
+                          ),
+                          child: ClipOval(
+                            child: _buildPhotoWidget(),
+                          ),
                         ),
                         const SizedBox(height: 10),
                         const Text(
