@@ -16,7 +16,8 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # firebase_storage: ^11.0.14
+  firebase_storage: ^11.0.14
+  cached_network_image: ^3.2.3
   # firebase_messaging: ^14.2.5
   # flutter_local_notifications: ^13.0.0
 
@@ -31,6 +32,9 @@ dependencies:
   google_fonts: ^4.0.3
   pdf: ^3.8.1
   printing: ^5.9.1
+  image_picker: ^0.8.6+4
+  file_picker: ^5.2.5
+  fluttertoast: ^8.2.1
 
 dev_dependencies:
   flutter_test:

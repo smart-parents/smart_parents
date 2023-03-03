@@ -1,5 +1,6 @@
-// import 'dart:async';
 // ignore_for_file: library_private_types_in_public_api
+
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,6 +9,9 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/edit_a.dart';
 import 'package:smart_parents/pages/option.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
@@ -25,6 +29,7 @@ class _ProfileState extends State<Profile> {
     super.initState();
     login();
     main();
+    _loadPhotoUrl();
   }
 
   delete() async {
@@ -59,6 +64,93 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  late File _imageFile;
+  bool _uploading = false;
+  String? _imageUrl;
+
+  void _loadPhotoUrl() async {
+    // final user = FirebaseAuth.instance.currentUser;
+    final doc = await FirebaseFirestore.instance
+        .collection('Admin/$admin/students')
+        .doc(id)
+        .get();
+    setState(() {
+      _imageUrl = doc.data()!['photoUrl'];
+    });
+  }
+
+  Future _pickImage() async {
+    final pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      _imageFile = File(pickedFile!.path);
+      _uploadImage();
+    });
+  }
+
+  Future _uploadImage() async {
+    setState(() {
+      _uploading = true;
+    });
+
+    final user = FirebaseAuth.instance.currentUser;
+    final ref =
+        FirebaseStorage.instance.ref().child('profile_photos/${user!.uid}.jpg');
+    final uploadTask = ref.putFile(_imageFile);
+    final snapshot = await uploadTask.whenComplete(() {});
+    final downloadUrl = await snapshot.ref.getDownloadURL();
+
+    await FirebaseFirestore.instance
+        .collection('Admin/$admin/Admin')
+        .doc(id)
+        .update({'photoUrl': downloadUrl});
+
+    setState(() {
+      _imageUrl = downloadUrl;
+      _uploading = false;
+    });
+  }
+
+  Widget _buildPhotoWidget() {
+    if (_uploading) {
+      return const Center(child: CircularProgressIndicator());
+    } else if (_imageUrl != null) {
+      return GestureDetector(
+        onTap: _pickImage,
+        child: CachedNetworkImage(
+          imageUrl: _imageUrl!,
+          placeholder: (context, url) => const CircularProgressIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
+      );
+    } else {
+      return Stack(
+        children: [
+          Image.asset('assets/images/man.png', fit: BoxFit.cover),
+          Positioned.fill(
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                onTap: _pickImage,
+                child: Center(
+                  child: Text(
+                    _imageUrl != null
+                        ? 'Tap to update photo'
+                        : 'Tap to add photo',
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
@@ -85,9 +177,23 @@ class _ProfileState extends State<Profile> {
               // color: Colors.blue[50],
               child: Column(
                 children: [
-                  const CircleAvatar(
-                    radius: 40,
-                    backgroundImage: AssetImage('assets/images/man.png'),
+                  // const CircleAvatar(
+                  //   radius: 40,
+                  //   backgroundImage: AssetImage('assets/images/man.png'),
+                  // ),
+                  GestureDetector(
+                    onTap: _pickImage,
+                    child: Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey, width: 2),
+                      ),
+                      child: ClipOval(
+                        child: _buildPhotoWidget(),
+                      ),
+                    ),
                   ),
                   const Text(
                     'Admin',

@@ -1,10 +1,19 @@
-// ignore_for_file: non_constant_identifier_names
+// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages
+
+// import 'dart:html';
+// import 'dart:io';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class NoticeAdd extends StatefulWidget {
   const NoticeAdd({Key? key}) : super(key: key);
@@ -35,7 +44,8 @@ class _NoticeAddState extends State<NoticeAdd> {
   void addnotice() {
     CollectionReference notices =
         FirebaseFirestore.instance.collection('Admin/$admin/Notices');
-    String docId = DateTime.now().toString();
+    String docId = DateFormat('dd-MM-yyyy hh:mm:ss').format(DateTime.now());
+    print(docId);
     notices
         .doc(docId)
         .set({
@@ -201,11 +211,18 @@ class _NoticeAddState extends State<NoticeAdd> {
                                 child: TextFormField(
                                   maxLines: null,
                                   // controller: project_description_controller_r,
-                                  decoration: const InputDecoration(
-                                      enabledBorder: InputBorder.none,
-                                      focusedBorder: InputBorder.none,
-                                      hintText: "Enter notice",
-                                      hintStyle: TextStyle(fontSize: 18)),
+                                  decoration: InputDecoration(
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    hintText: "Enter notice",
+                                    hintStyle: TextStyle(fontSize: 18),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(Icons.attach_file),
+                                      onPressed: () {
+                                        getImage();
+                                      },
+                                    ),
+                                  ),
                                   controller: noticeController,
                                   validator: (value) {
                                     if (value!.isEmpty) {
@@ -243,5 +260,64 @@ class _NoticeAddState extends State<NoticeAdd> {
             }),
       ),
     );
+  }
+
+  File? file;
+  ImagePicker image = ImagePicker();
+  String url = "";
+  var name;
+  getfile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['pdf', 'doc'],
+    );
+
+    if (result != null) {
+      File c = File(result.files.single.path.toString());
+      setState(() {
+        file = c;
+        name = result.names.toString();
+      });
+      uploadFile();
+    }
+  }
+
+  getImage() async {
+    var img = await image.pickImage(source: ImageSource.gallery);
+    setState(() {
+      file = File(img!.path);
+      name = img.name.toString();
+    });
+    if (file != null) {
+      uploadFile();
+    }
+  }
+
+  uploadFile() async {
+    try {
+      var imagefile =
+          FirebaseStorage.instance.ref().child("Users").child("/$name");
+      UploadTask task = imagefile.putFile(file!);
+      TaskSnapshot snapshot = await task;
+      url = await snapshot.ref.getDownloadURL();
+
+      print(url);
+      if (url != null && file != null) {
+        Fluttertoast.showToast(
+          msg: "Done Uploaded",
+          textColor: Colors.red,
+        );
+      } else {
+        Fluttertoast.showToast(
+          msg: "Something went wrong",
+          textColor: Colors.red,
+        );
+      }
+    } on Exception catch (e) {
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        textColor: Colors.red,
+      );
+    }
   }
 }

@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/TimeImage.dart';
 
 void main() async {
@@ -9,11 +8,14 @@ void main() async {
   // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: FirebaseOptions(
-            apiKey: Constants.apiKey,
-            appId: Constants.appId,
-            messagingSenderId: Constants.messagingSenderId,
-            projectId: Constants.projectId));
+        options: const FirebaseOptions(
+            apiKey: "AIzaSyAOUD8giZV2XdhMM4XEwtCwzPdNeDbcY2w",
+            authDomain: "smart-parents-11c8b.firebaseapp.com",
+            projectId: "smart-parents-11c8b",
+            storageBucket: "smart-parents-11c8b.appspot.com",
+            messagingSenderId: "581206730087",
+            appId: "1:581206730087:web:e3d782874866d2ff8fbbc2",
+            measurementId: "G-90WR2B1GJL"));
   } else {
     Firebase.initializeApp();
   }
