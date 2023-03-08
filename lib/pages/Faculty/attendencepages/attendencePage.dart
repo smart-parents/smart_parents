@@ -2,16 +2,24 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:focused_menu/focused_menu.dart';
-import 'package:focused_menu/modals.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
-// import 'package:smart_parents/pages/Faculty/attendencepages/util/userPrefrences.dart';
+import 'package:smart_parents/pages/Faculty/user_main_f.dart';
+// import 'package:smart_parents/pages/Faculty/attendencepages/att.dart';
 
 class AttendencePage extends StatefulWidget {
-  const AttendencePage({Key? key, required this.sem}) : super(key: key);
+  const AttendencePage(
+      {Key? key,
+      required this.sem,
+      required this.sub,
+      required this.start,
+      required this.end,
+      required this.date})
+      : super(key: key);
   final String sem;
-
+  final String sub;
+  final String start;
+  final String end;
+  final String date;
   @override
   _AttendencePageState createState() => _AttendencePageState();
 }
@@ -24,29 +32,75 @@ class Name {
 }
 
 class _AttendencePageState extends State<AttendencePage> {
-  // late String _selectedNameId;
   List<Name> studentvar = [];
-  List<int> attd = [];
+  List attd = [];
   List color = [];
+  List number = [];
 
   @override
   void initState() {
     super.initState();
-    // myMethod();
     _fetchNames();
   }
 
-  // final _prefs = SharedPreferences.getInstance();
-  // var admin;
-  // Future<void> myMethod() async {
-  //   final SharedPreferences prefs = await _prefs;
-  //   var id = prefs.getString('id');
-  //   DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-  //       .collection('Admin/$admin/faculty')
-  //       .doc(id)
-  //       .get();
-  //   admin = userSnapshot.get('admin');
-  // }
+  List<Map<String?, String>> attendance = [];
+
+  void _updateAttendance() async {
+    // var datetime = DateTime.now();
+    Map<String, dynamic> attendanceMap = {};
+    for (int i = 0; i < studentvar.length; i++) {
+      attendanceMap[number[i]] = attd[i] == 'P' ? true : false;
+    }
+    await FirebaseFirestore.instance
+        .collection('Admin/$admin/attendance')
+        // .doc(widget.sub)
+        // .collection('lectures')
+        .doc('${widget.date}_${widget.start}_${widget.end}')
+        .set({
+      'date': widget.date,
+      'start': widget.start,
+      'end': widget.end,
+      'branch': branch,
+      'sem': widget.sem,
+      'subject': widget.sub,
+      'attendance': attendanceMap,
+    });
+  }
+
+  void _handleSubmitted() {
+    _updateAttendance();
+
+    // for (int state = 0; state < attd.length; state++) {
+    //   Map<String?, String> attendanceMap = {
+    //     number[state]: attd[state],
+    //   };
+    //   attendance.add(attendanceMap);
+    //   _fireStore
+    //       .collection('Admin/$admin/attendance')
+    //       .doc(widget.sub)
+    //       .get()
+    //       .then((value) => {
+    //             if (value.exists)
+    //               {
+    //                 _fireStore
+    //                     .collection('Admin/$admin/attendance')
+    //                     .doc(widget.sub)
+    //                     .update({
+    //                   "${widget.date}_${widget.start}_${widget.end}": attendance
+    //                 })
+    //               }
+    //             else
+    //               {
+    //                 _fireStore
+    //                     .collection('Admin/$admin/attendance')
+    //                     .doc(widget.sub)
+    //                     .set({
+    //                   "${widget.date}_${widget.start}_${widget.end}": attendance
+    //                 })
+    //               }
+    //           });
+    // }
+  }
 
   Future<void> _fetchNames() async {
     final QuerySnapshot<Map<String, dynamic>> namesSnapshot =
@@ -55,28 +109,30 @@ class _AttendencePageState extends State<AttendencePage> {
             .where("branch", isEqualTo: branch)
             .where("sem", isEqualTo: widget.sem)
             .where('status', isEqualTo: true)
+            .orderBy('number')
+            .orderBy('name')
             .get();
 
     final List<Name> names = [];
-    final List<int> ad = [];
+    final List nu = [];
+    final List ad = [];
     final List co = [];
     for (final DocumentSnapshot<Map<String, dynamic>> namesSnapshot
         in namesSnapshot.docs) {
       final Name name = Name(namesSnapshot.id, namesSnapshot.data()!['name']);
       names.add(name);
-      ad.add(1);
+      nu.add(namesSnapshot.id);
+      ad.add('P');
       co.add(const Color(0xff00CE2D));
     }
 
     setState(() {
       studentvar = names;
+      number = nu;
       attd = ad;
       color = co;
-      // _selectedNameId = studentvar[0].id;
     });
   }
-
-  // final studentvar = UserPrefrences.studentlist;
 
   @override
   Widget build(BuildContext context) {
@@ -104,28 +160,19 @@ class _AttendencePageState extends State<AttendencePage> {
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.65,
-            // width: MediaQuery.of(context).size.height * 0.5,
-            // color: Colors.orange,
             child: ListView.builder(
                 itemCount: studentvar.length,
                 itemBuilder: (BuildContext context, int index) =>
                     buildAttendenceCard(context, index)),
-            // ListTile(
-
-            // )),
           ),
           const SizedBox(
             height: 25,
           ),
-          //
-          //
-          //
           ElevatedButton(
             onPressed: () => showDialog<String>(
               context: context,
               builder: (BuildContext context) => AlertDialog(
                 title: const Text('Submit Attendence?'),
-                // content: const Text('AlertDialog description'),
                 actions: <Widget>[
                   TextButton(
                     onPressed: () => Navigator.pop(context, 'Cancel'),
@@ -133,11 +180,14 @@ class _AttendencePageState extends State<AttendencePage> {
                   ),
                   TextButton(
                     onPressed: () => {
-                      ResetState(),
-                      // Navigator.of(context).pushAndRemoveUntil(
-                      //     MaterialPageRoute(
-                      //         builder: (context) => LoginNavScreen()),
-                      //     (route) => false)
+                      _handleSubmitted(),
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                            builder: (context) => const UserMainF(
+                                // sub: widget.sub,
+                                // studentId: '206470316022',
+                                )),
+                      )
                     },
                     child: const Text('Submit'),
                   ),
@@ -147,24 +197,6 @@ class _AttendencePageState extends State<AttendencePage> {
             style: ElevatedButton.styleFrom(fixedSize: const Size(300, 40)),
             child: const Text('Submit'),
           ),
-          // ElevatedButton(
-          //     onPressed: () => {
-          //       AlertDialog(
-          //         title: Text("Submit Attendence?"),
-          //         actions: [
-
-          //         ],
-          //       )
-          //     },
-          //     child: Text(
-          //       "Submit",
-          //       style: TextStyle(fontSize: 15),
-          //     ),
-          // style: ElevatedButton.styleFrom(
-          //   shape: new RoundedRectangleBorder(
-          //       borderRadius: new BorderRadius.circular(10.0)),
-          //   fixedSize: Size(400, 60),
-          // )),
         ],
       ),
     );
@@ -172,86 +204,20 @@ class _AttendencePageState extends State<AttendencePage> {
 
   buildAttendenceCard(BuildContext context, int index) {
     var index2 = index + 1;
-
-    return FocusedMenuHolder(
-      menuWidth: MediaQuery.of(context).size.width * 0.75,
-      // duration: const Duration(milliseconds: 350),
-      animateMenuItems: true,
-      // openWithTap: true,
-      onPressed: () {
+    return GestureDetector(
+      onTap: () {
         setState(() {
-          if (attd[index] == 1) {
-            ChangeState(attd, index, 0);
+          if (attd[index] == 'P') {
+            ChangeState(attd, index, 'A');
             ChangeColor(attd, index);
           } else {
-            ChangeState(attd, index, 1);
+            ChangeState(attd, index, 'P');
             ChangeColor(attd, index);
           }
         });
-        // Navigator.of(this.context).push(
-        // MaterialPageRoute(builder: (context) => ProfilePage()),
-        // );
       },
-      menuItems: <FocusedMenuItem>[
-        FocusedMenuItem(
-            title: const Text(
-              "Present",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15),
-            ),
-            onPressed: () {
-              setState(() {
-                ChangeState(attd, index, 1);
-                ChangeColor(attd, index);
-              });
-              // Navigator.of(this.context).push(
-              //   MaterialPageRoute(builder: (context) => ProfilePage()),
-              // );
-            },
-            backgroundColor: const Color(0xff00CE2D)),
-        //00CE2D
-        FocusedMenuItem(
-            title: const Text(
-              "Absent",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 15),
-            ),
-            onPressed: () {
-              setState(() {
-                ChangeState(attd, index, 0);
-                ChangeColor(attd, index);
-              });
-              // Navigator.of(this.context).push(
-              //   MaterialPageRoute(builder: (context) => EditProfilePage()),
-              // );
-            },
-            backgroundColor: const Color(0xffff0800)),
-        // FocusedMenuItem(
-        //     title: const Text(
-        //       "Leave",
-        //       style: TextStyle(
-        //           color: Colors.white,
-        //           fontSize: 15,
-        //           fontWeight: FontWeight.bold),
-        //     ),
-        //     onPressed: () {
-        //       setState(() {
-        //         ChangeState(isSelectedList, index, 2);
-        //         ChangeColor(isSelectedList, index);
-        //       });
-        //       // Navigator.of(this.context).push(
-        //       //   MaterialPageRoute(builder: (context) => ChangePassword()),
-        //       // );
-        //     },
-        //     backgroundColor: const Color(0xffffc100))
-      ],
       child: Card(
         color: color[index],
-        // color: Colors.green,
         elevation: 2,
         shadowColor: Colors.grey[200],
         child: Padding(
@@ -276,28 +242,17 @@ class _AttendencePageState extends State<AttendencePage> {
     );
   }
 
-  void ChangeState(List<int> isSelectedList, int value, int i) {
+  void ChangeState(List isSelectedList, int value, String i) {
     isSelectedList[value] = i;
   }
 
-  void ResetState() {
-    for (int state = 0; state < color.length; state++) {
-      color[state] = Colors.white;
-    }
-  }
-
-  void ChangeColor(List<int> isSelectedList, int index) {
-    if (isSelectedList[index] == 1) {
+  void ChangeColor(List isSelectedList, int index) {
+    if (isSelectedList[index] == 'P') {
       color[index] = const Color(0xff00CE2D);
       print("changed to : $isSelectedList");
-      // } else {
-      //   if (isSelectedList[index] == 2) {
-      //     attendencecolor[index] = const Color(0xffffc100);
-      // print("changed to : $isSelectedList");
     } else {
       color[index] = const Color(0xffff0800);
       print("changed to : $isSelectedList");
     }
-    // }
   }
 }

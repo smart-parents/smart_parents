@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 
@@ -50,6 +51,38 @@ class _ChatScreenState extends State<ChatScreen> {
     loggedName = userSnapshot.get('name');
   }
 
+  void _handleSubmitted(String text) {
+    // Handle the submitted text here
+    print('Submitted: $text');
+    if (messageText != '') {
+      Map<String?, String> messageMap = {
+        id: messageText,
+      };
+      messages.add(messageMap);
+      messageTextController.clear();
+      _fireStore
+          .collection('Admin/$admin/messages')
+          .doc('chatCollection')
+          .get()
+          .then((value) => {
+                if (value.exists)
+                  {
+                    _fireStore
+                        .collection('Admin/$admin/messages')
+                        .doc('chatCollection')
+                        .update({'chat1': messages})
+                  }
+                else
+                  {
+                    _fireStore
+                        .collection('Admin/$admin/messages')
+                        .doc('chatCollection')
+                        .set({'chat1': messages})
+                  }
+              });
+    } // Clear the text input field
+  }
+
   @override
   Widget build(BuildContext context) {
     return
@@ -85,50 +118,33 @@ class _ChatScreenState extends State<ChatScreen> {
                     onChanged: (value) {
                       messageText = value;
                     },
+                    onSubmitted: _handleSubmitted,
                     decoration: kMessageTextFieldDecoration,
                     style: const TextStyle(color: Colors.black),
                   ),
                 ),
-                TextButton(
-                  // TextButton.icon(
-                  onPressed: () {
-                    if (messageText != '') {
-                      Map<String?, String> messageMap = {
-                        id: messageText,
-                      };
-                      messages.add(messageMap);
-                      messageTextController.clear();
-
-                      _fireStore
-                          .collection('Admin/$admin/messages')
-                          .doc('chatCollection')
-                          .get()
-                          .then((value) => {
-                                if (value.exists)
-                                  {
-                                    _fireStore
-                                        .collection('Admin/$admin/messages')
-                                        .doc('chatCollection')
-                                        .update({'chat1': messages})
-                                  }
-                                else
-                                  {
-                                    _fireStore
-                                        .collection('Admin/$admin/messages')
-                                        .doc('chatCollection')
-                                        .set({'chat1': messages})
-                                  }
-                              });
+                RawKeyboardListener(
+                  focusNode: FocusNode(),
+                  onKey: (RawKeyEvent event) {
+                    if (event is RawKeyUpEvent &&
+                        event.logicalKey == LogicalKeyboardKey.enter) {
+                      _handleSubmitted(messageTextController.text);
                     }
                   },
-                  // icon: const Icon(Icons.send),
-                  // label: const Text(
-                  //   'Send',
-                  //   style: kSendButtonTextStyle,
-                  // ),
-                  child: const Text(
-                    'Send',
-                    style: kSendButtonTextStyle,
+                  child: TextButton(
+                    // TextButton.icon(
+                    onPressed: () {
+                      _handleSubmitted(messageTextController.text);
+                    },
+                    // icon: const Icon(Icons.send),
+                    // label: const Text(
+                    //   'Send',
+                    //   style: kSendButtonTextStyle,
+                    // ),
+                    child: const Text(
+                      'Send',
+                      style: kSendButtonTextStyle,
+                    ),
                   ),
                 ),
               ],

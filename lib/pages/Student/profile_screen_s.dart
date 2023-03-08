@@ -171,16 +171,10 @@ class _Profile_screenSState extends State<Profile_screenS> {
             int day = int.parse(dobParts[0]);
             int month = int.parse(dobParts[1]);
             int year = int.parse(dobParts[2]);
-
-// Create a DateTime object with the DOB
             DateTime dobDateTime = DateTime(year, month, day);
-
-// Calculate the age
             DateTime now = DateTime.now();
             Duration ageDuration = now.difference(dobDateTime);
             age = (ageDuration.inDays / 365).floor();
-
-// Print the age
             print('Age: $age');
           }
           return ListView(
@@ -188,7 +182,7 @@ class _Profile_screenSState extends State<Profile_screenS> {
               Center(
                 child: Container(
                   // height: 590.0,
-                  padding: const EdgeInsets.only(top: 25),
+                  padding: const EdgeInsets.only(top: 15),
                   // width: 414.0,
                   // height: MediaQuery.of(context).size.width * 590.0,
                   // width: MediaQuery.of(context).size.width * 380.0,

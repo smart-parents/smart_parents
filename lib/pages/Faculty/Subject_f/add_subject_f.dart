@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 
 class AddSubject extends StatefulWidget {

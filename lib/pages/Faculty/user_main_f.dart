@@ -13,6 +13,9 @@ import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
 import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
 import 'package:smart_parents/pages/Faculty/chat_f.dart';
+import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
+import 'package:smart_parents/pages/Faculty/attendencepages/attendance_display_f.dart';
+// import 'package:smart_parents/pages/Faculty/attendencepages/att.dart';
 
 class UserMainF extends StatefulWidget {
   const UserMainF({Key? key}) : super(key: key);
@@ -76,56 +79,65 @@ class _UserMainState extends State<UserMainF> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-      ),
-      drawer: NavigationDrawer(),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: Container(
-        decoration: const BoxDecoration(
-          color: kPrimaryLightColor,
-          // boxShadow: [
-          //   BoxShadow(
-          //     blurRadius: 20,
-          //     // color: Colors.black.withOpacity(.1),
-          //   )
-          // ],
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Home'),
         ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-            child: GNav(
-              // rippleColor: kPrimaryColor ,
-              // hoverColor: kPrimaryColor,
-              // gap: 8,
-              activeColor: Colors.white,
-              iconSize: 24,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              // tabMargin: EdgeInsets.symmetric(horizontal: 50),
-              // duration: Duration(milliseconds: 400),
-              tabBackgroundColor: kPrimaryColor,
-              // color: Colors.black,
-              tabs: const [
-                GButton(
-                  icon: Icons.home,
-                  text: 'Home',
-                ),
-                GButton(
-                  icon: Icons.schedule,
-                  text: 'Schedule',
-                ),
-                GButton(
-                  icon: Icons.chat,
-                  text: 'Chat',
-                ),
-                GButton(
-                  icon: Icons.account_circle,
-                  text: 'Profile',
-                ),
-              ],
-              selectedIndex: _selectedIndex,
-              onTabChange: _onItemTapped,
+        drawer: const NavigationDrawer(),
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: Container(
+          decoration: const BoxDecoration(
+            color: kPrimaryLightColor,
+            // boxShadow: [
+            //   BoxShadow(
+            //     blurRadius: 20,
+            //     // color: Colors.black.withOpacity(.1),
+            //   )
+            // ],
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+              child: GNav(
+                // rippleColor: kPrimaryColor ,
+                // hoverColor: kPrimaryColor,
+                // gap: 8,
+                activeColor: Colors.white,
+                iconSize: 24,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                // tabMargin: EdgeInsets.symmetric(horizontal: 50),
+                // duration: Duration(milliseconds: 400),
+                tabBackgroundColor: kPrimaryColor,
+                // color: Colors.black,
+                tabs: const [
+                  GButton(
+                    icon: Icons.home,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon: Icons.schedule,
+                    text: 'Schedule',
+                  ),
+                  GButton(
+                    icon: Icons.chat,
+                    text: 'Chat',
+                  ),
+                  GButton(
+                    icon: Icons.account_circle,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: _selectedIndex,
+                onTabChange: _onItemTapped,
+              ),
             ),
           ),
         ),
@@ -275,7 +287,14 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ListTile(
                 leading: const Icon(Icons.calendar_today),
                 title: const Text("Add Today's Attendence"),
-                onTap: () {},
+                onTap: () {
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const AttendanceCalendarPage(
+                  //     sub: 'PHP',
+                  //     studentId: '206470316050',
+                  //   ),
+                  // ));
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.calendar_month),
@@ -289,8 +308,15 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ),
               ListTile(
                 leading: const Icon(Icons.schedule_outlined),
-                title: const Text("Schedule"),
-                onTap: () {},
+                title: const Text("View Attendance"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AttendanceDisplayPage(
+                      // sub: 'PHP',
+                      // studentId: '206470316050',
+                    ),
+                  ));
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.contact_page_outlined),

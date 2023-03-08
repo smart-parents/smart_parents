@@ -1,7 +1,7 @@
 // ignore_for_file: file_names, non_constant_identifier_names, must_be_immutable, camel_case_types, library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
-import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
+import 'package:smart_parents/components/constants.dart';
 
 Widget dropdownButton(
   String? dropdownValue,
@@ -33,12 +33,6 @@ Widget dropdownButton(
         break;
       case "Batch":
         batchdropdownValue = dropdownValue!;
-        break;
-      case "Subject":
-        subjectdropdownValue = dropdownValue!;
-        break;
-      case "Faculty":
-        facultiesdropdownValue = dropdownValue!;
         break;
       default:
     }
@@ -137,12 +131,6 @@ class _dropdownState extends State<dropdown> {
         break;
       case "Batch":
         batchdropdownValue = dropdownValue;
-        break;
-      case "Subject":
-        subjectdropdownValue = dropdownValue;
-        break;
-      case "Faculty":
-        facultiesdropdownValue = dropdownValue;
         break;
       default:
     }

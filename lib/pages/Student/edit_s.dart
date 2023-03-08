@@ -341,7 +341,7 @@ class _EditSState extends State<EditS> {
                               padding: const EdgeInsets.only(
                                   left: 20.0, right: 20.0),
                               child: TextFormField(
-                                // readOnly: true,
+                                readOnly: true,
                                 initialValue: year,
                                 autofocus: false,
                                 onChanged: (value) => year = value,
@@ -378,7 +378,7 @@ class _EditSState extends State<EditS> {
                               padding: const EdgeInsets.only(
                                   left: 20.0, right: 20.0),
                               child: TextFormField(
-                                // readOnly: true,
+                                readOnly: true,
                                 initialValue: branch,
                                 autofocus: false,
                                 onChanged: (value) => branch = value,
@@ -423,7 +423,7 @@ class _EditSState extends State<EditS> {
                               padding: const EdgeInsets.only(
                                   left: 20.0, right: 20.0),
                               child: TextFormField(
-                                // readOnly: true,
+                                readOnly: true,
                                 initialValue: sem,
                                 autofocus: false,
                                 onChanged: (value) => sem = value,

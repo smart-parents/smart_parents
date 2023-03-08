@@ -1,12 +1,9 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, library_private_types_in_public_api, file_names, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 import 'package:smart_parents/pages/Faculty/report_f/makepdf.dart';
-import 'package:smart_parents/pages/Faculty/report_f/reportPdfDownload.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 
 class Department {
@@ -31,7 +28,6 @@ class ReportGenration extends StatefulWidget {
 }
 
 class _ReportGenrationState extends State<ReportGenration> {
-  final DateTime _current = DateTime.now();
   // String _date = '';
   // String _start = '';
   // String _end = '';
@@ -129,7 +125,7 @@ class _ReportGenrationState extends State<ReportGenration> {
     // String facultiesdropdownValue = Faculties[0];
     return Scaffold(
         appBar: AppBar(
-          title: Text("Report"),
+          title: const Text("Report"),
         ),
         body: Padding(
           padding: const EdgeInsets.all(10.0),
@@ -219,7 +215,7 @@ class _ReportGenrationState extends State<ReportGenration> {
                     DropdownValue: batchdropdownValue,
                     sTring: Batch,
                     Hint: "Batch"),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 Column(
@@ -278,7 +274,7 @@ class _ReportGenrationState extends State<ReportGenration> {
                     //   height: 20,
                     // ),
                     // dropdownButton(facultiesdropdownValue, sTring:Faculties, "Faculty"),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     // Container(
@@ -295,18 +291,18 @@ class _ReportGenrationState extends State<ReportGenration> {
                     // date picker
                     Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 50,
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Text("From :"),
-                            SizedBox(
+                            const Text("From :"),
+                            const SizedBox(
                               height: 10,
                             ),
                             Text("${selectedDate.toLocal()}".split(' ')[0]),
-                            SizedBox(
+                            const SizedBox(
                               height: 20.0,
                             ),
                             // ignore: deprecated_member_use
@@ -315,25 +311,25 @@ class _ReportGenrationState extends State<ReportGenration> {
                                 backgroundColor: Colors.green,
                               ),
                               onPressed: () => _selectDate(context),
-                              child: Text(
+                              child: const Text(
                                 'Select date',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 70,
                         ),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
-                            Text("To :"),
-                            SizedBox(
+                            const Text("To :"),
+                            const SizedBox(
                               height: 10,
                             ),
                             Text("${selectedDate2.toLocal()}".split(' ')[0]),
-                            SizedBox(
+                            const SizedBox(
                               height: 20.0,
                             ),
                             // ignore: deprecated_member_use
@@ -342,7 +338,7 @@ class _ReportGenrationState extends State<ReportGenration> {
                                 backgroundColor: Colors.green,
                               ),
                               onPressed: () => _selectDate2(context),
-                              child: Text(
+                              child: const Text(
                                 'Select date',
                                 style: TextStyle(color: Colors.white),
                               ),
@@ -352,21 +348,22 @@ class _ReportGenrationState extends State<ReportGenration> {
                         // SizedBox(width: 20,),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 40,
                     ),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                              builder: (context) => reportt(
-                                    list: [],
+                              builder: (context) => Report(
+                                    list: const [],
                                     sem: '',
                                   )),
                         );
                       },
-                      child: Text("Genrate Report"),
-                      style: ElevatedButton.styleFrom(fixedSize: Size(300, 40)),
+                      style: ElevatedButton.styleFrom(
+                          fixedSize: const Size(300, 40)),
+                      child: const Text("Genrate Report"),
                     ),
                   ],
                 ),

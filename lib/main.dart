@@ -5,7 +5,6 @@ import 'package:smart_parents/pages/TimeImage.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(

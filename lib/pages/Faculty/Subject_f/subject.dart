@@ -167,19 +167,22 @@ class _SubjectState extends State<Subject> {
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
-                                                  title: Text("Confirm Delete"),
-                                                  content: Text(
+                                                  title: const Text(
+                                                      "Confirm Delete"),
+                                                  content: const Text(
                                                       "Are you sure you want to delete this item?"),
                                                   actions: [
                                                     TextButton(
-                                                      child: Text("CANCEL"),
+                                                      child:
+                                                          const Text("CANCEL"),
                                                       onPressed: () {
                                                         Navigator.of(context)
                                                             .pop();
                                                       },
                                                     ),
                                                     TextButton(
-                                                      child: Text("DELETE"),
+                                                      child:
+                                                          const Text("DELETE"),
                                                       onPressed: () {
                                                         // Perform the deletion here
                                                         // ...

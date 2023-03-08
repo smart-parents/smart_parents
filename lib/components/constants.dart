@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
 import 'package:flutter/material.dart';
 
 // class Constants {
@@ -36,3 +36,32 @@ const kMessageContainerDecoration = BoxDecoration(
     top: BorderSide(color: kPrimaryColor, width: 2.0),
   ),
 );
+
+List<String> Semester = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  // "7",
+  // "8",
+];
+List<String> Batch = ["A", "B", "C", "All"];
+List<String> CollegeYear = [
+  "2020",
+  "2021",
+  "2022",
+];
+
+String semesterdropdownValue = Semester[0];
+String batchdropdownValue = Batch[0];
+String yeardropdownValue = CollegeYear[0];
+Map<String, String> values = {
+  semesterdropdownValue: "1",
+  batchdropdownValue: "A",
+  yeardropdownValue: "3rd",
+};
+
+const green = Color(0xff00CE2D);
+const red = Color(0xffff0800);

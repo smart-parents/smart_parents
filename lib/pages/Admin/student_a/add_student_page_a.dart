@@ -306,10 +306,10 @@ class _AddStudentPageState extends State<AddStudentPage> {
                           textInputAction: TextInputAction.done,
                           decoration: InputDecoration(
                             labelText: 'Password: ',
-                            labelStyle: TextStyle(fontSize: 20.0),
-                            border: OutlineInputBorder(),
+                            labelStyle: const TextStyle(fontSize: 20.0),
+                            border: const OutlineInputBorder(),
                             prefixIcon: Padding(
-                              padding: EdgeInsets.all(defaultPadding),
+                              padding: const EdgeInsets.all(defaultPadding),
                               child: Icon(showPassword
                                   ? Icons.lock_open
                                   : Icons.lock_outline),
@@ -320,7 +320,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
                                   : Icons.visibility_off),
                               onPressed: _togglePasswordVisibility,
                             ),
-                            errorStyle: TextStyle(
+                            errorStyle: const TextStyle(
                                 color: Colors.lightBlueAccent, fontSize: 15),
                           ),
                           controller: passwordController,

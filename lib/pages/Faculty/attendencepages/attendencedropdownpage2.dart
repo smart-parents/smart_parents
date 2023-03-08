@@ -1,10 +1,9 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencePage.dart';
-import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -32,49 +31,23 @@ class AttendenceDropdownpage2 extends StatefulWidget {
 }
 
 class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
-  // DateTime selectedDate = DateTime.now();
-  // TimeOfDay selectedStartTime = TimeOfDay.now();
-  // TimeOfDay selectedEndTime = TimeOfDay.now();
 
-// bool _chooseClass = true;
   final DateTime _current = DateTime.now();
-  String _date = '';
-  String _start = '';
-  String _end = '';
+  String _date = DateFormat('dd-MM-yyyy').format(DateTime.now());
+  DateTime start = DateTime.now();
+  String _start = DateFormat('hh:mm a').format(DateTime.now());
+  DateTime end = DateTime.now().add(const Duration(hours: 1));
+  String _end = DateFormat('hh:mm a')
+      .format(DateTime.now().add(const Duration(hours: 1)));
   String? Branch;
-  String? Sub;
-  // List<Department> _departments = [];
+  var Sub;
   List<Subject> _subjects = [];
 
   @override
   void initState() {
     super.initState();
-    // _fetchDepartments();
     _fetchSubjects();
   }
-
-  // late String _selectedDepartmentId;
-  // late String _selectedSubjectId;
-  // Future<void> _fetchDepartments() async {
-  //   final QuerySnapshot<Map<String, dynamic>> departmentsSnapshot =
-  //       await FirebaseFirestore.instance
-  //           .collection('Admin/$admin/department')
-  //           .get();
-
-  //   final List<Department> departments = [];
-
-  //   for (final DocumentSnapshot<Map<String, dynamic>> departmentSnapshot
-  //       in departmentsSnapshot.docs) {
-  //     final Department department =
-  //         Department(departmentSnapshot.id, departmentSnapshot.data()!['name']);
-  //     departments.add(department);
-  //   }
-
-  //   setState(() {
-  //     _departments = departments;
-  //     // _selectedDepartmentId = _departments[0].id;
-  //   });
-  // }
 
   Future<void> _fetchSubjects() async {
     final QuerySnapshot<Map<String, dynamic>> subjectSnapshot =
@@ -93,23 +66,14 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
 
     setState(() {
       _subjects = subjects;
-      // _selectedSubjectId = _subjects[0].id;
+      Sub = _subjects[0].name;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // String semesterdropdownValue = Semester[0];
-    // String batchdropdownValue = Batch[0];
-    // String schooldropdownValue = School[0];
-    // String subjectdropdownValue = Subject[0];
-    // String datedropdownValue = Date[0];
-    // String monthdropdownValue = Month[0];
-    // String yeardropdownValue = Year[0];
     dynamic fieldTextStyle = const TextStyle(
         color: Colors.cyan, fontSize: 17, fontWeight: FontWeight.w400);
-
-// Initialize the Cloud Firestore
 
     return Scaffold(
       appBar: AppBar(
@@ -125,126 +89,6 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                 const SizedBox(
                   height: 30,
                 ),
-                // dropdown(
-                //     DropdownValue: items.toString(),
-                //     sTring: Branch,
-                //     Hint: "Branch"),
-                // Column(
-                //   children: [
-                //     const Text(
-                //       "Branch",
-                //       style: TextStyle(fontSize: 20),
-                //     ),
-                //     const SizedBox(
-                //       height: 5,
-                //     ),
-                //     Container(
-                //       padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                //       decoration: BoxDecoration(
-                //           color: Colors.grey[100],
-                //           borderRadius: BorderRadius.circular(15.0),
-                //           border: Border.all(
-                //               color: Colors.grey,
-                //               style: BorderStyle.solid,
-                //               width: 0.80),
-                //           boxShadow: const [
-                //             BoxShadow(
-                //               color: Colors.grey,
-                //               offset: Offset(
-                //                 5.0,
-                //                 5.0,
-                //               ),
-                //               blurRadius: 5.0,
-                //               spreadRadius: 1.0,
-                //             ),
-                //           ]),
-                //       child: DropdownButton<String>(
-                //         isExpanded: true,
-                //         // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                //         value: Branch,
-                //         hint: const Text('Select an item'),
-                //         icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                //         elevation: 16,
-                //         dropdownColor: Colors.grey[100],
-                //         style: const TextStyle(color: Colors.black),
-                //         underline: Container(height: 0, color: Colors.black),
-                //         onChanged: (value) {
-                //           setState(() {
-                //             Branch = value;
-                //           });
-                //         },
-                //         items: _departments.map((item) {
-                //           return DropdownMenuItem<String>(
-                //             value: item.name,
-                //             child: Text(item.name),
-                //           );
-                //         }).toList(),
-                //       ),
-                //     ),
-                //   ],
-                // ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-
-                // Container(
-                //   child: Column(
-                //     children: [
-                //       const Text(
-                //         "Semester",
-                //         style: TextStyle(fontSize: 20),
-                //       ),
-                //       SizedBox(
-                //         height: 5,
-                //       ),
-                //       Container(
-                //         padding: EdgeInsets.symmetric(horizontal: 10.0),
-                //         decoration: BoxDecoration(
-                //             color: Colors.grey[100],
-                //             borderRadius: BorderRadius.circular(15.0),
-                //             border: Border.all(
-                //                 color: Colors.grey,
-                //                 style: BorderStyle.solid,
-                //                 width: 0.80),
-                //             boxShadow: [
-                //               BoxShadow(
-                //                 color: Colors.grey,
-                //                 offset: const Offset(
-                //                   5.0,
-                //                   5.0,
-                //                 ),
-                //                 blurRadius: 5.0,
-                //                 spreadRadius: 1.0,
-                //               ),
-                //             ]),
-                //         child: DropdownButton<String>(
-                //           isExpanded: true,
-                //           // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                //           value: Semester,
-                //           hint: const Text('Select an item'),
-                //           icon: const Icon(
-                //               Icons.keyboard_arrow_down_outlined),
-                //           elevation: 16,
-                //           dropdownColor: Colors.grey[100],
-                //           style: const TextStyle(color: Colors.black),
-                //           underline:
-                //               Container(height: 0, color: Colors.black),
-                //           onChanged: (value) {
-                //             setState(() {
-                //               Semester = value;
-                //             });
-                //           },
-                //           items: semester.map((item) {
-                //             return DropdownMenuItem<String>(
-                //               value: item,
-                //               child: Text(item),
-                //             );
-                //           }).toList(),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                // ),
                 dropdown(
                     DropdownValue: semesterdropdownValue,
                     sTring: Semester,
@@ -299,7 +143,11 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                         isExpanded: true,
                         // hint: Text(hint,style: TextStyle(color: Colors.black),),
                         value: Sub,
-                        hint: const Text('Select an item'),
+                        // decoration: const InputDecoration(
+                        //   border: InputBorder.none,
+                        //   contentPadding: EdgeInsets.zero,
+                        // ),
+                        // hint: const Text('Select an item'),
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                         elevation: 16,
                         dropdownColor: Colors.grey[100],
@@ -316,6 +164,12 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                             child: Text(item.name),
                           );
                         }).toList(),
+                        // validator: (value) {
+                        //   if (value == null) {
+                        //     return 'Please select a subject';
+                        //   }
+                        //   return null; // return null if there's no error
+                        // },
                       ),
                     ),
                   ],
@@ -332,12 +186,14 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                       width: 20,
                     ),
                     Expanded(
-                        child: _date.isEmpty
-                            ? Text(
-                                'Choose Date',
-                                style: fieldTextStyle,
-                              )
-                            : Text(_date, style: fieldTextStyle)),
+                        child:
+                            //  _date.isEmpty
+                            //     ? Text(
+                            //         'Choose Date',
+                            //         style: fieldTextStyle,
+                            //       )
+                            //     :
+                            Text(_date.toString(), style: fieldTextStyle)),
                     IconButton(
                       icon: Icon(
                         Icons.edit,
@@ -357,7 +213,8 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                               _current.year, _current.month, _current.day),
                           onConfirm: (dt) {
                             setState(() {
-                              _date = dt.toString().substring(0, 10);
+                              // _date = dt.toString().substring(0, 10);
+                              _date = DateFormat('dd-MM-yyyy').format(dt);
                             });
                           },
                         );
@@ -377,15 +234,17 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                       width: 20,
                     ),
                     Expanded(
-                        child: _start.isEmpty
-                            ? Text(
-                                'Choose Start Time',
-                                style: fieldTextStyle,
-                              )
-                            : Text(
-                                _start,
-                                style: fieldTextStyle,
-                              )),
+                        child:
+                            // _start.isEmpty
+                            //     ? Text(
+                            //         'Choose Start Time',
+                            //         style: fieldTextStyle,
+                            //       )
+                            //     :
+                            Text(
+                      _start,
+                      style: fieldTextStyle,
+                    )),
                     IconButton(
                       icon: Icon(
                         Icons.edit,
@@ -401,7 +260,11 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                           showTitleActions: true,
                           onConfirm: (time) {
                             setState(() {
-                              _start = DateFormat.jm().format(time);
+                              _start = DateFormat('hh:mm a').format(time);
+                              start = time;
+                              _end = DateFormat('hh:mm a')
+                                  .format(start.add(const Duration(hours: 1)));
+                              end = time.add(const Duration(hours: 1));
                             });
                           },
                         );
@@ -421,15 +284,17 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                       width: 20,
                     ),
                     Expanded(
-                        child: _end.isEmpty
-                            ? Text(
-                                'Choose Stop Time',
-                                style: fieldTextStyle,
-                              )
-                            : Text(
-                                _end,
-                                style: fieldTextStyle,
-                              )),
+                        child:
+                            // _end.isEmpty
+                            //     ? Text(
+                            //         'Choose Stop Time',
+                            //         style: fieldTextStyle,
+                            //       )
+                            //     :
+                            Text(
+                      _end,
+                      style: fieldTextStyle,
+                    )),
                     IconButton(
                       icon: Icon(
                         Icons.edit,
@@ -443,10 +308,12 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                             backgroundColor: Colors.white,
                           ),
                           showTitleActions: true,
+                          currentTime: end,
                           // showSecondsColumn: false,
                           onConfirm: (time) {
                             setState(() {
-                              _end = DateFormat.jm().format(time);
+                              _end = DateFormat('hh:mm a').format(time);
+                              end = time;
                             });
                           },
                         );
@@ -533,13 +400,19 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                 Expanded(
                                   child: ElevatedButton(
                                       onPressed: () {
+                                        // if (_formKey.currentState!.validate()) {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   AttendencePage(
                                                       sem:
-                                                          semesterdropdownValue)),
+                                                          semesterdropdownValue,
+                                                      sub: Sub,
+                                                      date: _date,
+                                                      start: _start,
+                                                      end: _end)),
                                         );
+                                        // }
                                       },
                                       child: const Text("Take Attendence")),
                                 ),

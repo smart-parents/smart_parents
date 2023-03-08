@@ -57,57 +57,51 @@ class _DashboardState extends State<Dashboard> {
       //   centerTitle: true,
       // ),
       body: Column(children: [
-        Container(
-          // padding: const EdgeInsets.only(top: 55.0),
-          // margin: const EdgeInsets.only(top: 50),
-          child: CarouselSlider(
-            options: CarouselOptions(
-              enlargeCenterPage: true,
-              initialPage:
-                  _selectedIndex, // Set the initial page to the current day index
-              enableInfiniteScroll: false,
-              height: 150,
-              // height: MediaQuery.of(context).size.height * 0.17,
-              viewportFraction: 1 / 5,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _selectedIndex = index;
-                });
-              },
-            ),
-            items: dates.map((date) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: _selectedIndex == dates.indexOf(date)
-                              ? Colors.white
-                              : Colors.grey,
-                        ),
-                        child: Transform.rotate(
-                          angle: -math.pi / 2,
-                          child: Text(
-                            DateFormat('dd MMM').format(date),
-                            style: GoogleFonts.rubik(
-                              fontSize: 20,
-                              fontWeight: _selectedIndex == dates.indexOf(date)
-                                  ? FontWeight.bold
-                                  : FontWeight.normal,
-                            ),
+        CarouselSlider(
+          options: CarouselOptions(
+            enlargeCenterPage: true,
+            initialPage: _selectedIndex,
+            enableInfiniteScroll: false,
+            height: 150,
+            viewportFraction: 1 / 5,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+          ),
+          items: dates.map((date) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.fromLTRB(0, 40, 0, 40),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(30),
+                        color: _selectedIndex == dates.indexOf(date)
+                            ? Colors.white
+                            : Colors.grey,
+                      ),
+                      child: Transform.rotate(
+                        angle: -math.pi / 2,
+                        child: Text(
+                          DateFormat('dd MMM').format(date),
+                          style: GoogleFonts.rubik(
+                            fontSize: 20,
+                            fontWeight: _selectedIndex == dates.indexOf(date)
+                                ? FontWeight.bold
+                                : FontWeight.normal,
                           ),
                         ),
                       ),
-                    ],
-                  );
-                },
-              );
-            }).toList(),
-          ),
+                    ),
+                  ],
+                );
+              },
+            );
+          }).toList(),
         ),
         Container(
           margin: const EdgeInsets.all(0),
@@ -118,49 +112,30 @@ class _DashboardState extends State<Dashboard> {
             borderRadius: BorderRadius.circular(80),
             color: Colors.white,
           ),
-          child: ListView(
-              padding: EdgeInsets.zero,
-              // crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(padding: EdgeInsets.zero, children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Text(
-                      DateFormat('E, dd MMM').format(dates[_selectedIndex]),
-                      style: GoogleFonts.rubik(
-                          fontSize: 30,
-                          color: kPrimaryColor,
-                          fontWeight: FontWeight.bold),
-                    ),
-                    const Icon(
-                      Icons.calendar_today_outlined,
+                Text(
+                  DateFormat('E, dd MMM').format(dates[_selectedIndex]),
+                  style: GoogleFonts.rubik(
+                      fontSize: 30,
                       color: kPrimaryColor,
-                      size: 40,
-                    ),
-                  ],
-                )
-                // ListView(children: [
-                //   Text(
-                //     "Selected date: ${DateFormat.yMMMMd().format(dates[_selectedIndex])}",
-                //     style: const TextStyle(fontSize: 18, color: kPrimaryColor),
-                //   ),
-                // ]),
-              ]),
+                      fontWeight: FontWeight.bold),
+                ),
+                const Icon(
+                  Icons.calendar_today_outlined,
+                  color: kPrimaryColor,
+                  size: 40,
+                ),
+              ],
+            )
+          ]),
         ),
       ]),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () => {
-      //     // Navigator.push(
-      //     //     context,
-      //     //     MaterialPageRoute(
-      //     //       builder: (context) => const AddParentPage(),
-      //     //     ))
-      //   },
-      //   child: const Icon(Icons.edit),
-      // ),
     );
   }
 }

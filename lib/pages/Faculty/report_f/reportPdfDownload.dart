@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, file_names
+
 import 'package:flutter/material.dart';
 
 class ReportPdfDownloadPage extends StatefulWidget {
@@ -15,46 +17,46 @@ class _ReportPdfDownloadPageState extends State<ReportPdfDownloadPage> {
       body: Column(
         // mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
-          Center(
+          const Center(
             child: Text(
               'REPORT',
               style: TextStyle(fontSize: 50, fontWeight: FontWeight.w600),
             ),
           ),
           Center(
-            child: Container(
+            child: SizedBox(
               height: 300,
               width: 300,
               child: Image.asset('assets/images/PdfDownload.png'),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           Center(
             child: TextButton.icon(
               onPressed: () {},
-              label: Text(
+              label: const Text(
                 'Download',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                 ),
               ),
-              icon: Icon(
+              icon: const Icon(
                 Icons.file_download_outlined,
                 color: Colors.white,
                 size: 20,
               ),
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all<Color>(
-                    Color.fromRGBO(6, 0, 79, 1),
+                    const Color.fromRGBO(6, 0, 79, 1),
                   ),
-                  padding: MaterialStateProperty.all(
-                      EdgeInsets.symmetric(vertical: 15, horizontal: 110)),
+                  padding: MaterialStateProperty.all(const EdgeInsets.symmetric(
+                      vertical: 15, horizontal: 110)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15)))),

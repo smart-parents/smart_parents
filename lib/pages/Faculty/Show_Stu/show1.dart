@@ -1,10 +1,8 @@
 // ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names, camel_case_types
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Show_Stu/student_f.dart';
-import 'package:smart_parents/pages/Faculty/attendencepages/util/names.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 
 class Show_stu extends StatefulWidget {

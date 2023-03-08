@@ -1,24 +1,26 @@
+// ignore_for_file: must_be_immutable, no_logic_in_create_state, prefer_typing_uninitialized_variables
+
 import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-class reportt extends StatefulWidget {
+class Report extends StatefulWidget {
   List list;
   String sem;
-  reportt({required this.list, required this.sem});
+  Report({super.key, required this.list, required this.sem});
   @override
-  State<reportt> createState() => _reporttState(list: list, sem: sem);
+  State<Report> createState() => _ReportState(list: list, sem: sem);
 }
 
-class _reporttState extends State<reportt> {
+class _ReportState extends State<Report> {
   List list;
   // String clas;
 
   String sem;
 
-  _reporttState({required this.list, required this.sem});
+  _ReportState({required this.list, required this.sem});
   final pdf = pw.Document();
   var marks;
 
@@ -26,14 +28,12 @@ class _reporttState extends State<reportt> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(''),
+        title: const Text('Report'),
       ),
       body: PdfPreview(
         canChangeOrientation: false,
         canDebug: false,
-        build: (format) => generateDocument(
-          format,
-        ),
+        build: (format) => generateDocument(format),
       ),
     );
   }
@@ -68,7 +68,7 @@ class _reporttState extends State<reportt> {
               ),
               pw.Text(
                 'Attendance sheet',
-                style: pw.TextStyle(
+                style: const pw.TextStyle(
                   fontSize: 25,
                 ),
               ),
@@ -81,13 +81,13 @@ class _reporttState extends State<reportt> {
                   pw.Row(children: [
                     pw.Text(
                       'Date :',
-                      style: pw.TextStyle(
+                      style: const pw.TextStyle(
                         fontSize: 20,
                       ),
                     ),
                     pw.Text(
                       DateTime.now().toString(),
-                      style: pw.TextStyle(
+                      style: const pw.TextStyle(
                         fontSize: 20,
                       ),
                     ),
@@ -96,13 +96,13 @@ class _reporttState extends State<reportt> {
                     children: [
                       pw.Text(
                         'Class : ',
-                        style: pw.TextStyle(
+                        style: const pw.TextStyle(
                           fontSize: 25,
                         ),
                       ),
                       pw.Text(
                         sem,
-                        style: pw.TextStyle(
+                        style: const pw.TextStyle(
                           fontSize: 25,
                         ),
                       ),
@@ -114,7 +114,7 @@ class _reporttState extends State<reportt> {
                 height: 20,
               ),
               pw.Table(
-                defaultColumnWidth: pw.FixedColumnWidth(120.0),
+                defaultColumnWidth: const pw.FixedColumnWidth(120.0),
                 border: pw.TableBorder.all(
                   style: pw.BorderStyle.solid,
                   width: 2,
@@ -126,7 +126,7 @@ class _reporttState extends State<reportt> {
                         children: [
                           pw.Text(
                             'Number',
-                            style: pw.TextStyle(
+                            style: const pw.TextStyle(
                               fontSize: 20.0,
                             ),
                           ),
@@ -136,7 +136,7 @@ class _reporttState extends State<reportt> {
                         children: [
                           pw.Text(
                             'Name',
-                            style: pw.TextStyle(
+                            style: const pw.TextStyle(
                               fontSize: 20.0,
                             ),
                           ),
@@ -146,7 +146,7 @@ class _reporttState extends State<reportt> {
                         children: [
                           pw.Text(
                             'Name',
-                            style: pw.TextStyle(
+                            style: const pw.TextStyle(
                               fontSize: 20.0,
                             ),
                           ),
@@ -156,7 +156,7 @@ class _reporttState extends State<reportt> {
                         children: [
                           pw.Text(
                             'Name',
-                            style: pw.TextStyle(
+                            style: const pw.TextStyle(
                               fontSize: 20.0,
                             ),
                           ),
@@ -168,7 +168,7 @@ class _reporttState extends State<reportt> {
                 itemCount: list.length,
                 itemBuilder: (_, index) {
                   return pw.Table(
-                    defaultColumnWidth: pw.FixedColumnWidth(120.0),
+                    defaultColumnWidth: const pw.FixedColumnWidth(120.0),
                     border: pw.TableBorder.all(
                         // color: pw.Colors.black,
                         style: pw.BorderStyle.solid,
@@ -180,7 +180,7 @@ class _reporttState extends State<reportt> {
                             pw.Text(
                               index.toString(),
                               textAlign: pw.TextAlign.center,
-                              style: pw.TextStyle(
+                              style: const pw.TextStyle(
                                 fontSize: 20.0,
                               ),
                             ),
@@ -190,7 +190,7 @@ class _reporttState extends State<reportt> {
                               pw.Text(
                                 list[index],
                                 textAlign: pw.TextAlign.center,
-                                style: pw.TextStyle(fontSize: 20.0),
+                                style: const pw.TextStyle(fontSize: 20.0),
                               ),
                             ],
                           ),

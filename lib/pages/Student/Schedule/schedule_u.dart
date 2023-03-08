@@ -7,8 +7,6 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
-import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
-
 class MyCarouselSlider extends StatefulWidget {
   const MyCarouselSlider({super.key});
 

@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, library_private_types_in_public_api
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,6 +11,7 @@ import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
+import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
 
 class ParentsScreen extends StatefulWidget {
   const ParentsScreen({super.key});
@@ -81,72 +82,81 @@ class _ParentsScreenState extends State<ParentsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        //   backgroundColor: Color.fromARGB(255, 187, 218, 240),
-        //   automaticallyImplyLeading: false,
-        //   title: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        //     children: [
-        //       //Image.asset("assets/images/top3.png", width: 100, height: 50,),
+    return WillPopScope(
+      onWillPop: () async {
+        Navigator.of(context).push(
+            MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          //   backgroundColor: Color.fromARGB(255, 187, 218, 240),
+          //   automaticallyImplyLeading: false,
+          //   title: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       //Image.asset("assets/images/top3.png", width: 100, height: 50,),
 
-        //       const Text(
-        //         "Parents",
-        //         style: TextStyle(
-        //           fontSize: 30.0,
-        //         ),
-        //       ),
-        //       Image.asset(
-        //         "assets/images/Parents.png",
-        //         height: 50,
-        //       ),
-        //     ],
-        //   ),
-        title: const Text('Home'),
-      ),
-      drawer: NavigationDrawer(),
-      body: _widgetOptions.elementAt(_selectedIndex),
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: const Color.fromARGB(255, 207, 235, 255),
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 20,
-              color: Colors.black.withOpacity(.1),
-            )
-          ],
+          //       const Text(
+          //         "Parents",
+          //         style: TextStyle(
+          //           fontSize: 30.0,
+          //         ),
+          //       ),
+          //       Image.asset(
+          //         "assets/images/Parents.png",
+          //         height: 50,
+          //       ),
+          //     ],
+          //   ),
+          title: const Text('Home'),
         ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-            child: GNav(
-              // rippleColor: const Color.fromARGB(255, 37, 86, 116),
-              // hoverColor: const Color.fromARGB(255, 37, 86, 116),
-              activeColor: Colors.white,
-              iconSize: 24,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-              tabBackgroundColor: kPrimaryColor,
-              // color: Colors.black,
-              tabs: const [
-                GButton(
-                  icon: Icons.home,
-                  text: 'Home',
-                ),
-                GButton(
-                  icon: Icons.calendar_month_rounded,
-                  text: 'Attendance',
-                ),
-                GButton(
-                  icon: Icons.chat,
-                  text: 'Chat',
-                ),
-                GButton(
-                  icon: Icons.account_circle,
-                  text: 'Profile',
-                ),
-              ],
-              selectedIndex: _selectedIndex,
-              onTabChange: _onItemTapped,
+        drawer: const NavigationDrawer(),
+        body: _widgetOptions.elementAt(_selectedIndex),
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 207, 235, 255),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 20,
+                color: Colors.black.withOpacity(.1),
+              )
+            ],
+          ),
+          child: SafeArea(
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+              child: GNav(
+                // rippleColor: const Color.fromARGB(255, 37, 86, 116),
+                // hoverColor: const Color.fromARGB(255, 37, 86, 116),
+                activeColor: Colors.white,
+                iconSize: 24,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                tabBackgroundColor: kPrimaryColor,
+                // color: Colors.black,
+                tabs: const [
+                  GButton(
+                    icon: Icons.home,
+                    text: 'Home',
+                  ),
+                  GButton(
+                    icon: Icons.calendar_month_rounded,
+                    text: 'Attendance',
+                  ),
+                  GButton(
+                    icon: Icons.chat,
+                    text: 'Chat',
+                  ),
+                  GButton(
+                    icon: Icons.account_circle,
+                    text: 'Profile',
+                  ),
+                ],
+                selectedIndex: _selectedIndex,
+                onTabChange: _onItemTapped,
+              ),
             ),
           ),
         ),
