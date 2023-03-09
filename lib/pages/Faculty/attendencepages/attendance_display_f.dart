@@ -81,7 +81,7 @@ class _AttendanceDisplayPageState extends State<AttendanceDisplayPage> {
               // // gap: 3,
               // strokeWidth: 1,
               child: ListTile(
-                textColor: Colors.white,
+                // textColor: Colors.white,
                 leading: Text('$sub'),
                 trailing: Text('$date, $start - $end'),
                 // trailing: Text('${attendance?.length ?? 0}'),

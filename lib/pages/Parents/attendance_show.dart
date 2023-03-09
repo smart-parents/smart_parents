@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
@@ -15,23 +14,11 @@ class AttendanceCalendarPage extends StatefulWidget {
 }
 
 class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
-  final _prefs = SharedPreferences.getInstance();
-  var id;
-  void getUserName() async {
-    final SharedPreferences prefs = await _prefs;
-    id = prefs.getString('id');
-  }
-
   @override
   void initState() {
-    getUserName();
     super.initState();
   }
 
-//  _getEventsForDay(DateTime day) {
-//     // Implementation example
-//     // return kEvents[day] ?? [];
-//   }
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay = DateTime.now();
@@ -103,7 +90,7 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
                       final data = documents[index].data();
                       final attendanceData =
                           data['attendance'] as Map<String, dynamic>?;
-                      final lecturePresent = attendanceData?[id] ?? false;
+                      final lecturePresent = attendanceData?[child] ?? false;
                       return Card(
                         color: lecturePresent ? green : red,
                         elevation: 5,

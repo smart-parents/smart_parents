@@ -2,7 +2,7 @@
 
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
+// import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -96,16 +96,60 @@ class _Profile_screenSState extends State<Profile_screenS> {
     });
   }
 
+  // Widget _buildPhotoWidget() {
+  //   if (_uploading) {
+  //     return const Center(child: CircularProgressIndicator());
+  //   } else if (_imageUrl != null) {
+  //     return GestureDetector(
+  //       onTap: _pickImage,
+  //       child: CachedNetworkImage(
+  //         imageUrl: _imageUrl!,
+  //         placeholder: (context, url) => const CircularProgressIndicator(),
+  //         errorWidget: (context, url, error) => const Icon(Icons.error),
+  //       ),
+  //     );
+  //   } else {
+  //     return Stack(
+  //       children: [
+  //         Image.asset('assets/images/man.png', fit: BoxFit.cover),
+  //         Positioned.fill(
+  //           child: Material(
+  //             color: Colors.transparent,
+  //             child: InkWell(
+  //               onTap: _pickImage,
+  //               child: Center(
+  //                 child: Text(
+  //                   _imageUrl != null
+  //                       ? 'Tap to update photo'
+  //                       : 'Tap to add photo',
+  //                   style: const TextStyle(
+  //                       color: Colors.white,
+  //                       fontSize: 16,
+  //                       fontWeight: FontWeight.bold),
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //       ],
+  //     );
+  //   }
+  // }
+
   Widget _buildPhotoWidget() {
     if (_uploading) {
       return const Center(child: CircularProgressIndicator());
     } else if (_imageUrl != null) {
       return GestureDetector(
         onTap: _pickImage,
-        child: CachedNetworkImage(
-          imageUrl: _imageUrl!,
-          placeholder: (context, url) => const CircularProgressIndicator(),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
+        child: Image.network(
+          _imageUrl!,
+          loadingBuilder: (context, child, progress) {
+            return progress == null ? child : const CircularProgressIndicator();
+          },
+          errorBuilder: (context, error, stackTrace) {
+            return const Icon(Icons.error);
+          },
         ),
       );
     } else {

@@ -7,6 +7,8 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
 
+import 'package:smart_parents/pages/Faculty/Schedule/addschedule.dart';
+
 class MyCarouselSlider extends StatefulWidget {
   const MyCarouselSlider({super.key});
 
@@ -151,11 +153,11 @@ class _MyCarouselSliderState extends State<MyCarouselSlider> {
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => const AddParentPage(),
-          //     ))
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const AddSchedule(),
+              ))
         },
         child: const Icon(Icons.edit),
       ),

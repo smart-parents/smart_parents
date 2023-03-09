@@ -37,6 +37,7 @@ dependencies:
   fluttertoast: ^8.2.1
   table_calendar: ^3.0.8
   dotted_border: ^2.0.0+3
+  flutter_dropzone: ^3.0.5
 
 dev_dependencies:
   flutter_test:

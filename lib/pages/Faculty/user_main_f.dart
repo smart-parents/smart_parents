@@ -11,6 +11,7 @@ import 'package:smart_parents/pages/Faculty/Schedule/schedule_u.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
+import 'package:smart_parents/pages/Faculty/Result_f/result_u.dart';
 import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
 import 'package:smart_parents/pages/Faculty/chat_f.dart';
 import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
@@ -307,14 +308,23 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 onTap: () {},
               ),
               ListTile(
+                leading: const Icon(Icons.receipt),
+                title: const Text("Add Result"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const DropAreaPage(),
+                  ));
+                },
+              ),
+              ListTile(
                 leading: const Icon(Icons.schedule_outlined),
                 title: const Text("View Attendance"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const AttendanceDisplayPage(
-                      // sub: 'PHP',
-                      // studentId: '206470316050',
-                    ),
+                        // sub: 'PHP',
+                        // studentId: '206470316050',
+                        ),
                   ));
                 },
               ),

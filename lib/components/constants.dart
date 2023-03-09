@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 var admin;
 var branch;
 var sem;
+var child;
 
 const kPrimaryColor = Color(0xFF255674);
 const kPrimaryLightColor = Color(0xFFCFEBFF);
@@ -48,19 +49,26 @@ List<String> Semester = [
   // "8",
 ];
 List<String> Batch = ["A", "B", "C", "All"];
-List<String> CollegeYear = [
-  "2020",
-  "2021",
-  "2022",
+List<String> Days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday"
 ];
+List<String> CollegeYear = ["2020", "2021", "2022", "2023"];
 
 String semesterdropdownValue = Semester[0];
 String batchdropdownValue = Batch[0];
+String daysdropdownValue = Days[0];
 String yeardropdownValue = CollegeYear[0];
 Map<String, String> values = {
   semesterdropdownValue: "1",
   batchdropdownValue: "A",
-  yeardropdownValue: "3rd",
+  daysdropdownValue: "Monday",
+  yeardropdownValue: "2023",
 };
 
 const green = Color(0xff00CE2D);
