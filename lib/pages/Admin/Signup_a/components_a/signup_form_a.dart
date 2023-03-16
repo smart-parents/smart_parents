@@ -93,7 +93,7 @@ class _SignUpFormState extends State<SignUpForm> {
         print(userCredential);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            backgroundColor: Colors.lightBlueAccent,
+            // backgroundColor: Colors.lightBlueAccent,
             content: Text(
               "Registered Successfully. Please Login..",
               style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -113,7 +113,7 @@ class _SignUpFormState extends State<SignUpForm> {
           print("Password Provided is too Weak");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              backgroundColor: Colors.lightBlueAccent,
+              // backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "Password Provided is too Weak",
                 style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -124,7 +124,7 @@ class _SignUpFormState extends State<SignUpForm> {
           print("Account Already exists");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              backgroundColor: Colors.lightBlueAccent,
+              // backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "Account Already exists",
                 style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -137,7 +137,7 @@ class _SignUpFormState extends State<SignUpForm> {
       print("Password and Confirm Password doesn't match");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.lightBlueAccent,
+          // backgroundColor: Colors.lightBlueAccent,
           content: Text(
             "Password and Confirm Password doesn't match",
             style: TextStyle(fontSize: 16.0, color: Colors.black),

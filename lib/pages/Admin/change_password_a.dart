@@ -43,7 +43,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       );
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.lightBlueAccent,
+          // backgroundColor: Colors.lightBlueAccent,
           content: Text(
             'Your Password has been Changed. Login again !',
             style: TextStyle(fontSize: 18.0),
@@ -71,8 +71,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                   hintText: 'Enter New Password',
                   labelStyle: TextStyle(fontSize: 20.0),
                   border: OutlineInputBorder(),
-                  errorStyle:
-                      TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+                  errorStyle: TextStyle(fontSize: 15),
                 ),
                 controller: newPasswordController,
                 validator: (value) {

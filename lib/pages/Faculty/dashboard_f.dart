@@ -105,7 +105,7 @@ class _DashboardState extends State<Dashboard> {
                   context,
                   MaterialPageRoute(
                     builder: (context) {
-                      return const MyCarouselSlider();
+                      return const ShowSchedule();
                     },
                   ),
                 )

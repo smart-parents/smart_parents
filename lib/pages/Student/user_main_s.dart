@@ -8,9 +8,10 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
-import 'package:smart_parents/pages/Student/attendance_show.dart';
+import 'package:smart_parents/pages/Student/Schedule/schedule_u.dart';
+// import 'package:smart_parents/pages/Student/attendance_show.dart';
+import 'package:smart_parents/pages/Student/attendance.dart';
 import 'package:smart_parents/pages/Student/chat_s.dart';
-import 'package:smart_parents/pages/Student/dashboard_s.dart';
 import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
 import 'package:smart_parents/pages/Student/profile_screen_s.dart';
 import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
@@ -57,7 +58,7 @@ class _UserMainState extends State<UserMainS> {
 
   // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
-    const Dashboard(),
+    const Text("Dashboard"),
     const Attendance_screen(),
     const ChatScreen(),
     // DoubleBackToCloseApp(
@@ -334,7 +335,15 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     ));
                   },
                 ),
-
+                ListTile(
+                  leading: const Icon(Icons.calendar_month_rounded),
+                  title: const Text("See Schedule"),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ShowSchedule(),
+                    ));
+                  },
+                ),
                 ListTile(
                   leading: const Icon(Icons.paste),
                   title: const Text("Results"),

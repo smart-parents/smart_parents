@@ -148,8 +148,7 @@ class _AddDepartPageState extends State<AddDepartPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    errorStyle: const TextStyle(
-                        color: Colors.lightBlueAccent, fontSize: 15),
+                    errorStyle: const TextStyle(fontSize: 15),
                   ),
                   keyboardType: TextInputType.number,
                   controller: departmentController,
@@ -176,8 +175,7 @@ class _AddDepartPageState extends State<AddDepartPage> {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
-                    errorStyle: const TextStyle(
-                        color: Colors.lightBlueAccent, fontSize: 15),
+                    errorStyle: const TextStyle(fontSize: 15),
                   ),
                   controller: nameController,
                   validator: (value) {

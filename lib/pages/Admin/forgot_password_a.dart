@@ -37,7 +37,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.lightBlueAccent,
+          // backgroundColor: Colors.lightBlueAccent,
           content: Text(
             'Password Reset Email has been sent !',
             style: TextStyle(fontSize: 18.0),
@@ -49,7 +49,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         print('No user found for that email.');
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            backgroundColor: Colors.lightBlueAccent,
+            // backgroundColor: Colors.lightBlueAccent,
             content: Text(
               'No user found for that email.',
               style: TextStyle(fontSize: 18.0),
@@ -98,8 +98,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           labelText: 'Email: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle:
-                              TextStyle(color: Colors.lightBlue, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         controller: emailController,
                         validator: (value) {

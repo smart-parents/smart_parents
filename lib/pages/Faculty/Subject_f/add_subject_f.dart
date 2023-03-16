@@ -153,8 +153,7 @@ class _AddSubjectState extends State<AddSubject> {
                     labelText: 'Subject Name: ',
                     labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
-                    errorStyle:
-                        TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+                    errorStyle: TextStyle(fontSize: 15),
                   ),
                   controller: nameController,
                   validator: (value) {
@@ -174,8 +173,7 @@ class _AddSubjectState extends State<AddSubject> {
                     labelText: 'Subject Code: ',
                     labelStyle: TextStyle(fontSize: 20.0),
                     border: OutlineInputBorder(),
-                    errorStyle:
-                        TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+                    errorStyle: TextStyle(fontSize: 15),
                   ),
                   keyboardType: TextInputType.number,
                   controller: numberController,

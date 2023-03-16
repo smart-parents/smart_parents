@@ -58,6 +58,7 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
               selectedTextStyle: TextStyle(color: Colors.white),
               todayTextStyle: TextStyle(color: Colors.black),
             ),
+            // eventLoader: _getEventsForDay,
             firstDay: DateTime(2021, 1, 1),
             lastDay: DateTime.now(),
             calendarFormat: _calendarFormat,
@@ -89,6 +90,40 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
                   .where('branch', isEqualTo: branch)
                   .snapshots(),
               builder: (context, snapshot) {
+                TableCalendar(
+                  calendarStyle: const CalendarStyle(
+                    selectedDecoration: BoxDecoration(
+                      color: kPrimaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                    todayDecoration: BoxDecoration(
+                      color: kPrimaryLightColor,
+                      shape: BoxShape.circle,
+                    ),
+                    selectedTextStyle: TextStyle(color: Colors.white),
+                    todayTextStyle: TextStyle(color: Colors.black),
+                  ),
+                  // eventLoader: _getEventsForDay,
+                  firstDay: DateTime(2021, 1, 1),
+                  lastDay: DateTime.now(),
+                  calendarFormat: _calendarFormat,
+                  focusedDay: _focusedDay,
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDay, day);
+                  },
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDay = selectedDay;
+                      day = DateFormat('dd-MM-yyyy').format(selectedDay);
+                      _focusedDay = focusedDay;
+                    });
+                  },
+                  onFormatChanged: (format) {
+                    setState(() {
+                      _calendarFormat = format;
+                    });
+                  },
+                );
                 if (snapshot.hasData) {
                   final documents = snapshot.data!.docs;
                   return ListView.builder(

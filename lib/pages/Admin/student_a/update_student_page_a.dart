@@ -75,8 +75,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                           labelText: 'Name: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -98,8 +97,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                           labelText: 'Enrollment Number: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -122,8 +120,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                           labelText: 'Password: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {

@@ -81,7 +81,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.lightBlueAccent,
+          // backgroundColor: Colors.lightBlueAccent,
           content: Text(
             "Faculty Added.",
             style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -96,7 +96,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
         print("Password Provided is too Weak");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            backgroundColor: Colors.lightBlueAccent,
+            // backgroundColor: Colors.lightBlueAccent,
             content: Text(
               "Password Provided is too Weak",
               style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -107,7 +107,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
         print("Faculty Already exists");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            backgroundColor: Colors.lightBlueAccent,
+            // backgroundColor: Colors.lightBlueAccent,
             content: Text(
               "Faculty Already exists",
               style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -236,8 +236,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                               labelText: 'Faculty Id: ',
                               labelStyle: TextStyle(fontSize: 20.0),
                               border: OutlineInputBorder(),
-                              errorStyle: TextStyle(
-                                  color: Colors.lightBlueAccent, fontSize: 15),
+                              errorStyle: TextStyle(fontSize: 15),
                             ),
                             keyboardType: TextInputType.number,
                             controller: facultyController,
@@ -259,8 +258,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                               labelText: 'Name: ',
                               labelStyle: TextStyle(fontSize: 20.0),
                               border: OutlineInputBorder(),
-                              errorStyle: TextStyle(
-                                  color: Colors.lightBlueAccent, fontSize: 15),
+                              errorStyle: TextStyle(fontSize: 15),
                             ),
                             controller: nameController,
                             validator: (value) {
@@ -292,8 +290,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                                     : Icons.visibility_off),
                                 onPressed: _togglePasswordVisibility,
                               ),
-                              errorStyle: const TextStyle(
-                                  color: Colors.lightBlueAccent, fontSize: 15),
+                              errorStyle: const TextStyle(fontSize: 15),
                             ),
                             controller: passwordController,
                             validator: (value) {

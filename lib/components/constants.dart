@@ -1,5 +1,6 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names
+// ignore_for_file: prefer_typing_uninitialized_variables, non_constant_identifier_names, depend_on_referenced_packages
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 // class Constants {
 //   static String appId = "1:581206730087:web:e3d782874866d2ff8fbbc2";
@@ -62,14 +63,14 @@ List<String> CollegeYear = ["2020", "2021", "2022", "2023"];
 
 String semesterdropdownValue = Semester[0];
 String batchdropdownValue = Batch[0];
-String daysdropdownValue = Days[0];
+String daysdropdownValue = DateFormat('EEEE').format(DateTime.now());
 String yeardropdownValue = CollegeYear[0];
-Map<String, String> values = {
-  semesterdropdownValue: "1",
-  batchdropdownValue: "A",
-  daysdropdownValue: "Monday",
-  yeardropdownValue: "2023",
-};
+// Map<String, String> values = {
+//   semesterdropdownValue: "1",
+//   batchdropdownValue: "A",
+//   daysdropdownValue: "Monday",
+//   yeardropdownValue: "2023",
+// };
 
 const green = Color(0xff00CE2D);
 const red = Color(0xffff0800);

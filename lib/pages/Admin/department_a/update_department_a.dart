@@ -79,8 +79,7 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
                           labelText: 'Department Id: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -102,8 +101,7 @@ class _UpdateDepartPageState extends State<UpdateDepartPage> {
                           labelText: 'Name: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {

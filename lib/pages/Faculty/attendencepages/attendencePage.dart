@@ -1,5 +1,6 @@
-// ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables
+// ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables, deprecated_member_use
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
@@ -134,6 +135,20 @@ class _AttendencePageState extends State<AttendencePage> {
     });
   }
 
+  void showAlertDialogOnOkCallback(String title, String msg,
+      DialogType dialogType, BuildContext context, VoidCallback onOkPress) {
+    AwesomeDialog(
+      context: context,
+      animType: AnimType.TOPSLIDE,
+      dialogType: dialogType,
+      title: title,
+      desc: msg,
+      btnOkIcon: Icons.check_circle,
+      btnOkColor: Colors.green.shade900,
+      btnOkOnPress: onOkPress,
+    ).show();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -181,13 +196,20 @@ class _AttendencePageState extends State<AttendencePage> {
                   TextButton(
                     onPressed: () => {
                       _handleSubmitted(),
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                            builder: (context) => const UserMainF(
-                                // sub: widget.sub,
-                                // studentId: '206470316022',
-                                )),
-                      )
+                      showAlertDialogOnOkCallback(
+                          'Success !',
+                          'Attendance Successfully Submitted.',
+                          DialogType.SUCCES,
+                          context,
+                          () => {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                      builder: (context) => const UserMainF(
+                                          // sub: widget.sub,
+                                          // studentId: '206470316022',
+                                          )),
+                                )
+                              }),
                     },
                     child: const Text('Submit'),
                   ),

@@ -1,18 +1,20 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables, deprecated_member_use
 
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/pages/Faculty/Schedule/schedule_u.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
-class Department {
-  final String id;
-  final String name;
+// class Department {
+//   final String id;
+//   final String name;
 
-  Department(this.id, this.name);
-}
+//   Department(this.id, this.name);
+// }
 
 class Subject {
   final String id;
@@ -37,11 +39,71 @@ class _AddScheduleState extends State<AddSchedule> {
   String? Branch;
   var Sub;
   List<Subject> _subjects = [];
-
+  List<String> type = ['Lecture', 'Lab'];
+  int selectedIndex = 0;
   @override
   void initState() {
     super.initState();
     _fetchSubjects();
+  }
+
+  void add_schedule() async {
+    var fullhour = DateFormat('HH:mm').format(start);
+    FirebaseFirestore.instance
+        .collection('Admin/$admin/schedule')
+        .doc('${branch}_$semesterdropdownValue')
+        .get()
+        .then((value) async => {
+              if (value.exists)
+                {
+                  await FirebaseFirestore.instance
+                      .collection('Admin')
+                      .doc(admin)
+                      .collection('schedule')
+                      .doc('${branch}_$semesterdropdownValue')
+                      // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
+                      .collection('timetable')
+                      .doc(daysdropdownValue)
+                      .collection('entries')
+                      .add({
+                    'subject': "$Sub (${type[selectedIndex]})",
+                    'startTime': _start,
+                    'start24': fullhour,
+                    'endTime': _end,
+                  })
+                }
+              else
+                {
+                  await FirebaseFirestore.instance
+                      .collection('Admin/$admin/schedule')
+                      // .doc(widget.sub)
+                      // .collection('lectures')
+                      .doc('${branch}_$semesterdropdownValue')
+                      .set({
+                    // 'day': daysdropdownValue,
+                    'branch': branch,
+                    'sem': semesterdropdownValue,
+                    // 'subject': Sub,
+                    // 'start': _start,
+                    // 'end': _end,
+                  }),
+                  await FirebaseFirestore.instance
+                      .collection('Admin')
+                      .doc(admin)
+                      .collection('schedule')
+                      .doc('${branch}_$semesterdropdownValue')
+                      // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
+                      .collection('timetable')
+                      .doc(daysdropdownValue)
+                      .collection('entries')
+                      .add({
+                    'subject': "$Sub (${type[selectedIndex]})",
+                    'startTime': _start,
+                    'start24': fullhour,
+                    'endTime': _end,
+                  })
+                }
+            });
   }
 
   Future<void> _fetchSubjects() async {
@@ -65,15 +127,28 @@ class _AddScheduleState extends State<AddSchedule> {
     });
   }
 
+  void showAlertDialogOnOkCallback(String title, String msg,
+      DialogType dialogType, BuildContext context, VoidCallback onOkPress) {
+    AwesomeDialog(
+      context: context,
+      animType: AnimType.TOPSLIDE,
+      dialogType: dialogType,
+      title: title,
+      desc: msg,
+      btnOkIcon: Icons.check_circle,
+      btnOkColor: Colors.green.shade900,
+      btnOkOnPress: onOkPress,
+    ).show();
+  }
+
   @override
   Widget build(BuildContext context) {
     dynamic fieldTextStyle = const TextStyle(
         color: Colors.cyan, fontSize: 17, fontWeight: FontWeight.w400);
-
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text("Attendence"),
+        title: const Text("Add Schedule"),
       ),
       body: Center(
         child: ListView(
@@ -83,6 +158,29 @@ class _AddScheduleState extends State<AddSchedule> {
               child: Column(children: [
                 Column(
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        customRadio(type[0], 0),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        customRadio(type[1], 1),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    dropdown(
+                        DropdownValue: semesterdropdownValue,
+                        sTring: Semester,
+                        Hint: "Semester"),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     const Text(
                       "Subject",
                       style: TextStyle(fontSize: 20),
@@ -270,14 +368,43 @@ class _AddScheduleState extends State<AddSchedule> {
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                              onPressed: () {
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) =>
-                                //           const MyCarouselSlider(),
-                                //     ));
-                              },
+                              onPressed: () => showDialog<String>(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        AlertDialog(
+                                      title: const Text('Submit Schedule?'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text('Cancel'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () => {
+                                            add_schedule(),
+                                            showAlertDialogOnOkCallback(
+                                                'Success !',
+                                                'Schedule Successfully Submitted.',
+                                                DialogType.SUCCES,
+                                                context,
+                                                () => {
+                                                      Navigator.of(context)
+                                                          .pushAndRemoveUntil(
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const ShowSchedule(),
+                                                              ),
+                                                              (route) => false)
+                                                    }),
+                                          },
+                                          child: const Text('Submit'),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                              style: ElevatedButton.styleFrom(
+                                  fixedSize: const Size(300, 40)),
                               child: const Text("Add Schedule")),
                         ),
                       ],
@@ -291,5 +418,29 @@ class _AddScheduleState extends State<AddSchedule> {
     // },
     // ),
     // );
+  }
+
+  void changeIndex(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  Widget customRadio(String txt, int index) {
+    return OutlinedButton(
+      onPressed: () => changeIndex(index),
+      style: OutlinedButton.styleFrom(
+        side: BorderSide(
+          color: selectedIndex == index ? Colors.cyan : Colors.grey,
+          width: 2.0,
+        ),
+      ),
+      child: Text(
+        txt,
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: selectedIndex == index ? Colors.cyan : Colors.grey),
+      ),
+    );
   }
 }

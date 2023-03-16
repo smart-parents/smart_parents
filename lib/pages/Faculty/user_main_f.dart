@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/pages/Faculty/Result_f/Result_u.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/schedule_u.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
-import 'package:smart_parents/pages/Faculty/Result_f/result_u.dart';
 import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
 import 'package:smart_parents/pages/Faculty/chat_f.dart';
 import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
@@ -67,7 +67,7 @@ class _UserMainState extends State<UserMainF> {
   // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
-    const MyCarouselSlider(),
+    const ShowSchedule(),
     const ChatScreen(),
     const ProfileF()
   ];

@@ -1,3 +1,5 @@
+// ignore_for_file: nullable_type_in_catch_clause
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,11 +11,10 @@ import 'package:smart_parents/pages/Faculty/parents_f/update_parents_page_f.dart
 class Parent extends StatefulWidget {
   const Parent({Key? key}) : super(key: key);
 
-  // void initState() {
+  // Future<void> initState() async {
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
   //     // SystemUiOverlay.bottom,
-  //   ]);
-  // }
+  //   ]);}
 
   @override
   State<Parent> createState() => _ParentState();

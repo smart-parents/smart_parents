@@ -1,11 +1,13 @@
-// ignore_for_file: must_be_immutable, file_names
+// ignore_for_file: file_names, depend_on_referenced_packages
 
+import 'dart:io';
+import 'package:file_picker/file_picker.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/Result_f/datamodel.dart';
+import 'package:smart_parents/pages/Faculty/Result_f/DataModel.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
+import 'package:path/path.dart';
 
 class DropAreaPage extends StatefulWidget {
   const DropAreaPage({super.key});
@@ -15,13 +17,13 @@ class DropAreaPage extends StatefulWidget {
 }
 
 class _DropAreaPageState extends State<DropAreaPage> {
-  late DropzoneViewController controller;
-
-  DataModel? dropedfile;
-  bool highlight = false;
+  DataModel? task;
+  File? file;
 
   @override
   Widget build(BuildContext context) {
+    final fileName =
+        file != null ? basename(file!.path) : 'No File Selected Yet';
     return Scaffold(
         appBar: AppBar(
           title: const Text('Add Result'),
@@ -74,50 +76,32 @@ class _DropAreaPageState extends State<DropAreaPage> {
                   strokeWidth: 5,
                   child: Container(
                     height: 250,
-                    color: highlight == true
-                        ? const Color.fromRGBO(64, 255, 0, 1)
-                        : kPrimaryLightColor,
+                    color: kPrimaryLightColor,
                     child: Stack(
                       children: [
-                        DropzoneView(
-                          onDrop: uploadedFile,
-                          onCreated: (dropcontroller) =>
-                              controller = dropcontroller,
-                          onHover: () {
-                            setState(() {
-                              highlight = true;
-                            });
-                          },
-                          onLeave: () {
-                            setState(() {
-                              highlight = false;
-                            });
-                          },
-                        ),
                         Center(
                           child: Column(
                             children: [
+                              const SizedBox(
+                                height: 10,
+                              ),
                               const Icon(
                                 Icons.file_upload_outlined,
                                 size: 100,
                                 color: kPrimaryColor,
                               ),
-                              const Text(
-                                "Drag and Drop File \n               or",
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.bold,
-                                    color: kPrimaryColor),
-                              ),
+                              // Text(
+                              //   "Select Files",
+                              //   style: TextStyle(
+                              //       fontSize: 25,
+                              //       fontWeight: FontWeight.bold,
+                              //       color: kPrimaryColor),
+                              // ),
                               const SizedBox(
                                 height: 10,
                               ),
                               ElevatedButton.icon(
-                                  onPressed: () async {
-                                    final events = await controller.pickFiles();
-                                    if (events.isEmpty) return;
-                                    uploadedFile(events.first);
-                                  },
+                                  onPressed: selectFile,
                                   style: ElevatedButton.styleFrom(
                                     padding: const EdgeInsets.symmetric(
                                         horizontal: 40.0, vertical: 20.0),
@@ -144,71 +128,80 @@ class _DropAreaPageState extends State<DropAreaPage> {
                 const SizedBox(
                   height: 15,
                 ),
-                if (dropedfile != null) ...[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Icons.picture_as_pdf,
-                        size: 30,
-                      ),
-                      Text(dropedfile!.name),
 
-                      // Text('MIME: ${dropedfile!.mime}'),
-                      // Image.network(dropedfile!.Url),
-                    ],
-                  ),
-                  Text('Size: ${dropedfile!.size}'),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      // if (_formKey.currentState!.validate()) {
-                      //   setState(() {
-                      //     subject = subjectController.text;
-                      //     notice = noticeController.text;
-                      //     addnotice();
-                      //     Navigator.pop(context);
-                      //   });
-                      // }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 40.0, vertical: 20.0),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)),
-                      // primary:
-                      //     Color.fromARGB(255, 176, 39, 39)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.picture_as_pdf,
+                      size: 30,
                     ),
-                    child: const Text(
-                      "Add Result",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
+                    Text(fileName,
+                        style: const TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
+                    // Text('MIME: ${dropedfile!.mime}'),
+                    // Image.network(dropedfile!.Url),
+                  ],
+                ),
+                //Text('Size: ${filename!.size}'),
+                const SizedBox(
+                  height: 55,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // if (_formKey.currentState!.validate()) {
+                    //   setState(() {
+                    //     subject = subjectController.text;
+                    //     notice = noticeController.text;
+                    //     addnotice();
+                    //     Navigator.pop(context);
+                    //   });
+                    // }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0)),
+                    // primary:
+                    //     Color.fromARGB(255, 176, 39, 39)
                   ),
-                ],
+                  child: const Text(
+                    "Upload Result",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ],
             ),
           ),
         ));
   }
 
-  Future uploadedFile(dynamic events) async {
-    final name = events.name;
-    final mine = await controller.getFileMIME(events);
-    final byteData = await controller.getFileData(events);
-    final bytes = byteData.buffer.asUint8List().length;
-    final url = await controller.createFileUrl(events);
+  Future selectFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles();
 
-    print(name);
-    print(mine);
-    print(bytes);
-    print(url);
+    if (result != null) {
+      final path = result.files.single.path!;
 
-    setState(() {
-      dropedfile = DataModel(name: name, mime: mine, bytes: bytes, url: url);
-      highlight = false;
-    });
+      setState(() => file = File(path));
+    }
+  }
+
+  Future uploadFile() async {
+    if (file == null) return;
+
+    final fileName = basename(file!.path);
+    final destination = 'files/$fileName';
+    print(fileName);
+    print(destination);
+    // FirebaseApi.uploadFile(destination, file!);
+    setState(() {});
+
+    if (task == null) return;
+
+    // final snapshot = await task!.(() => {});
+    // final urlDownload = await snapshot.ref.getDownloadURL();
+
+    // print('Download Link: $urlDownload');
   }
 }

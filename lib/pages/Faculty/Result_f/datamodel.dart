@@ -1,14 +1,17 @@
+// ignore_for_file: non_constant_identifier_names
+
+
 class DataModel {
   final String name;
   final String mime;
   final int bytes;
-  final String url;
+  final String Url;
 
   DataModel({
     required this.name,
     required this.mime,
     required this.bytes,
-    required this.url,
+    required this.Url,
   });
 
   String get size {

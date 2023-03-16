@@ -63,7 +63,7 @@ class _LoginFormState extends State<LoginForm> {
           print("No User Found for that Enrollment number");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              backgroundColor: Colors.lightBlueAccent,
+              // backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "No User Found for that Enrollment number",
                 style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -74,7 +74,7 @@ class _LoginFormState extends State<LoginForm> {
           print("Wrong Password Provided by User");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              backgroundColor: Colors.lightBlueAccent,
+              // backgroundColor: Colors.lightBlueAccent,
               content: Text(
                 "Wrong Password Provided by User",
                 style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -87,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
       print("No Faculty Found for that Faculty ID");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          backgroundColor: Colors.lightBlueAccent,
+          // backgroundColor: Colors.lightBlueAccent,
           content: Text(
             "No faculty Found for that Faculty ID",
             style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -132,8 +132,7 @@ class _LoginFormState extends State<LoginForm> {
                 padding: EdgeInsets.all(defaultPadding),
                 child: Icon(Icons.person),
               ),
-              errorStyle:
-                  TextStyle(color: Colors.lightBlueAccent, fontSize: 15),
+              errorStyle: TextStyle(fontSize: 15),
             ),
             controller: emailController,
             validator: (value) {
@@ -164,8 +163,7 @@ class _LoginFormState extends State<LoginForm> {
                       _showPassword ? Icons.visibility : Icons.visibility_off),
                   onPressed: _togglePasswordVisibility,
                 ),
-                errorStyle: const TextStyle(
-                    color: Colors.lightBlueAccent, fontSize: 15),
+                errorStyle: const TextStyle(fontSize: 15),
               ),
               controller: passwordController,
               validator: (value) {

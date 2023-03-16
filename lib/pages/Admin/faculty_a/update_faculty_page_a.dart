@@ -83,8 +83,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                           labelText: 'Faculty Id: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -106,8 +105,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                           labelText: 'Name: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -129,8 +127,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                           labelText: 'Branch: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
@@ -151,8 +148,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                           labelText: 'Password: ',
                           labelStyle: TextStyle(fontSize: 20.0),
                           border: OutlineInputBorder(),
-                          errorStyle: TextStyle(
-                              color: Colors.lightBlueAccent, fontSize: 15),
+                          errorStyle: TextStyle(fontSize: 15),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
