@@ -179,8 +179,8 @@ class _FacultyState extends State<Faculty> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                             color: storedocs[index]['status']
-                                                ? Colors.green
-                                                : Colors.red),
+                                                ? green
+                                                : red),
                                       ),
                                     ],
                                   ),

@@ -1,10 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:image_network/image_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Result_f/Result_u.dart';
@@ -190,10 +190,19 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
 
   Widget _buildPhotoWidget() {
     if (_imageUrl != null) {
-      return CachedNetworkImage(
-        imageUrl: _imageUrl!,
-        placeholder: (context, url) => const CircularProgressIndicator(),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
+      return ImageNetwork(
+        image: _imageUrl!,
+        height: 100,
+        width: 100,
+        fitAndroidIos: BoxFit.contain,
+        fitWeb: BoxFitWeb.contain,
+        onLoading: const CircularProgressIndicator(
+          color: kPrimaryColor,
+        ),
+        onError: const Icon(
+          Icons.error,
+          color: red,
+        ),
       );
     } else {
       return Stack(

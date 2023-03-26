@@ -304,18 +304,18 @@ class _NoticeAddState extends State<NoticeAdd> {
       if (url != null && file != null) {
         Fluttertoast.showToast(
           msg: "Done Uploaded",
-          textColor: Colors.red,
+          textColor: red,
         );
       } else {
         Fluttertoast.showToast(
           msg: "Something went wrong",
-          textColor: Colors.red,
+          textColor: red,
         );
       }
     } on Exception catch (e) {
       Fluttertoast.showToast(
         msg: e.toString(),
-        textColor: Colors.red,
+        textColor: red,
       );
     }
   }

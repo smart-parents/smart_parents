@@ -159,8 +159,8 @@ class _DropAreaPageState extends State<DropAreaPage> {
                     // }
                   },
                   style: ElevatedButton.styleFrom(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 40.0, vertical: 20.0),
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.0)),
                     // primary:

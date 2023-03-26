@@ -19,7 +19,17 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     // login();
-    return Center(
+    return
+        // Container(
+        //   decoration: const BoxDecoration(
+        //     color: Colors.transparent,
+        //     // image: DecorationImage(
+        //     //   image: AssetImage("assets/images/background.jpg"),
+        //     //   fit: BoxFit.cover,
+        //     // ),
+        //   ),
+        //   child:
+        Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -142,6 +152,7 @@ class _DashboardState extends State<Dashboard> {
           ),
         ],
       ),
+      // ),
     );
   }
 }
@@ -167,7 +178,7 @@ class _DashboardState extends State<Dashboard> {
 //           end: Alignment.bottomCenter,
 //           colors: [
 //             Color.fromARGB(255, 0, 105, 92),Color.fromARGB(255, 128, 203, 196),
-//             // Colors.blue,Colors.green,
+//             // Colors.blue,green,
 //             // Colors.orange,Colors.blue,
 //           ],
 //         ),

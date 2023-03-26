@@ -16,8 +16,9 @@ void main() async {
             appId: "1:581206730087:web:e3d782874866d2ff8fbbc2",
             measurementId: "G-90WR2B1GJL"));
   } else {
-    Firebase.initializeApp();
+    await Firebase.initializeApp();
   }
+  // await FastCachedImageConfig.init(clearCacheAfter: const Duration(days: 15));
   runApp(const MyApp());
 }
 

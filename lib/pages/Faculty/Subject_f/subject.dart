@@ -161,7 +161,7 @@ class _SubjectState extends State<Subject> {
                                       children: [
                                         const Text("Delete"),
                                         IconButton(
-                                          highlightColor: Colors.red,
+                                          highlightColor: red,
                                           onPressed: () async {
                                             showDialog(
                                               context: context,
@@ -221,7 +221,7 @@ class _SubjectState extends State<Subject> {
                                           },
                                           icon: const Icon(
                                             Icons.delete,
-                                            color: Colors.red,
+                                            color: red,
                                           ),
                                         ),
                                         // Switch(
@@ -263,8 +263,8 @@ class _SubjectState extends State<Subject> {
                                     //       fontWeight: FontWeight.bold,
                                     //       fontSize: 15,
                                     //       color: storedocs[index]['status']
-                                    //           ? Colors.green
-                                    //           : Colors.red),
+                                    //           ? green
+                                    //           : red),
                                     // ),
                                     //   ],
                                     // ),
@@ -407,7 +407,7 @@ class _SubjectState extends State<Subject> {
                           //               ),
                           //             ),
                           //             IconButton(
-                          //               highlightColor: Colors.red,
+                          //               highlightColor: red,
                           //               onPressed: () async {
                           //                 try {
                           //                   // await delete(storedocs[index]
@@ -433,7 +433,7 @@ class _SubjectState extends State<Subject> {
                           //               },
                           //               icon: const Icon(
                           //                 Icons.delete,
-                          //                 color: Colors.red,
+                          //                 color: red,
                           //               ),
                           //             ),
                           //           ],
@@ -567,7 +567,7 @@ class _SubjectState extends State<Subject> {
                     //                       },
                     //                       icon: const Icon(
                     //                         Icons.delete,
-                    //                         color: Colors.red,
+                    //                         color: red,
                     //                       ),
                     //                     ),
                     //                   ],

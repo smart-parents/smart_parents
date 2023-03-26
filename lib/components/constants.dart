@@ -15,7 +15,8 @@ var sem;
 var child;
 
 const kPrimaryColor = Color(0xFF255674);
-const kPrimaryLightColor = Color(0xFFCFEBFF);
+// const kPrimaryLightColor = Color.fromARGB(255, 184, 232, 255);
+const kPrimaryLightColor = Color.fromARGB(255, 207, 235, 255);
 
 const double defaultPadding = 10.0;
 const kSendButtonTextStyle = TextStyle(

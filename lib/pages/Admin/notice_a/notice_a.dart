@@ -153,7 +153,7 @@ class _NoticeState extends State<Notice> {
                                       children: [
                                         const Text("Delete"),
                                         IconButton(
-                                          highlightColor: Colors.red,
+                                          highlightColor: red,
                                           onPressed: () async {
                                             showDialog(
                                               context: context,
@@ -213,7 +213,7 @@ class _NoticeState extends State<Notice> {
                                           },
                                           icon: const Icon(
                                             Icons.delete,
-                                            color: Colors.red,
+                                            color: red,
                                           ),
                                         ),
                                         // Switch(

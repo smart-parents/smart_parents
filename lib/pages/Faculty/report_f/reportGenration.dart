@@ -308,7 +308,7 @@ class _ReportGenrationState extends State<ReportGenration> {
                             // ignore: deprecated_member_use
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                                backgroundColor: green,
                               ),
                               onPressed: () => _selectDate(context),
                               child: const Text(
@@ -335,7 +335,7 @@ class _ReportGenrationState extends State<ReportGenration> {
                             // ignore: deprecated_member_use
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.green,
+                                backgroundColor: green,
                               ),
                               onPressed: () => _selectDate2(context),
                               child: const Text(

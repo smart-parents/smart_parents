@@ -170,8 +170,8 @@ class _StudentFState extends State<StudentF> {
                                               fontWeight: FontWeight.bold,
                                               fontSize: 15,
                                               color: storedocs[index]['status']
-                                                  ? Colors.green
-                                                  : Colors.red),
+                                                  ? green
+                                                  : red),
                                         ),
                                       ],
                                     ),
@@ -314,7 +314,7 @@ class _StudentFState extends State<StudentF> {
                           //               ),
                           //             ),
                           //             IconButton(
-                          //               highlightColor: Colors.red,
+                          //               highlightColor: red,
                           //               onPressed: () async {
                           //                 try {
                           //                   // await delete(storedocs[index]
@@ -340,7 +340,7 @@ class _StudentFState extends State<StudentF> {
                           //               },
                           //               icon: const Icon(
                           //                 Icons.delete,
-                          //                 color: Colors.red,
+                          //                 color: red,
                           //               ),
                           //             ),
                           //           ],
@@ -474,7 +474,7 @@ class _StudentFState extends State<StudentF> {
                     //                       },
                     //                       icon: const Icon(
                     //                         Icons.delete,
-                    //                         color: Colors.red,
+                    //                         color: red,
                     //                       ),
                     //                     ),
                     //                   ],

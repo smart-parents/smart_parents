@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
@@ -96,85 +97,61 @@ class _Profile_screenSState extends State<Profile_screenS> {
     });
   }
 
-  // Widget _buildPhotoWidget() {
-  //   if (_uploading) {
-  //     return const Center(child: CircularProgressIndicator());
-  //   } else if (_imageUrl != null) {
-  //     return GestureDetector(
-  //       onTap: _pickImage,
-  //       child: CachedNetworkImage(
-  //         imageUrl: _imageUrl!,
-  //         placeholder: (context, url) => const CircularProgressIndicator(),
-  //         errorWidget: (context, url, error) => const Icon(Icons.error),
-  //       ),
-  //     );
-  //   } else {
-  //     return Stack(
-  //       children: [
-  //         Image.asset('assets/images/man.png', fit: BoxFit.cover),
-  //         Positioned.fill(
-  //           child: Material(
-  //             color: Colors.transparent,
-  //             child: InkWell(
-  //               onTap: _pickImage,
-  //               child: Center(
-  //                 child: Text(
-  //                   _imageUrl != null
-  //                       ? 'Tap to update photo'
-  //                       : 'Tap to add photo',
-  //                   style: const TextStyle(
-  //                       color: Colors.white,
-  //                       fontSize: 16,
-  //                       fontWeight: FontWeight.bold),
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //         ),
-  //       ],
-  //     );
-  //   }
-  // }
-
   Widget _buildPhotoWidget() {
     if (_uploading) {
       return const Center(child: CircularProgressIndicator());
     } else if (_imageUrl != null) {
       return GestureDetector(
         onTap: _pickImage,
-        child: Image.network(
-          _imageUrl!,
-          loadingBuilder: (context, child, progress) {
-            return progress == null ? child : const CircularProgressIndicator();
-          },
-          errorBuilder: (context, error, stackTrace) {
-            return const Icon(Icons.error);
-          },
+        child:
+            //  Image.network(
+            //   _imageUrl!,
+            //   loadingBuilder: (context, child, progress) {
+            //     return progress == null ? child : const CircularProgressIndicator();
+            //   },
+            //   errorBuilder: (context, error, stackTrace) {
+            //     return const Icon(Icons.error);
+            //   },
+            // ),
+            ImageNetwork(
+          image: _imageUrl!,
+          height: 100,
+          width: 100,
+          fitAndroidIos: BoxFit.contain,
+          fitWeb: BoxFitWeb.contain,
+          onLoading: const CircularProgressIndicator(
+            color: kPrimaryColor,
+          ),
+          onError: const Icon(
+            Icons.error,
+            color: red,
+          ),
+          onTap: _pickImage,
         ),
       );
     } else {
       return Stack(
         children: [
           Image.asset('assets/images/man.png', fit: BoxFit.cover),
-          Positioned.fill(
-            child: Material(
-              color: Colors.transparent,
-              child: InkWell(
-                onTap: _pickImage,
-                child: Center(
-                  child: Text(
-                    _imageUrl != null
-                        ? 'Tap to update photo'
-                        : 'Tap to add photo',
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            ),
-          ),
+          // Positioned.fill(
+          //   child: Material(
+          //     color: Colors.transparent,
+          //     child: InkWell(
+          //       onTap: _pickImage,
+          //       child: Center(
+          //         child: Text(
+          //           _imageUrl != null
+          //               ? 'Tap to update photo'
+          //               : 'Tap to add photo',
+          //           style: const TextStyle(
+          //               color: Colors.white,
+          //               fontSize: 16,
+          //               fontWeight: FontWeight.bold),
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // ),
         ],
       );
     }

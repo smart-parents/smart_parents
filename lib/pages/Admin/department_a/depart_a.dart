@@ -124,7 +124,7 @@ class _DepartmentState extends State<Department> {
                                     children: [
                                       const Text("Delete"),
                                       IconButton(
-                                        highlightColor: Colors.red,
+                                        highlightColor: red,
                                         onPressed: () async {
                                           try {
                                             // await delete(storedocs[index]
@@ -149,7 +149,7 @@ class _DepartmentState extends State<Department> {
                                         },
                                         icon: const Icon(
                                           Icons.delete,
-                                          color: Colors.red,
+                                          color: red,
                                         ),
                                       ),
                                     ],

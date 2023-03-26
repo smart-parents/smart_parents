@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/schedule_u.dart';
-import 'package:smart_parents/widgest/dropDownWidget.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -23,14 +22,30 @@ class Subject {
   Subject(this.id, this.name);
 }
 
-class AddSchedule extends StatefulWidget {
-  const AddSchedule({Key? key}) : super(key: key);
+class EditSchedule extends StatefulWidget {
+  const EditSchedule(
+      {Key? key,
+      required this.semester,
+      required this.doc,
+      required this.start,
+      required this.end,
+      required this.subject,
+      required this.type,
+      required this.day})
+      : super(key: key);
+  final String semester;
+  final String doc;
+  final String start;
+  final String end;
+  final String type;
+  final String subject;
+  final String day;
 
   @override
-  _AddScheduleState createState() => _AddScheduleState();
+  _EditScheduleState createState() => _EditScheduleState();
 }
 
-class _AddScheduleState extends State<AddSchedule> {
+class _EditScheduleState extends State<EditSchedule> {
   DateTime start = DateTime.now();
   String _start = DateFormat('hh:mm a').format(DateTime.now());
   DateTime end = DateTime.now().add(const Duration(hours: 1));
@@ -45,68 +60,79 @@ class _AddScheduleState extends State<AddSchedule> {
   void initState() {
     super.initState();
     _fetchSubjects();
+    start = DateFormat('hh:mm a').parse(widget.start);
+    _start = widget.start;
+    end = DateFormat('hh:mm a').parse(widget.end);
+    _end = widget.end;
+    Sub = widget.subject;
+    if (widget.type == 'Lecture') {
+      selectedIndex = 0;
+    } else if (widget.type == 'Lab') {
+      selectedIndex = 1;
+    }
   }
 
-  void add_schedule() async {
+  void update_schedule() async {
     var fullhour = DateFormat('HH:mm').format(start);
+    // FirebaseFirestore.instance
+    //     .collection('Admin/$admin/schedule')
+    //     .doc('${branch}_$semesterdropdownValue')
+    //     .get()
+    //     .then((value) async => {
+    // if (value.exists)
+    //   {
+    //     await
     FirebaseFirestore.instance
-        .collection('Admin/$admin/schedule')
-        .doc('${branch}_$semesterdropdownValue')
-        .get()
-        .then((value) async => {
-              if (value.exists)
-                {
-                  await FirebaseFirestore.instance
-                      .collection('Admin')
-                      .doc(admin)
-                      .collection('schedule')
-                      .doc('${branch}_$semesterdropdownValue')
-                      // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
-                      .collection('timetable')
-                      .doc(daysdropdownValue)
-                      .collection('entries')
-                      .add({
-                    'subject': "$Sub",
-                    'type': type[selectedIndex],
-                    'startTime': _start,
-                    'start24': fullhour,
-                    'endTime': _end,
-                  })
-                }
-              else
-                {
-                  await FirebaseFirestore.instance
-                      .collection('Admin/$admin/schedule')
-                      // .doc(widget.sub)
-                      // .collection('lectures')
-                      .doc('${branch}_$semesterdropdownValue')
-                      .set({
-                    // 'day': daysdropdownValue,
-                    'branch': branch,
-                    'sem': semesterdropdownValue,
-                    // 'subject': Sub,
-                    // 'start': _start,
-                    // 'end': _end,
-                  }),
-                  await FirebaseFirestore.instance
-                      .collection('Admin')
-                      .doc(admin)
-                      .collection('schedule')
-                      .doc('${branch}_$semesterdropdownValue')
-                      // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
-                      .collection('timetable')
-                      .doc(daysdropdownValue)
-                      .collection('entries')
-                      .add({
-                    // 'subject': "$Sub (${type[selectedIndex]})",
-                    'subject': "$Sub",
-                    'type': type[selectedIndex],
-                    'startTime': _start,
-                    'start24': fullhour,
-                    'endTime': _end,
-                  })
-                }
-            });
+        .collection('Admin')
+        .doc(admin)
+        .collection('schedule')
+        .doc('${branch}_${widget.semester}')
+        // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
+        .collection('timetable')
+        .doc(widget.day)
+        .collection('entries')
+        .doc(widget.doc)
+        .set({
+      // 'subject': "$Sub (${type[selectedIndex]})",
+      'subject': "$Sub",
+      'type': type[selectedIndex],
+      'startTime': _start,
+      'start24': fullhour,
+      'endTime': _end,
+    });
+    // }
+    // else
+    //   {
+    //     await FirebaseFirestore.instance
+    //         .collection('Admin/$admin/schedule')
+    //         // .doc(widget.sub)
+    //         // .collection('lectures')
+    //         .doc('${branch}_$semesterdropdownValue')
+    //         .set({
+    //       // 'day': daysdropdownValue,
+    //       'branch': branch,
+    //       'sem': semesterdropdownValue,
+    //       // 'subject': Sub,
+    //       // 'start': _start,
+    //       // 'end': _end,
+    //     }),
+    //     await FirebaseFirestore.instance
+    //         .collection('Admin')
+    //         .doc(admin)
+    //         .collection('schedule')
+    //         .doc('${branch}_$semesterdropdownValue')
+    //         // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
+    //         .collection('timetable')
+    //         .doc(daysdropdownValue)
+    //         .collection('entries')
+    //         .add({
+    //       'subject': "$Sub (${type[selectedIndex]})",
+    //       'startTime': _start,
+    //       'start24': fullhour,
+    //       'endTime': _end,
+    //     })
+    //   }
+    // });
   }
 
   Future<void> _fetchSubjects() async {
@@ -126,7 +152,7 @@ class _AddScheduleState extends State<AddSchedule> {
 
     setState(() {
       _subjects = subjects;
-      Sub = _subjects[0].name;
+      // Sub = _subjects[0].name;
     });
   }
 
@@ -151,7 +177,7 @@ class _AddScheduleState extends State<AddSchedule> {
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
-        title: const Text("Add Schedule"),
+        title: const Text("Update Schedule"),
       ),
       body: Center(
         child: ListView(
@@ -177,13 +203,13 @@ class _AddScheduleState extends State<AddSchedule> {
                     const SizedBox(
                       height: 20,
                     ),
-                    dropdown(
-                        DropdownValue: semesterdropdownValue,
-                        sTring: Semester,
-                        Hint: "Semester"),
-                    const SizedBox(
-                      height: 20,
-                    ),
+                    // dropdown(
+                    //     DropdownValue: semesterdropdownValue,
+                    //     sTring: Semester,
+                    //     Hint: "Semester"),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
                     const Text(
                       "Subject",
                       style: TextStyle(fontSize: 20),
@@ -249,13 +275,13 @@ class _AddScheduleState extends State<AddSchedule> {
                 const SizedBox(
                   height: 20,
                 ),
-                dropdown(
-                    DropdownValue: daysdropdownValue,
-                    sTring: Days,
-                    Hint: "Day"),
-                const SizedBox(
-                  height: 20,
-                ),
+                // dropdown(
+                //     DropdownValue: daysdropdownValue,
+                //     sTring: Days,
+                //     Hint: "Day"),
+                // const SizedBox(
+                //   height: 20,
+                // ),
                 // Text(
                 //       DateFormat('E, dd MMM').format(dates[_selectedIndex]),
                 //       style: GoogleFonts.rubik(
@@ -375,7 +401,7 @@ class _AddScheduleState extends State<AddSchedule> {
                                     context: context,
                                     builder: (BuildContext context) =>
                                         AlertDialog(
-                                      title: const Text('Submit Schedule?'),
+                                      title: const Text('Update Schedule?'),
                                       actions: <Widget>[
                                         TextButton(
                                           onPressed: () =>
@@ -384,10 +410,10 @@ class _AddScheduleState extends State<AddSchedule> {
                                         ),
                                         TextButton(
                                           onPressed: () => {
-                                            add_schedule(),
+                                            update_schedule(),
                                             showAlertDialogOnOkCallback(
                                                 'Success !',
-                                                'Schedule Successfully Submitted.',
+                                                'Schedule Successfully Updatted.',
                                                 DialogType.SUCCES,
                                                 context,
                                                 () => {
@@ -408,7 +434,7 @@ class _AddScheduleState extends State<AddSchedule> {
                                   ),
                               style: ElevatedButton.styleFrom(
                                   fixedSize: const Size(300, 40)),
-                              child: const Text("Add Schedule")),
+                              child: const Text("Update Schedule")),
                         ),
                       ],
                     ))

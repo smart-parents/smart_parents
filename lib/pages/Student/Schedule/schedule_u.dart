@@ -165,7 +165,7 @@ class _ShowScheduleState extends State<ShowSchedule> {
                           );
                         }
                         return ListView.builder(
-                          physics:const BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             final entry = snapshot.data![index];
@@ -207,7 +207,7 @@ class _ShowScheduleState extends State<ShowSchedule> {
                                     Container(
                                       // width: MediaQuery.of(context).size.width *
                                       //     0.40,
-                                      // height: 40,
+                                      // height: 40,y
                                       padding: const EdgeInsets.all(15),
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(10),
@@ -215,7 +215,7 @@ class _ShowScheduleState extends State<ShowSchedule> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          entry.subject,
+                                          "${entry.subject} ${entry.type}",
                                           style: GoogleFonts.rubik(
                                               fontSize: 25,
                                               color: kPrimaryColor,
@@ -255,9 +255,13 @@ class TimetableEntry {
   final String subject;
   final String startTime;
   final String endTime;
+  final String type;
 
   TimetableEntry(
-      {required this.subject, required this.startTime, required this.endTime});
+      {required this.subject,
+      required this.type,
+      required this.startTime,
+      required this.endTime});
 }
 
 class TimetableService {
@@ -283,7 +287,8 @@ class TimetableService {
         return TimetableEntry(
             subject: data['subject'],
             startTime: data['startTime'],
-            endTime: data['endTime']);
+            endTime: data['endTime'],
+            type: data['type']);
       }).toList();
     });
   }

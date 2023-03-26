@@ -168,6 +168,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
         child: FutureBuilder<QuerySnapshot>(
             future: FirebaseFirestore.instance
                 .collection('Admin/$admin/department')
+                .where("number")
                 .get(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {

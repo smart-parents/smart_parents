@@ -85,8 +85,18 @@ class _UserMainState extends State<UserMainA> {
             MaterialPageRoute(builder: (context) => const WelcomeScreen()));
         return false;
       },
+      // child: Container(
+      //   decoration: const BoxDecoration(
+      //     // color: Colors.transparent,
+      //     image: DecorationImage(
+      //       image: AssetImage("assets/images/background.jpg"),
+      //       fit: BoxFit.cover,
+      //     ),
+      //   ),
       child: Scaffold(
+        // backgroundColor: Colors.transparent,
         appBar: AppBar(
+          // backgroundColor: Colors.transparent,
           // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
           automaticallyImplyLeading: false,
           title: Row(
@@ -125,6 +135,11 @@ class _UserMainState extends State<UserMainA> {
 
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
+            // image: const DecorationImage(
+            //   image: AssetImage("assets/images/background.jpg"),
+            //   fit: BoxFit.cover,
+            // ),
+            // color: Colors.transparent,
             color: kPrimaryLightColor,
             boxShadow: [
               BoxShadow(
@@ -213,6 +228,7 @@ class _UserMainState extends State<UserMainA> {
         //   onTap: _onItemTapped,
         // ),
       ),
+      // ),
     );
   }
 }

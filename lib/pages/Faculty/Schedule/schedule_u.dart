@@ -1,4 +1,4 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, prefer_typing_uninitialized_variables
+// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, prefer_typing_uninitialized_variables, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +8,9 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:intl/intl.dart';
 import 'dart:math' as math;
 import 'package:smart_parents/pages/Faculty/Schedule/addschedule.dart';
+import 'package:smart_parents/pages/Faculty/Schedule/editSchedule.dart';
+
+var semester = 1;
 
 class ShowSchedule extends StatefulWidget {
   const ShowSchedule({super.key});
@@ -45,6 +48,43 @@ class _ShowScheduleState extends State<ShowSchedule> {
     print(_selectedDay);
   }
 
+  void _showNumberPicker(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Select a Semester'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _buildNumberButton(1),
+              _buildNumberButton(2),
+              _buildNumberButton(3),
+              _buildNumberButton(4),
+              _buildNumberButton(5),
+              _buildNumberButton(6),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildNumberButton(int number) {
+    return SizedBox(
+      width: double.infinity,
+      child: ElevatedButton(
+        onPressed: () {
+          setState(() {
+            semester = number;
+          });
+          Navigator.of(context).pop();
+        },
+        child: Text('$number'),
+      ),
+    );
+  }
+
   // FocusNode focusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
@@ -60,24 +100,33 @@ class _ShowScheduleState extends State<ShowSchedule> {
           style: GoogleFonts.oswald(fontSize: 30),
         ),
         centerTitle: true,
-        actions: [
-          IconButton(
-            icon: const Icon(
-              Icons.add,
-              size: 30,
-            ),
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddSchedule(),
-                  ));
-            },
-            tooltip: 'Add',
-            // Pass the focusNode to the IconButton
-            // focusNode: focusNode,
-          ),
-        ],
+        // actions: [
+        //   TextButton.icon(
+        //     icon: CircleAvatar(
+        //       radius: 15,
+        //       backgroundColor: Colors.white,
+        //       foregroundColor: kPrimaryColor,
+        //       child: Text(
+        //         semester.toString(),
+        //         style: GoogleFonts.rubik(
+        //           fontWeight: FontWeight.bold,
+        //           // fontSize: 20,
+        //         ),
+        //       ),
+        //     ),
+        //     // const Icon(Icons.filter_list),
+        //     onPressed: () {
+        //       _showNumberPicker(context);
+        //     },
+        //     label: Text(
+        //       'Sem',
+        //       style: GoogleFonts.rubik(
+        //           // fontSize: 20,
+        //           fontWeight: FontWeight.bold,
+        //           color: Colors.white),
+        //     ),
+        //   ),
+        // ],
       ),
       body: Column(children: [
         CarouselSlider(
@@ -164,10 +213,37 @@ class _ShowScheduleState extends State<ShowSchedule> {
                             color: kPrimaryColor,
                             fontWeight: FontWeight.bold),
                       ),
-                      const Icon(
-                        Icons.calendar_today_outlined,
-                        color: kPrimaryColor,
-                        size: 40,
+                      // const Icon(
+                      //   Icons.calendar_month_outlined,
+                      //   color: kPrimaryColor,
+                      //   size: 40,
+                      // ),
+                      GestureDetector(
+                        child: TextButton.icon(
+                          label: Text(
+                            'Sem',
+                            style: GoogleFonts.rubik(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                            ),
+                          ),
+                          icon: CircleAvatar(
+                            // radius: 15,
+                            foregroundColor: Colors.white,
+                            backgroundColor: kPrimaryColor,
+                            child: Text(
+                              semester.toString(),
+                              style: GoogleFonts.rubik(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20,
+                              ),
+                            ),
+                          ),
+                          // const Icon(Icons.filter_list),
+                          onPressed: () {
+                            _showNumberPicker(context);
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -184,7 +260,7 @@ class _ShowScheduleState extends State<ShowSchedule> {
                           );
                         }
                         return ListView.builder(
-                          physics:const BouncingScrollPhysics(),
+                          physics: const BouncingScrollPhysics(),
                           itemCount: snapshot.data!.length,
                           itemBuilder: (context, index) {
                             final entry = snapshot.data![index];
@@ -208,43 +284,108 @@ class _ShowScheduleState extends State<ShowSchedule> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    //   ListTile(
-                                    // title:
-                                    Text(
-                                      '${entry.startTime}\n${entry.endTime}',
-                                      style: GoogleFonts.rubik(
-                                          fontSize: 15,
-                                          color: kPrimaryColor,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                    // subtitle:
-                                    Container(
-                                      // width: MediaQuery.of(context).size.width *
-                                      //     0.40,
-                                      // height: 40,
-                                      padding: const EdgeInsets.all(15),
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: kPrimaryLightColor,
+                                GestureDetector(
+                                  onTap: () => {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => EditSchedule(
+                                                  doc: entry.doc,
+                                                  semester: semester.toString(),
+                                                  end: entry.endTime,
+                                                  start: entry.startTime,
+                                                  subject: entry.subject,
+                                                  type: entry.type,
+                                                  day: _selectedDay,
+                                                )))
+                                  },
+                                  onLongPress: () async {
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: const Text("Confirm Delete"),
+                                          content: const Text(
+                                              "Are you sure you want to delete this Schedule?"),
+                                          actions: [
+                                            TextButton(
+                                              child: const Text("Cancel"),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                            TextButton(
+                                              child: const Text("Delete"),
+                                              onPressed: () async {
+                                                await FirebaseFirestore.instance
+                                                    .collection('Admin')
+                                                    .doc(admin)
+                                                    .collection('schedule')
+                                                    .doc('${branch}_$semester')
+                                                    .collection('timetable')
+                                                    .doc(_selectedDay)
+                                                    .collection('entries')
+                                                    .doc(entry.doc)
+                                                    .delete()
+                                                    .then((value) => print(
+                                                        'Schedule Deleted'))
+                                                    .catchError((error) => print(
+                                                        'Failed to Delete Schedule: $error'));
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      //   ListTile(
+                                      // title:
+                                      Text(
+                                        '${entry.startTime}\n${entry.endTime}',
+                                        style: GoogleFonts.rubik(
+                                            fontSize: 15,
+                                            color: kPrimaryColor,
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                      child: Center(
-                                        child: Text(
-                                          entry.subject,
-                                          style: GoogleFonts.rubik(
-                                              fontSize: 25,
-                                              color: kPrimaryColor,
-                                              fontWeight: FontWeight.bold),
+                                      // subtitle:
+                                      // Text(
+                                      //   entry.doc,
+                                      //   style: GoogleFonts.rubik(
+                                      //       fontSize: 15,
+                                      //       color: kPrimaryColor,
+                                      //       fontWeight: FontWeight.bold),
+                                      // ),
+                                      Container(
+                                        // width: MediaQuery.of(context).size.width *
+                                        //     0.40,
+                                        // height: 40,
+                                        padding: const EdgeInsets.all(15),
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          color: kPrimaryLightColor,
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            "${entry.subject} ${entry.type}",
+                                            style: GoogleFonts.rubik(
+                                                fontSize: 20,
+                                                color: kPrimaryColor,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                  // ),
-                                  // ),
+                                    ],
+                                    // ),
+                                    // ),
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 15,
@@ -268,13 +409,19 @@ class _ShowScheduleState extends State<ShowSchedule> {
       ]),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          // Navigator.push(
-          //     context,
-          //     MaterialPageRoute(
-          //       builder: (context) => const AddSchedule(),
-          //     ))
+          // IconButton(
+          //   icon: const Icon(
+          //     Icons.add,
+          //     size: 30,
+          //   ),
+          //   onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const AddSchedule())),
+          //   },
+          //   tooltip: 'Add',
+          // ),
         },
-        child: const Icon(Icons.edit),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -284,9 +431,15 @@ class TimetableEntry {
   final String subject;
   final String startTime;
   final String endTime;
+  final String type;
+  final String doc;
 
   TimetableEntry(
-      {required this.subject, required this.startTime, required this.endTime});
+      {required this.doc,
+      required this.type,
+      required this.subject,
+      required this.startTime,
+      required this.endTime});
 }
 
 class TimetableService {
@@ -300,7 +453,7 @@ class TimetableService {
         .collection('Admin')
         .doc(admin)
         .collection('schedule')
-        .doc('${branch}_$semesterdropdownValue')
+        .doc('${branch}_$semester')
         .collection('timetable')
         .doc(day)
         .collection('entries')
@@ -310,13 +463,30 @@ class TimetableService {
       return snapshot.docs.map((doc) {
         final data = doc.data();
         return TimetableEntry(
+            doc: doc.id,
             subject: data['subject'],
             startTime: data['startTime'],
-            endTime: data['endTime']);
+            endTime: data['endTime'],
+            type: data['type']);
       }).toList();
     });
   }
 
+  Future<void> deleteSchedule(id, String day) async {
+    await FirebaseFirestore.instance
+        .collection('Admin')
+        .doc(admin)
+        .collection('schedule')
+        .doc('${branch}_$semester')
+        // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
+        .collection('timetable')
+        .doc(day)
+        .collection('entries')
+        .doc(id)
+        .delete()
+        .then((value) => print('Schedule Deleted'))
+        .catchError((error) => print('Failed to Delete Schedule: $error'));
+  }
   // Future<void> addTimetableEntry(String day, TimetableEntry entry) async {
   //   await _firestore
   //       .collection('Admin')

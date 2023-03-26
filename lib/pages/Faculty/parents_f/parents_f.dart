@@ -179,8 +179,8 @@ class _ParentState extends State<Parent> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 15,
                                             color: storedocs[index]['status']
-                                                ? Colors.green
-                                                : Colors.red),
+                                                ? green
+                                                : red),
                                       ),
                                     ],
                                   ),
@@ -188,7 +188,7 @@ class _ParentState extends State<Parent> {
                                   //   children: [
                                   //     const Text("Delete"),
                                   //     IconButton(
-                                  //       highlightColor: Colors.red,
+                                  //       highlightColor: red,
                                   //       onPressed: () async {
                                   //         try {
                                   //           // await delete(storedocs[index]
@@ -213,7 +213,7 @@ class _ParentState extends State<Parent> {
                                   //       },
                                   //       icon: const Icon(
                                   //         Icons.delete,
-                                  //         color: Colors.red,
+                                  //         color: red,
                                   //       ),
                                   //     ),
                                   //   ],
