@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_parents/pages/TimeImage.dart';
+import 'package:smart_parents/pages/TimeImage1.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
               })).copyWith(background: Colors.white),
             ),
             debugShowCheckedModeBanner: false,
-            home: const TimeImage(),
+            home: const MyCustomSplashScreen(),
           );
         }
         return const CircularProgressIndicator();

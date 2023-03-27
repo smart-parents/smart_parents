@@ -3,16 +3,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/attendance_show.dart';
+import 'package:smart_parents/pages/Parents/contact_faculty.dart';
 import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
-import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
 
 class ParentsScreen extends StatefulWidget {
   const ParentsScreen({super.key});
@@ -85,8 +86,10 @@ class _ParentsScreenState extends State<ParentsScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        // Navigator.of(context).push(
+        //     MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        // SystemNavigator.pop();
+        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         return false;
       },
       child: Container(
@@ -368,7 +371,11 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ListTile(
                 leading: const Icon(Icons.contact_page_outlined),
                 title: const Text("Contact Faculty"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ContactF(),
+                  ));
+                },
               ),
             ],
           ),

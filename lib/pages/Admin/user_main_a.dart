@@ -2,13 +2,13 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/dashboard_a.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:smart_parents/pages/Admin/change_password_a.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
 
 class UserMainA extends StatefulWidget {
   const UserMainA({Key? key}) : super(key: key);
@@ -81,8 +81,9 @@ class _UserMainState extends State<UserMainA> {
     // login();
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        // Navigator.of(context).push(
+        //     MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         return false;
       },
       child: Container(

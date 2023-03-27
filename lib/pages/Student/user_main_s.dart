@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,7 +15,6 @@ import 'package:smart_parents/pages/Student/attendance.dart';
 import 'package:smart_parents/pages/Student/chat_s.dart';
 import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
 import 'package:smart_parents/pages/Student/profile_screen_s.dart';
-import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
 
 class UserMainS extends StatefulWidget {
   const UserMainS({Key? key}) : super(key: key);
@@ -84,8 +84,9 @@ class _UserMainState extends State<UserMainS> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        // Navigator.of(context).push(
+        //     MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         return false;
       },
       child: Container(

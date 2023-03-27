@@ -1,6 +1,7 @@
 // ignore_for_file: camel_case_types
 
 import 'package:flutter/material.dart';
+import 'package:smart_parents/pages/Parents/contact_faculty.dart';
 
 class Parents_home extends StatefulWidget {
   const Parents_home({super.key});
@@ -47,14 +48,9 @@ class _Parents_homeState extends State<Parents_home> {
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
             child: ElevatedButton(
               onPressed: () => {
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //       builder: (context) {
-                //         return const att();
-                //       },
-                //     ),
-                //   )
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ContactF(),
+                ))
               },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
