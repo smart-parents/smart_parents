@@ -9,6 +9,8 @@ import 'package:intl/intl.dart';
 //   static String projectId = "smart-parents-11c8b";
 // }
 
+var background = 'assets/images/background.jpg';
+
 var admin;
 var branch;
 var sem;

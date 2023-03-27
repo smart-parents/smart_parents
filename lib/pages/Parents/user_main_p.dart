@@ -89,74 +89,84 @@ class _ParentsScreenState extends State<ParentsScreen> {
             MaterialPageRoute(builder: (context) => const WelcomeScreen()));
         return false;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          //   backgroundColor: Color.fromARGB(255, 187, 218, 240),
-          //   automaticallyImplyLeading: false,
-          //   title: Row(
-          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //     children: [
-          //       //Image.asset("assets/images/top3.png", width: 100, height: 50,),
-
-          //       const Text(
-          //         "Parents",
-          //         style: TextStyle(
-          //           fontSize: 30.0,
-          //         ),
-          //       ),
-          //       Image.asset(
-          //         "assets/images/Parents.png",
-          //         height: 50,
-          //       ),
-          //     ],
-          //   ),
-          title: const Text('Home'),
-        ),
-        drawer: const NavigationDrawer(),
-        body: _widgetOptions.elementAt(_selectedIndex),
-        bottomNavigationBar: Container(
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 207, 235, 255),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 20,
-                color: Colors.black.withOpacity(.1),
-              )
-            ],
+      child: Container(
+        decoration: BoxDecoration(
+          // color: Colors.transparent,
+          image: DecorationImage(
+            image: AssetImage(background),
+            fit: BoxFit.cover,
           ),
-          child: SafeArea(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-              child: GNav(
-                // rippleColor: const Color.fromARGB(255, 37, 86, 116),
-                // hoverColor: const Color.fromARGB(255, 37, 86, 116),
-                activeColor: Colors.white,
-                iconSize: 24,
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            //   backgroundColor: Color.fromARGB(255, 187, 218, 240),
+            //   automaticallyImplyLeading: false,
+            //   title: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: [
+            //       //Image.asset("assets/images/top3.png", width: 100, height: 50,),
+
+            //       const Text(
+            //         "Parents",
+            //         style: TextStyle(
+            //           fontSize: 30.0,
+            //         ),
+            //       ),
+            //       Image.asset(
+            //         "assets/images/Parents.png",
+            //         height: 50,
+            //       ),
+            //     ],
+            //   ),
+            title: const Text('Home'),
+          ),
+          drawer: const NavigationDrawer(),
+          body: _widgetOptions.elementAt(_selectedIndex),
+          bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              color: const Color.fromARGB(255, 207, 235, 255),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 20,
+                  color: Colors.black.withOpacity(.1),
+                )
+              ],
+            ),
+            child: SafeArea(
+              child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                tabBackgroundColor: kPrimaryColor,
-                // color: Colors.black,
-                tabs: const [
-                  GButton(
-                    icon: Icons.home,
-                    text: 'Home',
-                  ),
-                  GButton(
-                    icon: Icons.calendar_month_rounded,
-                    text: 'Attendance',
-                  ),
-                  GButton(
-                    icon: Icons.chat,
-                    text: 'Chat',
-                  ),
-                  GButton(
-                    icon: Icons.account_circle,
-                    text: 'Profile',
-                  ),
-                ],
-                selectedIndex: _selectedIndex,
-                onTabChange: _onItemTapped,
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                child: GNav(
+                  // rippleColor: const Color.fromARGB(255, 37, 86, 116),
+                  // hoverColor: const Color.fromARGB(255, 37, 86, 116),
+                  activeColor: Colors.white,
+                  iconSize: 24,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  tabBackgroundColor: kPrimaryColor,
+                  // color: Colors.black,
+                  tabs: const [
+                    GButton(
+                      icon: Icons.home,
+                      text: 'Home',
+                    ),
+                    GButton(
+                      icon: Icons.calendar_month_rounded,
+                      text: 'Attendance',
+                    ),
+                    GButton(
+                      icon: Icons.chat,
+                      text: 'Chat',
+                    ),
+                    GButton(
+                      icon: Icons.account_circle,
+                      text: 'Profile',
+                    ),
+                  ],
+                  selectedIndex: _selectedIndex,
+                  onTabChange: _onItemTapped,
+                ),
               ),
             ),
           ),
@@ -181,9 +191,9 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     main();
     _loadPhotoUrl();
     // _image = _getImage();
+    fetchName();
   }
 
-  String? fid;
   main() {
     if (FirebaseAuth.instance.currentUser != null) {
       final email = FirebaseAuth.instance.currentUser!.email;
@@ -191,6 +201,16 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
       String facid = em.substring(0, em.length - 8);
       fid = facid;
     }
+  }
+
+  String fid = '';
+  String name = '';
+  fetchName() async {
+    final faculty = await FirebaseFirestore.instance
+        .collection('Admin/$admin/parents')
+        .doc(fid)
+        .get();
+    name = faculty.data()!['name'];
   }
 
   // bool _uploading = false;
@@ -286,12 +306,13 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        const Text(
-                          'Parents',
-                          style: TextStyle(fontSize: 28, color: Colors.white),
+                        Text(
+                          name,
+                          style: const TextStyle(
+                              fontSize: 28, color: Colors.white),
                         ),
                         Text(
-                          "$fid",
+                          fid,
                           style: const TextStyle(
                               fontSize: 15, color: Colors.white),
                         )

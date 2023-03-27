@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, must_be_immutable
+// ignore_for_file: library_private_types_in_public_api, must_be_immutable, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -86,58 +86,68 @@ class _UserMainState extends State<UserMainF> {
             MaterialPageRoute(builder: (context) => const WelcomeScreen()));
         return false;
       },
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Home'),
-        ),
-        drawer: const NavigationDrawer(),
-        body: _widgetOptions.elementAt(_selectedIndex),
-        bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: kPrimaryLightColor,
-            // boxShadow: [
-            //   BoxShadow(
-            //     blurRadius: 20,
-            //     // color: Colors.black.withOpacity(.1),
-            //   )
-            // ],
+      child: Container(
+        decoration: BoxDecoration(
+          // color: Colors.transparent,
+          image: DecorationImage(
+            image: AssetImage(background),
+            fit: BoxFit.cover,
           ),
-          child: SafeArea(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-              child: GNav(
-                // rippleColor: kPrimaryColor ,
-                // hoverColor: kPrimaryColor,
-                // gap: 8,
-                activeColor: Colors.white,
-                iconSize: 24,
+        ),
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          appBar: AppBar(
+            title: const Text('Home'),
+          ),
+          drawer: const NavigationDrawer(),
+          body: _widgetOptions.elementAt(_selectedIndex),
+          bottomNavigationBar: Container(
+            decoration: const BoxDecoration(
+              color: kPrimaryLightColor,
+              // boxShadow: [
+              //   BoxShadow(
+              //     blurRadius: 20,
+              //     // color: Colors.black.withOpacity(.1),
+              //   )
+              // ],
+            ),
+            child: SafeArea(
+              child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                // tabMargin: EdgeInsets.symmetric(horizontal: 50),
-                // duration: Duration(milliseconds: 400),
-                tabBackgroundColor: kPrimaryColor,
-                // color: Colors.black,
-                tabs: const [
-                  GButton(
-                    icon: Icons.home,
-                    text: 'Home',
-                  ),
-                  GButton(
-                    icon: Icons.schedule,
-                    text: 'Schedule',
-                  ),
-                  GButton(
-                    icon: Icons.chat,
-                    text: 'Chat',
-                  ),
-                  GButton(
-                    icon: Icons.account_circle,
-                    text: 'Profile',
-                  ),
-                ],
-                selectedIndex: _selectedIndex,
-                onTabChange: _onItemTapped,
+                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                child: GNav(
+                  // rippleColor: kPrimaryColor ,
+                  // hoverColor: kPrimaryColor,
+                  // gap: 8,
+                  activeColor: Colors.white,
+                  iconSize: 24,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  // tabMargin: EdgeInsets.symmetric(horizontal: 50),
+                  // duration: Duration(milliseconds: 400),
+                  tabBackgroundColor: kPrimaryColor,
+                  // color: Colors.black,
+                  tabs: const [
+                    GButton(
+                      icon: Icons.home,
+                      text: 'Home',
+                    ),
+                    GButton(
+                      icon: Icons.schedule,
+                      text: 'Schedule',
+                    ),
+                    GButton(
+                      icon: Icons.chat,
+                      text: 'Chat',
+                    ),
+                    GButton(
+                      icon: Icons.account_circle,
+                      text: 'Profile',
+                    ),
+                  ],
+                  selectedIndex: _selectedIndex,
+                  onTabChange: _onItemTapped,
+                ),
               ),
             ),
           ),
@@ -162,9 +172,9 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
     main();
     _loadPhotoUrl();
     // _image = _getImage();
+    fetchName();
   }
 
-  String? fid;
   main() {
     if (FirebaseAuth.instance.currentUser != null) {
       final email = FirebaseAuth.instance.currentUser!.email;
@@ -172,6 +182,16 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
       String facid = em.substring(0, em.length - 8);
       fid = facid;
     }
+  }
+
+  String fid = '';
+  String name = '';
+  fetchName() async {
+    final faculty = await FirebaseFirestore.instance
+        .collection('Admin/$admin/faculty')
+        .doc(fid)
+        .get();
+    name = faculty.data()!['name'];
   }
 
   // bool _uploading = false;
@@ -268,12 +288,12 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                       ),
                     ),
                     const SizedBox(height: 10),
-                    const Text(
-                      'xyz',
-                      style: TextStyle(fontSize: 28, color: Colors.white),
+                    Text(
+                      name,
+                      style: const TextStyle(fontSize: 28, color: Colors.white),
                     ),
                     Text(
-                      "$fid",
+                      fid,
                       style: const TextStyle(fontSize: 15, color: Colors.white),
                     )
                   ],
