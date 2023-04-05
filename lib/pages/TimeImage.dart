@@ -3,7 +3,6 @@
 // import 'dart:async';
 
 // import 'package:flutter/material.dart';
-// import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
 
 // class TimeImage extends StatefulWidget {
 //   const TimeImage({Key? key}) : super(key: key);

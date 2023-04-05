@@ -10,7 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/attendance_show.dart';
+import 'package:smart_parents/pages/Parents/chatgpt_location.dart';
 import 'package:smart_parents/pages/Parents/contact_faculty.dart';
+import 'package:smart_parents/pages/Parents/location.dart';
 import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
@@ -361,12 +363,20 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ListTile(
                 leading: const Icon(Icons.insert_drive_file_outlined),
                 title: const Text("View Exam Info"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const LiveLocationPage(),
+                  ));
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.location_on_outlined),
                 title: const Text("Get Your Child Location"),
-                onTap: () {},
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const LiveLocationMap(),
+                  ));
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.contact_page_outlined),

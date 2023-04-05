@@ -33,27 +33,42 @@ class _ContactFState extends State<ContactF> {
 
   Future<void> _makePhoneCall(String phoneNumber) async {
     // Use the URL launcher to make the phone call.
-    final url = 'tel:+91$phoneNumber';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    if (phoneNumber != '') {
+      final url = 'tel:$phoneNumber';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+  }
+
+  Future<void> _makeWhatsapp(String phoneNumber) async {
+    if (phoneNumber != '') {
+      final url = 'https://wa.me/$phoneNumber';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
     }
   }
 
   Future<void> _makeEmail(String emailAddress) async {
     // Use the URL launcher to launch the email app.
-    final url =
-        'mailto:$emailAddress?subject=Contact between Faculty and Parents';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    if (emailAddress != '') {
+      final url =
+          'mailto:$emailAddress?subject=Contact between Faculty and Parents';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
     }
   }
 
   Widget _buildPhotoWidget(String imageUrl) {
-    if (imageUrl.isNotEmpty) {
+    if (imageUrl != '') {
       return ImageNetwork(
         image: imageUrl,
         height: 100,
@@ -71,7 +86,8 @@ class _ContactFState extends State<ContactF> {
     } else {
       return Stack(
         children: [
-          Image.asset('assets/images/man.png', fit: BoxFit.cover),
+          Image.asset('assets/images/man.png',
+              fit: BoxFit.contain, height: 100, width: 100),
           // Positioned.fill(
           //   child: Material(
           //     color: Colors.transparent,
@@ -125,7 +141,6 @@ class _ContactFState extends State<ContactF> {
                 child: CircularProgressIndicator(),
               );
             }
-
             final List storedocs = [];
             snapshot.data!.docs.map((DocumentSnapshot document) {
               Map a = document.data() as Map<String, dynamic>;
@@ -141,63 +156,89 @@ class _ContactFState extends State<ContactF> {
                   color: Colors.white,
                   borderOnForeground: true,
                   elevation: 10,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      Row(
-                        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          _buildPhotoWidget(storedocs[index]['photoUrl']),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // leading: const CircleAvatar(
-                                  //   backgroundImage: _buildPhotoWidget(),
-                                  // ),
-                                  // leading:
-                                  //     _buildPhotoWidget(storedocs[index]['photoUrl']),
-                                  Text('${storedocs[index]['name']}',
-                                      style:
-                                          const TextStyle(color: Colors.green)),
-                                  Text(
-                                    'Mobile No. : ${storedocs[index]['mono']}',
-                                    style: const TextStyle(
-                                        color: Colors.orangeAccent),
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child:
+                        //  Column(
+                        //   children: [
+                        //     const SizedBox(height: 10),
+                        Row(
+                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        // const SizedBox(width: 10),
+                        _buildPhotoWidget(storedocs[index]['photoUrl'] ?? ''),
+                        const SizedBox(width: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          // mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                // leading: const CircleAvatar(
+                                //   backgroundImage: _buildPhotoWidget(),
+                                // ),
+                                // leading:
+                                //     _buildPhotoWidget(storedocs[index]['photoUrl']),
+                                Text('${storedocs[index]['name']}',
+                                    style:
+                                        const TextStyle(color: Colors.green)),
+                                Text(
+                                  'Mobile No. : ${storedocs[index]['mono']}',
+                                  style: const TextStyle(
+                                      color: Colors.orangeAccent),
+                                ),
+                                Text(
+                                  'Email : ${storedocs[index]['email']}',
+                                  style: const TextStyle(
+                                      color: Colors.orangeAccent),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                TextButton(
+                                  child: Image.asset(
+                                    'assets/whatsapp/whatsapp 24px.png',
+                                    // width: 25,
+                                    // height: 25,
                                   ),
-                                  Text(
-                                    'Email : ${storedocs[index]['email']}',
-                                    style: const TextStyle(
-                                        color: Colors.orangeAccent),
+                                  onPressed: () => _makeWhatsapp(
+                                      storedocs[index]['mono'] ?? ''),
+                                ),
+                                const SizedBox(width: 5),
+                                TextButton(
+                                  child: const Icon(
+                                    Icons.call,
+                                    size: 24,
+                                    color: Colors.blue,
                                   ),
-                                ],
-                              ),
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    child: const Icon(Icons.call),
-                                    onPressed: () => _makePhoneCall(
-                                        storedocs[index]['mono']),
+                                  onPressed: () => _makePhoneCall(
+                                      storedocs[index]['mono'] ?? ''),
+                                ),
+                                const SizedBox(width: 5),
+                                TextButton(
+                                  child: const Icon(
+                                    Icons.mail,
+                                    size: 24,
+                                    color: Colors.red,
                                   ),
-                                  const SizedBox(width: 8),
-                                  TextButton(
-                                    child: const Icon(Icons.mail),
-                                    onPressed: () =>
-                                        _makeEmail(storedocs[index]['email']),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                    ],
+                                  onPressed: () => _makeEmail(
+                                      storedocs[index]['email'] ?? ''),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    //     const SizedBox(height: 10),
+                    //   ],
+                    // ),
                   ),
                 );
               },

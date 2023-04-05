@@ -1,16 +1,16 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Student/Schedule/schedule_u.dart';
-// import 'package:smart_parents/pages/Student/attendance_show.dart';
 import 'package:smart_parents/pages/Student/attendance.dart';
 import 'package:smart_parents/pages/Student/chat_s.dart';
 import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
@@ -28,6 +28,7 @@ class _UserMainState extends State<UserMainS> {
   @override
   void initState() {
     adminget();
+    FlutterBackgroundService().startService();
     super.initState();
   }
 

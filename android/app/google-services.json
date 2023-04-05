@@ -7,12 +7,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:581206730087:android:d25080bc11fa532c8fbbc2",
+        "mobilesdk_app_id": "1:581206730087:android:e5626dc93a5f3c6e8fbbc2",
         "android_client_info": {
           "package_name": "com.example.smart_parents"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "581206730087-sgqc9nmmsr0o6qq6s9j484p3kvfv5kck.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smart_parents",
+            "certificate_hash": "02a8ce721e19a36be98e0d1d97d6ea3a8e55b146"
+          }
+        },
         {
           "client_id": "581206730087-mqaucg3ckrahqrf24js3t0v8dtbc124u.apps.googleusercontent.com",
           "client_type": 3
