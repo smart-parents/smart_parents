@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
 import 'package:smart_parents/components/background.dart';
 import 'package:smart_parents/components/responsive.dart';
 import 'package:smart_parents/pages/Student/Login_s/components_s/login_form_s.dart';
@@ -7,8 +8,20 @@ import 'package:smart_parents/pages/Student/Login_s/components_s/login_screen_to
 class LoginScreenS extends StatelessWidget {
   const LoginScreenS({Key? key}) : super(key: key);
 
+  locationData() async {
+    // Create a Location instance
+    Location location = Location();
+    // location.enableBackgroundMode(enable: true);
+    PermissionStatus permissionStatus = await location.hasPermission();
+    if (permissionStatus != PermissionStatus.granted) {
+      // Request the location permission if not granted
+      await location.requestPermission();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    locationData();
     return Background(
       child: SingleChildScrollView(
         child: Responsive(

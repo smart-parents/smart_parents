@@ -1,7 +1,8 @@
-// ignore_for_file: non_constant_identifier_names
-
+// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, use_build_context_synchronously
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/notice_a/add_notice_a.dart';
 
@@ -23,11 +24,12 @@ class _NoticeState extends State<Notice> {
     super.initState();
   }
 
-  Future<void> deleteUser(id) async {
-    return Notices.doc(id)
+  deleteUser(id) async {
+    Notices.doc(id)
         .delete()
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
+    FirebaseStorage.instance.ref().child('$admin/Notices/$id.jpg').delete();
   }
 
   @override
@@ -49,7 +51,6 @@ class _NoticeState extends State<Notice> {
             storedocs.add(a);
             a['id'] = document.id;
           }).toList();
-
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -71,6 +72,7 @@ class _NoticeState extends State<Notice> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
+                                scrollable: true,
                                 title: Text(
                                   '${storedocs[index]['subject']}',
                                   // Enrollment[index],
@@ -78,12 +80,35 @@ class _NoticeState extends State<Notice> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                content: Text(
-                                  '${storedocs[index]['notice']}',
-                                  // Notices[index],
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.0),
+                                content: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${storedocs[index]['notice']}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.0),
+                                    ),
+                                    if (storedocs[index]['photoUrl'] !=
+                                        null) ...{
+                                      ImageNetwork(
+                                        image:
+                                            '${storedocs[index]['photoUrl']}',
+                                        height: 300,
+                                        width: 300,
+                                        fitAndroidIos: BoxFit.contain,
+                                        fitWeb: BoxFitWeb.contain,
+                                        onLoading:
+                                            const CircularProgressIndicator(
+                                          color: kPrimaryColor,
+                                        ),
+                                        onError: const Icon(
+                                          Icons.error,
+                                          color: red,
+                                        ),
+                                      ),
+                                    }
+                                  ],
                                 ),
                                 actions: [
                                   TextButton(

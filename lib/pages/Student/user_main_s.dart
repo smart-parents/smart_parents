@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +12,7 @@ import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Student/Schedule/schedule_u.dart';
 import 'package:smart_parents/pages/Student/attendance.dart';
 import 'package:smart_parents/pages/Student/chat_s.dart';
+import 'package:smart_parents/pages/Student/dashboard_s.dart';
 import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
 import 'package:smart_parents/pages/Student/profile_screen_s.dart';
 
@@ -28,9 +28,16 @@ class _UserMainState extends State<UserMainS> {
   @override
   void initState() {
     adminget();
-    FlutterBackgroundService().startService();
     super.initState();
   }
+
+  // final storage = new FlutterSecureStorage();
+  static final List<Widget> _widgetOptions = <Widget>[
+    const DashboardS(),
+    const Attendance_screen(),
+    const ChatScreen(),
+    const Profile_screenS()
+  ];
 
   adminget() async {
     final SharedPreferences prefs = await _prefs;
@@ -56,24 +63,6 @@ class _UserMainState extends State<UserMainS> {
     }
     print(branch);
   }
-
-  // final storage = new FlutterSecureStorage();
-  static final List<Widget> _widgetOptions = <Widget>[
-    const Text("Dashboard"),
-    const Attendance_screen(),
-    const ChatScreen(),
-    // DoubleBackToCloseApp(
-    //   child: Scaffold(
-    //     appBar: AppBar(
-    //       title: const Text('My App'),
-    //     ),
-    //     body: const Center(
-    //       child: Text('Hello, world!'),
-    //     ),
-    //   ),
-    // ),
-    const Profile_screenS()
-  ];
 
   void _onItemTapped(int index) {
     setState(() {

@@ -1,9 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, deprecated_member_use
 
-import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/constants.dart';
@@ -64,9 +63,7 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  late File _imageFile;
   bool _uploading = false;
-  String? _imageUrl;
 
   void _loadPhotoUrl() async {
     // final user = FirebaseAuth.instance.currentUser;
@@ -77,36 +74,59 @@ class _ProfileState extends State<Profile> {
     });
   }
 
-  Future _pickImage() async {
-    final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
-    setState(() {
-      _imageFile = File(pickedFile!.path);
-      _uploadImage();
-    });
+  Uint8List? _imageFile;
+  String? _imageUrl;
+
+  Future<void> pickImage() async {
+    final picker = ImagePicker();
+    try {
+      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        if (kIsWeb) {
+          final bytes = await pickedFile.readAsBytes();
+          setState(() {
+            _imageFile = bytes;
+            uploadImage();
+          });
+        } else {
+          final bytes = await pickedFile.readAsBytes();
+          setState(() {
+            _imageFile = bytes;
+            uploadImage();
+          });
+        }
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
-  Future _uploadImage() async {
+  Future<void> uploadImage() async {
     setState(() {
       _uploading = true;
     });
-
+    if (_imageFile == null) {
+      return;
+    }
     final user = FirebaseAuth.instance.currentUser;
-    final ref =
-        FirebaseStorage.instance.ref().child('profile_photos/${user!.uid}.jpg');
-    final uploadTask = ref.putFile(_imageFile);
-    final snapshot = await uploadTask.whenComplete(() {});
-    final downloadUrl = await snapshot.ref.getDownloadURL();
+    final storageRef = FirebaseStorage.instance
+        .ref()
+        .child('$admin/profile_photos/${user!.uid}.jpg');
+    final UploadTask uploadTask = storageRef.putData(_imageFile!);
 
+    final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() => null);
+
+    final url = (await downloadUrl.ref.getDownloadURL());
     await FirebaseFirestore.instance
         .collection('Admin')
         .doc(id)
-        .update({'photoUrl': downloadUrl});
-
+        .update({'photoUrl': url});
     setState(() {
-      _imageUrl = downloadUrl;
+      _imageUrl = url;
       _uploading = false;
     });
+
+    print('Image uploaded to Firebase Storage: $_imageUrl');
   }
 
   Widget _buildPhotoWidget() {
@@ -114,14 +134,8 @@ class _ProfileState extends State<Profile> {
       return const Center(child: CircularProgressIndicator());
     } else if (_imageUrl != null) {
       return GestureDetector(
-        onTap: _pickImage,
-        child:
-            //  CachedNetworkImage(
-            //   imageUrl: _imageUrl!,
-            //   placeholder: (context, url) => const CircularProgressIndicator(),
-            //   errorWidget: (context, url, error) => const Icon(Icons.error),
-            // ),
-            ImageNetwork(
+        onTap: pickImage,
+        child: ImageNetwork(
           image: _imageUrl!,
           height: 100,
           width: 100,
@@ -134,7 +148,7 @@ class _ProfileState extends State<Profile> {
             Icons.error,
             color: red,
           ),
-          onTap: _pickImage,
+          onTap: pickImage,
         ),
       );
     } else {
@@ -198,7 +212,7 @@ class _ProfileState extends State<Profile> {
                     //   backgroundImage: AssetImage('assets/images/man.png'),
                     // ),
                     GestureDetector(
-                      onTap: _pickImage,
+                      onTap: pickImage,
                       child: Container(
                         height: 100,
                         width: 100,

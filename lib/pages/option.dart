@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:smart_parents/components/background.dart';
 import 'package:smart_parents/components/responsive.dart';
 import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
@@ -7,9 +8,7 @@ import 'package:smart_parents/pages/Parents/Login_p/login_screen_p.dart';
 import 'package:smart_parents/pages/Student/Login_s/login_screen_s.dart';
 
 class Option extends StatefulWidget {
-  const Option({
-    Key? key,
-  }) : super(key: key);
+  const Option({Key? key}) : super(key: key);
 
   @override
   State<Option> createState() => _OptionState();
@@ -17,15 +16,24 @@ class Option extends StatefulWidget {
 
 class _OptionState extends State<Option> {
   @override
+  void initState() {
+    // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    //     FlutterLocalNotificationsPlugin();
+    // flutterLocalNotificationsPlugin
+    //     .resolvePlatformSpecificImplementation<
+    //         AndroidFlutterLocalNotificationsPlugin>()!
+    //     .requestPermission();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
     return Background(
       child: SafeArea(
         child: Responsive(
           mobile: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            // mainAxisSize: MainAxisSize.max,
             children: [
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,

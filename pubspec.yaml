@@ -16,12 +16,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-# Android:
-  # flutter_local_notifications: ^13.0.0
-
-# Web:
-  # flutter_dropzone: ^3.0.5
-
 # Android & Web:
   firebase_auth: ^4.4.0
   firebase_core: ^2.9.0
@@ -35,41 +29,45 @@ dependencies:
   pdf: ^3.10.1
   printing: ^5.10.3
   image_picker: ^0.8.7+1
-  file_picker: ^5.2.6
+  file_picker: ^5.2.7
   fluttertoast: ^8.2.1
   dotted_border: ^2.0.0+3
   awesome_dialog: ^3.0.2
   image_network: ^2.5.1
   url_launcher: ^6.1.10
   table_calendar: ^3.0.8
-  flutter_map: ^3.1.0
-  latlong2: ^0.8.1
   location: ^4.4.0
-  google_maps_flutter: ^2.2.5
-  flutter_background_service: ^2.4.6
 
-  # google_maps_flutter_web: ^0.4.0+7
-  # geolocator: ^9.0.2
-  # latlong: ^0.6.1
+  # flutter_map: ^3.1.0
+  # latlong2: ^0.8.1
   # table_calendar: ^3.0.9
   # firebase_messaging: ^14.4.0
   # excel: ^2.1.0
+
+# Android:
+  google_maps_flutter: ^2.2.5
+  flutter_background_service: ^2.4.6
+  flutter_local_notifications: ^13.0.0
+
+# Web:
+  # flutter_dropzone: ^3.0.5
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-# Android:
-  flutter_launcher_icons: ^0.12.0
-
-# Web:
-
 # Android & Web:
   flutter_lints: ^2.0.1
+
+# Android:
+  flutter_launcher_icons: ^0.13.0
+
+# Web:
 
 flutter_icons:
   # android: true
   android: "launcher_icon"
+  remove_alpha_ios: true
   ios: true
   image_path: "assets/images/Final.png"
   web:

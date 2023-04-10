@@ -106,12 +106,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(30),
               ),
-              // child: Image.asset('assets/images/file_name.png')
-              child: IconButton(
-                icon: Image.asset('assets/images/Final.png'),
-                onPressed: () {},
-                iconSize: 1000,
-              ),
+              child: Image.asset('assets/images/Final.png'),
             ),
           ),
         ),
@@ -141,90 +136,3 @@ class PageTransition extends PageRouteBuilder {
           },
         );
 }
-
-// class SecondPage extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       appBar: AppBar(
-//         brightness: Brightness.dark,
-//         backgroundColor: Colors.deepPurple,
-//         centerTitle: true,
-//         title: Text(
-//           'Your Welocome, Smart Parents ',
-//           style: TextStyle(
-//             color: Colors.white,
-//             fontWeight: FontWeight.bold,
-//             fontSize: 20,
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// backup code
-
-// import 'dart:async';
-
-// import 'package:flutter/material.dart';
-// // import 'package:smart_parents/pages/Welcome/welcome_screen.dart';
-// import 'package:smart_parents/pages/option.dart';
-
-// class TimeImage extends StatefulWidget {
-//   const TimeImage({Key? key}) : super(key: key);
-//   @override
-//   State<TimeImage> createState() => _TimeImageState();
-// }
-
-// class _TimeImageState extends State<TimeImage> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     Timer(
-//         const Duration(seconds: 5),
-//         () => Navigator.of(context).pushReplacement(
-//             MaterialPageRoute(builder: (context) => const Option())));
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: SizedBox(
-//         width: MediaQuery.of(context).size.width,
-//         height: MediaQuery.of(context).size.height,
-//         child: Stack(
-//           alignment: AlignmentDirectional.center,
-//           children: [
-//             Column(
-//               mainAxisSize: MainAxisSize.min,
-//               children: [
-//                 Padding(
-//                   padding: const EdgeInsets.only(top: 10.0),
-//                   child: Image.asset(
-//                     "assets/images/welcome.png",
-//                     fit: BoxFit.cover,
-//                     height: 350,
-//                     width: 350,
-//                   ),
-//                 ),
-//                 SizedBox(
-//                   height: 100,
-//                 ),
-//                 Text(
-//                   "SMART PARENTS",
-//                   style: TextStyle(
-//                     color: Color.fromARGB(255, 0, 0, 0),
-//                     fontSize: 40,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

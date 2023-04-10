@@ -10,9 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/attendance_show.dart';
-import 'package:smart_parents/pages/Parents/chatgpt_location.dart';
 import 'package:smart_parents/pages/Parents/contact_faculty.dart';
-import 'package:smart_parents/pages/Parents/location.dart';
+import 'package:smart_parents/pages/Parents/livelocation.dart';
 import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
@@ -57,7 +56,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
         child = doc.get('child');
       }
     }
-    print(branch);
+    print(child);
     final snahot = await FirebaseFirestore.instance
         .collection('Admin/$admin/students')
         .where('number', isEqualTo: child)
@@ -349,7 +348,11 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
               ListTile(
                 leading: const Icon(Icons.paste),
                 title: const Text("View Your Child Result"),
-                onTap: () {},
+                onTap: () {
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const LiveLocationMap(),
+                  // ));
+                },
               ),
               ListTile(
                 leading: const Icon(Icons.money),
@@ -364,9 +367,9 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 leading: const Icon(Icons.insert_drive_file_outlined),
                 title: const Text("View Exam Info"),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const LiveLocationPage(),
-                  ));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const LiveLocationPage(),
+                  // ));
                 },
               ),
               ListTile(
@@ -374,7 +377,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 title: const Text("Get Your Child Location"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const LiveLocationMap(),
+                    builder: (context) => const ChildLocation(),
                   ));
                 },
               ),
