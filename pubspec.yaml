@@ -28,8 +28,8 @@ dependencies:
   google_fonts: ^4.0.3
   pdf: ^3.10.1
   printing: ^5.10.3
-  image_picker: ^0.8.7+1
-  file_picker: ^5.2.7
+  image_picker: ^0.8.7+2
+  file_picker: ^5.2.8
   fluttertoast: ^8.2.1
   dotted_border: ^2.0.0+3
   awesome_dialog: ^3.0.2
@@ -51,7 +51,7 @@ dependencies:
   flutter_local_notifications: ^13.0.0
 
 # Web:
-  # flutter_dropzone: ^3.0.5
+  flutter_dropzone: ^3.0.5
   
 dev_dependencies:
   flutter_test:

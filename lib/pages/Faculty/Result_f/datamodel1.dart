@@ -1,22 +1,22 @@
-// class DataModel {
-//   final String name;
-//   final String mime;
-//   final int bytes;
-//   final String url;
+class DataModel {
+  final String name;
+  final String mime;
+  final int bytes;
+  final String url;
 
-//   DataModel({
-//     required this.name,
-//     required this.mime,
-//     required this.bytes,
-//     required this.url,
-//   });
+  DataModel({
+    required this.name,
+    required this.mime,
+    required this.bytes,
+    required this.url,
+  });
 
-//   String get size {
-//     final kb = bytes / 1024;
-//     final mb = kb / 1024;
+  String get size {
+    final kb = bytes / 1024;
+    final mb = kb / 1024;
 
-//     return mb > 1
-//         ? '${mb.toStringAsFixed(2)}MB'
-//         : '${kb.toStringAsFixed(2)} KB';
-//   }
-// }
+    return mb > 1
+        ? '${mb.toStringAsFixed(2)}MB'
+        : '${kb.toStringAsFixed(2)} KB';
+  }
+}

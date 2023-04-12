@@ -85,9 +85,9 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(children: [
-                const SizedBox(
-                  height: 30,
-                ),
+                // const SizedBox(
+                //   height: 30,
+                // ),
                 dropdown(
                     DropdownValue: semesterdropdownValue,
                     sTring: Semester,

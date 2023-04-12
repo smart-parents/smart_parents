@@ -2,21 +2,23 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/Result_f/Result_u.dart';
+import 'package:smart_parents/pages/Faculty/Result_f/result_u.dart';
+import 'package:smart_parents/pages/Faculty/Result_f/result_u1.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/schedule_u.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
+import 'package:smart_parents/pages/Faculty/exam_f/exam.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
 import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
 import 'package:smart_parents/pages/Faculty/chat_f.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendance_display_f.dart';
-// import 'package:smart_parents/pages/Faculty/attendencepages/att.dart';
 
 class UserMainF extends StatefulWidget {
   const UserMainF({Key? key}) : super(key: key);
@@ -341,8 +343,21 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 leading: const Icon(Icons.receipt),
                 title: const Text("Add Result"),
                 onTap: () {
+                  kIsWeb
+                      ? Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DropAreaPageWeb(),
+                        ))
+                      : Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DropAreaPageAndroid(),
+                        ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.receipt),
+                title: const Text("Add Exam"),
+                onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const DropAreaPage(),
+                    builder: (context) => const Exam(),
                   ));
                 },
               ),

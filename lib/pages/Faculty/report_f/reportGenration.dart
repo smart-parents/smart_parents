@@ -133,9 +133,9 @@ class _ReportGenrationState extends State<ReportGenration> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(children: [
-                const SizedBox(
-                  height: 30,
-                ),
+                // const SizedBox(
+                //   height: 30,
+                // ),
                 // dropdown(
                 //     DropdownValue: items.toString(),
                 //     sTring: Branch,
@@ -194,9 +194,9 @@ class _ReportGenrationState extends State<ReportGenration> {
                 //     ),
                 //   ],
                 // ),
-                const SizedBox(
-                  height: 20,
-                ),
+                // const SizedBox(
+                //   height: 20,
+                // ),
                 // dropdown(
                 //     DropdownValue: yeardropdownValue,
                 //     sTring: CollegeYear,
@@ -290,10 +290,11 @@ class _ReportGenrationState extends State<ReportGenration> {
                     // ),
                     // date picker
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        const SizedBox(
-                          width: 50,
-                        ),
+                        // const SizedBox(
+                        //   width: 50,
+                        // ),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
@@ -318,9 +319,9 @@ class _ReportGenrationState extends State<ReportGenration> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          width: 70,
-                        ),
+                        // const SizedBox(
+                        //   width: 70,
+                        // ),
                         Column(
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[

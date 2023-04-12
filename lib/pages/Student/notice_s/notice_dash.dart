@@ -1,8 +1,11 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/components/imageshow.dart';
 
 class Notice extends StatefulWidget {
   const Notice({Key? key}) : super(key: key);
@@ -66,12 +69,52 @@ class _NoticeState extends State<Notice> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                content: Text(
-                                  '${storedocs[index]['notice']}',
-                                  // Notices[index],
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15.0),
+                                content: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${storedocs[index]['notice']}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15.0),
+                                    ),
+                                    if (storedocs[index]['photoUrl'] !=
+                                        null) ...{
+                                      GestureDetector(
+                                        onTap: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  FullScreenImageScreen(
+                                                imageUrl: storedocs[index]
+                                                    ['photoUrl'],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: kIsWeb
+                                            ? ImageNetwork(
+                                                image:
+                                                    '${storedocs[index]['photoUrl']}',
+                                                height: 300,
+                                                width: 300,
+                                                fitAndroidIos: BoxFit.contain,
+                                                fitWeb: BoxFitWeb.contain,
+                                                onLoading:
+                                                    const CircularProgressIndicator(
+                                                  color: kPrimaryColor,
+                                                ),
+                                                onError: const Icon(
+                                                  Icons.error,
+                                                  color: red,
+                                                ),
+                                              )
+                                            : Image.network(
+                                                storedocs[index]['photoUrl'],
+                                              ),
+                                      ),
+                                    }
+                                  ],
                                 ),
                                 actions: [
                                   TextButton(

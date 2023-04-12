@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/widgest/dropDownWidget.dart';
 
 class AddStudentPage extends StatefulWidget {
   const AddStudentPage({Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
           'password': password,
           'branch': Branch,
           'status': true,
-          'sem': sem
+          'sem': semesterdropdownValue
         })
         .then((value) => print('student Added'))
         .catchError((error) => print('Failed to Add user: $error'));
@@ -177,6 +178,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
               // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
               final items =
                   snapshot.data!.docs.map((doc) => doc.get('name')).toList();
+              // Branch = items[0];
               return Form(
                 key: _formKey,
                 child: Padding(
@@ -184,6 +186,14 @@ class _AddStudentPageState extends State<AddStudentPage> {
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
                   child: ListView(
                     children: [
+                      const Text(
+                        'Branch',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
@@ -230,6 +240,13 @@ class _AddStudentPageState extends State<AddStudentPage> {
                       const SizedBox(
                         height: 20,
                       ),
+                      dropdown(
+                          DropdownValue: semesterdropdownValue,
+                          sTring: Semester,
+                          Hint: "Semester"),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10.0),
                         child: TextFormField(
@@ -272,29 +289,29 @@ class _AddStudentPageState extends State<AddStudentPage> {
                           },
                         ),
                       ),
-                      Container(
-                        margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: TextFormField(
-                          maxLength: 1,
-                          autofocus: false,
-                          decoration: const InputDecoration(
-                            labelText: 'Semester: ',
-                            labelStyle: TextStyle(fontSize: 20.0),
-                            border: OutlineInputBorder(),
-                            errorStyle: TextStyle(fontSize: 15),
-                          ),
-                          keyboardType: TextInputType.number,
-                          controller: semController,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please Enter Semester';
-                            } else if (value.length != 1) {
-                              return 'Please Enter Valid Semester';
-                            }
-                            return null;
-                          },
-                        ),
-                      ),
+                      // Container(
+                      //   margin: const EdgeInsets.symmetric(vertical: 10.0),
+                      //   child: TextFormField(
+                      //     maxLength: 1,
+                      //     autofocus: false,
+                      //     decoration: const InputDecoration(
+                      //       labelText: 'Semester: ',
+                      //       labelStyle: TextStyle(fontSize: 20.0),
+                      //       border: OutlineInputBorder(),
+                      //       errorStyle: TextStyle(fontSize: 15),
+                      //     ),
+                      //     keyboardType: TextInputType.number,
+                      //     controller: semController,
+                      //     validator: (value) {
+                      //       if (value == null || value.isEmpty) {
+                      //         return 'Please Enter Semester';
+                      //       } else if (value.length != 1) {
+                      //         return 'Please Enter Valid Semester';
+                      //       }
+                      //       return null;
+                      //     },
+                      //   ),
+                      // ),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10.0),
                         child: TextFormField(
@@ -340,7 +357,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
                                   name = nameController.text;
                                   number = numberController.text;
                                   password = passwordController.text;
-                                  sem = semController.text;
+                                  // sem = semController.text;
                                   registration();
                                   // Navigator.pop(context);
                                 });

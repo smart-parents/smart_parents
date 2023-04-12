@@ -1,6 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, use_build_context_synchronously
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/constants.dart';
@@ -93,33 +94,37 @@ class _NoticeState extends State<Notice> {
                                     if (storedocs[index]['photoUrl'] !=
                                         null) ...{
                                       GestureDetector(
-                                        onDoubleTap: () {
+                                        onTap: () {
                                           Navigator.of(context).push(
                                             MaterialPageRoute(
                                               builder: (BuildContext context) =>
-                                                  ZoomableImageScreen(
+                                                  FullScreenImageScreen(
                                                 imageUrl: storedocs[index]
                                                     ['photoUrl'],
                                               ),
                                             ),
                                           );
                                         },
-                                        child: ImageNetwork(
-                                          image:
-                                              '${storedocs[index]['photoUrl']}',
-                                          height: 300,
-                                          width: 300,
-                                          fitAndroidIos: BoxFit.contain,
-                                          fitWeb: BoxFitWeb.contain,
-                                          onLoading:
-                                              const CircularProgressIndicator(
-                                            color: kPrimaryColor,
-                                          ),
-                                          onError: const Icon(
-                                            Icons.error,
-                                            color: red,
-                                          ),
-                                        ),
+                                        child: kIsWeb
+                                            ? ImageNetwork(
+                                                image:
+                                                    '${storedocs[index]['photoUrl']}',
+                                                height: 300,
+                                                width: 300,
+                                                fitAndroidIos: BoxFit.contain,
+                                                fitWeb: BoxFitWeb.contain,
+                                                onLoading:
+                                                    const CircularProgressIndicator(
+                                                  color: kPrimaryColor,
+                                                ),
+                                                onError: const Icon(
+                                                  Icons.error,
+                                                  color: red,
+                                                ),
+                                              )
+                                            : Image.network(
+                                                storedocs[index]['photoUrl'],
+                                              ),
                                       ),
                                     }
                                   ],

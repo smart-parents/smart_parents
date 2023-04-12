@@ -9,14 +9,14 @@ import 'package:smart_parents/pages/Faculty/Result_f/DataModel.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 import 'package:path/path.dart';
 
-class DropAreaPage extends StatefulWidget {
-  const DropAreaPage({super.key});
+class DropAreaPageAndroid extends StatefulWidget {
+  const DropAreaPageAndroid({super.key});
 
   @override
-  State<DropAreaPage> createState() => _DropAreaPageState();
+  State<DropAreaPageAndroid> createState() => _DropAreaPageAndroidState();
 }
 
-class _DropAreaPageState extends State<DropAreaPage> {
+class _DropAreaPageAndroidState extends State<DropAreaPageAndroid> {
   DataModel? task;
   File? file;
 
