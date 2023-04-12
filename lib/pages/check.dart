@@ -29,7 +29,12 @@ class _CheckState extends State<Check> {
       loggedIn = false;
     }
     if (loggedIn) {
-      // final String? action = prefs.getString('uid');
+      final String? action = prefs.getString('uid');
+      if (action != user.uid) {
+        await prefs.clear();
+        FirebaseAuth.instance.signOut();
+        return true;
+      }
       final String? id = prefs.getString('id');
       DocumentSnapshot<Map<String, dynamic>> snapshot =
           await FirebaseFirestore.instance.collection('Users').doc(id).get();

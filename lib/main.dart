@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:smart_parents/pages/TimeImage1.dart';
+import 'package:http/http.dart' as http;
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:location/location.dart';
@@ -31,10 +32,27 @@ Future<void> main() async {
   } else {
     await Firebase.initializeApp();
   }
+  makeHttpGetRequest();
   // await initializeService();
   runApp(const MyApp());
 }
 
+Future<void> makeHttpGetRequest() async {
+  final response = await http.get(
+    Uri.parse(
+        'https://smart-parents-11c8b-default-rtdb.firebaseio.com'), // Replace with your backend server URL
+    headers: {
+      'Content-Type': 'application/json', // Set appropriate Content-Type header
+      'Access-Control-Allow-Origin': '*', // Set appropriate CORS headers
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+      'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
+    },
+  );
+
+  // Handle response
+  print('Response status: ${response.statusCode}');
+  print('Response body: ${response.body}');
+}
 // Future<void> initializeService() async {
 //   final service = FlutterBackgroundService();
 //   await service.configure(

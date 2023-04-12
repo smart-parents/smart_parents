@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/components/imageshow.dart';
 import 'package:smart_parents/pages/Admin/notice_a/add_notice_a.dart';
 
 class Notice extends StatefulWidget {
@@ -91,20 +92,33 @@ class _NoticeState extends State<Notice> {
                                     ),
                                     if (storedocs[index]['photoUrl'] !=
                                         null) ...{
-                                      ImageNetwork(
-                                        image:
-                                            '${storedocs[index]['photoUrl']}',
-                                        height: 300,
-                                        width: 300,
-                                        fitAndroidIos: BoxFit.contain,
-                                        fitWeb: BoxFitWeb.contain,
-                                        onLoading:
-                                            const CircularProgressIndicator(
-                                          color: kPrimaryColor,
-                                        ),
-                                        onError: const Icon(
-                                          Icons.error,
-                                          color: red,
+                                      GestureDetector(
+                                        onDoubleTap: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                              builder: (BuildContext context) =>
+                                                  ZoomableImageScreen(
+                                                imageUrl: storedocs[index]
+                                                    ['photoUrl'],
+                                              ),
+                                            ),
+                                          );
+                                        },
+                                        child: ImageNetwork(
+                                          image:
+                                              '${storedocs[index]['photoUrl']}',
+                                          height: 300,
+                                          width: 300,
+                                          fitAndroidIos: BoxFit.contain,
+                                          fitWeb: BoxFitWeb.contain,
+                                          onLoading:
+                                              const CircularProgressIndicator(
+                                            color: kPrimaryColor,
+                                          ),
+                                          onError: const Icon(
+                                            Icons.error,
+                                            color: red,
+                                          ),
                                         ),
                                       ),
                                     }
