@@ -11,6 +11,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/attendance_show.dart';
 import 'package:smart_parents/pages/Parents/contact_faculty.dart';
+import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
 import 'package:smart_parents/pages/Parents/livelocation.dart';
 import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/parents_home.dart';
@@ -367,9 +368,9 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 leading: const Icon(Icons.insert_drive_file_outlined),
                 title: const Text("View Exam Info"),
                 onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const LiveLocationPage(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Exam(),
+                  ));
                 },
               ),
               ListTile(

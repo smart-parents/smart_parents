@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Parents/contact_faculty.dart';
+import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
+import 'package:smart_parents/pages/Parents/livelocation.dart';
 
 class Parents_home extends StatefulWidget {
   const Parents_home({super.key});
@@ -83,7 +85,11 @@ class _Parents_homeState extends State<Parents_home> {
             // margin: const EdgeInsets.all(20),
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
             child: ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const Exam(),
+                ))
+              },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
                 // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
@@ -99,7 +105,11 @@ class _Parents_homeState extends State<Parents_home> {
             // margin: const EdgeInsets.all(20),
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
             child: ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ChildLocation(),
+                ))
+              },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
                 // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
