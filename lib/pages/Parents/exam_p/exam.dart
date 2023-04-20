@@ -17,7 +17,7 @@ class _ExamState extends State<Exam> {
         stream: FirebaseFirestore.instance
             .collection('Admin/$admin/exams')
             .where('branch', isEqualTo: branch)
-            .where('sem', isEqualTo: sem)
+            .where('batch', isEqualTo: batch)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
@@ -87,19 +87,19 @@ class _ExamState extends State<Exam> {
                                       fontSize: 20.0),
                                 ),
                                 Text(
-                                  'Sem: ${storedocs[index]['sem']}',
+                                  'Batch(Starting Year): ${storedocs[index]['batch']}',
                                   // Enrollment[index],
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20.0),
                                 ),
-                                Text(
-                                  'Year: ${storedocs[index]['year']}',
-                                  // Enrollment[index],
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20.0),
-                                ),
+                                // Text(
+                                //   'Year: ${storedocs[index]['year']}',
+                                //   // Enrollment[index],
+                                //   style: const TextStyle(
+                                //       fontWeight: FontWeight.bold,
+                                //       fontSize: 20.0),
+                                // ),
                               ],
                             ),
                           ),

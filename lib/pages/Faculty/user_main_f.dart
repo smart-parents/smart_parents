@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, must_be_immutable, prefer_typing_uninitialized_variables
+// ignore_for_file: library_private_types_in_public_api, must_be_immutable, prefer_typing_uninitialized_variables, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,18 +7,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/Result_f/result_u.dart';
+import 'package:smart_parents/pages/Faculty/Result_f/result_f.dart';
 import 'package:smart_parents/pages/Faculty/Result_f/result_u1.dart';
-import 'package:smart_parents/pages/Faculty/Schedule/schedule_u.dart';
+import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
+import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdownpage2.dart';
+import 'package:smart_parents/pages/Faculty/chat_parents_f.dart';
 import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/exam_f/exam.dart';
+import 'package:smart_parents/pages/Faculty/parents_f/parents_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
 import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
-import 'package:smart_parents/pages/Faculty/chat_f.dart';
+import 'package:smart_parents/pages/Faculty/chat_student_f.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendance_display_f.dart';
+import 'package:smart_parents/pages/option.dart';
 
 class UserMainF extends StatefulWidget {
   const UserMainF({Key? key}) : super(key: key);
@@ -39,6 +44,34 @@ class _UserMainState extends State<UserMainF> {
   void initState() {
     adminget();
     super.initState();
+    subscribeUserForNotifications();
+  }
+
+  Future<void> subscribeUserForNotifications() async {
+    final SharedPreferences prefs = await _prefs;
+    var id = prefs.getString('id');
+    // Check if the user has provided privacy consent
+    bool userProvidedPrivacyConsent =
+        await OneSignal.shared.userProvidedPrivacyConsent();
+    if (!userProvidedPrivacyConsent) {
+      print(
+          "User has not provided privacy consent yet. Cannot subscribe for notifications.");
+      return;
+    }
+
+    // Prompt the user to enable notifications
+    await OneSignal.shared.promptUserForPushNotificationPermission();
+
+    // Retrieve the user's device token
+    String deviceToken = await OneSignal.shared
+        .getDeviceState()
+        .then((deviceState) => deviceState!.userId!);
+
+    // Subscribe the user to notifications
+    await FirebaseFirestore.instance
+        .collection('Users')
+        .doc(id)
+        .set({'notification_tokens': deviceToken}, SetOptions(merge: true));
   }
 
   adminget() async {
@@ -69,8 +102,8 @@ class _UserMainState extends State<UserMainF> {
   // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
-    const ShowSchedule(),
-    const ChatScreen(),
+    // const ShowSchedule(),
+    // const ChatScreen(),
     const ProfileF()
   ];
 
@@ -78,6 +111,12 @@ class _UserMainState extends State<UserMainF> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  delete() async {
+    final SharedPreferences prefs = await _prefs;
+    final success = await prefs.clear();
+    print(success);
   }
 
   @override
@@ -101,6 +140,58 @@ class _UserMainState extends State<UserMainF> {
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             title: const Text('Home'),
+            actions: [
+              IconButton(
+                onPressed: () async => {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Confirm Logout"),
+                        content: const Text("Are you sure you want to logout?"),
+                        actions: [
+                          TextButton(
+                            child: const Text("Cancel"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text("Logout"),
+                            onPressed: () async {
+                              // Perform the deletion here
+                              // ...
+                              try {
+                                await FirebaseAuth.instance.signOut();
+                                delete();
+                                // await storage.delete(key: "uid"),
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Option(),
+                                    ),
+                                    (route) => false);
+                              } catch (e) {
+                                print(e);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Failed to logout: $e')),
+                                );
+                              }
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  )
+                },
+                icon: const Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
           drawer: const NavigationDrawer(),
           body: _widgetOptions.elementAt(_selectedIndex),
@@ -124,6 +215,7 @@ class _UserMainState extends State<UserMainF> {
                   // gap: 8,
                   activeColor: Colors.white,
                   iconSize: 24,
+                  // style: GnavStyle.oldSchool,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   // tabMargin: EdgeInsets.symmetric(horizontal: 50),
@@ -135,14 +227,14 @@ class _UserMainState extends State<UserMainF> {
                       icon: Icons.home,
                       text: 'Home',
                     ),
-                    GButton(
-                      icon: Icons.schedule,
-                      text: 'Schedule',
-                    ),
-                    GButton(
-                      icon: Icons.chat,
-                      text: 'Chat',
-                    ),
+                    // GButton(
+                    //   icon: Icons.schedule,
+                    //   text: 'Schedule',
+                    // ),
+                    // GButton(
+                    //   icon: Icons.chat,
+                    //   text: 'Chat',
+                    // ),
                     GButton(
                       icon: Icons.account_circle,
                       text: 'Profile',
@@ -267,94 +359,89 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           // buildHeader(context),
           Material(
             color: kPrimaryColor,
-            child: InkWell(
-              onTap: () {},
-              child: Container(
-                padding: EdgeInsets.only(
-                    top: 24 + MediaQuery.of(context).padding.top, bottom: 24),
-                child: Column(
-                  children: [
-                    // Image.asset('assets/images/man.png', fit: BoxFit.cover),
-                    // const CircleAvatar(
-                    //   radius: 40,
-                    //   backgroundImage: AssetImage('assets/images/man.png'),
-                    // ),
-                    Container(
-                      height: 100,
-                      width: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Colors.grey, width: 2),
-                      ),
-                      child: ClipOval(
-                        child: _buildPhotoWidget(),
-                      ),
+            child: Container(
+              padding: EdgeInsets.only(
+                  top: 20 + MediaQuery.of(context).padding.top, bottom: 20),
+              child: Column(
+                children: [
+                  // Image.asset('assets/images/man.png', fit: BoxFit.cover),
+                  // const CircleAvatar(
+                  //   radius: 40,
+                  //   backgroundImage: AssetImage('assets/images/man.png'),
+                  // ),
+                  Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.grey, width: 2),
                     ),
-                    const SizedBox(height: 10),
-                    Text(
-                      name,
-                      style: const TextStyle(fontSize: 28, color: Colors.white),
+                    child: ClipOval(
+                      child: _buildPhotoWidget(),
                     ),
-                    Text(
-                      fid,
-                      style: const TextStyle(fontSize: 15, color: Colors.white),
-                    )
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    name,
+                    style: const TextStyle(fontSize: 28, color: Colors.white),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    fid,
+                    style: const TextStyle(fontSize: 15, color: Colors.white),
+                  )
+                ],
               ),
             ),
           ),
           // buildMenuItems(context),
           Wrap(
-            runSpacing: 10,
+            // runSpacing: ,
             children: [
               ListTile(
-                leading: const Icon(Icons.home_outlined),
-                title: const Text("Home"),
+                leading: const Icon(Icons.calendar_month),
+                title: const Text("Add Today's Attendences"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Dashboard(),
+                    builder: (context) => const AttendenceDropdownpage2(),
+                  ));
+                },
+              ),
+              // ListTile(
+              //   // leading: const Icon(Icons.calendar_month),
+              //   leading: const Icon(Icons.assignment),
+              //   title: const Text("Attendence Reports"),
+              //   onTap: () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //       builder: (context) => const ReportGenration(),
+              //     ));
+              //   },
+              // ),
+              ListTile(
+                // leading: const Icon(Icons.calendar_month),
+                leading: const Icon(Icons.chat),
+                title: const Text("Chat with Parents"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ChatParent(),
                   ));
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.calendar_today),
-                title: const Text("Add Today's Attendence"),
+                // leading: const Icon(Icons.calendar_month),
+                leading: const Icon(Icons.chat),
+                title: const Text("Chat with Student"),
                 onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const AttendanceCalendarPage(
-                  //     sub: 'PHP',
-                  //     studentId: '206470316050',
-                  //   ),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ChatStudent(),
+                  ));
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.calendar_month),
-                title: const Text("Attendence Report"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.person_2_outlined),
-                title: const Text("Add Parents"),
-                onTap: () {},
-              ),
-              ListTile(
-                leading: const Icon(Icons.receipt),
-                title: const Text("Add Result"),
-                onTap: () {
-                  kIsWeb
-                      ? Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DropAreaPageWeb(),
-                        ))
-                      : Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const DropAreaPageAndroid(),
-                        ));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.receipt),
-                title: const Text("Add Exam"),
+                leading: const Icon(Icons.school),
+                title: const Text("Manage Exams"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const Exam(),
@@ -362,8 +449,48 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.schedule_outlined),
-                title: const Text("View Attendance"),
+                leading: const Icon(Icons.person_add_alt_1),
+                title: const Text("Manage Parents"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Parent(),
+                  ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.assignment_turned_in),
+                title: const Text("Manage Results"),
+                onTap: () {
+                  kIsWeb
+                      ? Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DropAreaPageWeb(),
+                        ))
+                      : Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Result(),
+                        ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.subject),
+                title: const Text("Manage Subjects"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SubjectF(),
+                  ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.schedule),
+                title: const Text("Schedule"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ShowSchedule(),
+                  ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.event_note),
+                title: const Text("View Attendances"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const AttendanceDisplayPage(
@@ -374,17 +501,8 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.contact_page_outlined),
-                title: const Text("Subjects"),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Subject(),
-                  ));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.home_outlined),
-                title: const Text("Show Student"),
+                leading: const Icon(Icons.people),
+                title: const Text("View Students"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const Show_stu(),

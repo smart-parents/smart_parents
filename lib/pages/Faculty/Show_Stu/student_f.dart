@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import '../../../components/constants.dart';
 
 class StudentF extends StatefulWidget {
-  final String sem;
-  const StudentF({Key? key, required this.sem}) : super(key: key);
+  final String batch;
+  const StudentF({Key? key, required this.batch}) : super(key: key);
   @override
   _StudentFState createState() => _StudentFState();
 }
@@ -42,7 +42,7 @@ class _StudentFState extends State<StudentF> {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Admin/$admin/students')
-            .where("sem", isEqualTo: widget.sem)
+            .where("batch", isEqualTo: widget.batch)
             .where("branch", isEqualTo: branch)
             .snapshots(),
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -217,15 +217,15 @@ class _StudentFState extends State<StudentF> {
                                         child: Column(
                                           children: [
                                             Text(
-                                              'Sem : ${storedocs[index]['sem']}',
+                                              'Batch(Starting Year) : ${storedocs[index]['batch']}',
                                               style:
                                                   const TextStyle(fontSize: 13),
                                             ),
-                                            Text(
-                                              'Year : ${storedocs[index]['year']}',
-                                              style:
-                                                  const TextStyle(fontSize: 13),
-                                            )
+                                            // Text(
+                                            //   'Year : ${storedocs[index]['year']}',
+                                            //   style:
+                                            //       const TextStyle(fontSize: 13),
+                                            // )
                                           ],
                                         ),
                                       ),

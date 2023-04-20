@@ -21,7 +21,7 @@ class _AddDepartPageState extends State<AddDepartPage> {
   final _formKey = GlobalKey<FormState>();
   var name = "";
   var departmentId = "";
-  var semno = "";
+  // var semno = "";
 
   @override
   void initState() {

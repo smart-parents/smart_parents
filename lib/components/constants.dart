@@ -14,7 +14,8 @@ var background = 'assets/images/background.jpg';
 
 var admin;
 var branch;
-var sem;
+// var sem;
+var batch;
 var child;
 
 const kPrimaryColor = Color(0xFF255674);
@@ -30,30 +31,34 @@ const kSendButtonTextStyle = TextStyle(
   fontSize: 18.0,
 );
 
-const kMessageTextFieldDecoration = InputDecoration(
-  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+InputDecoration kMessageTextFieldDecoration = InputDecoration(
+  // fillColor: Colors.white,
+  filled: true,
+  fillColor: kPrimaryLightColor,
+  contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
   hintText: 'Type your message here...',
-  hintStyle: TextStyle(color: Colors.grey),
+  hintStyle: TextStyle(color: Colors.grey[800]),
   border: InputBorder.none,
 );
 
 const kMessageContainerDecoration = BoxDecoration(
+  color: kPrimaryLightColor,
   border: Border(
     top: BorderSide(color: kPrimaryColor, width: 2.0),
   ),
 );
 
-List<String> Semester = [
-  "1",
-  "2",
-  "3",
-  "4",
-  "5",
-  "6",
-  // "7",
-  // "8",
-];
-List<String> Batch = ["A", "B", "C", "All"];
+// List<String> Semester = [
+//   "1",
+//   "2",
+//   "3",
+//   "4",
+//   "5",
+//   "6",
+//   // "7",
+//   // "8",
+// ];
+// List<String> Batch = ["A", "B", "C", "All"];
 List<String> Days = [
   "Sunday",
   "Monday",
@@ -63,12 +68,14 @@ List<String> Days = [
   "Friday",
   "Saturday"
 ];
-List<String> CollegeYear = ["2020", "2021", "2022", "2023"];
+List<String> batchList =
+    List.generate(100, (index) => (2001 + index).toString());
+// List<String> CollegeYear = ["2020", "2021", "2022", "2023"];
 
-String semesterdropdownValue = Semester[0];
-String batchdropdownValue = Batch[0];
+// String semesterdropdownValue = Semester[0];
+// String batchdropdownValue = Batch[0];
 String daysdropdownValue = DateFormat('EEEE').format(DateTime.now());
-String yeardropdownValue = CollegeYear[0];
+String batchyeardropdownValue = DateFormat('yyyy').format(DateTime.now());
 // Map<String, String> values = {
 //   semesterdropdownValue: "1",
 //   batchdropdownValue: "A",

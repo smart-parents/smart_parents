@@ -68,211 +68,392 @@ class _FacultyState extends State<Faculty> {
     }
   }
 
+  TextEditingController searchController = TextEditingController();
+  String number = '';
+
   @override
   Widget build(BuildContext context) {
     // login();
-    return StreamBuilder<QuerySnapshot>(
-        stream: facultyStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            print('Something went Wrong');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final List storedocs = [];
-          snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map a = document.data() as Map<String, dynamic>;
-            storedocs.add(a);
-            a['id'] = document.id;
-          }).toList();
-          return
-              //  MaterialApp(
-              // debugShowCheckedModeBanner: false,
-              // theme: ThemeData(
-              //   primarySwatch: Colors.lightBlue,
-              // ),
-              // home:
-              Scaffold(
-            appBar: AppBar(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
-              // automaticallyImplyLeading: false,
-              leading: const BackButton(),
-              // leading: IconButton(
-              //   icon: const Icon(Icons.arrow_back),
-              //   tooltip: "Back",
-              //   onPressed: () => Navigator.of(context).pop(),
-              // ),
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: const [
-                  Text("Faculty Details", style: TextStyle(fontSize: 30.0)),
-                  //    IconButton(
-                  //   icon: const Icon(Icons.sort_rounded),
-                  //   tooltip: "Filter",
-                  //   onPressed: () => AlertDialog(
-
-                  //   ),
-                  // ),
-                ],
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          tooltip: "Back",
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: const Text("Faculty Details", style: TextStyle(fontSize: 30.0)),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: searchController,
+              onChanged: (value) {
+                setState(() {
+                  // search();
+                  number = value;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Enter Faculty Id',
+                hintText: 'Enter faculty Id',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    searchController.clear();
+                    number = '';
+                    setState(() {});
+                  },
+                ),
               ),
             ),
-            body: storedocs.isNotEmpty
-                ? ListView.builder(
-                    itemCount: storedocs.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 5,
-                        shadowColor: Colors.grey[200],
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    '${index + 1}',
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          '${storedocs[index]['faculty']}',
-                                          // Enrollment[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0),
-                                        ),
-                                        Text(
-                                          'Name: ${storedocs[index]['name']}',
-                                          // Students[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17.0),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Column(
+          ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: facultyStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  print('Something went Wrong');
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final List storedocs = [];
+                snapshot.data!.docs.map((DocumentSnapshot document) {
+                  Map a = document.data() as Map<String, dynamic>;
+                  storedocs.add(a);
+                  a['id'] = document.id;
+                }).toList();
+                return Center(
+                  child: storedocs.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: storedocs.length,
+                          itemBuilder: (context, index) {
+                            var data = snapshot.data!.docs[index].data()
+                                as Map<String, dynamic>;
+                            if (number.isEmpty) {
+                              return Card(
+                                elevation: 5,
+                                shadowColor: Colors.grey[200],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
                                     children: [
-                                      Switch(
-                                        value: storedocs[index]['status'],
-                                        onChanged: (value) {
-                                          setState(() {
-                                            // _status = value;
-                                            updateStatus(
-                                                storedocs[index]['id'], value);
-                                          });
+                                      Row(
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          // Text(
+                                          //   '${index + 1}',
+                                          // ),
+                                          Expanded(
+                                            child: Column(
+                                              children: <Widget>[
+                                                Text(
+                                                  '${storedocs[index]['faculty']}',
+                                                  // Enrollment[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0),
+                                                ),
+                                                Text(
+                                                  'Name: ${storedocs[index]['name']}',
+                                                  // Students[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 17.0),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Switch(
+                                                value: storedocs[index]
+                                                    ['status'],
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    // _status = value;
+                                                    updateStatus(
+                                                        storedocs[index]['id'],
+                                                        value);
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                storedocs[index]['status']
+                                                    ? 'Active'
+                                                    : 'Disactive',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                    color: storedocs[index]
+                                                            ['status']
+                                                        ? green
+                                                        : red),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      // Row(
+                                      //   children: [
+                                      //     Expanded(
+                                      // child:
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'Mo: ${storedocs[index]['mono']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              'Branch : ${storedocs[index]['branch']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // ),
+                                      // Expanded(
+                                      // child:
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'email : ${storedocs[index]['email']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      //     ),
+                                      //   ],
+                                      // ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UpdateFacultyPage(
+                                                        id: storedocs[index]
+                                                            ['id'])),
+                                          );
                                         },
-                                      ),
-                                      Text(
-                                        storedocs[index]['status']
-                                            ? 'Active'
-                                            : 'Disactive',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: storedocs[index]['status']
-                                                ? green
-                                                : red),
-                                      ),
+                                        style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.grey[600],
+                                            backgroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0)),
+                                            fixedSize: const Size(200, 40),
+                                            elevation: 5,
+                                            textStyle: const TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500)),
+                                        child: const Text("Edit"),
+                                      )
                                     ],
                                   ),
-                                ],
-                              ),
-                              const SizedBox(
-                                height: 15,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'email : ${storedocs[index]['email']}',
-                                          style: const TextStyle(fontSize: 13),
-                                        ),
-                                        Text(
-                                          'Mo: ${storedocs[index]['mono']}',
-                                          style: const TextStyle(fontSize: 13),
-                                        )
-                                      ],
-                                    ),
+                                ),
+                              );
+                            }
+                            if (data['faculty']
+                                .toString()
+                                .toLowerCase()
+                                .startsWith(number.toLowerCase())) {
+                              return Card(
+                                elevation: 5,
+                                shadowColor: Colors.grey[200],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          // Text(
+                                          //   '${index + 1}',
+                                          // ),
+                                          Expanded(
+                                            child: Column(
+                                              children: <Widget>[
+                                                Text(
+                                                  '${storedocs[index]['faculty']}',
+                                                  // Enrollment[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0),
+                                                ),
+                                                Text(
+                                                  'Name: ${storedocs[index]['name']}',
+                                                  // Students[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 17.0),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Switch(
+                                                value: storedocs[index]
+                                                    ['status'],
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    // _status = value;
+                                                    updateStatus(
+                                                        storedocs[index]['id'],
+                                                        value);
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                storedocs[index]['status']
+                                                    ? 'Active'
+                                                    : 'Disactive',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                    color: storedocs[index]
+                                                            ['status']
+                                                        ? green
+                                                        : red),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      // Row(
+                                      //   children: [
+                                      //     Expanded(
+                                      // child:
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'Mo: ${storedocs[index]['mono']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              'Branch : ${storedocs[index]['branch']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // ),
+                                      // Expanded(
+                                      // child:
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'email : ${storedocs[index]['email']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      //     ),
+                                      //   ],
+                                      // ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UpdateFacultyPage(
+                                                        id: storedocs[index]
+                                                            ['id'])),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.grey[600],
+                                            backgroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0)),
+                                            fixedSize: const Size(200, 40),
+                                            elevation: 5,
+                                            textStyle: const TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500)),
+                                        child: const Text("Edit"),
+                                      )
+                                    ],
                                   ),
-                                  Expanded(
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          'Branch : ${storedocs[index]['branch']}',
-                                          style: const TextStyle(fontSize: 13),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                                ),
+                              );
+                            }
+                            return Container();
+                          })
+                      : Center(
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset(
+                                "assets/images/No data.png",
                               ),
-                              const SizedBox(
-                                height: 15,
+                              const Text(
+                                "No data",
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) => UpdateFacultyPage(
-                                            id: storedocs[index]['id'])),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.grey[600],
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                    fixedSize: const Size(200, 40),
-                                    elevation: 5,
-                                    textStyle: const TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500)),
-                                child: const Text("Edit"),
-                              )
                             ],
                           ),
                         ),
-                      );
-                    })
-                : Center(
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                          "assets/images/No data.png",
-                        ),
-                        const Text(
-                          "No data",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-            floatingActionButton: FloatingActionButton(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
-              onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddFacultyPage(),
-                  ),
-                )
+                );
               },
-              child: const Icon(Icons.add),
             ),
-            // ),
-          );
-        });
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
+        onPressed: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddFacultyPage(),
+            ),
+          )
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }

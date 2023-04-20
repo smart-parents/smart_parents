@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:smart_parents/components/constants.dart';
 
+Timer? timer;
+
 class DashboardS extends StatefulWidget {
   const DashboardS({Key? key}) : super(key: key);
   @override
@@ -20,7 +22,7 @@ class _DashboardState extends State<DashboardS> {
   void initState() {
     super.initState();
     // FlutterBackgroundService().startService();
-    Timer.periodic(const Duration(seconds: 5), (timer) {
+    timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       getLocationData();
     });
   }

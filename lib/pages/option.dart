@@ -1,6 +1,8 @@
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:smart_parents/components/background.dart';
+// import 'package:smart_parents/components/internetcheck.dart';
 import 'package:smart_parents/components/responsive.dart';
 import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
 import 'package:smart_parents/pages/Faculty/Login_f/login_screen_s.dart';
@@ -17,6 +19,10 @@ class Option extends StatefulWidget {
 class _OptionState extends State<Option> {
   @override
   void initState() {
+    // if (kIsWeb) {
+    // } else {
+    //   InternetPopup().initialize(context: context);
+    // }
     // FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     //     FlutterLocalNotificationsPlugin();
     // flutterLocalNotificationsPlugin

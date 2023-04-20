@@ -1,4 +1,4 @@
-// ignore_for_file: deprecated_member_use, constant_identifier_names, depend_on_referenced_packages
+// ignore_for_file: deprecated_member_use, constant_identifier_names, depend_on_referenced_packages, unused_field, use_build_context_synchronously
 
 import 'dart:async';
 // import 'dart:ui';
@@ -6,7 +6,9 @@ import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
-import 'package:smart_parents/pages/TimeImage1.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
+// import 'package:smart_parents/components/internetcheck.dart';
+import 'package:smart_parents/pages/TimeImage.dart';
 // import 'package:http/http.dart' as http;
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -20,17 +22,21 @@ Future<void> main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
         options: const FirebaseOptions(
-            apiKey: "AIzaSyAOUD8giZV2XdhMM4XEwtCwzPdNeDbcY2w",
-            authDomain: "smart-parents-11c8b.firebaseapp.com",
-            databaseURL:
-                "https://smart-parents-11c8b-default-rtdb.firebaseio.com",
-            projectId: "smart-parents-11c8b",
-            storageBucket: "smart-parents-11c8b.appspot.com",
-            messagingSenderId: "581206730087",
-            appId: "1:581206730087:web:fd5055e4eac384a98fbbc2",
-            measurementId: "G-9X7L4TQW98"));
+            apiKey: "AIzaSyBugsA2pQS4H8JUQJyISJexDpTn-aM5qzM",
+            authDomain: "smart-parents-97628.firebaseapp.com",
+            projectId: "smart-parents-97628",
+            storageBucket: "smart-parents-97628.appspot.com",
+            messagingSenderId: "988559124743",
+            appId: "1:988559124743:web:4be7ca32d3cafbb9bc3da2",
+            measurementId: "G-PZYQCLET3P"));
   } else {
     await Firebase.initializeApp();
+    OneSignal.shared.setAppId("26f997ff-1bb9-44a8-960f-97a39f8f489a");
+    // Optional: Set other OneSignal parameters
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+    // Optional: Prompt the user for push notification permission
+    await OneSignal.shared
+        .promptUserForPushNotificationPermission(fallbackToSettings: true);
   }
   // makeHttpGetRequest();
   // await initializeService();
@@ -130,8 +136,85 @@ Future<void> main() async {
 //   });
 // }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  bool _userProvidedPrivacyConsent = false;
+  @override
+  void initState() {
+    super.initState();
+    if (kIsWeb) {
+    } else {
+      // InternetPopup().initialize(context: context);
+      OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+
+      OneSignal.shared
+          .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+        print('Notification opened');
+      });
+
+      OneSignal.shared
+          .setInAppMessageClickedHandler((OSInAppMessageAction action) {
+        print('In app message clicked');
+      });
+
+      checkPrivacyConsent();
+      takeNotificationPermission();
+      print('notification setup successfully');
+    }
+  }
+
+  Future<void> checkPrivacyConsent() async {
+    bool userProvidedPrivacyConsent =
+        await OneSignal.shared.userProvidedPrivacyConsent();
+    setState(() {
+      _userProvidedPrivacyConsent = userProvidedPrivacyConsent;
+    });
+  }
+
+  Future<void> requestPrivacyConsent() async {
+    await OneSignal.shared.consentGranted(true);
+    checkPrivacyConsent();
+  }
+
+  Future<void> takeNotificationPermission() async {
+    // Check if the user has provided privacy consent
+    bool userProvidedPrivacyConsent =
+        await OneSignal.shared.userProvidedPrivacyConsent();
+    if (!userProvidedPrivacyConsent) {
+      //   showDialog(
+      //     context: context,
+      //     builder: (BuildContext context) {
+      //       return AlertDialog(
+      //         title: const Text('Privacy Consent Required'),
+      //         content: const Text(
+      //             'Please provide privacy consent to receive notifications.'),
+      //         actions: <Widget>[
+      //           TextButton(
+      //             child: const Text('OK'),
+      //             onPressed: () {
+      //               Navigator.of(context).pop();
+      //             },
+      //           ),
+      //           TextButton(
+      //             child: const Text('Grant Consent'),
+      //             onPressed: () {
+      requestPrivacyConsent();
+      //             Navigator.of(context).pop();
+      //           },
+      //         ),
+      //       ],
+      //     );
+      //   },
+      // );
+      return;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {

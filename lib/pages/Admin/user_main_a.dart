@@ -1,14 +1,17 @@
-// ignore_for_file: library_private_types_in_public_api
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
+// import 'package:smart_parents/components/internetcheck.dart';
 import 'package:smart_parents/pages/Admin/dashboard_a.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
-import 'package:smart_parents/pages/Admin/change_password_a.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
+import 'package:smart_parents/pages/option.dart';
 
 class UserMainA extends StatefulWidget {
   const UserMainA({Key? key}) : super(key: key);
@@ -21,8 +24,12 @@ class _UserMainState extends State<UserMainA> {
   final _prefs = SharedPreferences.getInstance();
   @override
   void initState() {
-    adminget();
     super.initState();
+    adminget();
+    // if (kIsWeb) {
+    // } else {
+    //   InternetPopup().initialize(context: context);
+    // }
   }
 
   adminget() async {
@@ -43,7 +50,7 @@ class _UserMainState extends State<UserMainA> {
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Profile(),
-    const ChangePassword(),
+    // const ChangePassword(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -75,6 +82,11 @@ class _UserMainState extends State<UserMainA> {
   //     print(e);
   //   }
   // }
+  delete() async {
+    final SharedPreferences prefs = await _prefs;
+    final success = await prefs.clear();
+    print(success);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,43 +106,96 @@ class _UserMainState extends State<UserMainA> {
             fit: BoxFit.cover,
           ),
         ),
+        // child: InternetConnectionDialog(
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             // backgroundColor: Colors.transparent,
             // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
             automaticallyImplyLeading: false,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
+            title:
+                //  Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //   children: [
                 // Image.asset("assets/images/top3.png", width: 100, height: 50,),
-
                 const Text(
-                  "Admin",
-                  style: TextStyle(
-                    fontSize: 30.0,
-                  ),
-                ),
-                Image.asset(
-                  "assets/images/Admin.png",
-                  height: 50,
-                ),
-                // ElevatedButton(
-                //   onPressed: () async => {
-                //     await FirebaseAuth.instance.signOut(),
-                //     await storage.delete(key: "uid"),
-                //     Navigator.pushAndRemoveUntil(
-                //         context,
-                //         MaterialPageRoute(
-                //           builder: (context) => LoginScreen(),
-                //         ),
-                //         (route) => false)
-                //   },
-                //   child: Text('Logout'),
-                //   style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
-                // )
-              ],
+              "Admin",
+              style: TextStyle(
+                fontSize: 30.0,
+              ),
             ),
+            actions: [
+              IconButton(
+                onPressed: () async => {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Confirm Logout"),
+                        content: const Text("Are you sure you want to logout?"),
+                        actions: [
+                          TextButton(
+                            child: const Text("Cancel"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text("Logout"),
+                            onPressed: () async {
+                              // Perform the deletion here
+                              // ...
+                              try {
+                                await FirebaseAuth.instance.signOut();
+                                delete();
+                                // await storage.delete(key: "uid"),
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Option(),
+                                    ),
+                                    (route) => false);
+                              } catch (e) {
+                                print(e);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Failed to logout: $e')),
+                                );
+                              }
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  )
+                },
+                icon: const Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+            // Image.asset(
+            //   "assets/images/Admin.png",
+            //   height: 50,
+            // ),
+            // ElevatedButton(
+            //   onPressed: () async => {
+            //     await FirebaseAuth.instance.signOut(),
+            //     await storage.delete(key: "uid"),
+            //     Navigator.pushAndRemoveUntil(
+            //         context,
+            //         MaterialPageRoute(
+            //           builder: (context) => LoginScreen(),
+            //         ),
+            //         (route) => false)
+            //   },
+            //   child: Text('Logout'),
+            //   style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
+            // )
+            //   ],
+            // ),
           ),
           body: _widgetOptions.elementAt(_selectedIndex),
 
@@ -174,10 +239,10 @@ class _UserMainState extends State<UserMainA> {
                       icon: Icons.person,
                       text: 'Profile',
                     ),
-                    GButton(
-                      icon: Icons.password,
-                      text: 'Change Password',
-                    ),
+                    // GButton(
+                    //   icon: Icons.password,
+                    //   text: 'Change Password',
+                    // ),
                   ],
                   selectedIndex: _selectedIndex,
                   onTabChange: _onItemTapped,
@@ -230,6 +295,7 @@ class _UserMainState extends State<UserMainA> {
           // ),
         ),
       ),
+      // ),
     );
   }
 }

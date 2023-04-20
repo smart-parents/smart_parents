@@ -10,13 +10,13 @@ import 'package:smart_parents/pages/Faculty/user_main_f.dart';
 class AttendencePage extends StatefulWidget {
   const AttendencePage(
       {Key? key,
-      required this.sem,
+      required this.batch,
       required this.sub,
       required this.start,
       required this.end,
       required this.date})
       : super(key: key);
-  final String sem;
+  final String batch;
   final String sub;
   final String start;
   final String end;
@@ -62,7 +62,7 @@ class _AttendencePageState extends State<AttendencePage> {
       'start': widget.start,
       'end': widget.end,
       'branch': branch,
-      'sem': widget.sem,
+      'batch': widget.batch,
       'subject': widget.sub,
       'attendance': attendanceMap,
     });
@@ -108,7 +108,7 @@ class _AttendencePageState extends State<AttendencePage> {
         await FirebaseFirestore.instance
             .collection('Admin/$admin/students')
             .where("branch", isEqualTo: branch)
-            .where("sem", isEqualTo: widget.sem)
+            .where("batch", isEqualTo: widget.batch)
             .where('status', isEqualTo: true)
             .orderBy('number')
             .orderBy('name')

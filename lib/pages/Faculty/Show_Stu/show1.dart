@@ -190,16 +190,10 @@ class _Show_stuState extends State<Show_stu> {
               //   ),
               // ),
               dropdown(
-                  DropdownValue: semesterdropdownValue,
-                  sTring: Semester,
-                  Hint: "Semester"),
-              const SizedBox(
-                height: 20,
+                DropdownValue: batchyeardropdownValue,
+                sTring: batchList,
+                Hint: "Batch(Starting Year)",
               ),
-              dropdown(
-                  DropdownValue: yeardropdownValue,
-                  sTring: CollegeYear,
-                  Hint: "Year"),
               const SizedBox(
                 height: 20,
               ),
@@ -213,7 +207,7 @@ class _Show_stuState extends State<Show_stu> {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                   builder: (context) =>
-                                      StudentF(sem: semesterdropdownValue)),
+                                      StudentF(batch: batchyeardropdownValue)),
                             );
                           },
                           child: const Text("Show Student")),

@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
@@ -25,13 +26,13 @@ class _AddStudentPageState extends State<AddStudentPage> {
   var number = "";
   var password = "";
   String? Branch;
-  var sem;
+  // var sem;
   // Create a text controller and use it to retrieve the current value
   // of the TextField.
   final nameController = TextEditingController();
   final numberController = TextEditingController();
   final passwordController = TextEditingController();
-  final semController = TextEditingController();
+  // final semController = TextEditingController();
 
   @override
   void dispose() {
@@ -39,7 +40,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
     nameController.dispose();
     numberController.dispose();
     passwordController.dispose();
-    semController.dispose();
+    // semController.dispose();
     super.dispose();
   }
 
@@ -47,7 +48,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
     nameController.clear();
     numberController.clear();
     passwordController.clear();
-    semController.clear();
+    // semController.clear();
   }
 
   @override
@@ -67,7 +68,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
           'password': password,
           'branch': Branch,
           'status': true,
-          'sem': semesterdropdownValue
+          'batch': batchyeardropdownValue
         })
         .then((value) => print('student Added'))
         .catchError((error) => print('Failed to Add user: $error'));
@@ -169,7 +170,6 @@ class _AddStudentPageState extends State<AddStudentPage> {
         child: FutureBuilder<QuerySnapshot>(
             future: FirebaseFirestore.instance
                 .collection('Admin/$admin/department')
-                .where("number")
                 .get(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
@@ -214,16 +214,20 @@ class _AddStudentPageState extends State<AddStudentPage> {
                                 spreadRadius: 1.0,
                               ),
                             ]),
-                        child: DropdownButton<String>(
+                        child: DropdownButtonFormField<String>(
                           isExpanded: true,
-                          // hint: Text(hint,style: TextStyle(color: Colors.black),),
                           value: Branch,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.zero,
+                          ),
                           hint: const Text('Select an item'),
                           icon: const Icon(Icons.keyboard_arrow_down_outlined),
                           elevation: 16,
                           dropdownColor: Colors.grey[100],
                           style: const TextStyle(color: Colors.black),
-                          underline: Container(height: 0, color: Colors.black),
+                          // underline:
+                          //     Container(height: 0, color: Colors.black),
                           onChanged: (value) {
                             setState(() {
                               Branch = value;
@@ -235,18 +239,32 @@ class _AddStudentPageState extends State<AddStudentPage> {
                               child: Text(item),
                             );
                           }).toList(),
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please select a branch';
+                            }
+                            return null; // return null if there's no error
+                          },
                         ),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       dropdown(
-                          DropdownValue: semesterdropdownValue,
-                          sTring: Semester,
-                          Hint: "Semester"),
+                        DropdownValue: batchyeardropdownValue,
+                        sTring: batchList,
+                        Hint: "Batch(Starting Year)",
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
+                      // dropdown(
+                      //     DropdownValue: semesterdropdownValue,
+                      //     sTring: Semester,
+                      //     Hint: "Semester"),
+                      // const SizedBox(
+                      //   height: 20,
+                      // ),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10.0),
                         child: TextFormField(
@@ -271,6 +289,9 @@ class _AddStudentPageState extends State<AddStudentPage> {
                         child: TextFormField(
                           maxLength: 12,
                           autofocus: false,
+                          inputFormatters: <TextInputFormatter>[
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
                           decoration: const InputDecoration(
                             labelText: 'Enrollment Number: ',
                             labelStyle: TextStyle(fontSize: 20.0),

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/components/internetcheck.dart';
+// import 'package:smart_parents/components/internetcheck.dart';
 import 'package:smart_parents/pages/Admin/department_a/add_depart_a.dart';
-import 'package:smart_parents/pages/Admin/department_a/update_department_a.dart';
 
 class Department extends StatefulWidget {
   const Department({Key? key}) : super(key: key);
@@ -15,6 +17,10 @@ class _DepartmentState extends State<Department> {
   @override
   void initState() {
     super.initState();
+    if (kIsWeb) {
+    } else {
+      InternetPopup().initialize(context: context);
+    }
     // login();
   }
 
@@ -37,199 +43,259 @@ class _DepartmentState extends State<Department> {
   @override
   Widget build(BuildContext context) {
     // login();
-    return StreamBuilder<QuerySnapshot>(
-        stream: departmentStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            print('Something went Wrong');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
+    return
+        // InternetConnectionDialog(
+        //   child:
+        StreamBuilder<QuerySnapshot>(
+            stream: departmentStream,
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) {
+                print('Something went Wrong');
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
 
-          final List storedocs = [];
-          snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map a = document.data() as Map<String, dynamic>;
-            storedocs.add(a);
-            a['id'] = document.id;
-          }).toList();
-          return
-              // MaterialApp(
-              //   debugShowCheckedModeBanner: false,
-              //   theme: ThemeData(
-              //     primarySwatch: Colors.lightBlue,
-              //   ),
-              //   home:
-              Scaffold(
-            appBar: AppBar(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                tooltip: "Back",
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-              title: const Text("Department Details",
-                  style: TextStyle(fontSize: 30.0)),
-            ),
-            body: storedocs.isNotEmpty
-                ? ListView.builder(
-                    itemCount: storedocs.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 5,
-                        shadowColor: Colors.grey[200],
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            children: [
-                              Row(
+              final List storedocs = [];
+              snapshot.data!.docs.map((DocumentSnapshot document) {
+                Map a = document.data() as Map<String, dynamic>;
+                storedocs.add(a);
+                a['id'] = document.id;
+              }).toList();
+              return
+                  // MaterialApp(
+                  //   debugShowCheckedModeBanner: false,
+                  //   theme: ThemeData(
+                  //     primarySwatch: Colors.lightBlue,
+                  //   ),
+                  //   home:
+                  Scaffold(
+                appBar: AppBar(
+                  // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
+                  automaticallyImplyLeading: false,
+                  leading: IconButton(
+                    icon: const Icon(Icons.arrow_back),
+                    tooltip: "Back",
+                    onPressed: () => Navigator.of(context).pop(),
+                  ),
+                  title: const Text("Department Details",
+                      style: TextStyle(fontSize: 30.0)),
+                ),
+                body: storedocs.isNotEmpty
+                    ? ListView.builder(
+                        itemCount: storedocs.length,
+                        itemBuilder: (context, index) {
+                          return Card(
+                            elevation: 5,
+                            shadowColor: Colors.grey[200],
+                            child: Padding(
+                              padding: const EdgeInsets.all(15.0),
+                              child: Column(
                                 children: [
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    '${index + 1}',
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          '${storedocs[index]['departmentId']}',
-                                          // Enrollment[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0),
-                                        ),
-                                        Text(
-                                          'Name: ${storedocs[index]['name']}',
-                                          // Students[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17.0),
-                                        ),
-                                        // Text(
-                                        //   'SEM: ${storedocs[index]['semno']}',
-                                        //   // Students[index],
-                                        //   style: const TextStyle(
-                                        //       fontWeight: FontWeight.bold,
-                                        //       fontSize: 17.0),
-                                        // ),
-                                      ],
-                                    ),
-                                  ),
-                                  Column(
+                                  Row(
                                     children: [
-                                      const Text("Delete"),
-                                      IconButton(
-                                        highlightColor: red,
-                                        onPressed: () async {
-                                          try {
-                                            // await delete(storedocs[index]
-                                            //         ['number'] +
-                                            //     '@sps.com');
-                                            deleteUser(storedocs[index]['id']);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              const SnackBar(
-                                                  content: Text(
-                                                      'Department deleted.')),
-                                            );
-                                          } catch (e) {
-                                            print(e);
-                                            ScaffoldMessenger.of(context)
-                                                .showSnackBar(
-                                              SnackBar(
-                                                  content: Text(
-                                                      'Failed to delete Department: $e')),
-                                            );
-                                          }
-                                        },
-                                        icon: const Icon(
-                                          Icons.delete,
-                                          color: red,
+                                      const SizedBox(
+                                        width: 10,
+                                      ),
+                                      // Text(
+                                      //   '${index + 1}',
+                                      // ),
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          // mainAxisAlignment: MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              '${storedocs[index]['departmentId']}',
+                                              // Enrollment[index],
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 20.0),
+                                            ),
+                                            Text(
+                                              'Name: ${storedocs[index]['name']}',
+                                              // Students[index],
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  fontSize: 17.0),
+                                            ),
+                                            // Text(
+                                            //   'SEM: ${storedocs[index]['semno']}',
+                                            //   // Students[index],
+                                            //   style: const TextStyle(
+                                            //       fontWeight: FontWeight.bold,
+                                            //       fontSize: 17.0),
+                                            // ),
+                                          ],
                                         ),
+                                      ),
+                                      Column(
+                                        children: [
+                                          const Text("Delete"),
+                                          IconButton(
+                                            highlightColor: red,
+                                            onPressed: () async {
+                                              try {
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: const Text(
+                                                          "Confirm Delete"),
+                                                      content: const Text(
+                                                          "Are you sure you want to delete this item?"),
+                                                      actions: [
+                                                        TextButton(
+                                                          child: const Text(
+                                                              "CANCEL"),
+                                                          onPressed: () {
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                        TextButton(
+                                                          child: const Text(
+                                                              "DELETE"),
+                                                          onPressed: () {
+                                                            // Perform the deletion here
+                                                            // ...
+                                                            try {
+                                                              // await delete(storedocs[index]
+                                                              //         ['number'] +
+                                                              //     '@sps.com');
+                                                              deleteUser(
+                                                                  storedocs[
+                                                                          index]
+                                                                      ['id']);
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .showSnackBar(
+                                                                const SnackBar(
+                                                                    content: Text(
+                                                                        'Department deleted.')),
+                                                              );
+                                                            } catch (e) {
+                                                              print(e);
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .showSnackBar(
+                                                                SnackBar(
+                                                                    content: Text(
+                                                                        'Failed to delete Department: $e')),
+                                                              );
+                                                            }
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop();
+                                                          },
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              } catch (e) {
+                                                print(e);
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                      content: Text(
+                                                          'Failed to delete Department: $e')),
+                                                );
+                                              }
+                                            },
+                                            icon: const Icon(
+                                              Icons.delete,
+                                              color: red,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
+                                  // SizedBox(
+                                  //   height: 15,
+                                  // ),
+                                  // Row(
+                                  //   children: [
+                                  //     Expanded(
+                                  //       child: Column(
+                                  //         children: [
+                                  //           Text(
+                                  //             "Department : " +
+                                  //                 storedocs[index]['department'],
+                                  //             style: TextStyle(fontSize: 13),
+                                  //           ),
+                                  //         ],
+                                  //       ),
+                                  //     ),
+                                  //   ],
+                                  // ),
+                                  // const SizedBox(
+                                  //   height: 15,
+                                  // ),
+                                  // ElevatedButton(
+                                  //   onPressed: () {
+                                  //     Navigator.of(context).push(
+                                  //       MaterialPageRoute(
+                                  //           builder: (context) =>
+                                  //               UpdateDepartPage(
+                                  //                   id: storedocs[index]
+                                  //                       ['id'])),
+                                  //     );
+                                  //   },
+                                  //   style: ElevatedButton.styleFrom(
+                                  //       foregroundColor: Colors.grey[600],
+                                  //       backgroundColor: Colors.white,
+                                  //       shape: RoundedRectangleBorder(
+                                  //           borderRadius:
+                                  //               BorderRadius.circular(10.0)),
+                                  //       fixedSize: const Size(200, 40),
+                                  //       elevation: 5,
+                                  //       textStyle: const TextStyle(
+                                  //           fontSize: 17,
+                                  //           fontWeight: FontWeight.w500)),
+                                  //   child: const Text("Edit"),
+                                  // )
                                 ],
                               ),
-                              // SizedBox(
-                              //   height: 15,
-                              // ),
-                              // Row(
-                              //   children: [
-                              //     Expanded(
-                              //       child: Column(
-                              //         children: [
-                              //           Text(
-                              //             "Department : " +
-                              //                 storedocs[index]['department'],
-                              //             style: TextStyle(fontSize: 13),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ],
-                              // ),
-                              // const SizedBox(
-                              //   height: 15,
-                              // ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) => UpdateDepartPage(
-                                            id: storedocs[index]['id'])),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.grey[600],
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                    fixedSize: const Size(200, 40),
-                                    elevation: 5,
-                                    textStyle: const TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500)),
-                                child: const Text("Edit"),
-                              )
-                            ],
-                          ),
+                            ),
+                          );
+                        })
+                    : Center(
+                        child: Column(
+                          children: <Widget>[
+                            Image.asset(
+                              "assets/images/No data.png",
+                            ),
+                            const Text(
+                              "No data",
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ],
                         ),
-                      );
-                    })
-                : Center(
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                          "assets/images/No data.png",
-                        ),
-                        const Text(
-                          "No data",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-            floatingActionButton: FloatingActionButton(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
-              onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddDepartPage(),
-                  ),
-                )
-              },
-              child: const Icon(Icons.add),
-            ),
+                      ),
+                floatingActionButton: FloatingActionButton(
+                  // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
+                  onPressed: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AddDepartPage(),
+                      ),
+                    )
+                  },
+                  child: const Icon(Icons.add),
+                ),
+                // ),
+              );
+            }
             // ),
-          );
-        });
+            );
   }
 }

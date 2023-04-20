@@ -4,7 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/Schedule/schedule_u.dart';
+import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -25,7 +25,7 @@ class Subject {
 class EditSchedule extends StatefulWidget {
   const EditSchedule(
       {Key? key,
-      required this.semester,
+      required this.batch,
       required this.doc,
       required this.start,
       required this.end,
@@ -33,7 +33,7 @@ class EditSchedule extends StatefulWidget {
       required this.type,
       required this.day})
       : super(key: key);
-  final String semester;
+  final String batch;
   final String doc;
   final String start;
   final String end;
@@ -86,7 +86,7 @@ class _EditScheduleState extends State<EditSchedule> {
         .collection('Admin')
         .doc(admin)
         .collection('schedule')
-        .doc('${branch}_${widget.semester}')
+        .doc('${branch}_${widget.batch}')
         // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
         .collection('timetable')
         .doc(widget.day)

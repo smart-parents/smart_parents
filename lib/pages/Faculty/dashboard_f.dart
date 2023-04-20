@@ -4,8 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdownpage2.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/parents_f.dart';
 import 'package:smart_parents/pages/Faculty/report_f/reportGenration.dart';
-
-import 'Schedule/schedule_u.dart';
+import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -91,7 +90,7 @@ class _DashboardState extends State<Dashboard> {
                 minimumSize: const Size(250, 50),
               ),
               child: const Text(
-                'Add Parents',
+                'Manage Parents',
                 style: TextStyle(fontSize: 20.0, color: Colors.white),
               ),
             ),

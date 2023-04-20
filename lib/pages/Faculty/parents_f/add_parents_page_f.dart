@@ -204,6 +204,14 @@ class _AddParentPageState extends State<AddParentPage> {
                           vertical: 20, horizontal: 30),
                       child: ListView(
                         children: [
+                          const Text(
+                            'Student',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           Container(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
@@ -225,18 +233,22 @@ class _AddParentPageState extends State<AddParentPage> {
                                     spreadRadius: 1.0,
                                   ),
                                 ]),
-                            child: DropdownButton<String>(
+                            child: DropdownButtonFormField<String>(
                               isExpanded: true,
                               // hint: Text(hint,style: TextStyle(color: Colors.black),),
                               value: child,
+                              decoration: const InputDecoration(
+                                border: InputBorder.none,
+                                contentPadding: EdgeInsets.zero,
+                              ),
                               hint: const Text('Select an item'),
                               icon: const Icon(
                                   Icons.keyboard_arrow_down_outlined),
                               elevation: 16,
                               dropdownColor: Colors.grey[100],
                               style: const TextStyle(color: Colors.black),
-                              underline:
-                                  Container(height: 0, color: Colors.black),
+                              // underline:
+                              //     Container(height: 0, color: Colors.black),
                               onChanged: (value) {
                                 setState(() {
                                   child = value;
@@ -248,6 +260,12 @@ class _AddParentPageState extends State<AddParentPage> {
                                   child: Text(item),
                                 );
                               }).toList(),
+                              validator: (value) {
+                                if (value == null) {
+                                  return 'Please select a student';
+                                }
+                                return null; // return null if there's no error
+                              },
                             ),
                           ),
                           const SizedBox(

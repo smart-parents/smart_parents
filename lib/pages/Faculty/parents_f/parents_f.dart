@@ -79,203 +79,396 @@ class _ParentState extends State<Parent> {
     }
   }
 
+  TextEditingController searchController = TextEditingController();
+  String number = '';
+
   @override
   Widget build(BuildContext context) {
     // myMethod();
-    return StreamBuilder<QuerySnapshot>(
-        stream: parentsStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            print('Something went Wrong');
-          }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          }
-
-          final List storedocs = [];
-          snapshot.data!.docs.map((DocumentSnapshot document) {
-            Map a = document.data() as Map<String, dynamic>;
-            storedocs.add(a);
-            a['id'] = document.id;
-          }).toList();
-
-          return
-              // MaterialApp(
-              // debugShowCheckedModeBanner: false,
-              // theme: ThemeData(
-              //   primarySwatch: Colors.lightBlue,
-              // ),
-              // home:
-              Scaffold(
-            appBar: AppBar(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
-              automaticallyImplyLeading: false,
-              leading: IconButton(
-                icon: const Icon(Icons.arrow_back),
-                tooltip: "Back",
-                onPressed: () => Navigator.of(context).pop(),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          tooltip: "Back",
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: const Text("Parents Details", style: TextStyle(fontSize: 30.0)),
+      ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              controller: searchController,
+              onChanged: (value) {
+                setState(() {
+                  // search();
+                  number = value;
+                });
+              },
+              decoration: InputDecoration(
+                labelText: 'Enter Mobile Number',
+                hintText: 'Enter Mobile Number',
+                suffixIcon: IconButton(
+                  icon: const Icon(Icons.clear),
+                  onPressed: () {
+                    searchController.clear();
+                    number = '';
+                    setState(() {});
+                  },
+                ),
               ),
-              title: const Text("Parents Details",
-                  style: TextStyle(fontSize: 30.0)),
             ),
-            body: storedocs.isNotEmpty
-                ? ListView.builder(
-                    itemCount: storedocs.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 5,
-                        shadowColor: Colors.grey[200],
-                        child: Padding(
-                          padding: const EdgeInsets.all(15.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                children: [
-                                  const SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    '${index + 1}',
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      children: <Widget>[
-                                        Text(
-                                          '${storedocs[index]['number']}',
-                                          // Enrollment[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0),
-                                        ),
-                                        Text(
-                                          'Name: ${storedocs[index]['name']}',
-                                          // Students[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 17.0),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Column(
+          ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: parentsStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  print('Something went Wrong');
+                }
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                final List storedocs = [];
+                snapshot.data!.docs.map((DocumentSnapshot document) {
+                  Map a = document.data() as Map<String, dynamic>;
+                  storedocs.add(a);
+                  a['id'] = document.id;
+                }).toList();
+                return Center(
+                  child: storedocs.isNotEmpty
+                      ? ListView.builder(
+                          itemCount: storedocs.length,
+                          itemBuilder: (context, index) {
+                            var data = snapshot.data!.docs[index].data()
+                                as Map<String, dynamic>;
+                            if (number.isEmpty) {
+                              return Card(
+                                elevation: 5,
+                                shadowColor: Colors.grey[200],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
                                     children: [
-                                      Switch(
-                                        value: storedocs[index]['status'],
-                                        onChanged: (value) {
-                                          setState(() {
-                                            // _status = value;
-                                            updateStatus(
-                                                storedocs[index]['id'], value);
-                                          });
+                                      Row(
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          // Text(
+                                          //   '${index + 1}',
+                                          // ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Text(
+                                                  '${storedocs[index]['number']}',
+                                                  // Enrollment[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0),
+                                                ),
+                                                Text(
+                                                  'Name: ${storedocs[index]['name']}',
+                                                  // Students[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 17.0),
+                                                ),
+                                                Text(
+                                                  'Child: ${storedocs[index]['child']}',
+                                                  // Students[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15.0),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Switch(
+                                                value: storedocs[index]
+                                                    ['status'],
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    // _status = value;
+                                                    updateStatus(
+                                                        storedocs[index]['id'],
+                                                        value);
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                storedocs[index]['status']
+                                                    ? 'Active'
+                                                    : 'Disactive',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                    color: storedocs[index]
+                                                            ['status']
+                                                        ? green
+                                                        : red),
+                                              ),
+                                            ],
+                                          ),
+                                          // Column(
+                                          //   children: [
+                                          //     const Text("Delete"),
+                                          //     IconButton(
+                                          //       highlightColor: red,
+                                          //       onPressed: () async {
+                                          //         try {
+                                          //           // await delete(storedocs[index]
+                                          //           //         ['number'] +
+                                          //           //     '@sps.com');
+                                          //           deleteUser(storedocs[index]['id']);
+                                          //           ScaffoldMessenger.of(context)
+                                          //               .showSnackBar(
+                                          //             const SnackBar(
+                                          //                 content:
+                                          //                     Text('Student deleted.')),
+                                          //           );
+                                          //         } catch (e) {
+                                          //           print(e);
+                                          //           ScaffoldMessenger.of(context)
+                                          //               .showSnackBar(
+                                          //             SnackBar(
+                                          //                 content: Text(
+                                          //                     'Failed to delete student: $e')),
+                                          //           );
+                                          //         }
+                                          //       },
+                                          //       icon: const Icon(
+                                          //         Icons.delete,
+                                          //         color: red,
+                                          //       ),
+                                          //     ),
+                                          //   ],
+                                          // ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UpdateParentPage(
+                                                        id: storedocs[index]
+                                                            ['id'])),
+                                          );
                                         },
-                                      ),
-                                      Text(
-                                        storedocs[index]['status']
-                                            ? 'Active'
-                                            : 'Disactive',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15,
-                                            color: storedocs[index]['status']
-                                                ? green
-                                                : red),
-                                      ),
+                                        style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.grey[600],
+                                            backgroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0)),
+                                            fixedSize: const Size(200, 40),
+                                            elevation: 5,
+                                            textStyle: const TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500)),
+                                        child: const Text("Edit"),
+                                      )
                                     ],
                                   ),
-                                  // Column(
-                                  //   children: [
-                                  //     const Text("Delete"),
-                                  //     IconButton(
-                                  //       highlightColor: red,
-                                  //       onPressed: () async {
-                                  //         try {
-                                  //           // await delete(storedocs[index]
-                                  //           //         ['number'] +
-                                  //           //     '@sps.com');
-                                  //           deleteUser(storedocs[index]['id']);
-                                  //           ScaffoldMessenger.of(context)
-                                  //               .showSnackBar(
-                                  //             const SnackBar(
-                                  //                 content:
-                                  //                     Text('Student deleted.')),
-                                  //           );
-                                  //         } catch (e) {
-                                  //           print(e);
-                                  //           ScaffoldMessenger.of(context)
-                                  //               .showSnackBar(
-                                  //             SnackBar(
-                                  //                 content: Text(
-                                  //                     'Failed to delete student: $e')),
-                                  //           );
-                                  //         }
-                                  //       },
-                                  //       icon: const Icon(
-                                  //         Icons.delete,
-                                  //         color: red,
-                                  //       ),
-                                  //     ),
-                                  //   ],
-                                  // ),
-                                ],
+                                ),
+                              );
+                            }
+                            if (data['number']
+                                .toString()
+                                .toLowerCase()
+                                .startsWith(number.toLowerCase())) {
+                              return Card(
+                                elevation: 5,
+                                shadowColor: Colors.grey[200],
+                                child: Padding(
+                                  padding: const EdgeInsets.all(15.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          const SizedBox(
+                                            width: 10,
+                                          ),
+                                          // Text(
+                                          //   '${index + 1}',
+                                          // ),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Text(
+                                                  '${storedocs[index]['number']}',
+                                                  // Enrollment[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 20.0),
+                                                ),
+                                                Text(
+                                                  'Name: ${storedocs[index]['name']}',
+                                                  // Students[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 17.0),
+                                                ),
+                                                Text(
+                                                  'Child: ${storedocs[index]['child']}',
+                                                  // Students[index],
+                                                  style: const TextStyle(
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 15.0),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          Column(
+                                            children: [
+                                              Switch(
+                                                value: storedocs[index]
+                                                    ['status'],
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    // _status = value;
+                                                    updateStatus(
+                                                        storedocs[index]['id'],
+                                                        value);
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                storedocs[index]['status']
+                                                    ? 'Active'
+                                                    : 'Disactive',
+                                                style: TextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15,
+                                                    color: storedocs[index]
+                                                            ['status']
+                                                        ? green
+                                                        : red),
+                                              ),
+                                            ],
+                                          ),
+                                          // Column(
+                                          //   children: [
+                                          //     const Text("Delete"),
+                                          //     IconButton(
+                                          //       highlightColor: red,
+                                          //       onPressed: () async {
+                                          //         try {
+                                          //           // await delete(storedocs[index]
+                                          //           //         ['number'] +
+                                          //           //     '@sps.com');
+                                          //           deleteUser(storedocs[index]['id']);
+                                          //           ScaffoldMessenger.of(context)
+                                          //               .showSnackBar(
+                                          //             const SnackBar(
+                                          //                 content:
+                                          //                     Text('Student deleted.')),
+                                          //           );
+                                          //         } catch (e) {
+                                          //           print(e);
+                                          //           ScaffoldMessenger.of(context)
+                                          //               .showSnackBar(
+                                          //             SnackBar(
+                                          //                 content: Text(
+                                          //                     'Failed to delete student: $e')),
+                                          //           );
+                                          //         }
+                                          //       },
+                                          //       icon: const Icon(
+                                          //         Icons.delete,
+                                          //         color: red,
+                                          //       ),
+                                          //     ),
+                                          //   ],
+                                          // ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 15,
+                                      ),
+                                      ElevatedButton(
+                                        onPressed: () {
+                                          Navigator.of(context).push(
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    UpdateParentPage(
+                                                        id: storedocs[index]
+                                                            ['id'])),
+                                          );
+                                        },
+                                        style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.grey[600],
+                                            backgroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0)),
+                                            fixedSize: const Size(200, 40),
+                                            elevation: 5,
+                                            textStyle: const TextStyle(
+                                                fontSize: 17,
+                                                fontWeight: FontWeight.w500)),
+                                        child: const Text("Edit"),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }
+                            return Container();
+                          })
+                      : Center(
+                          child: Column(
+                            children: <Widget>[
+                              Image.asset(
+                                "assets/images/No data.png",
                               ),
-                              const SizedBox(
-                                height: 15,
+                              const Text(
+                                "No data",
+                                style: TextStyle(fontWeight: FontWeight.bold),
                               ),
-                              ElevatedButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                        builder: (context) => UpdateParentPage(
-                                            id: storedocs[index]['id'])),
-                                  );
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    foregroundColor: Colors.grey[600],
-                                    backgroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
-                                    fixedSize: const Size(200, 40),
-                                    elevation: 5,
-                                    textStyle: const TextStyle(
-                                        fontSize: 17,
-                                        fontWeight: FontWeight.w500)),
-                                child: const Text("Edit"),
-                              )
                             ],
                           ),
                         ),
-                      );
-                    })
-                : Center(
-                    child: Column(
-                      children: <Widget>[
-                        Image.asset(
-                          "assets/images/No data.png",
-                        ),
-                        const Text(
-                          "No data",
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-            floatingActionButton: FloatingActionButton(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
-              onPressed: () => {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddParentPage(),
-                  ),
-                )
+                );
               },
-              child: const Icon(Icons.add),
             ),
-            // ),
-          );
-        });
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
+        onPressed: () => {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddParentPage(),
+            ),
+          )
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }

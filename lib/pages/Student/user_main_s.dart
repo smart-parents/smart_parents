@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
+// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,13 +8,16 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Parents/attendance_screen.dart';
+import 'package:smart_parents/pages/Parents/contact_faculty.dart';
+import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
+import 'package:smart_parents/pages/Parents/result_p.dart';
 import 'package:smart_parents/pages/Student/Schedule/schedule_u.dart';
 import 'package:smart_parents/pages/Student/attendance.dart';
-import 'package:smart_parents/pages/Student/chat_s.dart';
+import 'package:smart_parents/pages/Student/chat_student.dart';
 import 'package:smart_parents/pages/Student/dashboard_s.dart';
 import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
 import 'package:smart_parents/pages/Student/profile_screen_s.dart';
+import 'package:smart_parents/pages/option.dart';
 
 class UserMainS extends StatefulWidget {
   const UserMainS({Key? key}) : super(key: key);
@@ -34,8 +37,7 @@ class _UserMainState extends State<UserMainS> {
   // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
     const DashboardS(),
-    const Attendance_screen(),
-    const ChatScreen(),
+    // const ChatStudent(),
     const Profile_screenS()
   ];
 
@@ -58,7 +60,7 @@ class _UserMainState extends State<UserMainS> {
     if (snaphot.docs.isNotEmpty) {
       for (DocumentSnapshot<Map<String, dynamic>> doc in snaphot.docs) {
         branch = doc.get('branch');
-        sem = doc.get('sem');
+        batch = doc.get('batch');
       }
     }
     print(branch);
@@ -68,6 +70,12 @@ class _UserMainState extends State<UserMainS> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  delete() async {
+    final SharedPreferences prefs = await _prefs;
+    final success = await prefs.clear();
+    print(success);
   }
 
   @override
@@ -111,6 +119,60 @@ class _UserMainState extends State<UserMainS> {
             //   ),
             // ),
             title: const Text('Home'),
+            actions: [
+              IconButton(
+                onPressed: () async => {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Confirm Logout"),
+                        content: const Text("Are you sure you want to logout?"),
+                        actions: [
+                          TextButton(
+                            child: const Text("Cancel"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text("Logout"),
+                            onPressed: () async {
+                              // Perform the deletion here
+                              // ...
+                              try {
+                                await FirebaseAuth.instance.signOut();
+                                // FlutterBackgroundService()
+                                //     .invoke("stopService"),
+                                timer?.cancel();
+                                delete();
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Option(),
+                                    ),
+                                    (route) => false);
+                              } catch (e) {
+                                print(e);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Failed to logout: $e')),
+                                );
+                              }
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  )
+                },
+                icon: const Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
           drawer: const NavigationDrawer(),
           body: _widgetOptions.elementAt(_selectedIndex),
@@ -145,14 +207,10 @@ class _UserMainState extends State<UserMainS> {
                       icon: Icons.home,
                       text: 'Home',
                     ),
-                    GButton(
-                      icon: Icons.calendar_month_rounded,
-                      text: 'Attendance',
-                    ),
-                    GButton(
-                      icon: Icons.chat,
-                      text: ' Chat',
-                    ),
+                    // GButton(
+                    //   icon: Icons.chat,
+                    //   text: ' Chat',
+                    // ),
                     GButton(
                       icon: Icons.account_circle,
                       text: 'Profile',
@@ -291,65 +349,70 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
             // buildHeader(context),
             Material(
                 color: kPrimaryColor,
-                child: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.only(
-                          top: 24 + MediaQuery.of(context).padding.top,
-                          bottom: 24),
-                      child: Column(
-                        children: [
-                          // const CircleAvatar(
-                          //   radius: 40,
-                          //   backgroundImage:
-                          //       AssetImage('assets/images/man.png'),
-                          //   // backgroundImage: image.image,
-                          // ),
-                          Container(
-                            height: 100,
-                            width: 100,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: Colors.grey, width: 2),
-                            ),
-                            child: ClipOval(
-                              child: _buildPhotoWidget(),
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            name,
-                            style: const TextStyle(
-                                fontSize: 28, color: Colors.white),
-                          ),
-                          Text(
-                            fid,
-                            style: const TextStyle(
-                                fontSize: 15, color: Colors.white),
-                          )
-                        ],
+                child: Container(
+                  padding: EdgeInsets.only(
+                      top: 20 + MediaQuery.of(context).padding.top, bottom: 20),
+                  child: Column(
+                    children: [
+                      // const CircleAvatar(
+                      //   radius: 40,
+                      //   backgroundImage:
+                      //       AssetImage('assets/images/man.png'),
+                      //   // backgroundImage: image.image,
+                      // ),
+                      Container(
+                        height: 100,
+                        width: 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(color: Colors.grey, width: 2),
+                        ),
+                        child: ClipOval(
+                          child: _buildPhotoWidget(),
+                        ),
                       ),
-                    ))),
+                      const SizedBox(height: 10),
+                      Text(
+                        name,
+                        style:
+                            const TextStyle(fontSize: 28, color: Colors.white),
+                      ),
+                      const SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        fid,
+                        style:
+                            const TextStyle(fontSize: 15, color: Colors.white),
+                      )
+                    ],
+                  ),
+                )),
             // buildMenuItems(context),
             Wrap(
-              runSpacing: 10,
+              // runSpacing: 10,
               children: [
-                // ListTile(
-                //     leading: const Icon(Icons.home_outlined),
-                //     title: const Text("Home"),
-                //     onTap: () {
-                //       Navigator.of(context).push(MaterialPageRoute(
-                //         builder: (context) => const Dashboard(),
-                //       ));
-                //     }),
-                // ListTile(
-                //   leading: const Icon(Icons.timelapse),
-                //   title: const Text("Classes Schedule"),
-                //   onTap: () {},
-                // ),
                 ListTile(
-                  leading: const Icon(Icons.calendar_month_rounded),
-                  title: const Text("See Attendence"),
+                  leading: const Icon(Icons.chat),
+                  title: const Text("Chat with Faculty"),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ChatStudent(),
+                    ));
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.people),
+                  title: const Text("Contact Faculty"),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ContactF(),
+                    ));
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.calendar_month),
+                  title: const Text("View Attendence"),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const AttendanceCalendarPage(),
@@ -357,32 +420,17 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.calendar_month_rounded),
-                  title: const Text("See Schedule"),
+                  leading: const Icon(Icons.school),
+                  title: const Text("View Exams"),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ShowSchedule(),
+                      builder: (context) => const Exam(),
                     ));
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.paste),
-                  title: const Text("Results"),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.pages_outlined),
-                  title: const Text("Study Material"),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.insert_drive_file_outlined),
-                  title: const Text("Exam Info"),
-                  onTap: () {},
-                ),
-                ListTile(
-                  leading: const Icon(Icons.money),
-                  title: const Text("Notices"),
+                  leading: const Icon(Icons.notifications),
+                  title: const Text("View Notices"),
                   onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const Notice(),
@@ -390,9 +438,22 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   },
                 ),
                 ListTile(
-                  leading: const Icon(Icons.contact_page_outlined),
-                  title: const Text("contact With Faculty"),
-                  onTap: () {},
+                  leading: const Icon(Icons.assignment),
+                  title: const Text("View Results"),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const Result(),
+                    ));
+                  },
+                ),
+                ListTile(
+                  leading: const Icon(Icons.schedule),
+                  title: const Text("View Schedule"),
+                  onTap: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ShowSchedule(),
+                    ));
+                  },
                 ),
               ],
             ),

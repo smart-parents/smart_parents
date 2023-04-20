@@ -1,5 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
@@ -33,30 +34,49 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   }
 
   resetPassword() async {
-    try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          // backgroundColor: Colors.lightBlueAccent,
-          content: Text(
-            'Password Reset Email has been sent !',
-            style: TextStyle(fontSize: 18.0),
-          ),
-        ),
-      );
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        print('No user found for that email.');
+    final snapShot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('id', isEqualTo: email)
+        .where('role', isEqualTo: 'admin')
+        .where('status', isEqualTo: true)
+        .get();
+    if (snapShot.docs.isNotEmpty) {
+      try {
+        await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             // backgroundColor: Colors.lightBlueAccent,
             content: Text(
-              'No user found for that email.',
+              'Password Reset Email has been sent !',
               style: TextStyle(fontSize: 18.0),
             ),
           ),
         );
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              // backgroundColor: Colors.lightBlueAccent,
+              content: Text(
+                'No user found for that email.',
+                style: TextStyle(fontSize: 18.0),
+              ),
+            ),
+          );
+        }
       }
+    } else {
+      print('No user found for that email.');
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          // backgroundColor: Colors.lightBlueAccent,
+          content: Text(
+            'No user found for that email.',
+            style: TextStyle(fontSize: 18.0),
+          ),
+        ),
+      );
     }
   }
 

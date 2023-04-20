@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/add_subject_f.dart';
 
-class Subject extends StatefulWidget {
-  const Subject({Key? key}) : super(key: key);
+class SubjectF extends StatefulWidget {
+  const SubjectF({Key? key}) : super(key: key);
 
   // void initState() {
   //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
@@ -15,10 +15,10 @@ class Subject extends StatefulWidget {
   // }
 
   @override
-  State<Subject> createState() => _SubjectState();
+  State<SubjectF> createState() => _SubjectFState();
 }
 
-class _SubjectState extends State<Subject> {
+class _SubjectFState extends State<SubjectF> {
   // final email = FirebaseAuth.instance.currentUser!.email;
 
   Stream<QuerySnapshot> subjectStream = FirebaseFirestore.instance
@@ -142,12 +142,12 @@ class _SubjectState extends State<Subject> {
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 13.0),
                                           ),
-                                          Text(
-                                            'Sem: ${storedocs[index]['sem']}',
-                                            style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 13.0),
-                                          ),
+                                          // Text(
+                                          //   'Batch(Starting Year): ${storedocs[index]['batch']}',
+                                          //   style: const TextStyle(
+                                          //       fontWeight: FontWeight.bold,
+                                          //       fontSize: 13.0),
+                                          // ),
                                         ],
                                       ),
                                     ),

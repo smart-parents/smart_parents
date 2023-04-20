@@ -25,14 +25,8 @@ Widget dropdownButton(
       case "Days":
         daysdropdownValue = dropdownValue!;
         break;
-      case "Year":
-        yeardropdownValue = dropdownValue!;
-        break;
-      case "Semester":
-        semesterdropdownValue = dropdownValue!;
-        break;
-      case "Batch":
-        batchdropdownValue = dropdownValue!;
+      case "Batch(Starting Year)":
+        batchyeardropdownValue = dropdownValue!;
         break;
       default:
     }
@@ -123,14 +117,8 @@ class _dropdownState extends State<dropdown> {
       case "Day":
         daysdropdownValue = dropdownValue;
         break;
-      case "Year":
-        yeardropdownValue = dropdownValue;
-        break;
-      case "Semester":
-        semesterdropdownValue = dropdownValue;
-        break;
-      case "Batch":
-        batchdropdownValue = dropdownValue;
+      case "Batch(Starting Year)":
+        batchyeardropdownValue = dropdownValue;
         break;
       default:
     }

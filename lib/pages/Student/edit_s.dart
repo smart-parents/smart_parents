@@ -39,17 +39,15 @@ class _EditSState extends State<EditS> {
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/students');
 
-  Future<void> updateUser(
-      id, name, email, mono, year, branch, sem, batch, dob) {
+  Future<void> updateUser(id, name, email, mono, branch, batch, dob) {
     return students
         .doc(id)
         .update(({
           'name': name,
           'email': email,
           'mono': mono,
-          'year': year,
           'branch': branch,
-          'sem': sem,
+          // 'sem': sem,
           'batch': batch,
           'dob': dob
         }))
@@ -106,9 +104,9 @@ class _EditSState extends State<EditS> {
               var name = data['name'];
               var email = data['email'];
               var mono = data['mono'];
-              var year = data['year'];
+              // var year = data['year'];
               var branch = data['branch'];
-              var sem = data['sem'];
+              // var sem = data['sem'];
               var batch = data['batch'];
               return Column(
                 children: [
@@ -321,43 +319,43 @@ class _EditSState extends State<EditS> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                              child: Text(
-                                "Year",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0, right: 20.0),
-                              child: TextFormField(
-                                readOnly: true,
-                                initialValue: year,
-                                autofocus: false,
-                                onChanged: (value) => year = value,
-                                style: const TextStyle(fontSize: 20),
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                      // Flexible(
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       const Padding(
+                      //         padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                      //         child: Text(
+                      //           "Year",
+                      //           style: TextStyle(
+                      //               fontWeight: FontWeight.bold,
+                      //               fontSize: 18.0),
+                      //         ),
+                      //       ),
+                      //       const SizedBox(
+                      //         height: 5,
+                      //       ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.only(
+                      //             left: 20.0, right: 20.0),
+                      //         child: TextFormField(
+                      //           readOnly: true,
+                      //           initialValue: year,
+                      //           autofocus: false,
+                      //           onChanged: (value) => year = value,
+                      //           style: const TextStyle(fontSize: 20),
+                      //           decoration: InputDecoration(
+                      //             contentPadding: const EdgeInsets.symmetric(
+                      //                 vertical: 2, horizontal: 10),
+                      //             border: OutlineInputBorder(
+                      //               borderRadius: BorderRadius.circular(12),
+                      //             ),
+                      //           ),
+                      //         ),
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
                       Flexible(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -400,85 +398,85 @@ class _EditSState extends State<EditS> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                              child: Text(
-                                "Semester",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0, right: 20.0),
-                              child: TextFormField(
-                                readOnly: true,
-                                initialValue: sem,
-                                autofocus: false,
-                                onChanged: (value) => sem = value,
-                                style: const TextStyle(fontSize: 20),
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Padding(
-                              padding: EdgeInsets.only(left: 20.0, right: 20.0),
-                              child: Text(
-                                "Batch",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18.0),
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 20.0, right: 20.0),
-                              child: TextFormField(
-                                // readOnly: true,
-                                initialValue: batch,
-                                autofocus: false,
-                                onChanged: (value) => batch = value,
-                                style: const TextStyle(fontSize: 20),
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(
-                                      vertical: 2, horizontal: 10),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: <Widget>[
+                  //     Flexible(
+                  //       child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           const Padding(
+                  //             padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                  //             child: Text(
+                  //               "Semester",
+                  //               style: TextStyle(
+                  //                   fontWeight: FontWeight.bold,
+                  //                   fontSize: 18.0),
+                  //             ),
+                  //           ),
+                  //           const SizedBox(
+                  //             height: 5,
+                  //           ),
+                  //           Padding(
+                  //             padding: const EdgeInsets.only(
+                  //                 left: 20.0, right: 20.0),
+                  //             child: TextFormField(
+                  //               readOnly: true,
+                  //               initialValue: sem,
+                  //               autofocus: false,
+                  //               onChanged: (value) => sem = value,
+                  //               style: const TextStyle(fontSize: 20),
+                  //               decoration: InputDecoration(
+                  //                 contentPadding: const EdgeInsets.symmetric(
+                  //                     vertical: 2, horizontal: 10),
+                  //                 border: OutlineInputBorder(
+                  //                   borderRadius: BorderRadius.circular(12),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //     Flexible(
+                  //       child: Column(
+                  //         crossAxisAlignment: CrossAxisAlignment.start,
+                  //         children: [
+                  //           const Padding(
+                  //             padding: EdgeInsets.only(left: 20.0, right: 20.0),
+                  //             child: Text(
+                  //               "Batch",
+                  //               style: TextStyle(
+                  //                   fontWeight: FontWeight.bold,
+                  //                   fontSize: 18.0),
+                  //             ),
+                  //           ),
+                  //           const SizedBox(
+                  //             height: 5,
+                  //           ),
+                  //           Padding(
+                  //             padding: const EdgeInsets.only(
+                  //                 left: 20.0, right: 20.0),
+                  //             child: TextFormField(
+                  //               // readOnly: true,
+                  //               initialValue: batch,
+                  //               autofocus: false,
+                  //               onChanged: (value) => batch = value,
+                  //               style: const TextStyle(fontSize: 20),
+                  //               decoration: InputDecoration(
+                  //                 contentPadding: const EdgeInsets.symmetric(
+                  //                     vertical: 2, horizontal: 10),
+                  //                 border: OutlineInputBorder(
+                  //                   borderRadius: BorderRadius.circular(12),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           )
+                  //         ],
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                   const SizedBox(
                     height: 15,
                   ),
@@ -487,8 +485,8 @@ class _EditSState extends State<EditS> {
                         onPressed: () => {
                               if (_formKey.currentState!.validate())
                                 {
-                                  updateUser(widget.id, name, email, mono, year,
-                                      branch, sem, batch, _selectedDate),
+                                  updateUser(widget.id, name, email, mono,
+                                      branch, batch, _selectedDate),
                                   Navigator.pop(context)
                                 }
                             },

@@ -118,6 +118,7 @@ class _StudentState extends State<Student> {
                   icon: const Icon(Icons.clear),
                   onPressed: () {
                     searchController.clear();
+                    number = '';
                     setState(() {});
                   },
                 ),
@@ -165,7 +166,7 @@ class _StudentState extends State<Student> {
                                         //   '${index + 1}',
                                         // ),
                                         Text(
-                                          '${storedocs[index]['branch']}',
+                                          '${storedocs[index]['batch']}',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20.0),
@@ -221,58 +222,68 @@ class _StudentState extends State<Student> {
                                       const SizedBox(
                                         height: 15,
                                       ),
+                                      // Row(
+                                      //   children: [
+                                      // Flexible(
+                                      //   child:
                                       Row(
+                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  'email : ${storedocs[index]['email']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 13),
-                                                ),
-                                                Text(
-                                                  'Mo: ${storedocs[index]['mono']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 13),
-                                                )
-                                              ],
+                                            child: Text(
+                                              'Mo: ${storedocs[index]['mono']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
                                             ),
                                           ),
-                                          // Expanded(
-                                          //   child: Column(
-                                          //     children: [
-                                          //       Text(
-                                          //         'Branch : ${storedocs[index]['branch']}',
-                                          //         style: const TextStyle(
-                                          //             fontSize: 13),
-                                          //       ),
-                                          //       Text(
-                                          //         'Batch : ${storedocs[index]['batch']}',
-                                          //         style: const TextStyle(
-                                          //             fontSize: 13),
-                                          //       )
-                                          //     ],
-                                          //   ),
-                                          // ),
                                           Expanded(
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  'Sem : ${storedocs[index]['sem']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 13),
-                                                ),
-                                                Text(
-                                                  'Year : ${storedocs[index]['year']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 13),
-                                                )
-                                              ],
+                                            child: Text(
+                                              'Branch: ${storedocs[index]['branch']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
                                             ),
                                           ),
                                         ],
                                       ),
+                                      // ),
+                                      // Expanded(
+                                      //   child: Column(
+                                      //     children: [
+                                      //       Text(
+                                      //         'Branch : ${storedocs[index]['branch']}',
+                                      //         style: const TextStyle(
+                                      //             fontSize: 13),
+                                      //       ),
+                                      //       Text(
+                                      //         'Batch : ${storedocs[index]['batch']}',
+                                      //         style: const TextStyle(
+                                      //             fontSize: 13),
+                                      //       )
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                      // Flexible(
+                                      //   child:
+                                      Row(
+                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'Email: ${storedocs[index]['email']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
+                                            ),
+                                          ),
+                                          // Text(
+                                          //   'Year : ${storedocs[index]['year']}',
+                                          //   style: const TextStyle(
+                                          //       fontSize: 13),
+                                          // )
+                                        ],
+                                      ),
+                                      // ),
+                                      //   ],
+                                      // ),
                                       const SizedBox(
                                         height: 15,
                                       ),
@@ -324,7 +335,7 @@ class _StudentState extends State<Student> {
                                         //   '${index + 1}',
                                         // ),
                                         Text(
-                                          '${storedocs[index]['branch']}',
+                                          '${storedocs[index]['batch']}',
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20.0),
@@ -379,58 +390,69 @@ class _StudentState extends State<Student> {
                                       const SizedBox(
                                         height: 15,
                                       ),
+                                      // Row(
+                                      //   children: [
+                                      // Flexible(
+                                      //   child:
                                       Row(
+                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  'email : ${storedocs[index]['email']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 13),
-                                                ),
-                                                Text(
-                                                  'Mo: ${storedocs[index]['mono']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 13),
-                                                )
-                                              ],
+                                            child: Text(
+                                              'Mo: ${storedocs[index]['mono']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
                                             ),
                                           ),
-                                          // Expanded(
-                                          //   child: Column(
-                                          //     children: [
-                                          //       Text(
-                                          //         'Branch : ${storedocs[index]['branch']}',
-                                          //         style: const TextStyle(
-                                          //             fontSize: 13),
-                                          //       ),
-                                          //       Text(
-                                          //         'Batch : ${storedocs[index]['batch']}',
-                                          //         style: const TextStyle(
-                                          //             fontSize: 13),
-                                          //       )
-                                          //     ],
-                                          //   ),
-                                          // ),
                                           Expanded(
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  'Sem : ${storedocs[index]['sem']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 13),
-                                                ),
-                                                Text(
-                                                  'Year : ${storedocs[index]['year']}',
-                                                  style: const TextStyle(
-                                                      fontSize: 13),
-                                                )
-                                              ],
+                                            child: Text(
+                                              'Branch: ${storedocs[index]['branch']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
                                             ),
                                           ),
                                         ],
                                       ),
+                                      // ),
+                                      // Expanded(
+                                      //   child: Column(
+                                      //     children: [
+                                      //       Text(
+                                      //         'Branch : ${storedocs[index]['branch']}',
+                                      //         style: const TextStyle(
+                                      //             fontSize: 13),
+                                      //       ),
+                                      //       Text(
+                                      //         'Batch : ${storedocs[index]['batch']}',
+                                      //         style: const TextStyle(
+                                      //             fontSize: 13),
+                                      //       )
+                                      //     ],
+                                      //   ),
+                                      // ),
+                                      // Flexible(
+                                      //   child:
+                                      Row(
+                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Expanded(
+                                            child: Text(
+                                              'Email: ${storedocs[index]['email']}',
+                                              style:
+                                                  const TextStyle(fontSize: 13),
+                                            ),
+                                          ),
+
+                                          // Text(
+                                          //   'Year : ${storedocs[index]['year']}',
+                                          //   style: const TextStyle(
+                                          //       fontSize: 13),
+                                          // )
+                                        ],
+                                      ),
+                                      // ),
+                                      //   ],
+                                      // ),
                                       const SizedBox(
                                         height: 15,
                                       ),

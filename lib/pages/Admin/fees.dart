@@ -2,6 +2,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 
@@ -16,6 +17,28 @@ class _FeesState extends State<Fees> {
   // int? name;
   final _formKey = GlobalKey<FormState>();
   final amountController = TextEditingController();
+  final semController = TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    datafetch();
+  }
+
+  @override
+  void dispose() {
+    amountController.dispose();
+    semController.dispose();
+    super.dispose();
+  }
+
+  late Stream<QuerySnapshot> studentStream;
+  datafetch() {
+    studentStream = FirebaseFirestore.instance
+        .collection('Admin/$admin/students')
+        .where('batch', isEqualTo: batchyeardropdownValue)
+        .snapshots();
+  }
+
   // final nameController = TextEditingController();
   String? child;
   String? namestudent;
@@ -31,9 +54,7 @@ class _FeesState extends State<Fees> {
           //   child:
           Center(
         child: StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection('Admin/$admin/students')
-              .snapshots(),
+          stream: studentStream,
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
@@ -61,6 +82,14 @@ class _FeesState extends State<Fees> {
                     // const SizedBox(
                     //   height: 15,
                     // ),
+                    dropdown(
+                      DropdownValue: batchyeardropdownValue,
+                      sTring: batchList,
+                      Hint: "Batch(Starting Year)",
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     const Text(
                       'Enrollment Number',
                       textAlign: TextAlign.center,
@@ -89,30 +118,43 @@ class _FeesState extends State<Fees> {
                               spreadRadius: 1.0,
                             ),
                           ]),
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                        value: child,
-                        hint: const Text('Select a number'),
-                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                        elevation: 16,
-                        dropdownColor: Colors.grey[100],
-                        style: const TextStyle(color: Colors.black),
-                        underline: Container(height: 0, color: Colors.black),
-                        onChanged: (value) {
-                          setState(() {
-                            child = value;
-                            int name = items.indexOf(value);
-                            namestudent = names[name];
-                            // nameController.text = names[items.indexOf(value)];
-                          });
-                        },
-                        items: items.map((item) {
-                          return DropdownMenuItem<String>(
-                            value: item,
-                            child: Text(item),
-                          );
-                        }).toList(),
+                      child: GestureDetector(
+                        onTap: datafetch(),
+                        child: DropdownButtonFormField<String>(
+                          isExpanded: true,
+                          // hint: Text(hint,style: TextStyle(color: Colors.black),),
+                          value: child,
+                          decoration: const InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.zero,
+                          ),
+                          hint: const Text('Select a number'),
+                          icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                          elevation: 16,
+                          dropdownColor: Colors.grey[100],
+                          style: const TextStyle(color: Colors.black),
+                          // underline: Container(height: 0, color: Colors.black),
+                          onChanged: (value) {
+                            setState(() {
+                              child = value;
+                              int name = items.indexOf(value);
+                              namestudent = names[name];
+                              // nameController.text = names[items.indexOf(value)];
+                            });
+                          },
+                          items: items.map((item) {
+                            return DropdownMenuItem<String>(
+                              value: item,
+                              child: Text(item),
+                            );
+                          }).toList(),
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Please select a branch';
+                            }
+                            return null; // return null if there's no error
+                          },
+                        ),
                       ),
                     ),
                     // TextFieldWidgetForm(
@@ -126,13 +168,7 @@ class _FeesState extends State<Fees> {
                     const SizedBox(
                       height: 20,
                     ),
-                    dropdown(
-                        DropdownValue: semesterdropdownValue,
-                        sTring: Semester,
-                        Hint: "Semester"),
-                    const SizedBox(
-                      height: 20,
-                    ),
+
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: Text(
@@ -170,8 +206,37 @@ class _FeesState extends State<Fees> {
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10.0),
                       child: TextFormField(
+                        maxLength: 1,
                         autofocus: false,
                         keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        decoration: const InputDecoration(
+                          labelText: 'Semester: ',
+                          labelStyle: TextStyle(fontSize: 20.0),
+                          border: OutlineInputBorder(),
+                          errorStyle: TextStyle(fontSize: 15),
+                        ),
+                        controller: semController,
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please Enter Semester';
+                          } else if (value.length != 1) {
+                            return 'Please Enter Valid Semester';
+                          }
+                          return null;
+                        },
+                      ),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: TextFormField(
+                        autofocus: false,
+                        keyboardType: TextInputType.number,
+                        inputFormatters: <TextInputFormatter>[
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
                         decoration: const InputDecoration(
                           labelText: 'Amount: ',
                           labelStyle: TextStyle(fontSize: 20.0),
@@ -264,12 +329,15 @@ class _FeesState extends State<Fees> {
                     //       Expanded(
                     //         child:
                     ElevatedButton(
-                      onPressed: () => {
+                      onPressed: () {
                         // Navigator.of(context).pushAndRemoveUntil(
                         //   MaterialPageRoute(
                         //       builder: (context) => AdminNavScreen()),
                         //   (route) => false,
                         // ),
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {});
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),

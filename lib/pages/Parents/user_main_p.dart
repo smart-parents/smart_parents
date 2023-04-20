@@ -1,4 +1,4 @@
-// ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, library_private_types_in_public_api
+// ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, library_private_types_in_public_api, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,14 +8,16 @@ import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Parents/attendance_screen.dart';
 import 'package:smart_parents/pages/Parents/attendance_show.dart';
+import 'package:smart_parents/pages/Parents/chat_parents_f.dart';
 import 'package:smart_parents/pages/Parents/contact_faculty.dart';
 import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
 import 'package:smart_parents/pages/Parents/livelocation.dart';
 import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
-import 'package:smart_parents/pages/Parents/parents_home.dart';
+import 'package:smart_parents/pages/Parents/dashboard_p.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
+import 'package:smart_parents/pages/Parents/result_p.dart';
+import 'package:smart_parents/pages/option.dart';
 
 class ParentsScreen extends StatefulWidget {
   const ParentsScreen({super.key});
@@ -64,24 +66,30 @@ class _ParentsScreenState extends State<ParentsScreen> {
         .get();
     if (snahot.docs.isNotEmpty) {
       for (DocumentSnapshot<Map<String, dynamic>> doc in snahot.docs) {
-        sem = doc.get('sem');
+        batch = doc.get('batch');
       }
     }
-    print(sem);
+    print(batch);
   }
 
   static final List<Widget> _widgetOptions = <Widget>[
     const Parents_home(),
-    const Attendance_screen(),
-    const Text(
-      'Index 3: chat',
-    ),
+    // const Attendance_screen(),
+    // const Text(
+    //   'Index 3: chat',
+    // ),
     const Profile_screenP()
   ];
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  delete() async {
+    final SharedPreferences prefs = await _prefs;
+    final success = await prefs.clear();
+    print(success);
   }
 
   @override
@@ -125,6 +133,58 @@ class _ParentsScreenState extends State<ParentsScreen> {
             //     ],
             //   ),
             title: const Text('Home'),
+            actions: [
+              IconButton(
+                onPressed: () async => {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Confirm Logout"),
+                        content: const Text("Are you sure you want to logout?"),
+                        actions: [
+                          TextButton(
+                            child: const Text("Cancel"),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                          TextButton(
+                            child: const Text("Logout"),
+                            onPressed: () async {
+                              // Perform the deletion here
+                              // ...
+                              try {
+                                await FirebaseAuth.instance.signOut();
+                                delete();
+                                // await storage.delete(key: "uid"),
+                                Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => const Option(),
+                                    ),
+                                    (route) => false);
+                              } catch (e) {
+                                print(e);
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text('Failed to logout: $e')),
+                                );
+                              }
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  )
+                },
+                icon: const Icon(
+                  Icons.logout,
+                  color: Colors.white,
+                ),
+              ),
+            ],
           ),
           drawer: const NavigationDrawer(),
           body: _widgetOptions.elementAt(_selectedIndex),
@@ -156,14 +216,14 @@ class _ParentsScreenState extends State<ParentsScreen> {
                       icon: Icons.home,
                       text: 'Home',
                     ),
-                    GButton(
-                      icon: Icons.calendar_month_rounded,
-                      text: 'Attendance',
-                    ),
-                    GButton(
-                      icon: Icons.chat,
-                      text: 'Chat',
-                    ),
+                    // GButton(
+                    //   icon: Icons.calendar_month_rounded,
+                    //   text: 'Attendance',
+                    // ),
+                    // GButton(
+                    //   icon: Icons.chat,
+                    //   text: 'Chat',
+                    // ),
                     GButton(
                       icon: Icons.account_circle,
                       text: 'Profile',
@@ -287,94 +347,67 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
           // buildHeader(context),
           Material(
               color: kPrimaryColor,
-              child: InkWell(
-                  onTap: () {},
-                  child: Container(
-                    padding: EdgeInsets.only(
-                        top: 24 + MediaQuery.of(context).padding.top,
-                        bottom: 24),
-                    child: Column(
-                      children: [
-                        // const CircleAvatar(
-                        //   radius: 40,
-                        //   backgroundImage: AssetImage('assets/images/man.png'),
-                        // ),
-                        Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.grey, width: 2),
-                          ),
-                          child: ClipOval(
-                            child: _buildPhotoWidget(),
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          name,
-                          style: const TextStyle(
-                              fontSize: 28, color: Colors.white),
-                        ),
-                        Text(
-                          fid,
-                          style: const TextStyle(
-                              fontSize: 15, color: Colors.white),
-                        )
-                      ],
+              // child: InkWell(
+              //     onTap: () {},
+              child: Container(
+                padding: EdgeInsets.only(
+                    top: 20 + MediaQuery.of(context).padding.top, bottom: 20),
+                child: Column(
+                  children: [
+                    // const CircleAvatar(
+                    //   radius: 40,
+                    //   backgroundImage: AssetImage('assets/images/man.png'),
+                    // ),
+                    Container(
+                      height: 100,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.grey, width: 2),
+                      ),
+                      child: ClipOval(
+                        child: _buildPhotoWidget(),
+                      ),
                     ),
-                  ))),
+                    const SizedBox(height: 10),
+                    Text(
+                      name,
+                      style: const TextStyle(fontSize: 28, color: Colors.white),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      fid,
+                      style: const TextStyle(fontSize: 15, color: Colors.white),
+                    )
+                  ],
+                ),
+              )),
           // buildMenuItems(context),
           Wrap(
-            runSpacing: 10,
+            // runSpacing: 10,
             children: [
-              // ListTile(
-              //   leading: const Icon(Icons.home_outlined),
-              //   title: const Text("Home"),
-              //   onTap: () {
-              //     Navigator.of(context).push(MaterialPageRoute(
-              //       builder: (context) => const Parents_home(),
-              //     ));
-              //   },
-              // ),
               ListTile(
-                leading: const Icon(Icons.calendar_month_outlined),
-                title: const Text("View Attendance"),
+                leading: const Icon(Icons.chat),
+                title: const Text("Chat with Faculty"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AttendanceCalendarPage(),
+                    builder: (context) => const ChatParent(),
                   ));
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.paste),
-                title: const Text("View Your Child Result"),
-                onTap: () {
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const LiveLocationMap(),
-                  // ));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.money),
-                title: const Text("Notice"),
+                leading: const Icon(Icons.people),
+                title: const Text("Contact Faculty"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Notice(),
+                    builder: (context) => const ContactF(),
                   ));
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.insert_drive_file_outlined),
-                title: const Text("View Exam Info"),
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Exam(),
-                  ));
-                },
-              ),
-              ListTile(
-                leading: const Icon(Icons.location_on_outlined),
+                leading: const Icon(Icons.location_on),
                 title: const Text("Get Your Child Location"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -383,11 +416,38 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.contact_page_outlined),
-                title: const Text("Contact Faculty"),
+                leading: const Icon(Icons.calendar_month),
+                title: const Text("View Attendances"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ContactF(),
+                    builder: (context) => const AttendanceCalendarPage(),
+                  ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.assignment),
+                title: const Text("View Results"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Result(),
+                  ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.school),
+                title: const Text("View Exams"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Exam(),
+                  ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.notifications),
+                title: const Text("View Notices"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Notice(),
                   ));
                 },
               ),

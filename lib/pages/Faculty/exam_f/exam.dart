@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/exam_f/addexam.dart';
@@ -17,18 +18,26 @@ class _ExamState extends State<Exam> {
   // For Deleting User
   CollectionReference exams =
       FirebaseFirestore.instance.collection('Admin/$admin/exams');
-  Future<void> deleteUser(id) {
+
+  Future<void> deleteUser(id) async {
     // print("User Deleted $id");
-    return exams
+    final subcollections = exams.doc(id).collection('exam').get();
+    subcollections.then((QuerySnapshot<Map<String, dynamic>> snapshot) {
+      for (var doc in snapshot.docs) {
+        doc.reference.delete();
+      }
+    });
+    exams
         .doc(id)
         .delete()
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
+    FirebaseStorage.instance.ref().child('$admin/exams/$id.jpg').delete();
   }
 
-  addExam(name, year, sem) {
+  addExam(name, batch) {
     return exams
-        .add({'name': name, 'year': year, 'branch': branch, 'sem': sem})
+        .add({'name': name, 'batch': batch, 'branch': branch})
         .then((value) => print('student Added'))
         .catchError((error) => print('Failed to Add user: $error'));
   }
@@ -112,19 +121,19 @@ class _ExamState extends State<Exam> {
                                           fontSize: 20.0),
                                     ),
                                     Text(
-                                      'Sem: ${storedocs[index]['sem']}',
+                                      'Batch(Starting Year): ${storedocs[index]['batch']}',
                                       // Enrollment[index],
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20.0),
                                     ),
-                                    Text(
-                                      'Year: ${storedocs[index]['year']}',
-                                      // Enrollment[index],
-                                      style: const TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20.0),
-                                    ),
+                                    // Text(
+                                    //   'Year: ${storedocs[index]['year']}',
+                                    //   // Enrollment[index],
+                                    //   style: const TextStyle(
+                                    //       fontWeight: FontWeight.bold,
+                                    //       fontSize: 20.0),
+                                    // ),
                                   ],
                                 ),
                                 Column(
@@ -251,16 +260,13 @@ class _ExamState extends State<Exam> {
                           //   height: 20,
                           // ),
                           dropdown(
-                              DropdownValue: semesterdropdownValue,
-                              sTring: Semester,
-                              Hint: "Semester"),
-                          // const SizedBox(
-                          //   height: 20,
-                          // ),
-                          dropdown(
-                              DropdownValue: yeardropdownValue,
-                              sTring: CollegeYear,
-                              Hint: "Year"),
+                            DropdownValue: batchyeardropdownValue,
+                            sTring: batchList,
+                            Hint: "Batch(Starting Year)",
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                         ],
                       ),
                       actions: [
@@ -273,8 +279,8 @@ class _ExamState extends State<Exam> {
                         TextButton(
                           child: const Text("Add"),
                           onPressed: () {
-                            addExam(nameController.text, yeardropdownValue,
-                                semesterdropdownValue);
+                            addExam(
+                                nameController.text, batchyeardropdownValue);
                             Navigator.of(context).pop();
                           },
                         ),

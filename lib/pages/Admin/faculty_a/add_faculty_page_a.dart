@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_typing_uninitialized_variables
+// ignore_for_file: library_private_types_in_public_api, prefer_typing_uninitialized_variables, non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -17,7 +17,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
   final _prefs = SharedPreferences.getInstance();
   var faculty = "";
   var name = "";
-  var branch;
+  var Branch;
   var password = "";
 
   @override
@@ -60,7 +60,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
           'faculty': faculty,
           'name': name,
           'password': password,
-          'branch': branch,
+          'branch': Branch,
           'status': true
         })
         .then((value) => print('faculty Added'))
@@ -179,6 +179,14 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                         vertical: 20, horizontal: 30),
                     child: ListView(
                       children: [
+                        const Text(
+                          'Branch',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
                         Container(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0),
                           decoration: BoxDecoration(
@@ -199,21 +207,24 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                                   spreadRadius: 1.0,
                                 ),
                               ]),
-                          child: DropdownButton<String>(
+                          child: DropdownButtonFormField<String>(
                             isExpanded: true,
-                            // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                            value: branch,
+                            value: Branch,
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.zero,
+                            ),
                             hint: const Text('Select an item'),
                             icon:
                                 const Icon(Icons.keyboard_arrow_down_outlined),
                             elevation: 16,
                             dropdownColor: Colors.grey[100],
                             style: const TextStyle(color: Colors.black),
-                            underline:
-                                Container(height: 0, color: Colors.black),
+                            // underline:
+                            //     Container(height: 0, color: Colors.black),
                             onChanged: (value) {
                               setState(() {
-                                branch = value;
+                                Branch = value;
                               });
                             },
                             items: items.map((item) {
@@ -222,6 +233,12 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                                 child: Text(item),
                               );
                             }).toList(),
+                            validator: (value) {
+                              if (value == null) {
+                                return 'Please select a branch';
+                              }
+                              return null; // return null if there's no error
+                            },
                           ),
                         ),
                         const SizedBox(
@@ -319,8 +336,8 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                                     registration();
                                     // Navigator.pop(context);
                                   });
+                                  login();
                                 }
-                                login();
                               },
                               child: const Text(
                                 'Register',

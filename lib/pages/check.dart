@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/internetcheck.dart';
 import 'package:smart_parents/pages/Faculty/user_main_f.dart';
 import 'package:smart_parents/pages/Parents/user_main_p.dart';
 import 'package:smart_parents/pages/Student/user_main_s.dart';
@@ -16,6 +18,15 @@ class Check extends StatefulWidget {
 }
 
 class _CheckState extends State<Check> {
+  @override
+  void initState() {
+    super.initState();
+    if (kIsWeb) {
+    } else {
+      InternetPopup().initialize(context: context);
+    }
+  }
+
   final _prefs = SharedPreferences.getInstance();
   String? role;
 

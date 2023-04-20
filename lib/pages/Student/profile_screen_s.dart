@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types, deprecated_member_use, unused_import
+// ignore_for_file: camel_case_types, deprecated_member_use, unused_import, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -8,8 +8,9 @@ import 'package:flutter/material.dart';
 // import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:image_network/image_network.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:smart_parents/components/change_password.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/pages/Student/dashboard_s.dart';
 import 'package:smart_parents/pages/Student/edit_s.dart';
 import 'package:smart_parents/pages/option.dart';
 
@@ -23,12 +24,6 @@ class Profile_screenS extends StatefulWidget {
 class _Profile_screenSState extends State<Profile_screenS> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   String? email = FirebaseAuth.instance.currentUser!.email;
-  final _prefs = SharedPreferences.getInstance();
-  delete() async {
-    final SharedPreferences prefs = await _prefs;
-    final success = await prefs.clear();
-    print(success);
-  }
 
   @override
   void initState() {
@@ -58,27 +53,49 @@ class _Profile_screenSState extends State<Profile_screenS> {
     });
   }
 
+  Future<void> _selectProfileImage() async {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Gallery'),
+                onTap: () async {
+                  pickImage(ImageSource.gallery);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Camera'),
+                onTap: () async {
+                  pickImage(ImageSource.camera);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Uint8List? _imageFile;
   String? _imageUrl;
 
-  Future<void> pickImage() async {
+  Future<void> pickImage(ImageSource source) async {
     final picker = ImagePicker();
     try {
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      final pickedFile = await picker.pickImage(source: source);
       if (pickedFile != null) {
-        if (kIsWeb) {
-          final bytes = await pickedFile.readAsBytes();
-          setState(() {
-            _imageFile = bytes;
-            uploadImage();
-          });
-        } else {
-          final bytes = await pickedFile.readAsBytes();
-          setState(() {
-            _imageFile = bytes;
-            uploadImage();
-          });
-        }
+        final bytes = await pickedFile.readAsBytes();
+        setState(() {
+          _imageFile = bytes;
+          uploadImage();
+        });
+        Navigator.pop(context);
       }
     } catch (e) {
       print('Error: $e');
@@ -117,8 +134,10 @@ class _Profile_screenSState extends State<Profile_screenS> {
     if (_uploading) {
       return const Center(child: CircularProgressIndicator());
     } else if (_imageUrl != null) {
-      return GestureDetector(
-        onTap: pickImage,
+      return
+          // Stack(children: [
+          GestureDetector(
+        onTap: _selectProfileImage,
         child: ImageNetwork(
           image: _imageUrl!,
           height: 100,
@@ -132,25 +151,27 @@ class _Profile_screenSState extends State<Profile_screenS> {
             Icons.error,
             color: red,
           ),
-          onTap: pickImage,
+          onTap: _selectProfileImage,
         ),
       );
+
+      // ]);
     } else {
-      return Stack(
-        children: [
-          Image.asset('assets/images/man.png', fit: BoxFit.cover),
-        ],
-      );
+      // return Stack(
+      //   children: [
+      return Image.asset('assets/images/man.png', fit: BoxFit.cover);
+      // ],
+      // );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-        future: FirebaseFirestore.instance
+    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+        stream: FirebaseFirestore.instance
             .collection('Admin/$admin/students')
             .doc(id)
-            .get(),
+            .snapshots(),
         builder: (_, snapshot) {
           if (snapshot.hasError) {
             print('Something Went Wrong');
@@ -165,9 +186,9 @@ class _Profile_screenSState extends State<Profile_screenS> {
           var name = data['name'];
           var email = data['email'];
           var mono = data['mono'];
-          var year = data['year'];
+          // var year = data['year'];
           var branch = data['branch'];
-          var sem = data['sem'];
+          // var sem = data['sem'];
           var batch = data['batch'];
           var dob = data['dob'];
           var age = data['age'];
@@ -193,18 +214,35 @@ class _Profile_screenSState extends State<Profile_screenS> {
                   child: Column(
                     children: [
                       GestureDetector(
-                        onTap: pickImage,
+                        onTap: _selectProfileImage,
                         child: Container(
-                          height: 100,
-                          width: 100,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(color: Colors.grey, width: 2),
-                          ),
-                          child: ClipOval(
-                            child: _buildPhotoWidget(),
-                          ),
-                        ),
+                            height: 100,
+                            width: 100,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.grey, width: 2),
+                            ),
+                            child: Stack(
+                              children: [
+                                ClipOval(
+                                  child: _buildPhotoWidget(),
+                                ),
+                                Positioned(
+                                  bottom: 0,
+                                  right: 0,
+                                  child: Container(
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Colors.white,
+                                    ),
+                                    child: const Icon(
+                                      Icons.camera_alt,
+                                      color: kPrimaryColor,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            )),
                       ),
                       const Text(
                         'Student',
@@ -230,6 +268,16 @@ class _Profile_screenSState extends State<Profile_screenS> {
                                 children: [
                                   Text(
                                     "Enrollment: $number",
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      color: Color.fromARGB(255, 255, 255, 255),
+                                    ),
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  Text(
+                                    "Batch(Starting Year): $batch",
                                     style: const TextStyle(
                                       fontSize: 20,
                                       color: Color.fromARGB(255, 255, 255, 255),
@@ -298,33 +346,27 @@ class _Profile_screenSState extends State<Profile_screenS> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  Text(
-                                    "Batch: $batch",
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    "Semester: $sem",
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                    ),
-                                  ),
-                                  const SizedBox(
-                                    height: 10,
-                                  ),
-                                  Text(
-                                    "Year: $year",
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Color.fromARGB(255, 255, 255, 255),
-                                    ),
-                                  ),
+                                  // Text(
+                                  //   "Batch: $batch",
+                                  //   style: const TextStyle(
+                                  //     fontSize: 20,
+                                  //     color: Color.fromARGB(255, 255, 255, 255),
+                                  //   ),
+                                  // ),
+                                  // const SizedBox(
+                                  //   height: 10,
+                                  // ),
+
+                                  // const SizedBox(
+                                  //   height: 10,
+                                  // ),
+                                  // Text(
+                                  //   "Year: $year",
+                                  //   style: const TextStyle(
+                                  //     fontSize: 20,
+                                  //     color: Color.fromARGB(255, 255, 255, 255),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                             ),
@@ -344,32 +386,59 @@ class _Profile_screenSState extends State<Profile_screenS> {
                                     color: Colors.white,
                                   ),
                                   label: const Text(
-                                    'Edit Profile',
+                                    'Edit',
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
                                 ),
+                                // TextButton.icon(
+                                //   onPressed: () async => {
+                                //     await FirebaseAuth.instance.signOut(),
+                                //     // FlutterBackgroundService()
+                                //     //     .invoke("stopService"),
+                                //     timer?.cancel(),
+                                //     delete(),
+                                //     Navigator.pushAndRemoveUntil(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //           builder: (context) => const Option(),
+                                //         ),
+                                //         (route) => false)
+                                //   },
+                                //   icon: const Icon(
+                                //     Icons.logout,
+                                //     color: Colors.white,
+                                //   ),
+                                //   label: const Text(
+                                //     'Logout',
+                                //     style: TextStyle(
+                                //       fontSize: 20,
+                                //       color: Color.fromARGB(255, 255, 255, 255),
+                                //     ),
+                                //   ),
+                                // ),
                                 TextButton.icon(
                                   onPressed: () async => {
-                                    await FirebaseAuth.instance.signOut(),
-                                    // FlutterBackgroundService()
-                                    //     .invoke("stopService"),
-                                    delete(),
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => const Option(),
-                                        ),
-                                        (route) => false)
+                                    // await FirebaseAuth.instance.signOut(),
+                                    // delete(),
+                                    // await storage.delete(key: "uid"),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ChangePassword(),
+                                      ),
+                                    )
                                   },
                                   icon: const Icon(
-                                    Icons.logout,
+                                    Icons.password,
                                     color: Colors.white,
                                   ),
                                   label: const Text(
-                                    'Logout',
+                                    // 'Change Password',
+                                    'Change',
                                     style: TextStyle(
                                       fontSize: 20,
                                       color: Color.fromARGB(255, 255, 255, 255),

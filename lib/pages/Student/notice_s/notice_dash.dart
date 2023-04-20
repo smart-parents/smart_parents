@@ -18,7 +18,7 @@ class _NoticeState extends State<Notice> {
   Stream<QuerySnapshot> noticesStream = FirebaseFirestore.instance
       .collection('Admin/$admin/Notices')
       .where('branch', isEqualTo: branch)
-      .where('sem', isEqualTo: sem)
+      .where('batch', isEqualTo: batch)
       .snapshots();
 
   @override
@@ -62,6 +62,7 @@ class _NoticeState extends State<Notice> {
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
+                                scrollable: true,
                                 title: Text(
                                   '${storedocs[index]['subject']}',
                                   // Enrollment[index],

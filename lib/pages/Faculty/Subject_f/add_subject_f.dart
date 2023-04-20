@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/widgest/dropDownWidget.dart';
 
 class AddSubject extends StatefulWidget {
   const AddSubject({Key? key}) : super(key: key);
@@ -28,21 +27,21 @@ class _AddSubjectState extends State<AddSubject> {
   // of the TextField.
   final nameController = TextEditingController();
   final numberController = TextEditingController();
-  final semController = TextEditingController();
+  // final semController = TextEditingController();
 
   @override
   void dispose() {
     // Clean up the controller when the widget is disposed.
     nameController.dispose();
     numberController.dispose();
-    semController.dispose();
+    // semController.dispose();
     super.dispose();
   }
 
   clearText() {
     nameController.clear();
     numberController.clear();
-    semController.clear();
+    // semController.clear();
   }
 
   // Adding Student
@@ -53,7 +52,7 @@ class _AddSubjectState extends State<AddSubject> {
     return subject
         .doc(number)
         .set({
-          'sem': semesterdropdownValue,
+          // 'batch': batchyeardropdownValue,
           'sub_name': name,
           'sub_code': number,
           'branch': branch,
@@ -138,13 +137,15 @@ class _AddSubjectState extends State<AddSubject> {
               //     }).toList(),
               //   ),
               // ),
-              dropdown(
-                  DropdownValue: semesterdropdownValue,
-                  sTring: Semester,
-                  Hint: "Semester"),
-              const SizedBox(
-                height: 20,
-              ),
+
+              // dropdown(
+              //   DropdownValue: batchyeardropdownValue,
+              //   sTring: batchList,
+              //   Hint: "Batch(Starting Year)",
+              // ),
+              // const SizedBox(
+              //   height: 20,
+              // ),
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(

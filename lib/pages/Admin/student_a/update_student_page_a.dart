@@ -20,10 +20,11 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/students');
 
-  Future<void> updateUser(id, name, branch, sem) async {
+  Future<void> updateUser(id, name, branch) async {
     students
         .doc(id)
-        .update({'name': name, 'branch': Branch, 'sem': semesterdropdownValue})
+        .update(
+            {'name': name, 'branch': branch, 'batch': batchyeardropdownValue})
         .then((value) => print("User Updated"))
         .catchError((error) => print("Failed to update user: $error"));
   }
@@ -45,7 +46,6 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
             child: FutureBuilder<QuerySnapshot>(
                 future: FirebaseFirestore.instance
                     .collection('Admin/$admin/department')
-                    .where("number")
                     .get(),
                 builder: (context, snapshot) {
                   if (!snapshot.hasData) {
@@ -79,7 +79,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                           var number = data['number'];
                           // var password = data['password'];
                           // Branch = data['branch'];
-                          semesterdropdownValue = data['sem'];
+                          batchyeardropdownValue = data['batch'];
                           return Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 30),
@@ -114,18 +114,21 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                           spreadRadius: 1.0,
                                         ),
                                       ]),
-                                  child: DropdownButton<String>(
+                                  child: DropdownButtonFormField<String>(
                                     isExpanded: true,
-                                    // hint: Text(hint,style: TextStyle(color: Colors.black),),
                                     value: Branch,
+                                    decoration: const InputDecoration(
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.zero,
+                                    ),
                                     hint: const Text('Select an item'),
                                     icon: const Icon(
                                         Icons.keyboard_arrow_down_outlined),
                                     elevation: 16,
                                     dropdownColor: Colors.grey[100],
                                     style: const TextStyle(color: Colors.black),
-                                    underline: Container(
-                                        height: 0, color: Colors.black),
+                                    // underline:
+                                    //     Container(height: 0, color: Colors.black),
                                     onChanged: (value) {
                                       setState(() {
                                         Branch = value;
@@ -137,15 +140,22 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                         child: Text(item),
                                       );
                                     }).toList(),
+                                    validator: (value) {
+                                      if (value == null) {
+                                        return 'Please select a branch';
+                                      }
+                                      return null; // return null if there's no error
+                                    },
                                   ),
                                 ),
                                 const SizedBox(
                                   height: 20,
                                 ),
                                 dropdown(
-                                    DropdownValue: semesterdropdownValue,
-                                    sTring: Semester,
-                                    Hint: "Semester"),
+                                  DropdownValue: batchyeardropdownValue,
+                                  sTring: batchList,
+                                  Hint: "Batch(Starting Year)",
+                                ),
                                 const SizedBox(
                                   height: 20,
                                 ),
@@ -225,8 +235,11 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                       onPressed: () {
                                         // Validate returns true if the form is valid, otherwise false.
                                         if (_formKey.currentState!.validate()) {
-                                          updateUser(widget.id, name, Branch,
-                                              semesterdropdownValue);
+                                          updateUser(
+                                            widget.id,
+                                            name,
+                                            Branch,
+                                          );
                                           Navigator.pop(context);
                                         }
                                       },

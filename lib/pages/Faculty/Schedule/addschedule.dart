@@ -4,7 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/Schedule/schedule_u.dart';
+import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
@@ -51,7 +51,7 @@ class _AddScheduleState extends State<AddSchedule> {
     var fullhour = DateFormat('HH:mm').format(start);
     FirebaseFirestore.instance
         .collection('Admin/$admin/schedule')
-        .doc('${branch}_$semesterdropdownValue')
+        .doc('${branch}_$batchyeardropdownValue')
         .get()
         .then((value) async => {
               if (value.exists)
@@ -60,7 +60,7 @@ class _AddScheduleState extends State<AddSchedule> {
                       .collection('Admin')
                       .doc(admin)
                       .collection('schedule')
-                      .doc('${branch}_$semesterdropdownValue')
+                      .doc('${branch}_$batchyeardropdownValue')
                       // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
                       .collection('timetable')
                       .doc(daysdropdownValue)
@@ -79,11 +79,11 @@ class _AddScheduleState extends State<AddSchedule> {
                       .collection('Admin/$admin/schedule')
                       // .doc(widget.sub)
                       // .collection('lectures')
-                      .doc('${branch}_$semesterdropdownValue')
+                      .doc('${branch}_$batchyeardropdownValue')
                       .set({
                     // 'day': daysdropdownValue,
                     'branch': branch,
-                    'sem': semesterdropdownValue,
+                    'batch': batchyeardropdownValue,
                     // 'subject': Sub,
                     // 'start': _start,
                     // 'end': _end,
@@ -92,7 +92,7 @@ class _AddScheduleState extends State<AddSchedule> {
                       .collection('Admin')
                       .doc(admin)
                       .collection('schedule')
-                      .doc('${branch}_$semesterdropdownValue')
+                      .doc('${branch}_$batchyeardropdownValue')
                       // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
                       .collection('timetable')
                       .doc(daysdropdownValue)
@@ -178,9 +178,10 @@ class _AddScheduleState extends State<AddSchedule> {
                       height: 20,
                     ),
                     dropdown(
-                        DropdownValue: semesterdropdownValue,
-                        sTring: Semester,
-                        Hint: "Semester"),
+                      DropdownValue: batchyeardropdownValue,
+                      sTring: batchList,
+                      Hint: "Batch(Starting Year)",
+                    ),
                     const SizedBox(
                       height: 20,
                     ),

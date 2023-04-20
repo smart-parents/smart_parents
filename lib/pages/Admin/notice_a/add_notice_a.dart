@@ -1,4 +1,4 @@
-// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, prefer_typing_uninitialized_variables, prefer_final_fields
+// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, prefer_typing_uninitialized_variables, prefer_final_fields, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
@@ -36,6 +36,7 @@ class _NoticeAddState extends State<NoticeAdd> {
   var subject = '';
   var notice = '';
   String? docId;
+
   void addnotice() {
     CollectionReference notices =
         FirebaseFirestore.instance.collection('Admin/$admin/Notices');
@@ -45,7 +46,7 @@ class _NoticeAddState extends State<NoticeAdd> {
         .doc(docId)
         .set({
           'branch': Branch,
-          'sem': semesterdropdownValue,
+          'batch': batchyeardropdownValue,
           'subject': subject,
           'notice': notice,
           'date': docId,
@@ -55,49 +56,51 @@ class _NoticeAddState extends State<NoticeAdd> {
     clearText();
   }
 
-  // File? file;
-  // ImagePicker image = ImagePicker();
-  // String? url;
-  // var name;
-
-  // getfile() async {
-  //   FilePickerResult? result = await FilePicker.platform.pickFiles(
-  //     type: FileType.custom,
-  //     allowedExtensions: ['pdf', 'doc'],
-  //   );
-  //   if (result != null) {
-  //     File c = File(result.files.single.path.toString());
-  //     setState(() {
-  //       file = c;
-  //       name = result.names.toString();
-  //     });
-  //     uploadFile();
-  //   }
-  // }
-
   Uint8List? _imageFile;
-  Future<void> pickImage() async {
+  Future<void> pickImage(ImageSource source) async {
     final picker = ImagePicker();
     try {
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      final pickedFile = await picker.pickImage(source: source);
       if (pickedFile != null) {
-        if (kIsWeb) {
-          final bytes = await pickedFile.readAsBytes();
-          setState(() {
-            _imageFile = bytes;
-            // uploadImage();
-          });
-        } else {
-          final bytes = await pickedFile.readAsBytes();
-          setState(() {
-            _imageFile = bytes;
-            // uploadImage();
-          });
-        }
+        final bytes = await pickedFile.readAsBytes();
+        setState(() {
+          _imageFile = bytes;
+          // uploadImage();
+        });
+        Navigator.pop(context);
       }
     } catch (e) {
       print('Error: $e');
     }
+  }
+
+  Future<void> _selectProfileImage() async {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Gallery'),
+                onTap: () async {
+                  pickImage(ImageSource.gallery);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Camera'),
+                onTap: () async {
+                  pickImage(ImageSource.camera);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Future<void> uploadImage() async {
@@ -167,11 +170,12 @@ class _NoticeAddState extends State<NoticeAdd> {
                 Form(
                   key: _formKey,
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 30),
                     child: Column(children: [
-                      const SizedBox(
-                        height: 30,
-                      ),
+                      // const SizedBox(
+                      //   height: 30,
+                      // ),
                       Column(
                         children: [
                           const Text(
@@ -242,9 +246,10 @@ class _NoticeAddState extends State<NoticeAdd> {
                         height: 20,
                       ),
                       dropdown(
-                          DropdownValue: semesterdropdownValue,
-                          sTring: Semester,
-                          Hint: "Semester"),
+                        DropdownValue: batchyeardropdownValue,
+                        sTring: batchList,
+                        Hint: "Batch(Starting Year)",
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -253,7 +258,8 @@ class _NoticeAddState extends State<NoticeAdd> {
                           Container(
                             padding: const EdgeInsets.only(left: 15),
                             margin: const EdgeInsets.only(
-                                left: 20, top: 20, right: 20),
+                              top: 20,
+                            ),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(15),
                               border: Border.all(
@@ -283,7 +289,8 @@ class _NoticeAddState extends State<NoticeAdd> {
                               padding:
                                   const EdgeInsets.fromLTRB(15, 10, 15, 10),
                               margin: const EdgeInsets.only(
-                                  left: 20, top: 20, right: 20),
+                                top: 20,
+                              ),
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(15),
                                 border: Border.all(
@@ -302,7 +309,7 @@ class _NoticeAddState extends State<NoticeAdd> {
                                       hintStyle: const TextStyle(fontSize: 18),
                                       suffixIcon: IconButton(
                                         icon: const Icon(Icons.attach_file),
-                                        onPressed: pickImage,
+                                        onPressed: _selectProfileImage,
                                       ),
                                     ),
                                     controller: noticeController,

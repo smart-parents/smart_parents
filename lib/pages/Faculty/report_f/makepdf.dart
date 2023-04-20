@@ -8,19 +8,19 @@ import 'package:printing/printing.dart';
 
 class Report extends StatefulWidget {
   List list;
-  String sem;
-  Report({super.key, required this.list, required this.sem});
+  String batch;
+  Report({super.key, required this.list, required this.batch});
   @override
-  State<Report> createState() => _ReportState(list: list, sem: sem);
+  State<Report> createState() => _ReportState(list: list, batch: batch);
 }
 
 class _ReportState extends State<Report> {
   List list;
   // String clas;
 
-  String sem;
+  String batch;
 
-  _ReportState({required this.list, required this.sem});
+  _ReportState({required this.list, required this.batch});
   final pdf = pw.Document();
   var marks;
 
@@ -101,7 +101,7 @@ class _ReportState extends State<Report> {
                         ),
                       ),
                       pw.Text(
-                        sem,
+                        batch,
                         style: const pw.TextStyle(
                           fontSize: 25,
                         ),

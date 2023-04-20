@@ -205,16 +205,10 @@ class _ReportGenrationState extends State<ReportGenration> {
                 //   height: 20,
                 // ),
                 dropdown(
-                    DropdownValue: semesterdropdownValue,
-                    sTring: Semester,
-                    Hint: "Semester"),
-                const SizedBox(
-                  height: 20,
+                  DropdownValue: batchyeardropdownValue,
+                  sTring: batchList,
+                  Hint: "Batch(Starting Year)",
                 ),
-                dropdown(
-                    DropdownValue: batchdropdownValue,
-                    sTring: Batch,
-                    Hint: "Batch"),
                 const SizedBox(
                   height: 20,
                 ),
@@ -358,7 +352,7 @@ class _ReportGenrationState extends State<ReportGenration> {
                           MaterialPageRoute(
                               builder: (context) => Report(
                                     list: const [],
-                                    sem: '',
+                                    batch: '',
                                   )),
                         );
                       },

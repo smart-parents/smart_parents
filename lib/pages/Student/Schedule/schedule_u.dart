@@ -275,7 +275,7 @@ class TimetableService {
         .collection('Admin')
         .doc(admin)
         .collection('schedule')
-        .doc('${branch}_$sem')
+        .doc('${branch}_$batch')
         .collection('timetable')
         .doc(day)
         .collection('entries')

@@ -89,23 +89,10 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                 //   height: 30,
                 // ),
                 dropdown(
-                    DropdownValue: semesterdropdownValue,
-                    sTring: Semester,
-                    Hint: "Semester"),
-                const SizedBox(
-                  height: 20,
+                  DropdownValue: batchyeardropdownValue,
+                  sTring: batchList,
+                  Hint: "Batch(Starting Year)",
                 ),
-                dropdown(
-                    DropdownValue: yeardropdownValue,
-                    sTring: CollegeYear,
-                    Hint: "Year"),
-                const SizedBox(
-                  height: 20,
-                ),
-                dropdown(
-                    DropdownValue: batchdropdownValue,
-                    sTring: Batch,
-                    Hint: "Batch"),
                 const SizedBox(
                   height: 20,
                 ),
@@ -366,29 +353,18 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
-                                Expanded(child: Text("Branch : $branch")),
+                                Expanded(child: Text("Branch: $branch")),
+                                Expanded(child: Text("Subject: $Sub"))
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
                                 Expanded(
                                     child: Text(
-                                        "Semester : $semesterdropdownValue"))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                    child: Text("Year : $yeardropdownValue")),
-                                Expanded(child: Text("Subject : $Sub"))
-                              ],
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                    child: Text("Batch : $batchdropdownValue")),
+                                        "Batch(Starting Year): $batchyeardropdownValue")),
                               ],
                             ),
                           ),
@@ -404,8 +380,8 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   AttendencePage(
-                                                      sem:
-                                                          semesterdropdownValue,
+                                                      batch:
+                                                          batchyeardropdownValue,
                                                       sub: Sub,
                                                       date: _date,
                                                       start: _start,

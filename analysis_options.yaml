@@ -1,5 +1,10 @@
 include: package:flutter_lints/flutter.yaml
 
+analyzer:
+  errors:
+    unchecked_use_of_nullable_value: error
+    deprecated_member_use: error
+
 linter:
   rules:
     avoid_print: false

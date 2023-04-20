@@ -169,16 +169,6 @@ class _NoticeState extends State<Notice> {
                                           height: 10,
                                         ),
                                         Text(
-                                          'Date : ${storedocs[index]['date']}',
-                                          style: const TextStyle(fontSize: 15),
-                                        ),
-                                      ],
-                                    ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
                                           'Branch : ${storedocs[index]['branch']}',
                                           style: const TextStyle(fontSize: 15),
                                         ),
@@ -186,11 +176,36 @@ class _NoticeState extends State<Notice> {
                                           height: 10,
                                         ),
                                         Text(
-                                          'Sem : ${storedocs[index]['sem']}',
+                                          'Date : ${storedocs[index]['date']}',
+                                          style: const TextStyle(fontSize: 15),
+                                        ),
+                                        const SizedBox(
+                                          height: 10,
+                                        ),
+                                        Text(
+                                          'Batch(Starting Year) : ${storedocs[index]['batch']}',
                                           style: const TextStyle(fontSize: 15),
                                         ),
                                       ],
                                     ),
+                                    // Column(
+                                    //   mainAxisAlignment:
+                                    //       MainAxisAlignment.start,
+                                    //   children: [
+                                    //     // Text(
+                                    //     //   'Batch(Starting Year) : ${storedocs[index]['batch']}',
+                                    //     //   style: const TextStyle(fontSize: 15),
+                                    //     // ),
+                                    //     // const SizedBox(
+                                    //     //   height: 10,
+                                    //     // ),
+                                    //     Text(
+                                    //       'Branch : ${storedocs[index]['branch']}',
+                                    //       style: const TextStyle(fontSize: 15),
+                                    //     ),
+
+                                    //   ],
+                                    // ),
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,

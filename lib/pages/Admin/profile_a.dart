@@ -1,13 +1,13 @@
-// ignore_for_file: library_private_types_in_public_api, deprecated_member_use
+// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, use_build_context_synchronously
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
+import 'package:smart_parents/components/change_password.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/edit_a.dart';
-import 'package:smart_parents/pages/option.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
@@ -31,11 +31,11 @@ class _ProfileState extends State<Profile> {
     _loadPhotoUrl();
   }
 
-  delete() async {
-    final SharedPreferences prefs = await _prefs;
-    final success = await prefs.clear();
-    print(success);
-  }
+  // delete() async {
+  //   final SharedPreferences prefs = await _prefs;
+  //   final success = await prefs.clear();
+  //   print(success);
+  // }
 
   String? id;
   main() {
@@ -77,28 +77,50 @@ class _ProfileState extends State<Profile> {
   Uint8List? _imageFile;
   String? _imageUrl;
 
-  Future<void> pickImage() async {
+  Future<void> pickImage(ImageSource source) async {
     final picker = ImagePicker();
     try {
-      final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+      final pickedFile = await picker.pickImage(source: source);
       if (pickedFile != null) {
-        if (kIsWeb) {
-          final bytes = await pickedFile.readAsBytes();
-          setState(() {
-            _imageFile = bytes;
-            uploadImage();
-          });
-        } else {
-          final bytes = await pickedFile.readAsBytes();
-          setState(() {
-            _imageFile = bytes;
-            uploadImage();
-          });
-        }
+        final bytes = await pickedFile.readAsBytes();
+        setState(() {
+          _imageFile = bytes;
+          uploadImage();
+        });
+        Navigator.pop(context);
       }
     } catch (e) {
       print('Error: $e');
     }
+  }
+
+  Future<void> _selectProfileImage() async {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text('Gallery'),
+                onTap: () async {
+                  pickImage(ImageSource.gallery);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: const Text('Camera'),
+                onTap: () async {
+                  pickImage(ImageSource.camera);
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   Future<void> uploadImage() async {
@@ -133,8 +155,10 @@ class _ProfileState extends State<Profile> {
     if (_uploading) {
       return const Center(child: CircularProgressIndicator());
     } else if (_imageUrl != null) {
-      return GestureDetector(
-        onTap: pickImage,
+      return
+          // Stack(children: [
+          GestureDetector(
+        onTap: _selectProfileImage,
         child: ImageNetwork(
           image: _imageUrl!,
           height: 100,
@@ -148,41 +172,25 @@ class _ProfileState extends State<Profile> {
             Icons.error,
             color: red,
           ),
-          onTap: pickImage,
+          onTap: _selectProfileImage,
         ),
       );
+
+      // ]);
     } else {
-      return Stack(
-        children: [
-          Image.asset('assets/images/man.png', fit: BoxFit.cover),
-          // Positioned.fill(
-          //   child: Material(
-          //     color: Colors.transparent,
-          //     child: InkWell(
-          //       onTap: _pickImage,
-          //       child: Center(
-          //         child: Text(
-          //           _imageUrl != null
-          //               ? 'Tap to update photo'
-          //               : 'Tap to add photo',
-          //           style: const TextStyle(
-          //               color: Colors.white,
-          //               fontSize: 16,
-          //               fontWeight: FontWeight.bold),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
-        ],
-      );
+      // return Stack(
+      //   children: [
+      return Image.asset('assets/images/man.png', fit: BoxFit.cover);
+      // ],
+      // );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
-      future: FirebaseFirestore.instance.collection('Admin').doc(id).get(),
+    return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
+      stream:
+          FirebaseFirestore.instance.collection('Admin').doc(id).snapshots(),
       builder: (_, snapshot) {
         if (snapshot.hasError) {
           print('Something Went Wrong');
@@ -212,18 +220,35 @@ class _ProfileState extends State<Profile> {
                     //   backgroundImage: AssetImage('assets/images/man.png'),
                     // ),
                     GestureDetector(
-                      onTap: pickImage,
+                      onTap: _selectProfileImage,
                       child: Container(
-                        height: 100,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border: Border.all(color: Colors.grey, width: 2),
-                        ),
-                        child: ClipOval(
-                          child: _buildPhotoWidget(),
-                        ),
-                      ),
+                          height: 100,
+                          width: 100,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.grey, width: 2),
+                          ),
+                          child: Stack(
+                            children: [
+                              ClipOval(
+                                child: _buildPhotoWidget(),
+                              ),
+                              Positioned(
+                                bottom: 0,
+                                right: 0,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.white,
+                                  ),
+                                  child: const Icon(
+                                    Icons.camera_alt,
+                                    color: kPrimaryColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
                     ),
                     const Text(
                       'Admin',
@@ -244,8 +269,9 @@ class _ProfileState extends State<Profile> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
+                        children: [
                           Container(
+                            width: double.maxFinite,
                             margin: const EdgeInsets.only(left: 15, top: 15),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,6 +369,11 @@ class _ProfileState extends State<Profile> {
                             // crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
+                              // Positioned(
+                              //   // width: double.infinity,
+                              //   bottom: 0,
+                              //   left: 0,
+                              //   child:
                               TextButton.icon(
                                 onPressed: () async => {
                                   Navigator.push(
@@ -359,37 +390,50 @@ class _ProfileState extends State<Profile> {
                                   color: Colors.white,
                                 ),
                                 label: const Text(
-                                  'Edit Profile',
+                                  // 'Edit Profile',
+                                  'Edit',
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: Color.fromARGB(255, 255, 255, 255),
                                   ),
                                 ),
                               ),
+                              // ),
+                              // const SizedBox(
+                              //   height: 5,
+                              // ),
+                              // Positioned(
+                              //   // width: double.infinity,
+                              //   bottom: 0,
+                              //   right: 0,
+                              //   child:
                               TextButton.icon(
                                 onPressed: () async => {
-                                  await FirebaseAuth.instance.signOut(),
-                                  delete(),
+                                  // await FirebaseAuth.instance.signOut(),
+                                  // delete(),
                                   // await storage.delete(key: "uid"),
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const Option(),
-                                      ),
-                                      (route) => false)
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ChangePassword(),
+                                    ),
+                                  )
                                 },
                                 icon: const Icon(
-                                  Icons.logout,
+                                  Icons.password,
                                   color: Colors.white,
                                 ),
                                 label: const Text(
-                                  'Logout',
+                                  // 'Change Password',
+                                  'Change',
                                   style: TextStyle(
                                     fontSize: 20,
                                     color: Color.fromARGB(255, 255, 255, 255),
                                   ),
                                 ),
                               ),
+                              // ),
                             ],
                           ),
                         ],

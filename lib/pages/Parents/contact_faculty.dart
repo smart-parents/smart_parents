@@ -124,7 +124,7 @@ class _ContactFState extends State<ContactF> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text('Contacts'),
+          title: const Text('Contact Faculty'),
         ),
         body: StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
@@ -203,7 +203,7 @@ class _ContactFState extends State<ContactF> {
                               children: [
                                 TextButton(
                                   child: Image.asset(
-                                    'assets/whatsapp/whatsapp 24px.png',
+                                    'assets/images/whatsapp 24px.png',
                                     // width: 25,
                                     // height: 25,
                                   ),

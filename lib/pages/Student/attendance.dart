@@ -86,7 +86,7 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
                   // .doc(widget.sub)
                   // .collection('lectures')
                   .where('date', isEqualTo: day)
-                  .where('sem', isEqualTo: sem)
+                  .where('batch', isEqualTo: batch)
                   .where('branch', isEqualTo: branch)
                   .snapshots(),
               builder: (context, snapshot) {

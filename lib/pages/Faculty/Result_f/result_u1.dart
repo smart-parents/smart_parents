@@ -1,11 +1,31 @@
-// ignore_for_file: must_be_immutable, file_names
-
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/Result_f/datamodel1.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
+
+class DataModel {
+  final String name;
+  final String mime;
+  final int bytes;
+  final String url;
+
+  DataModel({
+    required this.name,
+    required this.mime,
+    required this.bytes,
+    required this.url,
+  });
+
+  String get size {
+    final kb = bytes / 1024;
+    final mb = kb / 1024;
+
+    return mb > 1
+        ? '${mb.toStringAsFixed(2)}MB'
+        : '${kb.toStringAsFixed(2)} KB';
+  }
+}
 
 class DropAreaPageWeb extends StatefulWidget {
   const DropAreaPageWeb({super.key});
@@ -32,9 +52,10 @@ class _DropAreaPageWebState extends State<DropAreaPageWeb> {
             child: Column(
               children: [
                 dropdown(
-                    DropdownValue: semesterdropdownValue,
-                    sTring: Semester,
-                    Hint: "Semester"),
+                  DropdownValue: batchyeardropdownValue,
+                  sTring: batchList,
+                  Hint: "Batch(Starting Year)",
+                ),
                 const SizedBox(
                   height: 20,
                 ),
