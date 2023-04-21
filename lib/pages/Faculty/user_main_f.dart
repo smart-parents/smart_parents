@@ -1,5 +1,7 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable, prefer_typing_uninitialized_variables, use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -16,7 +18,6 @@ import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdownpage2.dart';
 import 'package:smart_parents/pages/Faculty/chat_parents_f.dart';
-import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/exam_f/exam.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/parents_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
@@ -44,7 +45,9 @@ class _UserMainState extends State<UserMainF> {
   void initState() {
     adminget();
     super.initState();
-    subscribeUserForNotifications();
+    Timer(const Duration(seconds: 5), () {
+      subscribeUserForNotifications();
+    });
   }
 
   Future<void> subscribeUserForNotifications() async {
@@ -69,9 +72,9 @@ class _UserMainState extends State<UserMainF> {
 
     // Subscribe the user to notifications
     await FirebaseFirestore.instance
-        .collection('Users')
+        .collection('Admin/$admin/faculty')
         .doc(id)
-        .set({'notification_tokens': deviceToken}, SetOptions(merge: true));
+        .set({'notification_token': deviceToken}, SetOptions(merge: true));
   }
 
   adminget() async {
@@ -101,7 +104,7 @@ class _UserMainState extends State<UserMainF> {
 
   // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
-    const Dashboard(),
+    // const Dashboard(),
     // const ShowSchedule(),
     // const ChatScreen(),
     const ProfileF()
@@ -121,6 +124,7 @@ class _UserMainState extends State<UserMainF> {
 
   @override
   Widget build(BuildContext context) {
+    // double horizontal = MediaQuery.of(context).size.width * 0.6;
     return WillPopScope(
       onWillPop: () async {
         // Navigator.of(context).push(
@@ -164,6 +168,7 @@ class _UserMainState extends State<UserMainF> {
                               try {
                                 await FirebaseAuth.instance.signOut();
                                 delete();
+                                await OneSignal.shared.removeExternalUserId();
                                 // await storage.delete(key: "uid"),
                                 Navigator.pushAndRemoveUntil(
                                     context,
@@ -175,10 +180,15 @@ class _UserMainState extends State<UserMainF> {
                                 print(e);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                      content: Text('Failed to logout: $e')),
+                                      backgroundColor: kPrimaryLightColor,
+                                      content: Text(
+                                        'Failed to logout: $e',
+                                        style: const TextStyle(
+                                            fontSize: 18.0,
+                                            color: Colors.black),
+                                      )),
                                 );
                               }
-                              Navigator.of(context).pop();
                             },
                           ),
                         ],
@@ -207,41 +217,52 @@ class _UserMainState extends State<UserMainF> {
             ),
             child: SafeArea(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-                child: GNav(
-                  // rippleColor: kPrimaryColor ,
-                  // hoverColor: kPrimaryColor,
-                  // gap: 8,
-                  activeColor: Colors.white,
-                  iconSize: 24,
-                  // style: GnavStyle.oldSchool,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  // tabMargin: EdgeInsets.symmetric(horizontal: 50),
-                  // duration: Duration(milliseconds: 400),
-                  tabBackgroundColor: kPrimaryColor,
-                  // color: Colors.black,
-                  tabs: const [
-                    GButton(
-                      icon: Icons.home,
-                      text: 'Home',
-                    ),
-                    // GButton(
-                    //   icon: Icons.schedule,
-                    //   text: 'Schedule',
-                    // ),
-                    // GButton(
-                    //   icon: Icons.chat,
-                    //   text: 'Chat',
-                    // ),
-                    GButton(
-                      icon: Icons.account_circle,
-                      text: 'Profile',
+                padding: const EdgeInsets.symmetric(
+                    // horizontal: MediaQuery.of(context).size.width * 0.4,
+                    vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // padding: EdgeInsets.symmetric(
+                    //     horizontal: MediaQuery.of(context).size.width * 0.4,
+                    //     vertical: 8),
+                    // const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                    // child:
+                    GNav(
+                      // rippleColor: kPrimaryColor ,
+                      // hoverColor: kPrimaryColor,
+                      // gap: 8,
+                      activeColor: Colors.white,
+                      iconSize: 24,
+                      // style: GnavStyle.oldSchool,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
+                      // tabMargin: EdgeInsets.symmetric(horizontal: 50),
+                      // duration: Duration(milliseconds: 400),
+                      tabBackgroundColor: kPrimaryColor,
+                      // color: Colors.black,
+                      tabs: const [
+                        // GButton(
+                        //   icon: Icons.home,
+                        //   text: 'Home',
+                        // ),
+                        // GButton(
+                        //   icon: Icons.schedule,
+                        //   text: 'Schedule',
+                        // ),
+                        // GButton(
+                        //   icon: Icons.chat,
+                        //   text: 'Chat',
+                        // ),
+                        GButton(
+                          icon: Icons.account_circle,
+                          text: 'Profile',
+                        ),
+                      ],
+                      selectedIndex: _selectedIndex,
+                      onTabChange: _onItemTapped,
                     ),
                   ],
-                  selectedIndex: _selectedIndex,
-                  onTabChange: _onItemTapped,
                 ),
               ),
             ),

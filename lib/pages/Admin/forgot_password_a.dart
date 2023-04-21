@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
 import 'package:smart_parents/pages/Admin/Signup_a/signup_screen_a.dart';
 
@@ -45,10 +46,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            // backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: kPrimaryLightColor,
             content: Text(
               'Password Reset Email has been sent !',
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(fontSize: 18.0, color: Colors.black),
             ),
           ),
         );
@@ -57,10 +58,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
           print('No user found for that email.');
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              // backgroundColor: Colors.lightBlueAccent,
+              backgroundColor: kPrimaryLightColor,
               content: Text(
                 'No user found for that email.',
-                style: TextStyle(fontSize: 18.0),
+                style: TextStyle(fontSize: 18.0, color: Colors.black),
               ),
             ),
           );
@@ -70,10 +71,10 @@ class _ForgotPasswordState extends State<ForgotPassword> {
       print('No user found for that email.');
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          // backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: kPrimaryLightColor,
           content: Text(
             'No user found for that email.',
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.black),
           ),
         ),
       );

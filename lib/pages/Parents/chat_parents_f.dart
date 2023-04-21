@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/components/sendNotification.dart';
 
 final _fireStore = FirebaseFirestore.instance;
 // User? loggedInUser;
@@ -21,7 +22,7 @@ class ChatParent extends StatefulWidget {
   _ChatParentState createState() => _ChatParentState();
 }
 
-class _ChatParentState extends State<ChatParent> {
+class _ChatParentState extends State<ChatParent> with notification {
   final messageTextController = TextEditingController();
   // final _auth = FirebaseAuth.instance;
 
@@ -64,7 +65,7 @@ class _ChatParentState extends State<ChatParent> {
           .collection('Admin/$admin/messages_parent')
           .doc(branch)
           .get()
-          .then((value) => {
+          .then((value) async => {
                 if (value.exists)
                   {
                     _fireStore
@@ -78,7 +79,15 @@ class _ChatParentState extends State<ChatParent> {
                         .collection('Admin/$admin/messages_parent')
                         .doc(branch)
                         .set({batch: messages})
-                  }
+                  },
+                sendNotificationToAllUsers(
+                    "",
+                    'Message from parents',
+                    text,
+                    await FirebaseFirestore.instance
+                        .collection('Admin/$admin/faculty')
+                        .where('branch', isEqualTo: branch)
+                        .get()),
               });
     } // Clear the text input field
   }

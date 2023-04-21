@@ -241,9 +241,14 @@ class _AddDepartPageState extends State<AddDepartPage> {
                           clearText();
                           // registration();
                           Navigator.pop(context);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content: Text('Department Added.')));
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                                  backgroundColor: kPrimaryLightColor,
+                                  content: Text(
+                                    'Department Added.',
+                                    style: TextStyle(
+                                        fontSize: 18.0, color: Colors.black),
+                                  )));
                         });
                       }
                     },

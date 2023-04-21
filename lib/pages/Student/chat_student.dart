@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/components/sendNotification.dart';
 
 final _fireStore = FirebaseFirestore.instance;
 // User? loggedInUser;
@@ -21,7 +22,7 @@ class ChatStudent extends StatefulWidget {
   _ChatStudentState createState() => _ChatStudentState();
 }
 
-class _ChatStudentState extends State<ChatStudent> {
+class _ChatStudentState extends State<ChatStudent> with notification {
   final messageTextController = TextEditingController();
   // final _auth = FirebaseAuth.instance;
 
@@ -64,27 +65,35 @@ class _ChatStudentState extends State<ChatStudent> {
           .collection('Admin/$admin/messages')
           .doc(branch)
           .get()
-          .then((value) => {
+          .then((value) async => {
                 if (value.exists)
                   {
                     _fireStore
                         .collection('Admin/$admin/messages')
                         .doc(branch)
-                        .update({batchyeardropdownValue: messages})
+                        .update({batch: messages})
                   }
                 else
                   {
                     _fireStore
                         .collection('Admin/$admin/messages')
                         .doc(branch)
-                        .set({batchyeardropdownValue: messages})
-                  }
+                        .set({batch: messages})
+                  },
+                sendNotificationToAllUsers(
+                    "",
+                    'Message from student',
+                    text,
+                    await FirebaseFirestore.instance
+                        .collection('Admin/$admin/faculty')
+                        .where('branch', isEqualTo: branch)
+                        .get()),
               });
     } // Clear the text input field
   }
 
   // void _showNumberPicker(BuildContext context) {
-  //   // batchyeardropdownValue = batchyear;
+  //   // batch = batchyear;
   //   showDialog(
   //     context: context,
   //     builder: (BuildContext context) {
@@ -92,7 +101,7 @@ class _ChatStudentState extends State<ChatStudent> {
   //         scrollable: true,
   //         title: const Text('Select a Batch'),
   //         content: dropdown(
-  //           DropdownValue: batchyeardropdownValue,
+  //           DropdownValue: batch,
   //           sTring: batchList,
   //           Hint: "Batch(Starting Year)",
   //         ),
@@ -100,7 +109,7 @@ class _ChatStudentState extends State<ChatStudent> {
   //           TextButton(
   //               onPressed: () {
   //                 setState(() {
-  //                   // batchyear = batchyeardropdownValue;
+  //                   // batchyear = batch;
   //                   Navigator.of(context).pop();
   //                 });
   //               },
@@ -152,7 +161,7 @@ class _ChatStudentState extends State<ChatStudent> {
           //         // radius: 15,
           //         // foregroundColor: Colors.white,
           //         child: Text(
-          //           batchyeardropdownValue,
+          //           batch,
           //           textAlign: TextAlign.center,
           //           style: GoogleFonts.rubik(
           //             // color: Colors.white,
@@ -181,7 +190,7 @@ class _ChatStudentState extends State<ChatStudent> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               // dropdown(
-              //   DropdownValue: batchyeardropdownValue,
+              //   DropdownValue: batch,
               //   sTring: batchList,
               //   Hint: "Batch(Starting Year)",
               // ),
@@ -275,10 +284,9 @@ class CustomStreamBuilder extends StatelessWidget {
           // for (var message in data) {
           //   Map<String, dynamic> chat = message.data() as Map<String, dynamic>;
           if (data != null) {
-            print(batchyeardropdownValue);
-            if (data[batchyeardropdownValue] != null) {
-              List<dynamic> test =
-                  data[batchyeardropdownValue] as List<dynamic>;
+            print(batch);
+            if (data[batch] != null) {
+              List<dynamic> test = data[batch] as List<dynamic>;
               for (var elem in test) {
                 Map<String?, dynamic> tmp = elem as Map<String?, dynamic>;
 
@@ -309,7 +317,7 @@ class CustomStreamBuilder extends StatelessWidget {
                 // ),
               );
             } else {
-              print('data[batchyeardropdownValue] == false');
+              print('data[batch] == false');
             }
           } else {
             print('data==null');

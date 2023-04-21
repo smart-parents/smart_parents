@@ -10,7 +10,7 @@ class PdfViewerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PDF Viewer'),
+        title: const Text('Result Viewer'),
       ),
       body: SfPdfViewer.network(
         pdfUrl,

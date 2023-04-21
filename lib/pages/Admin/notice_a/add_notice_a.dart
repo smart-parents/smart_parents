@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:smart_parents/components/sendNotification.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:intl/intl.dart';
@@ -15,7 +16,7 @@ class NoticeAdd extends StatefulWidget {
   State<NoticeAdd> createState() => _NoticeAddState();
 }
 
-class _NoticeAddState extends State<NoticeAdd> {
+class _NoticeAddState extends State<NoticeAdd> with notification {
   String? Branch;
   final _formKey = GlobalKey<FormState>();
   final subjectController = TextEditingController();
@@ -37,7 +38,7 @@ class _NoticeAddState extends State<NoticeAdd> {
   var notice = '';
   String? docId;
 
-  void addnotice() {
+  Future<void> addnotice() async {
     CollectionReference notices =
         FirebaseFirestore.instance.collection('Admin/$admin/Notices');
     docId = DateFormat('dd-MM-yyyy hh:mm:ss').format(DateTime.now());
@@ -53,6 +54,24 @@ class _NoticeAddState extends State<NoticeAdd> {
         })
         .then((value) => print('notice Added'))
         .catchError((error) => print('Failed to Add user: $error'));
+    sendNotificationToAllUsers(
+        "",
+        'Notice',
+        subject,
+        await FirebaseFirestore.instance
+            .collection('Admin/$admin/parents')
+            .where('branch', isEqualTo: Branch)
+            .where('batch', isEqualTo: batchyeardropdownValue)
+            .get());
+    sendNotificationToAllUsers(
+        "",
+        'Notice',
+        subject,
+        await FirebaseFirestore.instance
+            .collection('Admin/$admin/students')
+            .where('branch', isEqualTo: Branch)
+            .where('batch', isEqualTo: batchyeardropdownValue)
+            .get());
     clearText();
   }
 

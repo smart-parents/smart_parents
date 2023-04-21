@@ -1,20 +1,23 @@
 // ignore_for_file: must_be_immutable, prefer_typing_uninitialized_variables, library_private_types_in_public_api, use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/attendance_show.dart';
 import 'package:smart_parents/pages/Parents/chat_parents_f.dart';
 import 'package:smart_parents/pages/Parents/contact_faculty.dart';
 import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
+import 'package:smart_parents/pages/Parents/fees.dart';
 import 'package:smart_parents/pages/Parents/livelocation.dart';
 import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
-import 'package:smart_parents/pages/Parents/dashboard_p.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
 import 'package:smart_parents/pages/Parents/result_p.dart';
 import 'package:smart_parents/pages/option.dart';
@@ -32,8 +35,37 @@ class _ParentsScreenState extends State<ParentsScreen> {
   final _prefs = SharedPreferences.getInstance();
   @override
   void initState() {
-    adminget();
     super.initState();
+    adminget();
+    Timer(const Duration(seconds: 5), () {
+      subscribeUserForNotifications();
+    });
+  }
+
+  Future<void> subscribeUserForNotifications() async {
+    final SharedPreferences prefs = await _prefs;
+    var id = prefs.getString('id');
+    // Check if the user has provided privacy consent
+    bool userProvidedPrivacyConsent =
+        await OneSignal.shared.userProvidedPrivacyConsent();
+    if (!userProvidedPrivacyConsent) {
+      print(
+          "User has not provided privacy consent yet. Cannot subscribe for notifications.");
+      return;
+    }
+    // Prompt the user to enable notifications
+    await OneSignal.shared.promptUserForPushNotificationPermission();
+
+    // Retrieve the user's device token
+    String deviceToken = await OneSignal.shared
+        .getDeviceState()
+        .then((deviceState) => deviceState!.userId!);
+
+    // Subscribe the user to notifications
+    await FirebaseFirestore.instance
+        .collection('Admin/$admin/parents')
+        .doc(id)
+        .set({'notification_token': deviceToken}, SetOptions(merge: true));
   }
 
   adminget() async {
@@ -73,7 +105,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
   }
 
   static final List<Widget> _widgetOptions = <Widget>[
-    const Parents_home(),
+    // const Parents_home(),
     // const Attendance_screen(),
     // const Text(
     //   'Index 3: chat',
@@ -157,6 +189,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
                               try {
                                 await FirebaseAuth.instance.signOut();
                                 delete();
+                                await OneSignal.shared.removeExternalUserId();
                                 // await storage.delete(key: "uid"),
                                 Navigator.pushAndRemoveUntil(
                                     context,
@@ -168,10 +201,15 @@ class _ParentsScreenState extends State<ParentsScreen> {
                                 print(e);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                      content: Text('Failed to logout: $e')),
+                                      backgroundColor: kPrimaryLightColor,
+                                      content: Text(
+                                        'Failed to logout: $e',
+                                        style: const TextStyle(
+                                            fontSize: 18.0,
+                                            color: Colors.black),
+                                      )),
                                 );
                               }
-                              Navigator.of(context).pop();
                             },
                           ),
                         ],
@@ -200,37 +238,52 @@ class _ParentsScreenState extends State<ParentsScreen> {
             ),
             child: SafeArea(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-                child: GNav(
-                  // rippleColor: const Color.fromARGB(255, 37, 86, 116),
-                  // hoverColor: const Color.fromARGB(255, 37, 86, 116),
-                  activeColor: Colors.white,
-                  iconSize: 24,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  tabBackgroundColor: kPrimaryColor,
-                  // color: Colors.black,
-                  tabs: const [
-                    GButton(
-                      icon: Icons.home,
-                      text: 'Home',
-                    ),
-                    // GButton(
-                    //   icon: Icons.calendar_month_rounded,
-                    //   text: 'Attendance',
-                    // ),
-                    // GButton(
-                    //   icon: Icons.chat,
-                    //   text: 'Chat',
-                    // ),
-                    GButton(
-                      icon: Icons.account_circle,
-                      text: 'Profile',
+                padding: const EdgeInsets.symmetric(
+                    // horizontal: MediaQuery.of(context).size.width * 0.4,
+                    vertical: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // padding: EdgeInsets.symmetric(
+                    //     horizontal: MediaQuery.of(context).size.width * 0.4,
+                    //     vertical: 8),
+                    // const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                    // child:
+                    GNav(
+                      // rippleColor: kPrimaryColor ,
+                      // hoverColor: kPrimaryColor,
+                      // gap: 8,
+                      activeColor: Colors.white,
+                      iconSize: 24,
+                      // style: GnavStyle.oldSchool,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 12),
+                      // tabMargin: EdgeInsets.symmetric(horizontal: 50),
+                      // duration: Duration(milliseconds: 400),
+                      tabBackgroundColor: kPrimaryColor,
+                      // color: Colors.black,
+                      tabs: const [
+                        // GButton(
+                        //   icon: Icons.home,
+                        //   text: 'Home',
+                        // ),
+                        // GButton(
+                        //   icon: Icons.schedule,
+                        //   text: 'Schedule',
+                        // ),
+                        // GButton(
+                        //   icon: Icons.chat,
+                        //   text: 'Chat',
+                        // ),
+                        GButton(
+                          icon: Icons.account_circle,
+                          text: 'Profile',
+                        ),
+                      ],
+                      selectedIndex: _selectedIndex,
+                      onTabChange: _onItemTapped,
                     ),
                   ],
-                  selectedIndex: _selectedIndex,
-                  onTabChange: _onItemTapped,
                 ),
               ),
             ),
@@ -439,6 +492,15 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const Exam(),
+                  ));
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.money),
+                title: const Text("View Fees"),
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Fees(),
                   ));
                 },
               ),

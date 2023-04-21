@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:location/location.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 
 Timer? timer;
@@ -27,48 +28,55 @@ class _DashboardState extends State<DashboardS> {
     });
   }
 
+  final _prefs = SharedPreferences.getInstance();
+
   getLocationData() async {
     if (FirebaseAuth.instance.currentUser != null) {
       // Create a Location instance
-      Location location = Location();
-      // location.enableBackgroundMode(enable: true);
-      // Request the location permission if not granted
-      await location.requestPermission();
-      // Get the current location data
-      LocationData locationData = await location.getLocation();
-      String? email = FirebaseAuth.instance.currentUser!.email;
-      String em = email.toString();
-      String id = em.substring(0, em.length - 8);
-      // Use Firestore package to send data to Firestore
-      final fireStore = FirebaseFirestore.instance;
-      fireStore
-          .collection('Admin/$admin/students/$id/location')
-          .doc(id)
-          .get()
-          .then((value) => {
-                if (value.exists)
-                  {
-                    fireStore
-                        .collection('Admin/$admin/students/$id/location')
-                        .doc(id)
-                        .update({
-                      'latitude': locationData.latitude,
-                      'longitude': locationData.longitude,
-                      'timestamp': DateTime.now(),
-                    })
-                  }
-                else
-                  {
-                    fireStore
-                        .collection('Admin/$admin/students/$id/location')
-                        .doc(id)
-                        .set({
-                      'latitude': locationData.latitude,
-                      'longitude': locationData.longitude,
-                      'timestamp': DateTime.now(),
-                    })
-                  }
-              });
+      final SharedPreferences prefs = await _prefs;
+      var id = prefs.getString('id');
+      var role = prefs.getString('role');
+      if (role == 'student') {
+        Location location = Location();
+        // location.enableBackgroundMode(enable: true);
+        // Request the location permission if not granted
+        await location.requestPermission();
+        // Get the current location data
+        LocationData locationData = await location.getLocation();
+        // String? email = FirebaseAuth.instance.currentUser!.email;
+        // String em = email.toString();
+        // String id = em.substring(0, em.length - 8);
+        // Use Firestore package to send data to Firestore
+        final fireStore = FirebaseFirestore.instance;
+        fireStore
+            .collection('Admin/$admin/students/$id/location')
+            .doc(id)
+            .get()
+            .then((value) => {
+                  if (value.exists)
+                    {
+                      fireStore
+                          .collection('Admin/$admin/students/$id/location')
+                          .doc(id)
+                          .update({
+                        'latitude': locationData.latitude,
+                        'longitude': locationData.longitude,
+                        'timestamp': DateTime.now(),
+                      })
+                    }
+                  else
+                    {
+                      fireStore
+                          .collection('Admin/$admin/students/$id/location')
+                          .doc(id)
+                          .set({
+                        'latitude': locationData.latitude,
+                        'longitude': locationData.longitude,
+                        'timestamp': DateTime.now(),
+                      })
+                    }
+                });
+      }
     }
   }
 

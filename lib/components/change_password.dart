@@ -3,7 +3,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:smart_parents/pages/Faculty/Login_f/login_screen_s.dart';
+import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/pages/option.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
@@ -86,16 +87,19 @@ class _ChangePasswordState extends State<ChangePassword> {
         final SharedPreferences prefs = await _prefs;
         final success = await prefs.clear();
         print(success);
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => const LoginScreenF()),
-        );
+        Navigator.pushAndRemoveUntil(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, a, b) => const Option(),
+              transitionDuration: const Duration(seconds: 0),
+            ),
+            (route) => false);
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            // backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: kPrimaryLightColor,
             content: Text(
               'Password changed successfully!',
-              style: TextStyle(fontSize: 18.0),
+              style: TextStyle(fontSize: 18.0, color: Colors.black),
             ),
           ),
         );
@@ -104,10 +108,10 @@ class _ChangePasswordState extends State<ChangePassword> {
           print('The old password is incorrect.');
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              // backgroundColor: Colors.lightBlueAccent,
+              backgroundColor: kPrimaryLightColor,
               content: Text(
                 'The old password is incorrect.',
-                style: TextStyle(fontSize: 18.0),
+                style: TextStyle(fontSize: 18.0, color: Colors.black),
               ),
             ),
           );
@@ -118,10 +122,10 @@ class _ChangePasswordState extends State<ChangePassword> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          // backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: kPrimaryLightColor,
           content: Text(
             "Password and Confirm Password doesn't match",
-            style: TextStyle(fontSize: 18.0),
+            style: TextStyle(fontSize: 18.0, color: Colors.black),
           ),
         ),
       );

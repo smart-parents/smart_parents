@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/components/sendNotification.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 
 final _fireStore = FirebaseFirestore.instance;
@@ -24,7 +25,7 @@ class ChatStudent extends StatefulWidget {
   _ChatStudentState createState() => _ChatStudentState();
 }
 
-class _ChatStudentState extends State<ChatStudent> {
+class _ChatStudentState extends State<ChatStudent> with notification {
   final messageTextController = TextEditingController();
   // final _auth = FirebaseAuth.instance;
 
@@ -67,7 +68,7 @@ class _ChatStudentState extends State<ChatStudent> {
           .collection('Admin/$admin/messages')
           .doc(branch)
           .get()
-          .then((value) => {
+          .then((value) async => {
                 if (value.exists)
                   {
                     _fireStore
@@ -81,7 +82,16 @@ class _ChatStudentState extends State<ChatStudent> {
                         .collection('Admin/$admin/messages')
                         .doc(branch)
                         .set({batchyeardropdownValue: messages})
-                  }
+                  },
+                sendNotificationToAllUsers(
+                    "",
+                    'Message from faculty',
+                    text,
+                    await FirebaseFirestore.instance
+                        .collection('Admin/$admin/students')
+                        .where('branch', isEqualTo: branch)
+                        .where('batch', isEqualTo: batchyeardropdownValue)
+                        .get()),
               });
     } // Clear the text input field
   }

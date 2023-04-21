@@ -63,7 +63,7 @@ class _LoginFormState extends State<LoginForm> {
           print("No User Found for that Enrollment number");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              // backgroundColor: Colors.lightBlueAccent,
+              backgroundColor: kPrimaryLightColor,
               content: Text(
                 "No User Found for that Enrollment number",
                 style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -74,7 +74,7 @@ class _LoginFormState extends State<LoginForm> {
           print("Wrong Password Provided by User");
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
-              // backgroundColor: Colors.lightBlueAccent,
+              backgroundColor: kPrimaryLightColor,
               content: Text(
                 "Wrong Password Provided by User",
                 style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -87,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
       print("No Faculty Found for that Faculty ID");
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          // backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: kPrimaryLightColor,
           content: Text(
             "No faculty Found for that Faculty ID",
             style: TextStyle(fontSize: 18.0, color: Colors.black),

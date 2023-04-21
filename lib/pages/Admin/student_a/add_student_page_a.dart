@@ -89,7 +89,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
       print(userCredential);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          // backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: kPrimaryLightColor,
           content: Text(
             "Student Added.",
             style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -105,7 +105,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
         print("Password Provided is too Weak");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            // backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: kPrimaryLightColor,
             content: Text(
               "Password Provided is too Weak",
               style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -116,7 +116,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
         print("Student Already exists");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            // backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: kPrimaryLightColor,
             content: Text(
               "Student Already exists",
               style: TextStyle(fontSize: 18.0, color: Colors.black),

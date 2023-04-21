@@ -81,7 +81,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          // backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: kPrimaryLightColor,
           content: Text(
             "Faculty Added.",
             style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -96,7 +96,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
         print("Password Provided is too Weak");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            // backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: kPrimaryLightColor,
             content: Text(
               "Password Provided is too Weak",
               style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -107,7 +107,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
         print("Faculty Already exists");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            // backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: kPrimaryLightColor,
             content: Text(
               "Faculty Already exists",
               style: TextStyle(fontSize: 18.0, color: Colors.black),

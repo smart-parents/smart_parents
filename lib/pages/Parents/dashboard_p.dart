@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Parents/contact_faculty.dart';
 import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
+import 'package:smart_parents/pages/Parents/fees.dart';
 import 'package:smart_parents/pages/Parents/livelocation.dart';
 import 'package:smart_parents/pages/Parents/result_p.dart';
 
@@ -65,7 +66,11 @@ class _Parents_homeState extends State<Parents_home> {
             // margin: const EdgeInsets.all(20),
             margin: const EdgeInsets.fromLTRB(0, 0, 0, 40),
             child: ElevatedButton(
-              onPressed: () => {},
+              onPressed: () => {
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const Fees(),
+                ))
+              },
               style: ElevatedButton.styleFrom(
                 shape: const StadiumBorder(),
                 // backgroundColor: const Color.fromARGB(255, 37, 86, 116),

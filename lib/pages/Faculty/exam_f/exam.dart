@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/components/sendNotification.dart';
 import 'package:smart_parents/pages/Faculty/exam_f/addexam.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 
@@ -12,7 +15,7 @@ class Exam extends StatefulWidget {
   State<Exam> createState() => _ExamState();
 }
 
-class _ExamState extends State<Exam> {
+class _ExamState extends State<Exam> with notification {
   final nameController = TextEditingController();
 
   // For Deleting User
@@ -234,40 +237,44 @@ class _ExamState extends State<Exam> {
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 20),
                       ),
-                      content: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(vertical: 10.0),
-                            child: TextFormField(
-                              autofocus: false,
-                              decoration: const InputDecoration(
-                                labelText: 'Name: ',
-                                labelStyle: TextStyle(fontSize: 20.0),
-                                border: OutlineInputBorder(),
-                                errorStyle: TextStyle(fontSize: 15),
+                      content: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              child: TextFormField(
+                                autofocus: false,
+                                decoration: const InputDecoration(
+                                  labelText: 'Name: ',
+                                  labelStyle: TextStyle(fontSize: 20.0),
+                                  border: OutlineInputBorder(),
+                                  errorStyle: TextStyle(fontSize: 15),
+                                ),
+                                controller: nameController,
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please Enter Name';
+                                  }
+                                  return null;
+                                },
                               ),
-                              controller: nameController,
-                              validator: (value) {
-                                if (value == null || value.isEmpty) {
-                                  return 'Please Enter Name';
-                                }
-                                return null;
-                              },
                             ),
-                          ),
-                          // const SizedBox(
-                          //   height: 20,
-                          // ),
-                          dropdown(
-                            DropdownValue: batchyeardropdownValue,
-                            sTring: batchList,
-                            Hint: "Batch(Starting Year)",
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                        ],
+                            // const SizedBox(
+                            //   height: 20,
+                            // ),
+                            dropdown(
+                              DropdownValue: batchyeardropdownValue,
+                              sTring: batchList,
+                              Hint: "Batch(Starting Year)",
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                          ],
+                        ),
                       ),
                       actions: [
                         TextButton(
@@ -279,9 +286,33 @@ class _ExamState extends State<Exam> {
                         TextButton(
                           child: const Text("Add"),
                           onPressed: () {
-                            addExam(
-                                nameController.text, batchyeardropdownValue);
-                            Navigator.of(context).pop();
+                            if (_formKey.currentState!.validate()) {
+                              setState(() async {
+                                addExam(nameController.text,
+                                    batchyeardropdownValue);
+                                sendNotificationToAllUsers(
+                                    "",
+                                    'Exam',
+                                    nameController.text,
+                                    await FirebaseFirestore.instance
+                                        .collection('Admin/$admin/parents')
+                                        .where('branch', isEqualTo: branch)
+                                        .where('batch',
+                                            isEqualTo: batchyeardropdownValue)
+                                        .get());
+                                sendNotificationToAllUsers(
+                                    "",
+                                    'Exam',
+                                    nameController.text,
+                                    await FirebaseFirestore.instance
+                                        .collection('Admin/$admin/students')
+                                        .where('branch', isEqualTo: branch)
+                                        .where('batch',
+                                            isEqualTo: batchyeardropdownValue)
+                                        .get());
+                                Navigator.of(context).pop();
+                              });
+                            }
                           },
                         ),
                       ],
@@ -295,4 +326,6 @@ class _ExamState extends State<Exam> {
           );
         });
   }
+
+  final _formKey = GlobalKey<FormState>();
 }

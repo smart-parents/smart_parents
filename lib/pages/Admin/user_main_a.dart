@@ -1,10 +1,13 @@
 // ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 // import 'package:smart_parents/components/internetcheck.dart';
@@ -26,10 +29,39 @@ class _UserMainState extends State<UserMainA> {
   void initState() {
     super.initState();
     adminget();
+    Timer(const Duration(seconds: 5), () {
+      subscribeUserForNotifications();
+    });
     // if (kIsWeb) {
     // } else {
     //   InternetPopup().initialize(context: context);
     // }
+  }
+
+  Future<void> subscribeUserForNotifications() async {
+    final SharedPreferences prefs = await _prefs;
+    var id = prefs.getString('id');
+    // Check if the user has provided privacy consent
+    bool userProvidedPrivacyConsent =
+        await OneSignal.shared.userProvidedPrivacyConsent();
+    if (!userProvidedPrivacyConsent) {
+      print(
+          "User has not provided privacy consent yet. Cannot subscribe for notifications.");
+      return;
+    }
+    // Prompt the user to enable notifications
+    await OneSignal.shared.promptUserForPushNotificationPermission();
+
+    // Retrieve the user's device token
+    String deviceToken = await OneSignal.shared
+        .getDeviceState()
+        .then((deviceState) => deviceState!.userId!);
+
+    // Subscribe the user to notifications
+    await FirebaseFirestore.instance
+        .collection('Admin')
+        .doc(id)
+        .set({'notification_token': deviceToken}, SetOptions(merge: true));
   }
 
   adminget() async {
@@ -148,6 +180,7 @@ class _UserMainState extends State<UserMainA> {
                               try {
                                 await FirebaseAuth.instance.signOut();
                                 delete();
+                                await OneSignal.shared.removeExternalUserId();
                                 // await storage.delete(key: "uid"),
                                 Navigator.pushAndRemoveUntil(
                                     context,
@@ -159,10 +192,15 @@ class _UserMainState extends State<UserMainA> {
                                 print(e);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                      content: Text('Failed to logout: $e')),
+                                      backgroundColor: kPrimaryLightColor,
+                                      content: Text(
+                                        'Failed to logout: $e',
+                                        style: const TextStyle(
+                                            fontSize: 18.0,
+                                            color: Colors.black),
+                                      )),
                                 );
                               }
-                              Navigator.of(context).pop();
                             },
                           ),
                         ],
@@ -217,7 +255,7 @@ class _UserMainState extends State<UserMainA> {
             child: SafeArea(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+                    const EdgeInsets.symmetric(horizontal: 80.0, vertical: 8),
                 child: GNav(
                   // rippleColor: const Color.fromARGB(255, 37, 86, 116),
                   // hoverColor: const Color.fromARGB(255, 37, 86, 116),

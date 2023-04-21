@@ -1,4 +1,4 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
+// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, prefer_typing_uninitialized_variables
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -56,10 +56,21 @@ class _AddParentPageState extends State<AddParentPage> {
   CollectionReference parents =
       FirebaseFirestore.instance.collection('Admin/$admin/parents');
 
-  Future<void> addUser() {
-    return parents
+  Future<void> addUser() async {
+    final snahot = await FirebaseFirestore.instance
+        .collection('Admin/$admin/students')
+        .where('number', isEqualTo: child)
+        .get();
+    var batchyear;
+    if (snahot.docs.isNotEmpty) {
+      for (DocumentSnapshot<Map<String, dynamic>> doc in snahot.docs) {
+        batchyear = doc.get('batch');
+      }
+    }
+    parents
         .doc(number)
         .set({
+          'batch': batchyear,
           'name': name,
           'number': number,
           'password': password,
@@ -88,7 +99,7 @@ class _AddParentPageState extends State<AddParentPage> {
       print(userCredential);
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          // backgroundColor: Colors.lightBlueAccent,
+          backgroundColor: kPrimaryLightColor,
           content: Text(
             "Parent Added.",
             style: TextStyle(fontSize: 20.0, color: Colors.black),
@@ -111,7 +122,7 @@ class _AddParentPageState extends State<AddParentPage> {
         print("Password Provided is too Weak");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            // backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: kPrimaryLightColor,
             content: Text(
               "Password Provided is too Weak",
               style: TextStyle(fontSize: 18.0, color: Colors.black),
@@ -122,7 +133,7 @@ class _AddParentPageState extends State<AddParentPage> {
         print("Parent Already exists");
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            // backgroundColor: Colors.lightBlueAccent,
+            backgroundColor: kPrimaryLightColor,
             content: Text(
               "Parent Already exists",
               style: TextStyle(fontSize: 18.0, color: Colors.black),

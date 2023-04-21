@@ -7,6 +7,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/components/sendNotification.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 import 'package:path/path.dart' as path;
 import 'package:intl/intl.dart';
@@ -41,7 +42,7 @@ class ResultAdd extends StatefulWidget {
   State<ResultAdd> createState() => _ResultAddState();
 }
 
-class _ResultAddState extends State<ResultAdd> {
+class _ResultAddState extends State<ResultAdd> with notification {
   DataModel? task;
   File? file;
   final subjectController = TextEditingController();
@@ -100,6 +101,24 @@ class _ResultAddState extends State<ResultAdd> {
         .collection('Admin/$admin/Results')
         .doc(docId)
         .update({'pdf': url});
+    sendNotificationToAllUsers(
+        "",
+        'Result',
+        subject,
+        await FirebaseFirestore.instance
+            .collection('Admin/$admin/students')
+            .where('branch', isEqualTo: branch)
+            .where('batch', isEqualTo: batchyeardropdownValue)
+            .get());
+    sendNotificationToAllUsers(
+        "",
+        'Result',
+        subject,
+        await FirebaseFirestore.instance
+            .collection('Admin/$admin/parents')
+            .where('branch', isEqualTo: branch)
+            .where('batch', isEqualTo: batchyeardropdownValue)
+            .get());
     // setState(() {
     //   _imageUrl = url;
     //   _uploading = false;
@@ -107,6 +126,7 @@ class _ResultAddState extends State<ResultAdd> {
     print('Image uploaded to Firebase Storage: $url');
     clearText();
     Navigator.pop(context);
+    return const CircularProgressIndicator();
     // final fileName = basename(file!.path);
     // final destination = 'files/$fileName';
     // print(fileName);
@@ -317,9 +337,9 @@ class _ResultAddState extends State<ResultAdd> {
                         setState(() {
                           // error == false;
                           subject = subjectController.text;
+                          uploadFile();
                           // notice = noticeController.text;
                           // addnotice();
-                          uploadFile();
                         });
                       }
                     }
