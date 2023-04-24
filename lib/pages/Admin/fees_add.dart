@@ -78,7 +78,7 @@ class _FeesAddState extends State<FeesAdd> with notification {
                           (error) => print('Failed to Add user: $error'));
                   sendNotificationToAllUsers(
                       "Fees",
-                      'Fee paid',
+                      '',
                       '$amount is paid',
                       await FirebaseFirestore.instance
                           .collection('Admin/$admin/students')
@@ -86,7 +86,7 @@ class _FeesAddState extends State<FeesAdd> with notification {
                           .get());
                   sendNotificationToAllUsers(
                       "Fees",
-                      'Fee paid',
+                      '',
                       '$amount is paid',
                       await FirebaseFirestore.instance
                           .collection('Admin/$admin/parents')
@@ -101,7 +101,7 @@ class _FeesAddState extends State<FeesAdd> with notification {
                     SnackBar(content: Text('Failed to delete Notice: $e')),
                   );
                 }
-                Navigator.of(context).pop();
+                // Navigator.of(context).pop();
               },
             ),
           ],

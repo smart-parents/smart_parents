@@ -236,51 +236,29 @@ class _UserMainState extends State<UserMainA> {
             // ),
           ),
           body: _widgetOptions.elementAt(_selectedIndex),
-
           bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-              // image: const DecorationImage(
-              //   image: AssetImage("assets/images/background.jpg"),
-              //   fit: BoxFit.cover,
-              // ),
-              // color: Colors.transparent,
+            decoration: const BoxDecoration(
               color: kPrimaryLightColor,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 20,
-                  color: Colors.black.withOpacity(.1),
-                )
-              ],
             ),
             child: SafeArea(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 80.0, vertical: 8),
+                padding: const EdgeInsets.symmetric(vertical: 8),
                 child: GNav(
-                  // rippleColor: const Color.fromARGB(255, 37, 86, 116),
-                  // hoverColor: const Color.fromARGB(255, 37, 86, 116),
-                  // gap: 8,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   activeColor: Colors.white,
                   iconSize: 24,
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  // tabMargin: EdgeInsets.symmetric(horizontal: 50),
-                  // duration: Duration(milliseconds: 400),
                   tabBackgroundColor: kPrimaryColor,
-                  color: Colors.black,
                   tabs: const [
                     GButton(
                       icon: Icons.home,
                       text: 'Home',
                     ),
                     GButton(
-                      icon: Icons.person,
+                      icon: Icons.account_circle,
                       text: 'Profile',
                     ),
-                    // GButton(
-                    //   icon: Icons.password,
-                    //   text: 'Change Password',
-                    // ),
                   ],
                   selectedIndex: _selectedIndex,
                   onTabChange: _onItemTapped,
@@ -288,49 +266,6 @@ class _UserMainState extends State<UserMainA> {
               ),
             ),
           ),
-
-          // bottomNavigationBar: BottomNavyBar(
-          //   backgroundColor: Color.fromARGB(255, 207, 235, 255),
-          //   selectedIndex: _selectedIndex,
-          //   showElevation: true,
-          //   itemCornerRadius: 24,
-          //   curve: Curves.easeIn,
-          //   onItemSelected: _onItemTapped,
-          //   items: <BottomNavyBarItem>[
-          //     BottomNavyBarItem(
-          //       icon: Icon(Icons.home),
-          //       title: Text('Home'),
-          //       activeColor: Color.fromARGB(255, 37, 86, 116),
-          //       textAlign: TextAlign.center,
-          //     ),
-          //     BottomNavyBarItem(
-          //       icon: Icon(Icons.person),
-          //       title: Text('Profile'),
-          //       activeColor: Color.fromARGB(255, 37, 86, 116),
-          //       textAlign: TextAlign.center,
-          //     ),
-          //   ],
-          // ),
-
-          // bottomNavigationBar: BottomNavigationBar(
-          //   items: const <BottomNavigationBarItem>[
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.home),
-          //       label: 'Student Detail',
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.person),
-          //       label: 'My Profile',
-          //     ),
-          //     BottomNavigationBarItem(
-          //       icon: Icon(Icons.settings),
-          //       label: 'Change Password',
-          //     ),
-          //   ],
-          //   currentIndex: _selectedIndex,
-          //   selectedItemColor: const Color.fromARGB(255, 177, 217, 250),
-          //   onTap: _onItemTapped,
-          // ),
         ),
       ),
       // ),

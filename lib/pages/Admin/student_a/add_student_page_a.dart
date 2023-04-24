@@ -83,22 +83,24 @@ class _AddStudentPageState extends State<AddStudentPage> {
 
   registration() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-              email: "$number@sps.com", password: password);
-      print(userCredential);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: kPrimaryLightColor,
-          content: Text(
-            "Student Added.",
-            style: TextStyle(fontSize: 20.0, color: Colors.black),
+              email: "$number@sps.com", password: password)
+          .then((value) {
+        addUser();
+        clearText();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: kPrimaryLightColor,
+            content: Text(
+              "Student Added.",
+              style: TextStyle(fontSize: 20.0, color: Colors.black),
+            ),
           ),
-        ),
-      );
-      addUser();
-      clearText();
-      Navigator.pop(context);
+        );
+        login();
+        Navigator.pop(context);
+      });
     } on FirebaseAuthException catch (e) {
       print(e);
       if (e.code == 'weak-password') {
@@ -362,6 +364,8 @@ class _AddStudentPageState extends State<AddStudentPage> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please Enter Password';
+                            } else if (value.length < 6) {
+                              return 'Password Provided is too Weak';
                             }
                             return null;
                           },

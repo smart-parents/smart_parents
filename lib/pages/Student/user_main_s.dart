@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -31,15 +32,18 @@ class UserMainS extends StatefulWidget {
 
 class _UserMainState extends State<UserMainS> {
   int _selectedIndex = 0;
-  final _prefs = SharedPreferences.getInstance();
+
   @override
   void initState() {
     super.initState();
     adminget();
     Timer(const Duration(seconds: 5), () {
       subscribeUserForNotifications();
+      // FlutterBackgroundService().startService();
     });
   }
+
+  final _prefs = SharedPreferences.getInstance();
 
   Future<void> subscribeUserForNotifications() async {
     final SharedPreferences prefs = await _prefs;
@@ -69,7 +73,7 @@ class _UserMainState extends State<UserMainS> {
 
   // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
-    // const DashboardS(),
+    const DashboardS(),
     // const ChatStudent(),
     const Profile_screenS()
   ];
@@ -175,8 +179,8 @@ class _UserMainState extends State<UserMainS> {
                               // ...
                               try {
                                 await FirebaseAuth.instance.signOut();
-                                // FlutterBackgroundService()
-                                //     .invoke("stopService"),
+                                FlutterBackgroundService()
+                                    .invoke("stopService");
                                 timer?.cancel();
                                 delete();
                                 await OneSignal.shared.removeExternalUserId();
@@ -216,63 +220,31 @@ class _UserMainState extends State<UserMainS> {
           drawer: const NavigationDrawer(),
           body: _widgetOptions.elementAt(_selectedIndex),
           bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-              color: const Color.fromARGB(255, 207, 235, 255),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 20,
-                  color: Colors.black.withOpacity(.1),
-                )
-              ],
+            decoration: const BoxDecoration(
+              color: kPrimaryLightColor,
             ),
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    // horizontal: MediaQuery.of(context).size.width * 0.4,
-                    vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // padding: EdgeInsets.symmetric(
-                    //     horizontal: MediaQuery.of(context).size.width * 0.4,
-                    //     vertical: 8),
-                    // const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-                    // child:
-                    GNav(
-                      // rippleColor: kPrimaryColor ,
-                      // hoverColor: kPrimaryColor,
-                      // gap: 8,
-                      activeColor: Colors.white,
-                      iconSize: 24,
-                      // style: GnavStyle.oldSchool,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 12),
-                      // tabMargin: EdgeInsets.symmetric(horizontal: 50),
-                      // duration: Duration(milliseconds: 400),
-                      tabBackgroundColor: kPrimaryColor,
-                      // color: Colors.black,
-                      tabs: const [
-                        // GButton(
-                        //   icon: Icons.home,
-                        //   text: 'Home',
-                        // ),
-                        // GButton(
-                        //   icon: Icons.schedule,
-                        //   text: 'Schedule',
-                        // ),
-                        // GButton(
-                        //   icon: Icons.chat,
-                        //   text: 'Chat',
-                        // ),
-                        GButton(
-                          icon: Icons.account_circle,
-                          text: 'Profile',
-                        ),
-                      ],
-                      selectedIndex: _selectedIndex,
-                      onTabChange: _onItemTapped,
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: GNav(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  activeColor: Colors.white,
+                  iconSize: 24,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  tabBackgroundColor: kPrimaryColor,
+                  tabs: const [
+                    GButton(
+                      icon: Icons.home,
+                      text: 'Home',
+                    ),
+                    GButton(
+                      icon: Icons.account_circle,
+                      text: 'Profile',
                     ),
                   ],
+                  selectedIndex: _selectedIndex,
+                  onTabChange: _onItemTapped,
                 ),
               ),
             ),

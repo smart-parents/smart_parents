@@ -1,7 +1,6 @@
 // ignore_for_file: library_private_types_in_public_api, must_be_immutable, prefer_typing_uninitialized_variables, use_build_context_synchronously
 
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -18,6 +17,7 @@ import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdownpage2.dart';
 import 'package:smart_parents/pages/Faculty/chat_parents_f.dart';
+import 'package:smart_parents/pages/Faculty/dashboard_f.dart';
 import 'package:smart_parents/pages/Faculty/exam_f/exam.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/parents_f.dart';
 import 'package:smart_parents/pages/Faculty/profile_screen_f.dart';
@@ -104,7 +104,7 @@ class _UserMainState extends State<UserMainF> {
 
   // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
-    // const Dashboard(),
+    const Dashboard(),
     // const ShowSchedule(),
     // const ChatScreen(),
     const ProfileF()
@@ -208,61 +208,29 @@ class _UserMainState extends State<UserMainF> {
           bottomNavigationBar: Container(
             decoration: const BoxDecoration(
               color: kPrimaryLightColor,
-              // boxShadow: [
-              //   BoxShadow(
-              //     blurRadius: 20,
-              //     // color: Colors.black.withOpacity(.1),
-              //   )
-              // ],
             ),
             child: SafeArea(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                    // horizontal: MediaQuery.of(context).size.width * 0.4,
-                    vertical: 8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // padding: EdgeInsets.symmetric(
-                    //     horizontal: MediaQuery.of(context).size.width * 0.4,
-                    //     vertical: 8),
-                    // const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
-                    // child:
-                    GNav(
-                      // rippleColor: kPrimaryColor ,
-                      // hoverColor: kPrimaryColor,
-                      // gap: 8,
-                      activeColor: Colors.white,
-                      iconSize: 24,
-                      // style: GnavStyle.oldSchool,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 12),
-                      // tabMargin: EdgeInsets.symmetric(horizontal: 50),
-                      // duration: Duration(milliseconds: 400),
-                      tabBackgroundColor: kPrimaryColor,
-                      // color: Colors.black,
-                      tabs: const [
-                        // GButton(
-                        //   icon: Icons.home,
-                        //   text: 'Home',
-                        // ),
-                        // GButton(
-                        //   icon: Icons.schedule,
-                        //   text: 'Schedule',
-                        // ),
-                        // GButton(
-                        //   icon: Icons.chat,
-                        //   text: 'Chat',
-                        // ),
-                        GButton(
-                          icon: Icons.account_circle,
-                          text: 'Profile',
-                        ),
-                      ],
-                      selectedIndex: _selectedIndex,
-                      onTabChange: _onItemTapped,
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                child: GNav(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  activeColor: Colors.white,
+                  iconSize: 24,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  tabBackgroundColor: kPrimaryColor,
+                  tabs: const [
+                    GButton(
+                      icon: Icons.home,
+                      text: 'Home',
+                    ),
+                    GButton(
+                      icon: Icons.account_circle,
+                      text: 'Profile',
                     ),
                   ],
+                  selectedIndex: _selectedIndex,
+                  onTabChange: _onItemTapped,
                 ),
               ),
             ),

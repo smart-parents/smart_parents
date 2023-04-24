@@ -76,20 +76,24 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
 
   registration() async {
     try {
-      FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: "$faculty@spf.com", password: password);
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: kPrimaryLightColor,
-          content: Text(
-            "Faculty Added.",
-            style: TextStyle(fontSize: 20.0, color: Colors.black),
+      FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+              email: "$faculty@spf.com", password: password)
+          .then((value) {
+        addUser();
+        clearText();
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: kPrimaryLightColor,
+            content: Text(
+              "Faculty Added.",
+              style: TextStyle(fontSize: 20.0, color: Colors.black),
+            ),
           ),
-        ),
-      );
-      addUser();
-      clearText();
+        );
+        login();
+        Navigator.pop(context);
+      });
     } on FirebaseAuthException catch (e) {
       print(e);
       if (e.code == 'weak-password') {
@@ -116,8 +120,6 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
         );
       }
     }
-    login();
-    Navigator.pop(context);
   }
 
   login() async {
@@ -313,6 +315,8 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                             validator: (value) {
                               if (value == null || value.isEmpty) {
                                 return 'Please Enter Password';
+                              } else if (value.length < 6) {
+                                return 'Password Provided is too Weak';
                               }
                               return null;
                             },

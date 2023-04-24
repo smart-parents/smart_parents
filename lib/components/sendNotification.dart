@@ -37,16 +37,17 @@ class notification {
         playerIds.add(playerId);
       }
     }
-
-    // Send the notification to all users using OneSignal
-    await OneSignal.shared.postNotification(
-      OSCreateNotification(
-        playerIds: playerIds,
-        heading: heading,
-        subtitle: subtitle,
-        content: message,
-        androidSmallIcon: '@mipmap/notification_icon',
-      ),
-    );
+    if (playerIds.isNotEmpty) {
+      // Send the notification to all users using OneSignal
+      await OneSignal.shared.postNotification(
+        OSCreateNotification(
+          playerIds: playerIds,
+          heading: heading,
+          subtitle: subtitle,
+          content: message,
+          androidSmallIcon: '@mipmap/notification_icon',
+        ),
+      );
+    }
   }
 }

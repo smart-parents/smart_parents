@@ -1,20 +1,11 @@
 // ignore_for_file: deprecated_member_use, constant_identifier_names, depend_on_referenced_packages, unused_field, use_build_context_synchronously
 
 import 'dart:async';
-// import 'dart:ui';
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
-// import 'package:smart_parents/components/internetcheck.dart';
 import 'package:smart_parents/pages/TimeImage.dart';
-// import 'package:http/http.dart' as http;
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
-// import 'package:location/location.dart';
-// import 'package:smart_parents/components/constants.dart';
-// import 'package:flutter_background_service/flutter_background_service.dart';
 // import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 
 Future<void> main() async {
@@ -37,35 +28,18 @@ Future<void> main() async {
     // Optional: Prompt the user for push notification permission
     await OneSignal.shared
         .promptUserForPushNotificationPermission(fallbackToSettings: true);
+    // await initializeService();
   }
-  // makeHttpGetRequest();
-  // await initializeService();
   runApp(const MyApp());
 }
 
-// Future<void> makeHttpGetRequest() async {
-//   final response = await http.get(
-//     Uri.parse(
-//         'https://smart-parents-11c8b-default-rtdb.firebaseio.com'), // Replace with your backend server URL
-//     headers: {
-//       'Content-Type': 'application/json', // Set appropriate Content-Type header
-//       'Access-Control-Allow-Origin': '*', // Set appropriate CORS headers
-//       'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-//       'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token',
-//     },
-//   );
+// final _prefs = SharedPreferences.getInstance();
 
-//   // Handle response
-//   print('Response status: ${response.statusCode}');
-//   print('Response body: ${response.body}');
-// }
 // Future<void> initializeService() async {
 //   final service = FlutterBackgroundService();
 //   await service.configure(
 //     androidConfiguration: AndroidConfiguration(
-//       // this will be executed when app is in foreground or background in separated isolate
 //       onStart: onStart,
-//       // auto start service
 //       autoStart: false,
 //       isForegroundMode: true,
 //     ),
@@ -90,47 +64,48 @@ Future<void> main() async {
 //   Timer.periodic(const Duration(seconds: 1), (timer) async {
 //     print('FLUTTER BACKGROUND SERVICE: ${DateTime.now()}');
 //     Location location = Location();
-//     // location.serviceEnabled();
-//     // location.requestService();
-//     location.enableBackgroundMode(enable: true);
 //     PermissionStatus permissionStatus = await location.hasPermission();
 //     if (permissionStatus != PermissionStatus.granted) {
 //       permissionStatus = await location.requestPermission();
 //     } else {
-//       LocationData locationData = await location.getLocation();
 //       if (FirebaseAuth.instance.currentUser != null) {
-//         String? email = FirebaseAuth.instance.currentUser!.email;
-//         String em = email.toString();
-//         String id = em.substring(0, em.length - 8);
-//         final fireStore = FirebaseFirestore.instance;
-//         fireStore
-//             .collection('Admin/$admin/students/$id/location')
-//             .doc(id)
-//             .get()
-//             .then((value) => {
-//                   if (value.exists)
-//                     {
-//                       fireStore
-//                           .collection('Admin/$admin/students/$id/location')
-//                           .doc(id)
-//                           .update({
-//                         'latitude': locationData.latitude,
-//                         'longitude': locationData.longitude,
-//                         'timestamp': DateTime.now(),
-//                       })
-//                     }
-//                   else
-//                     {
-//                       fireStore
-//                           .collection('Admin/$admin/students/$id/location')
-//                           .doc(id)
-//                           .set({
-//                         'latitude': locationData.latitude,
-//                         'longitude': locationData.longitude,
-//                         'timestamp': DateTime.now(),
-//                       })
-//                     }
-//                 });
+//         final SharedPreferences prefs = await _prefs;
+//         var id = prefs.getString('id');
+//         var role = prefs.getString('role');
+//         if (role == 'student') {
+//           location.enableBackgroundMode(enable: true);
+//           await location.requestPermission();
+//           LocationData locationData = await location.getLocation();
+//           final fireStore = FirebaseFirestore.instance;
+//           fireStore
+//               .collection('Admin/$admin/students/$id/location')
+//               .doc(id)
+//               .get()
+//               .then((value) => {
+//                     if (value.exists)
+//                       {
+//                         fireStore
+//                             .collection('Admin/$admin/students/$id/location')
+//                             .doc(id)
+//                             .update({
+//                           'latitude': locationData.latitude,
+//                           'longitude': locationData.longitude,
+//                           'timestamp': DateTime.now(),
+//                         })
+//                       }
+//                     else
+//                       {
+//                         fireStore
+//                             .collection('Admin/$admin/students/$id/location')
+//                             .doc(id)
+//                             .set({
+//                           'latitude': locationData.latitude,
+//                           'longitude': locationData.longitude,
+//                           'timestamp': DateTime.now(),
+//                         })
+//                       }
+//                   });
+//         }
 //       }
 //     }
 //   });

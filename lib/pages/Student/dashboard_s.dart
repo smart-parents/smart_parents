@@ -23,9 +23,9 @@ class _DashboardState extends State<DashboardS> {
   void initState() {
     super.initState();
     // FlutterBackgroundService().startService();
-    timer = Timer.periodic(const Duration(seconds: 5), (timer) {
-      getLocationData();
-    });
+    // timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+    //   getLocationData();
+    // });
   }
 
   final _prefs = SharedPreferences.getInstance();
@@ -82,9 +82,85 @@ class _DashboardState extends State<DashboardS> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: ElevatedButton(
-          onPressed: getLocationData, child: const Text('Live Location')),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('College Admin Dashboard'),
+        centerTitle: true,
+      ),
+      drawer: Drawer(
+        child: ListView(
+          children: const [
+            UserAccountsDrawerHeader(
+              accountName: Text('John Doe'),
+              accountEmail: Text('johndoe@example.com'),
+              currentAccountPicture: CircleAvatar(
+                backgroundImage: NetworkImage(
+                    'https://www.example.com/images/user_profile.png'),
+              ),
+            ),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+            ),
+            ListTile(
+              leading: Icon(Icons.settings),
+              title: Text('Settings'),
+            ),
+            ListTile(
+              leading: Icon(Icons.logout),
+              title: Text('Logout'),
+            ),
+          ],
+        ),
+      ),
+      body: GridView.count(
+        crossAxisCount: 2,
+        padding: const EdgeInsets.all(16.0),
+        mainAxisSpacing: 16.0,
+        crossAxisSpacing: 16.0,
+        children: [
+          _buildCard('Manage Students', Icons.people, Colors.green),
+          _buildCard('Manage Faculty', Icons.person, Colors.blue),
+          _buildCard('Manage Courses', Icons.book, Colors.orange),
+          _buildCard('Manage Assignments', Icons.assignment, Colors.purple),
+        ],
+      ),
     );
   }
+
+  Widget _buildCard(String title, IconData iconData, Color color) {
+    return Card(
+      elevation: 8.0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: InkWell(
+        onTap: () {},
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              iconData,
+              color: color,
+              size: 64.0,
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              title,
+              style:
+                  const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  // @override
+  // Widget build(BuildContext context) {
+  //   return Center(
+  //     child: ElevatedButton(
+  //         onPressed: getLocationData, child: const Text('Live Location')),
+  //   );
+  // }
 }

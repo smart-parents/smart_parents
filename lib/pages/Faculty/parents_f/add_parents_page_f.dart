@@ -93,29 +93,31 @@ class _AddParentPageState extends State<AddParentPage> {
 
   registration() async {
     try {
-      UserCredential userCredential = await FirebaseAuth.instance
+      await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
-              email: "$number@spp.com", password: password);
-      print(userCredential);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          backgroundColor: kPrimaryLightColor,
-          content: Text(
-            "Parent Added.",
-            style: TextStyle(fontSize: 20.0, color: Colors.black),
+              email: "$number@spp.com", password: password)
+          .then((value) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            backgroundColor: kPrimaryLightColor,
+            content: Text(
+              "Parents Added.",
+              style: TextStyle(fontSize: 20.0, color: Colors.black),
+            ),
           ),
-        ),
-      );
-      addUser();
-      addUsers();
-      clearText();
+        );
+        addUser();
+        addUsers();
+        clearText();
+        login();
+        Navigator.pop(context);
+      });
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(
       //     builder: (context) => LoginScreen(),
       //   ),
       // );
-      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print(e);
       if (e.code == 'weak-password') {
@@ -351,6 +353,8 @@ class _AddParentPageState extends State<AddParentPage> {
                               validator: (value) {
                                 if (value == null || value.isEmpty) {
                                   return 'Please Enter Password';
+                                } else if (value.length < 6) {
+                                  return 'Password Provided is too Weak';
                                 }
                                 return null;
                               },
