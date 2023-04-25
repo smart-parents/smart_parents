@@ -181,16 +181,6 @@
 //   }
 // }
 
-
-
-
-
-
-
-
-
-
-
 import 'package:flutter/material.dart';
 
 class FacultyDashboard extends StatelessWidget {
@@ -285,14 +275,14 @@ class FacultyDashboard extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         const SizedBox(height: 10),
-        _buildAssignmentRow(context, 'Mobile App Development', 'Project Proposal',
-            'Due 4/30/2023'),
+        _buildAssignmentRow(context, 'Mobile App Development',
+            'Project Proposal', 'Due 4/30/2023'),
         const SizedBox(height: 10),
-        _buildAssignmentRow(context, 'Database Systems', 'Normalization Exercises',
-            'Due 5/5/2023'),
+        _buildAssignmentRow(context, 'Database Systems',
+            'Normalization Exercises', 'Due 5/5/2023'),
         const SizedBox(height: 10),
-        _buildAssignmentRow(context, 'Artificial Intelligence', 'Neural Networks',
-            'Due 5/12/2023'),
+        _buildAssignmentRow(context, 'Artificial Intelligence',
+            'Neural Networks', 'Due 5/12/2023'),
       ],
     );
   }
