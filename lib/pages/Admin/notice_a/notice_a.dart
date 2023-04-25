@@ -7,7 +7,7 @@ import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/components/imageshow.dart';
 import 'package:smart_parents/pages/Admin/notice_a/add_notice_a.dart';
-import 'package:smart_parents/widgest/animation1.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 class Notice extends StatefulWidget {
   const Notice({Key? key}) : super(key: key);
@@ -309,8 +309,7 @@ class _NoticeState extends State<Notice> {
                   ),
             floatingActionButton: FloatingActionButton(
               onPressed: () => {
-                Navigator.push(
-                  context, ScaleTransition4(const NoticeAdd())),
+                Navigator.push(context, FloatingAnimation(const NoticeAdd())),
               },
               child: const Icon(Icons.add),
             ),

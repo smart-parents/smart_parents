@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/add_parents_page_f.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/update_parents_page_f.dart';
-import 'package:smart_parents/widgest/animation1.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 class Parent extends StatefulWidget {
   const Parent({Key? key}) : super(key: key);
@@ -461,9 +461,7 @@ class _ParentState extends State<Parent> {
       floatingActionButton: FloatingActionButton(
         // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         onPressed: () => {
-          Navigator.push(
-                  context, ScaleTransition4(const AddParentPage())),
-      
+          Navigator.push(context, FloatingAnimation(const AddParentPage())),
         },
         child: const Icon(Icons.add),
       ),

@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'dart:math' as math;
 import 'package:smart_parents/pages/Faculty/Schedule/addschedule.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/editSchedule.dart';
-import 'package:smart_parents/widgest/animation1.dart';
+import 'package:smart_parents/widgest/animation.dart';
 import 'package:smart_parents/widgest/dropDownWidget.dart';
 
 String batchyear = DateFormat('yyyy').format(DateTime.now());
@@ -565,8 +565,7 @@ class _ShowScheduleState extends State<ShowSchedule> {
           //     size: 30,
           //   ),
           //   onPressed: () {
-            Navigator.push(
-                  context, ScaleTransition4(const AddSchedule())),
+          Navigator.push(context, FloatingAnimation(const AddSchedule())),
           //   },
           //   tooltip: 'Add',
           // ),

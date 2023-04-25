@@ -7,7 +7,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/student_a/add_student_page_a.dart';
 import 'package:smart_parents/pages/Admin/student_a/update_student_page_a.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_parents/widgest/animation1.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
@@ -510,8 +510,7 @@ class _StudentState extends State<Student> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
-          Navigator.push(
-                  context, ScaleTransition4(const AddStudentPage())),
+          Navigator.push(context, FloatingAnimation(const AddStudentPage())),
           // Navigator.push(
           //   context,
           //   MaterialPageRoute(

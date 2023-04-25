@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/components/imageshow.dart';
 import 'package:smart_parents/pages/Faculty/exam_f/addexamtime.dart';
-import 'package:smart_parents/widgest/animation1.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 class AddExam extends StatefulWidget {
   const AddExam({Key? key, required this.docid, required this.name})
@@ -255,7 +255,7 @@ class _AddExamState extends State<AddExam> {
                         onPressed: () => {
                           Navigator.push(
                               context,
-                              ScaleTransition4(AddExamTimeTable(
+                              FloatingAnimation(AddExamTimeTable(
                                 docid: widget.docid,
                                 name: widget.name,
                               ))),

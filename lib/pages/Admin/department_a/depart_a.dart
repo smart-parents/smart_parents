@@ -5,7 +5,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/components/internetcheck.dart';
 // import 'package:smart_parents/components/internetcheck.dart';
 import 'package:smart_parents/pages/Admin/department_a/add_depart_a.dart';
-import 'package:smart_parents/widgest/animation1.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 class Department extends StatefulWidget {
   const Department({Key? key}) : super(key: key);
@@ -285,7 +285,7 @@ class _DepartmentState extends State<Department> {
                   // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
                   onPressed: () => {
                     Navigator.push(
-                  context, ScaleTransition4(const AddDepartPage())),
+                        context, FloatingAnimation(const AddDepartPage())),
                     // Navigator.push(
                     //   context,
                     //   MaterialPageRoute(
