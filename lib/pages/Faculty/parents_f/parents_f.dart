@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/add_parents_page_f.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/update_parents_page_f.dart';
+import 'package:smart_parents/widgest/animation1.dart';
 
 class Parent extends StatefulWidget {
   const Parent({Key? key}) : super(key: key);
@@ -461,11 +462,8 @@ class _ParentState extends State<Parent> {
         // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         onPressed: () => {
           Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddParentPage(),
-            ),
-          )
+                  context, ScaleTransition4(const AddParentPage())),
+      
         },
         child: const Icon(Icons.add),
       ),

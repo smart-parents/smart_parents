@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/add_subject_f.dart';
+import 'package:smart_parents/widgest/animation1.dart';
 
 class SubjectF extends StatefulWidget {
   const SubjectF({Key? key}) : super(key: key);
@@ -599,11 +600,7 @@ class _SubjectFState extends State<SubjectF> {
               // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
               onPressed: () => {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const AddSubject(),
-                  ),
-                )
+                  context, ScaleTransition4(const AddSubject())),
               },
               child: const Icon(Icons.add),
             ),

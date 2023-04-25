@@ -5,6 +5,7 @@ import 'package:smart_parents/pages/Admin/faculty_a/add_faculty_page_a.dart';
 import 'package:smart_parents/pages/Admin/faculty_a/update_faculty_page_a.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/widgest/animation1.dart';
 
 class Faculty extends StatefulWidget {
   const Faculty({Key? key}) : super(key: key);
@@ -446,11 +447,13 @@ class _FacultyState extends State<Faculty> {
         // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         onPressed: () => {
           Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddFacultyPage(),
-            ),
-          )
+                  context, ScaleTransition4(const AddFacultyPage())),
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(
+          //     builder: (context) => const AddFacultyPage(),
+          //   ),
+          // )
         },
         child: const Icon(Icons.add),
       ),

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Admin/fees_add.dart';
+import 'package:smart_parents/widgest/animation1.dart';
 
 class Fees extends StatefulWidget {
   const Fees({Key? key}) : super(key: key);
@@ -371,11 +372,8 @@ class _FeesState extends State<Fees> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
           Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const FeesAdd(),
-            ),
-          )
+                  context, ScaleTransition4(const FeesAdd())),
+       
         },
         child: const Icon(Icons.add),
       ),

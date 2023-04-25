@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/components/pdfshow.dart';
 import 'package:smart_parents/pages/Faculty/Result_f/addresult_f.dart';
+import 'package:smart_parents/widgest/animation1.dart';
 
 class Result extends StatefulWidget {
   const Result({Key? key}) : super(key: key);
@@ -241,11 +242,8 @@ class _ResultState extends State<Result> {
             floatingActionButton: FloatingActionButton(
               onPressed: () => {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const ResultAdd(),
-                  ),
-                )
+                  context, ScaleTransition4(const ResultAdd())),
+           
               },
               child: const Icon(Icons.add),
             ),
