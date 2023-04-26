@@ -155,7 +155,7 @@ class _UserMainState extends State<UserMainS> {
             //     ],
             //   ),
             // ),
-            title: const Text('Home'),
+            title: const Text('Student'),
             actions: [
               IconButton(
                 onPressed: () async => {
@@ -177,6 +177,12 @@ class _UserMainState extends State<UserMainS> {
                             onPressed: () async {
                               // Perform the deletion here
                               // ...
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  });
                               try {
                                 await FirebaseAuth.instance.signOut();
                                 FlutterBackgroundService()

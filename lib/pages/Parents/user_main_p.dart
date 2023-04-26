@@ -165,7 +165,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
             //       ),
             //     ],
             //   ),
-            title: const Text('Home'),
+            title: const Text('Parents'),
             actions: [
               IconButton(
                 onPressed: () async => {
@@ -187,6 +187,12 @@ class _ParentsScreenState extends State<ParentsScreen> {
                             onPressed: () async {
                               // Perform the deletion here
                               // ...
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return Center(
+                                        child: CircularProgressIndicator());
+                                  });
                               try {
                                 await FirebaseAuth.instance.signOut();
                                 delete();

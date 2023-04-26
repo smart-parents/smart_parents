@@ -5,10 +5,18 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
 // import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/pages/Student/Schedule/schedule_u.dart';
+
+import 'package:smart_parents/pages/Student/attendance.dart';
+import 'package:smart_parents/pages/Student/fees.dart';
+import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
+import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 Timer? timer;
 
@@ -82,50 +90,29 @@ class _DashboardState extends State<DashboardS> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('College Admin Dashboard'),
-        centerTitle: true,
-      ),
-      drawer: Drawer(
-        child: ListView(
-          children: const [
-            UserAccountsDrawerHeader(
-              accountName: Text('John Doe'),
-              accountEmail: Text('johndoe@example.com'),
-              currentAccountPicture: CircleAvatar(
-                backgroundImage: NetworkImage(
-                    'https://www.example.com/images/user_profile.png'),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.home),
-              title: Text('Home'),
-            ),
-            ListTile(
-              leading: Icon(Icons.settings),
-              title: Text('Settings'),
-            ),
-            ListTile(
-              leading: Icon(Icons.logout),
-              title: Text('Logout'),
-            ),
-          ],
+    return Container(
+        decoration: BoxDecoration(
+          // color: Colors.transparent,
+          image: DecorationImage(
+            image: AssetImage(background),
+            fit: BoxFit.cover,
+          ),
         ),
-      ),
-      body: GridView.count(
-        crossAxisCount: 2,
-        padding: const EdgeInsets.all(16.0),
-        mainAxisSpacing: 16.0,
-        crossAxisSpacing: 16.0,
-        children: [
-          _buildCard('Manage Students', Icons.people, Colors.green),
-          _buildCard('Manage Faculty', Icons.person, Colors.blue),
-          _buildCard('Manage Courses', Icons.book, Colors.orange),
-          _buildCard('Manage Assignments', Icons.assignment, Colors.purple),
-        ],
-      ),
-    );
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: GridView.count(
+            crossAxisCount: 2,
+            padding: const EdgeInsets.all(16.0),
+            mainAxisSpacing: 16.0,
+            crossAxisSpacing: 16.0,
+            children: [
+              _buildCard('View Attendence', Icons.calendar_month, Colors.green),
+              _buildCard('View Notice', Icons.notifications, Colors.blue),
+              _buildCard('View Schedule', Icons.schedule, Colors.orange),
+              _buildCard('View Exam', Icons.school, Colors.purple),
+            ],
+          ),
+        ));
   }
 
   Widget _buildCard(String title, IconData iconData, Color color) {
@@ -135,7 +122,46 @@ class _DashboardState extends State<DashboardS> {
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          switch (title) {
+            case 'View Attendence':
+              Navigator.push(
+                  context, FadeAnimation(const AttendanceCalendarPage()));
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const Student()),
+              // );
+              break;
+            case 'View Notice':
+              Navigator.push(context, FadeAnimation(const Notice()));
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const Faculty()),
+              // );
+              break;
+            case 'View Schedule':
+              Navigator.push(context, FadeAnimation(const ShowSchedule()));
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const Department()),
+              // );
+              break;
+            case 'View Exam':
+              Navigator.push(context, FadeAnimation(const Exam()));
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const Notice()),
+              // );
+              break;
+            case 'Manage Fees':
+              Navigator.push(context, FadeAnimation(const Fees()));
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => const Fees()),
+              // );
+              break;
+          }
+        },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
