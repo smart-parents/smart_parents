@@ -23,6 +23,7 @@ import 'package:smart_parents/pages/Student/fees.dart';
 import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
 import 'package:smart_parents/pages/Student/profile_screen_s.dart';
 import 'package:smart_parents/pages/option.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 class UserMainS extends StatefulWidget {
   const UserMainS({Key? key}) : super(key: key);
@@ -429,72 +430,82 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                   leading: const Icon(Icons.chat),
                   title: const Text("Chat with Faculty"),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ChatStudent(),
-                    ));
+                    Navigator.push(context, FadeAnimation(const ChatStudent()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const ChatStudent(),
+                    // ));
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.people),
                   title: const Text("Contact Faculty"),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ContactF(),
-                    ));
+                    Navigator.push(context, FadeAnimation(const ContactF()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const ContactF(),
+                    // ));
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.calendar_month),
                   title: const Text("View Attendence"),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const AttendanceCalendarPage(),
-                    ));
+                    Navigator.push(
+                        context, FadeAnimation(const AttendanceCalendarPage()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const AttendanceCalendarPage(),
+                    // ));
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.school),
                   title: const Text("View Exams"),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const Exam(),
-                    ));
+                    Navigator.push(context, FadeAnimation(const Exam()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const Exam(),
+                    // ));
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.money),
                   title: const Text("View Fees"),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const Fees(),
-                    ));
+                    Navigator.push(context, FadeAnimation(const Fees()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const Fees(),
+                    // ));
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.notifications),
                   title: const Text("View Notices"),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const Notice(),
-                    ));
+                    Navigator.push(context, FadeAnimation(const Notice()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const Notice(),
+                    // ));
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.assignment),
                   title: const Text("View Results"),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const Result(),
-                    ));
+                    Navigator.push(context, FadeAnimation(const Result()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const Result(),
+                    // ));
                   },
                 ),
                 ListTile(
                   leading: const Icon(Icons.schedule),
                   title: const Text("View Schedule"),
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const ShowSchedule(),
-                    ));
+                    Navigator.push(
+                        context, FadeAnimation(const ShowSchedule()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const ShowSchedule(),
+                    // ));
                   },
                 ),
               ],

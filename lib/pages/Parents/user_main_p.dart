@@ -22,6 +22,7 @@ import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/profile_screen_p.dart';
 import 'package:smart_parents/pages/Parents/result_p.dart';
 import 'package:smart_parents/pages/option.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 class ParentsScreen extends StatefulWidget {
   const ParentsScreen({super.key});
@@ -420,72 +421,81 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 leading: const Icon(Icons.chat),
                 title: const Text("Chat with Faculty"),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ChatParent(),
-                  ));
+                  Navigator.push(context, FadeAnimation(const ChatParent()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const ChatParent(),
+                  // ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.people),
                 title: const Text("Contact Faculty"),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ContactF(),
-                  ));
+                  Navigator.push(context, FadeAnimation(const ContactF()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const ContactF(),
+                  // ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.location_on),
                 title: const Text("Get Your Child Location"),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const ChildLocation(),
-                  ));
+                  Navigator.push(context, FadeAnimation(const ChildLocation()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const ChildLocation(),
+                  // ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.calendar_month),
                 title: const Text("View Attendances"),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const AttendanceCalendarPage(),
-                  ));
+                  Navigator.push(
+                      context, FadeAnimation(const AttendanceCalendarPage()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const AttendanceCalendarPage(),
+                  // ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.assignment),
                 title: const Text("View Results"),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Result(),
-                  ));
+                  Navigator.push(context, FadeAnimation(const Result()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const Result(),
+                  // ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.school),
                 title: const Text("View Exams"),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Exam(),
-                  ));
+                  Navigator.push(context, FadeAnimation(const Exam()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const Exam(),
+                  // ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.money),
                 title: const Text("View Fees"),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Fees(),
-                  ));
+                  Navigator.push(context, FadeAnimation(const Fees()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const Fees(),
+                  // ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.notifications),
                 title: const Text("View Notices"),
                 onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const Notice(),
-                  ));
+                  Navigator.push(context, FadeAnimation(const Notice()));
+                  // Navigator.of(context).push(MaterialPageRoute(
+                  //   builder: (context) => const Notice(),
+                  // ));
                 },
               ),
             ],

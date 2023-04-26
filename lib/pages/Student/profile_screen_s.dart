@@ -13,6 +13,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Student/dashboard_s.dart';
 import 'package:smart_parents/pages/Student/edit_s.dart';
 import 'package:smart_parents/pages/option.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 class Profile_screenS extends StatefulWidget {
   const Profile_screenS({super.key});
@@ -375,11 +376,13 @@ class _Profile_screenSState extends State<Profile_screenS> {
                               children: [
                                 TextButton.icon(
                                   onPressed: () async => {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                EditS(id: "$id")))
+                                    Navigator.push(context,
+                                        FadeAnimation(EditS(id: '$id')))
+                                    // Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             EditS(id: "$id")))
                                   },
                                   icon: const Icon(
                                     Icons.info_outline,
@@ -424,13 +427,15 @@ class _Profile_screenSState extends State<Profile_screenS> {
                                     // await FirebaseAuth.instance.signOut(),
                                     // delete(),
                                     // await storage.delete(key: "uid"),
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ChangePassword(),
-                                      ),
-                                    )
+                                    Navigator.push(context,
+                                        FadeAnimation(const ChangePassword())),
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) =>
+                                    //         const ChangePassword(),
+                                    //   ),
+                                    // )
                                   },
                                   icon: const Icon(
                                     Icons.password,
