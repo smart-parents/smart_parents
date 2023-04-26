@@ -11,6 +11,7 @@ import 'package:smart_parents/pages/Faculty/edit_f.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:smart_parents/widgest/animation.dart';
 
 class ProfileF extends StatefulWidget {
   const ProfileF({Key? key}) : super(key: key);
@@ -404,13 +405,18 @@ class _ProfileFState extends State<ProfileF> {
                                 TextButton.icon(
                                   onPressed: () async => {
                                     Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditF(
-                                          id: "$id",
-                                        ),
-                                      ),
-                                    ) // (route) => false)
+                                        context,
+                                        FadeAnimation(EditF(
+                                          id: '$id',
+                                        ))),
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => EditF(
+                                    //       id: "$id",
+                                    //     ),
+                                    //   ),
+                                    // ) // (route) => false)
                                   },
                                   icon: const Icon(
                                     Icons.info_outline,
@@ -450,16 +456,18 @@ class _ProfileFState extends State<ProfileF> {
                                 // ),
                                 TextButton.icon(
                                   onPressed: () async => {
+                                    Navigator.push(context,
+                                        FadeAnimation(const ChangePassword())),
                                     // await FirebaseAuth.instance.signOut(),
                                     // delete(),
                                     // await storage.delete(key: "uid"),
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ChangePassword(),
-                                      ),
-                                    )
+                                    // Navigator.push(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) =>
+                                    //         const ChangePassword(),
+                                    //   ),
+                                    // )
                                   },
                                   icon: const Icon(
                                     Icons.password,
