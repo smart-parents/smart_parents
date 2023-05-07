@@ -177,10 +177,10 @@ class _FacultyState extends State<Faculty> {
                                             children: [
                                               Switch(
                                                 value: storedocs[index]
-                                                    ['status'],
+                                                        ['status'] ??
+                                                    true,
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    // _status = value;
                                                     updateStatus(
                                                         storedocs[index]['id'],
                                                         value);
@@ -188,14 +188,16 @@ class _FacultyState extends State<Faculty> {
                                                 },
                                               ),
                                               Text(
-                                                storedocs[index]['status']
+                                                (storedocs[index]['status'] ??
+                                                        true)
                                                     ? 'Active'
                                                     : 'Disactive',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15,
-                                                    color: storedocs[index]
-                                                            ['status']
+                                                    color: (storedocs[index]
+                                                                ['status'] ??
+                                                            true)
                                                         ? green
                                                         : red),
                                               ),

@@ -508,6 +508,21 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                     // ));
                   },
                 ),
+                ListTile(
+                  leading: const Icon(Icons.location_on),
+                  title: const Text("Location"),
+                  onTap: () {
+                    Navigator.push(
+                        context, FadeAnimation(const ShowSchedule()));
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //   builder: (context) => const ShowSchedule(),
+                    // ));
+                  },
+                ),
+  //     child: ElevatedButton(
+  //         onPressed: getLocationData, child: const Text('Live Location')),
+  //   );
+  // }
               ],
             ),
           ],

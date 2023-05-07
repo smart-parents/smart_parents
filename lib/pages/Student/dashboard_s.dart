@@ -31,9 +31,9 @@ class _DashboardState extends State<DashboardS> {
   void initState() {
     super.initState();
     // FlutterBackgroundService().startService();
-    // timer = Timer.periodic(const Duration(seconds: 5), (timer) {
-    //   getLocationData();
-    // });
+    timer = Timer.periodic(const Duration(seconds: 5), (timer) {
+      getLocationData();
+    });
   }
 
   final _prefs = SharedPreferences.getInstance();
@@ -91,28 +91,29 @@ class _DashboardState extends State<DashboardS> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
-          // color: Colors.transparent,
-          image: DecorationImage(
-            image: AssetImage(background),
-            fit: BoxFit.cover,
-          ),
+      decoration: BoxDecoration(
+        // color: Colors.transparent,
+        image: DecorationImage(
+          image: AssetImage(background),
+          fit: BoxFit.cover,
         ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: GridView.count(
-            crossAxisCount: 2,
-            padding: const EdgeInsets.all(16.0),
-            mainAxisSpacing: 16.0,
-            crossAxisSpacing: 16.0,
-            children: [
-              _buildCard('View Attendence', Icons.calendar_month, Colors.green),
-              _buildCard('View Notice', Icons.notifications, Colors.blue),
-              _buildCard('View Schedule', Icons.schedule, Colors.orange),
-              _buildCard('View Exam', Icons.school, Colors.purple),
-            ],
-          ),
-        ));
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: GridView.count(
+          crossAxisCount: 2,
+          padding: const EdgeInsets.all(16.0),
+          mainAxisSpacing: 16.0,
+          crossAxisSpacing: 16.0,
+          children: [
+            _buildCard('View Attendence', Icons.calendar_month, Colors.green),
+            _buildCard('View Notice', Icons.notifications, Colors.blue),
+            _buildCard('View Schedule', Icons.schedule, Colors.orange),
+            _buildCard('View Exam', Icons.school, Colors.purple),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildCard(String title, IconData iconData, Color color) {
@@ -127,6 +128,7 @@ class _DashboardState extends State<DashboardS> {
             case 'View Attendence':
               Navigator.push(
                   context, FadeAnimation(const AttendanceCalendarPage()));
+              // Navigator.push(context, FadeAnimation(getLocation()));
               // Navigator.push(
               //   context,
               //   MaterialPageRoute(builder: (context) => const Student()),
@@ -182,11 +184,4 @@ class _DashboardState extends State<DashboardS> {
       ),
     );
   }
-  // @override
-  // Widget build(BuildContext context) {
-  //   return Center(
-  //     child: ElevatedButton(
-  //         onPressed: getLocationData, child: const Text('Live Location')),
-  //   );
-  // }
 }
