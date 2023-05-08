@@ -12,7 +12,6 @@ class MyCustomWidget extends StatefulWidget {
   _MyCustomWidgetState createState() => _MyCustomWidgetState();
 }
 
-
 class _MyCustomWidgetState extends State<MyCustomWidget>
     with TickerProviderStateMixin {
   late AnimationController scaleController;

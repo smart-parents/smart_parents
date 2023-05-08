@@ -6,11 +6,6 @@ import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdownpa
 import 'package:smart_parents/pages/Faculty/chat_parents_f.dart';
 import 'package:smart_parents/pages/Faculty/chat_student_f.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/parents_f.dart';
-// import 'package:smart_parents/pages/Faculty/parents_f/parent_f.dart';
-// import 'package:smart_parents/pages/Parents/chat_parents_f.dart';
-// import 'package:smart_parents/pages/Student/chat_student.dart';
-
-import '../../widgest/animation.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -47,40 +42,40 @@ class _DashboardState extends State<Dashboard> {
         onTap: () {
           switch (title) {
             case 'Add Attendence':
-              Navigator.push(
-                  context, FadeAnimation(const AttendenceDropdownpage2()));
               // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Student()),
-              // );
+              //     context, FadeAnimation(const AttendenceDropdownpage2()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AttendenceDropdownpage2()),
+              );
               break;
             case 'Manage Parents':
-              Navigator.push(context, FadeAnimation(const Parent()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Faculty()),
-              // );
+              // Navigator.push(context, FadeAnimation(const Parent()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Parent()),
+              );
               break;
             case 'Manage Schedule':
-              Navigator.push(context, FadeAnimation(const ShowSchedule()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Department()),
-              // );
+              // Navigator.push(context, FadeAnimation(const ShowSchedule()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ShowSchedule()),
+              );
               break;
             case 'Chat With Parents':
-              Navigator.push(context, FadeAnimation(const ChatParent()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Notice()),
-              // );
+              // Navigator.push(context, FadeAnimation(const ChatParent()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChatParent()),
+              );
               break;
             case 'Chat With Student':
-              Navigator.push(context, FadeAnimation(const ChatStudent()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Fees()),
-              // );
+              // Navigator.push(context, FadeAnimation(const ChatStudent()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChatStudent()),
+              );
               break;
           }
         },

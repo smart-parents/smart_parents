@@ -15,7 +15,6 @@ import 'package:smart_parents/pages/Admin/dashboard_a.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:smart_parents/pages/option.dart';
-import 'package:smart_parents/widgest/animation.dart';
 
 class UserMainA extends StatefulWidget {
   const UserMainA({Key? key}) : super(key: key);
@@ -178,13 +177,6 @@ class _UserMainState extends State<UserMainA> {
                             onPressed: () async {
                               // Perform the deletion here
                               // ...
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  });
-
                               try {
                                 await FirebaseAuth.instance.signOut();
                                 delete();
@@ -262,16 +254,12 @@ class _UserMainState extends State<UserMainA> {
                     GButton(
                       icon: Icons.home,
                       text: 'Home',
-                      // onPressed: () async => {
-                      //       Navigator.push(context, FadeAnimation(const Profile()));
-                      //     }
                     ),
                     GButton(
                       icon: Icons.account_circle,
                       text: 'Profile',
                     ),
                   ],
-                  //  Navigator.push(context, FadeAnimation(const Profile()));
                   selectedIndex: _selectedIndex,
                   onTabChange: _onItemTapped,
                 ),

@@ -7,7 +7,6 @@ import 'package:smart_parents/pages/Admin/faculty_a/faculty_a.dart';
 import 'package:smart_parents/pages/Admin/fees.dart';
 import 'package:smart_parents/pages/Admin/notice_a/notice_a.dart';
 import 'package:smart_parents/pages/Admin/student_a/student_a.dart';
-import 'package:smart_parents/widgest/animation.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -180,39 +179,34 @@ class _DashboardState extends State<Dashboard> {
         onTap: () {
           switch (title) {
             case 'Manage Students':
-              Navigator.push(context, FadeAnimation(const Student()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Student()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Student()),
+              );
               break;
             case 'Manage Faculty':
-              Navigator.push(context, FadeAnimation(const Faculty()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Faculty()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Faculty()),
+              );
               break;
             case 'Manage Departments':
-              Navigator.push(context, FadeAnimation(const Department()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Department()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Department()),
+              );
               break;
             case 'Manage Notice':
-              Navigator.push(context, FadeAnimation(const Notice()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Notice()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Notice()),
+              );
               break;
             case 'Manage Fees':
-              Navigator.push(context, FadeAnimation(const Fees()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Fees()),
-              // );
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Fees()),
+              );
               break;
           }
         },

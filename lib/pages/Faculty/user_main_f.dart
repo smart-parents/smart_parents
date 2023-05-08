@@ -25,7 +25,6 @@ import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
 import 'package:smart_parents/pages/Faculty/chat_student_f.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendance_display_f.dart';
 import 'package:smart_parents/pages/option.dart';
-import 'package:smart_parents/widgest/animation.dart';
 
 class UserMainF extends StatefulWidget {
   const UserMainF({Key? key}) : super(key: key);
@@ -144,7 +143,7 @@ class _UserMainState extends State<UserMainF> {
         child: Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
-            title: const Text('Faculty'),
+            title: const Text('Home'),
             actions: [
               IconButton(
                 onPressed: () async => {
@@ -166,12 +165,6 @@ class _UserMainState extends State<UserMainF> {
                             onPressed: () async {
                               // Perform the deletion here
                               // ...
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return Center(
-                                        child: CircularProgressIndicator());
-                                  });
                               try {
                                 await FirebaseAuth.instance.signOut();
                                 delete();
@@ -400,11 +393,9 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 leading: const Icon(Icons.calendar_month),
                 title: const Text("Add Today's Attendences"),
                 onTap: () {
-                  Navigator.push(
-                      context, FadeAnimation(const AttendenceDropdownpage2()));
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const AttendenceDropdownpage2(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AttendenceDropdownpage2(),
+                  ));
                 },
               ),
               // ListTile(
@@ -422,10 +413,9 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 leading: const Icon(Icons.chat),
                 title: const Text("Chat with Parents"),
                 onTap: () {
-                  Navigator.push(context, FadeAnimation(const ChatParent()));
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const ChatParent(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ChatParent(),
+                  ));
                 },
               ),
               ListTile(
@@ -433,30 +423,27 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 leading: const Icon(Icons.chat),
                 title: const Text("Chat with Student"),
                 onTap: () {
-                  Navigator.push(context, FadeAnimation(const ChatStudent()));
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const ChatStudent(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ChatStudent(),
+                  ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.school),
                 title: const Text("Manage Exams"),
                 onTap: () {
-                  Navigator.push(context, FadeAnimation(const Exam()));
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const Exam(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Exam(),
+                  ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.person_add_alt_1),
                 title: const Text("Manage Parents"),
                 onTap: () {
-                  Navigator.push(context, FadeAnimation(const Parent()));
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const Parent(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Parent(),
+                  ));
                 },
               ),
               ListTile(
@@ -464,59 +451,51 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                 title: const Text("Manage Results"),
                 onTap: () {
                   kIsWeb
-                      ? Navigator.push(
-                          context, FadeAnimation(const DropAreaPageWeb()))
-                      : Navigator.push(context, FadeAnimation(const Result()));
-                  // ? Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => const DropAreaPageWeb(),
-                  //   ))
-                  // : Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => const Result(),
-                  //   ));
+                      ? Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const DropAreaPageWeb(),
+                        ))
+                      : Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Result(),
+                        ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.subject),
                 title: const Text("Manage Subjects"),
                 onTap: () {
-                  Navigator.push(context, FadeAnimation(const SubjectF()));
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const SubjectF(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SubjectF(),
+                  ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.schedule),
                 title: const Text("Schedule"),
                 onTap: () {
-                  Navigator.push(context, FadeAnimation(const ShowSchedule()));
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const ShowSchedule(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ShowSchedule(),
+                  ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.event_note),
                 title: const Text("View Attendances"),
                 onTap: () {
-                  Navigator.push(
-                      context, FadeAnimation(const AttendanceDisplayPage()));
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const AttendanceDisplayPage(
-                  //       // sub: 'PHP',
-                  //       // studentId: '206470316050',
-                  //       ),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const AttendanceDisplayPage(
+                        // sub: 'PHP',
+                        // studentId: '206470316050',
+                        ),
+                  ));
                 },
               ),
               ListTile(
                 leading: const Icon(Icons.people),
                 title: const Text("View Students"),
                 onTap: () {
-                  Navigator.push(context, FadeAnimation(const Show_stu()));
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //   builder: (context) => const Show_stu(),
-                  // ));
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const Show_stu(),
+                  ));
                 },
               ),
             ],

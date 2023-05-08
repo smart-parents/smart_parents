@@ -12,8 +12,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'package:smart_parents/widgest/animation.dart';
-
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
 
@@ -380,20 +378,12 @@ class _ProfileState extends State<Profile> {
                                 onPressed: () async => {
                                   Navigator.push(
                                     context,
-                                    FadeAnimation(
-                                      EditA(
+                                    MaterialPageRoute(
+                                      builder: (context) => EditA(
                                         id: "$id",
                                       ),
                                     ),
-                                  ),
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) => EditA(
-                                  //       id: "$id",
-                                  //     ),
-                                  //   ),
-                                  // ) // (route) => false)
+                                  ) // (route) => false)
                                 },
                                 icon: const Icon(
                                   Icons.info_outline,
@@ -422,19 +412,13 @@ class _ProfileState extends State<Profile> {
                                   // await FirebaseAuth.instance.signOut(),
                                   // delete(),
                                   // await storage.delete(key: "uid"),
-
                                   Navigator.push(
                                     context,
-                                    FadeAnimation(const ChangePassword()),
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ChangePassword(),
+                                    ),
                                   )
-
-                                  // Navigator.push(
-                                  //   context,
-                                  //   MaterialPageRoute(
-                                  //     builder: (context) =>
-                                  //         const ChangePassword(),
-                                  //   ),
-                                  // )
                                 },
                                 icon: const Icon(
                                   Icons.password,

@@ -1,22 +1,16 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Student/Schedule/schedule_u.dart';
-
 import 'package:smart_parents/pages/Student/attendance.dart';
-import 'package:smart_parents/pages/Student/fees.dart';
 import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
-import 'package:smart_parents/widgest/animation.dart';
 
 Timer? timer;
 
@@ -126,42 +120,42 @@ class _DashboardState extends State<DashboardS> {
         onTap: () {
           switch (title) {
             case 'View Attendence':
-              Navigator.push(
-                  context, FadeAnimation(const AttendanceCalendarPage()));
-              // Navigator.push(context, FadeAnimation(getLocation()));
               // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Student()),
-              // );
+              //     context, FadeAnimation(const AttendanceCalendarPage()));
+              // Navigator.push(context, FadeAnimation(getLocation()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AttendanceCalendarPage()),
+              );
               break;
             case 'View Notice':
-              Navigator.push(context, FadeAnimation(const Notice()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Faculty()),
-              // );
+              // Navigator.push(context, FadeAnimation(const Notice()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Notice()),
+              );
               break;
             case 'View Schedule':
-              Navigator.push(context, FadeAnimation(const ShowSchedule()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Department()),
-              // );
+              // Navigator.push(context, FadeAnimation(const ShowSchedule()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ShowSchedule()),
+              );
               break;
             case 'View Exam':
-              Navigator.push(context, FadeAnimation(const Exam()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Notice()),
-              // );
+              // Navigator.push(context, FadeAnimation(const Exam()));
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Exam()),
+              );
               break;
-            case 'Manage Fees':
-              Navigator.push(context, FadeAnimation(const Fees()));
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => const Fees()),
-              // );
-              break;
+            // case 'Manage Fees':
+            //   // Navigator.push(context, FadeAnimation(const Fees()));
+            //   Navigator.push(
+            //     context,
+            //     MaterialPageRoute(builder: (context) => const Fees()),
+            //   );
+            //   break;
           }
         },
         child: Column(

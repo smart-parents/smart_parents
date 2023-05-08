@@ -10,7 +10,6 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/edit_p.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smart_parents/widgest/animation.dart';
 
 class Profile_screenP extends StatefulWidget {
   const Profile_screenP({super.key});
@@ -47,7 +46,7 @@ class _Profile_screenPState extends State<Profile_screenP> {
   void _loadPhotoUrl() async {
     // final user = FirebaseAuth.instance.currentUser;
     final doc = await FirebaseFirestore.instance
-        .collection('Admin/$admin/students')
+        .collection('Admin/$admin/parents')
         .doc(id)
         .get();
     if (doc.data() != null) {
@@ -375,18 +374,13 @@ class _Profile_screenPState extends State<Profile_screenP> {
                                 TextButton.icon(
                                   onPressed: () async => {
                                     Navigator.push(
-                                        context,
-                                        FadeAnimation(EditP(
-                                          id: '$id',
-                                        ))),
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) => EditP(
-                                    //       id: "$id",
-                                    //     ),
-                                    //   ),
-                                    // ) // (route) => false)
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EditP(
+                                          id: "$id",
+                                        ),
+                                      ),
+                                    ) // (route) => false)
                                   },
                                   icon: const Icon(
                                     Icons.info_outline,
@@ -429,15 +423,13 @@ class _Profile_screenPState extends State<Profile_screenP> {
                                     // await FirebaseAuth.instance.signOut(),
                                     // delete(),
                                     // await storage.delete(key: "uid"),
-                                    Navigator.push(context,
-                                        FadeAnimation(const ChangePassword())),
-                                    // Navigator.push(
-                                    //   context,
-                                    //   MaterialPageRoute(
-                                    //     builder: (context) =>
-                                    //         const ChangePassword(),
-                                    //   ),
-                                    // )
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ChangePassword(),
+                                      ),
+                                    )
                                   },
                                   icon: const Icon(
                                     Icons.password,
