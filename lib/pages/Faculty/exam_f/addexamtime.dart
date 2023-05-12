@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:smart_parents/components/constants.dart';
 
 class AddExamTimeTable extends StatefulWidget {
@@ -68,10 +67,12 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
   }
 
   final DateTime current = DateTime.now();
-  String date = DateFormat('dd-MM-yyyy').format(DateTime.now());
-  DateTime start = DateTime.now();
+  String date0 = DateFormat('dd-MM-yyyy').format(DateTime.now());
+  DateTime date = DateTime.now();
+  TimeOfDay start = TimeOfDay.now();
   String start0 = DateFormat('hh:mm a').format(DateTime.now());
-  DateTime end = DateTime.now().add(const Duration(hours: 1));
+  TimeOfDay end =
+      TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours: 1)));
   String end0 = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(hours: 1)));
   dynamic fieldTextStyle = const TextStyle(
@@ -178,31 +179,26 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                           //         style: fieldTextStyle,
                           //       )
                           //     :
-                          Text(date.toString(), style: fieldTextStyle)),
+                          Text(date0.toString(), style: fieldTextStyle)),
                   IconButton(
                     icon: Icon(
                       Icons.edit,
                       color: Colors.grey[700],
                     ),
-                    onPressed: () {
-                      DatePicker.showDatePicker(
-                        context,
-                        theme: const DatePickerTheme(
-                          containerHeight: 350,
-                          backgroundColor: Colors.white,
-                        ),
-                        showTitleActions: true,
-                        minTime: DateTime(
-                            current.year, current.month - 1, current.day),
-                        maxTime: DateTime(
-                            current.year, current.month + 2, current.day),
-                        onConfirm: (dt) {
-                          setState(() {
-                            // _date = dt.toString().substring(0, 10);
-                            date = DateFormat('dd-MM-yyyy').format(dt);
-                          });
-                        },
-                      );
+                    onPressed: () async {
+                      DateTime? picked = await showDatePicker(
+                          context: context,
+                          initialDate: date,
+                          firstDate: DateTime(
+                              current.year, current.month - 1, current.day),
+                          lastDate: DateTime(
+                              current.year, current.month + 2, current.day));
+                      if (picked != null) {
+                        setState(() {
+                          date0 = DateFormat('dd-MM-yyyy').format(picked);
+                          date = picked;
+                        });
+                      }
                     },
                   )
                 ],
@@ -235,26 +231,24 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                       Icons.edit,
                       color: Colors.grey[700],
                     ),
-                    onPressed: () {
-                      DatePicker.showTime12hPicker(
-                        context,
-                        theme: const DatePickerTheme(
-                          containerHeight: 300,
-                          backgroundColor: Colors.white,
-                        ),
-                        showTitleActions: true,
-                        onConfirm: (time) {
-                          setState(() {
-                            start0 = DateFormat('hh:mm a').format(time);
-                            start = time;
-                            end0 = DateFormat('hh:mm a')
-                                .format(start.add(const Duration(hours: 1)));
-                            end = time.add(const Duration(hours: 1));
-                          });
-                        },
-                      );
+                    onPressed: () async {
+                      TimeOfDay? picked = await showTimePicker(
+                          context: context, initialTime: start);
+                      if (picked != null) {
+                        setState(() {
+                          start0 = DateFormat('hh:mm a').format(
+                              DateTime(2022, 1, 1, picked.hour, picked.minute));
+                          start = picked;
+                          end0 = DateFormat('hh:mm a').format(
+                              DateTime(2022, 1, 1, start.hour, start.minute)
+                                  .add(const Duration(hours: 1)));
+                          end = TimeOfDay.fromDateTime(
+                              DateTime(2022, 1, 1, start.hour, start.minute)
+                                  .add(const Duration(hours: 1)));
+                        });
+                      }
                     },
-                  )
+                  ),
                 ],
               ),
               const SizedBox(
@@ -285,23 +279,16 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                       Icons.edit,
                       color: Colors.grey[700],
                     ),
-                    onPressed: () {
-                      DatePicker.showTime12hPicker(
-                        context,
-                        theme: const DatePickerTheme(
-                          containerHeight: 240,
-                          backgroundColor: Colors.white,
-                        ),
-                        showTitleActions: true,
-                        currentTime: end,
-                        // showSecondsColumn: false,
-                        onConfirm: (time) {
-                          setState(() {
-                            end0 = DateFormat('hh:mm a').format(time);
-                            end = time;
-                          });
-                        },
-                      );
+                    onPressed: () async {
+                      TimeOfDay? picked = await showTimePicker(
+                          context: context, initialTime: end);
+                      if (picked != null) {
+                        setState(() {
+                          end0 = DateFormat('hh:mm a').format(
+                              DateTime(2022, 1, 1, picked.hour, picked.minute));
+                          end = picked;
+                        });
+                      }
                     },
                   )
                 ],

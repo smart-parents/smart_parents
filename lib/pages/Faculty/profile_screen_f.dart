@@ -1,8 +1,10 @@
 // ignore_for_file: library_private_types_in_public_api, deprecated_member_use, unnecessary_null_comparison, use_build_context_synchronously
 
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/change_password.dart';
@@ -401,26 +403,29 @@ class _ProfileFState extends State<ProfileF> {
                               // crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                TextButton.icon(
-                                  onPressed: () async => {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditF(
-                                          id: "$id",
+                                Expanded(
+                                  child: TextButton.icon(
+                                    onPressed: () async => {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => EditF(
+                                            id: "$id",
+                                          ),
                                         ),
+                                      ) // (route) => false)
+                                    },
+                                    icon: const Icon(
+                                      Icons.info_outline,
+                                      color: Colors.white,
+                                    ),
+                                    label: const Text(
+                                      'Edit Details',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
                                       ),
-                                    ) // (route) => false)
-                                  },
-                                  icon: const Icon(
-                                    Icons.info_outline,
-                                    color: Colors.white,
-                                  ),
-                                  label: const Text(
-                                    'Edit',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
                                 ),
@@ -448,29 +453,32 @@ class _ProfileFState extends State<ProfileF> {
                                 //     ),
                                 //   ),
                                 // ),
-                                TextButton.icon(
-                                  onPressed: () async => {
-                                    // await FirebaseAuth.instance.signOut(),
-                                    // delete(),
-                                    // await storage.delete(key: "uid"),
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ChangePassword(),
+                                Expanded(
+                                  child: TextButton.icon(
+                                    onPressed: () async => {
+                                      // await FirebaseAuth.instance.signOut(),
+                                      // delete(),
+                                      // await storage.delete(key: "uid"),
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ChangePassword(),
+                                        ),
+                                      )
+                                    },
+                                    icon: const Icon(
+                                      Icons.password,
+                                      color: Colors.white,
+                                    ),
+                                    label: const Text(
+                                      // 'Change Password',
+                                      'Change Password',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
                                       ),
-                                    )
-                                  },
-                                  icon: const Icon(
-                                    Icons.password,
-                                    color: Colors.white,
-                                  ),
-                                  label: const Text(
-                                    // 'Change Password',
-                                    'Change',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
                                 ),

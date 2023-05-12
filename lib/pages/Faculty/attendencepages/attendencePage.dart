@@ -201,15 +201,14 @@ class _AttendencePageState extends State<AttendencePage> {
                           'Attendance Successfully Submitted.',
                           DialogType.SUCCES,
                           context,
-                          () => {
-                                Navigator.of(context).push(
+                          () => Navigator.of(context).push(
                                   MaterialPageRoute(
                                       builder: (context) => const UserMainF(
                                           // sub: widget.sub,
                                           // studentId: '206470316022',
                                           )),
                                 )
-                              }),
+                              ),
                     },
                     child: const Text('Submit'),
                   ),

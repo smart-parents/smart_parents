@@ -81,8 +81,8 @@ class _ChatParentState extends State<ChatParent> with notification {
                         .set({batch: messages})
                   },
                 sendNotificationToAllUsers(
-                    "",
-                    'Message from parents',
+                    "Message from parents",
+                    '',
                     text,
                     await FirebaseFirestore.instance
                         .collection('Admin/$admin/faculty')

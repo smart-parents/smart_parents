@@ -81,8 +81,8 @@ class _ChatStudentState extends State<ChatStudent> with notification {
                         .set({batch: messages})
                   },
                 sendNotificationToAllUsers(
-                    "",
-                    'Message from student',
+                    "Message from student",
+                    '',
                     text,
                     await FirebaseFirestore.instance
                         .collection('Admin/$admin/faculty')

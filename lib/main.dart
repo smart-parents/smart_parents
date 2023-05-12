@@ -3,33 +3,19 @@
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/foundation.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:smart_parents/pages/TimeImage.dart';
 // import 'package:flutter_background_service_android/flutter_background_service_android.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  if (kIsWeb) {
-    await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyBugsA2pQS4H8JUQJyISJexDpTn-aM5qzM",
-            authDomain: "smart-parents-97628.firebaseapp.com",
-            projectId: "smart-parents-97628",
-            storageBucket: "smart-parents-97628.appspot.com",
-            messagingSenderId: "988559124743",
-            appId: "1:988559124743:web:4be7ca32d3cafbb9bc3da2",
-            measurementId: "G-PZYQCLET3P"));
-  } else {
-    await Firebase.initializeApp();
-    OneSignal.shared.setAppId("26f997ff-1bb9-44a8-960f-97a39f8f489a");
-    // Optional: Set other OneSignal parameters
-    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-    // Optional: Prompt the user for push notification permission
-    await OneSignal.shared
-        .promptUserForPushNotificationPermission(fallbackToSettings: true);
-    // await initializeService();
-  }
+  await Firebase.initializeApp();
+  OneSignal.shared.setAppId("26f997ff-1bb9-44a8-960f-97a39f8f489a");
+  OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+  await OneSignal.shared
+      .promptUserForPushNotificationPermission(fallbackToSettings: true);
+  // await initializeService();
+
   runApp(const MyApp());
 }
 
@@ -123,25 +109,22 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    if (kIsWeb) {
-    } else {
-      // InternetPopup().initialize(context: context);
-      OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
+    // InternetPopup().initialize(context: context);
+    OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
 
-      OneSignal.shared
-          .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-        print('Notification opened');
-      });
+    OneSignal.shared
+        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
+      print('Notification opened');
+    });
 
-      OneSignal.shared
-          .setInAppMessageClickedHandler((OSInAppMessageAction action) {
-        print('In app message clicked');
-      });
+    OneSignal.shared
+        .setInAppMessageClickedHandler((OSInAppMessageAction action) {
+      print('In app message clicked');
+    });
 
-      checkPrivacyConsent();
-      takeNotificationPermission();
-      print('notification setup successfully');
-    }
+    checkPrivacyConsent();
+    takeNotificationPermission();
+    print('notification setup successfully');
   }
 
   Future<void> checkPrivacyConsent() async {

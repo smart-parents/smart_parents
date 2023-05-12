@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/components/internetcheck.dart';
@@ -18,10 +18,8 @@ class _DepartmentState extends State<Department> {
   @override
   void initState() {
     super.initState();
-    if (kIsWeb) {
-    } else {
       InternetPopup().initialize(context: context);
-    }
+    
     // login();
   }
 

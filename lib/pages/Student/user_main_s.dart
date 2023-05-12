@@ -6,7 +6,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:image_network/image_network.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -115,149 +114,170 @@ class _UserMainState extends State<UserMainS> {
     print(success);
   }
 
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async {
-        // Navigator.of(context).push(
-        //     MaterialPageRoute(builder: (context) => const WelcomeScreen()));
-        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        return false;
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          // color: Colors.transparent,
-          image: DecorationImage(
-            image: AssetImage(background),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: AppBar(
-            //   backgroundColor: Color.fromARGB(255, 207, 235, 255),
-            //   automaticallyImplyLeading: false,
-            //   title: Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //     children: [
-            //       // Image.asset("assets/images/top3.png", width: 100, height: 50,),
-            //
-            //       const Text(
-            //         "Student",
-            //         style: TextStyle(
-            //           fontSize: 30.0,
-            //         ),
-            //       ),
-            //       Image.asset(
-            //         "assets/images/Student.png",
-            //         height: 50,
-            //       ),
-            //     ],
-            //   ),
-            // ),
-            title: const Text('Student'),
-            actions: [
-              IconButton(
-                onPressed: () async => {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text("Confirm Logout"),
-                        content: const Text("Are you sure you want to logout?"),
-                        actions: [
-                          TextButton(
-                            child: const Text("Cancel"),
-                            onPressed: () {
-                              Navigator.of(context).pop();
+        onWillPop: () async {
+          // Navigator.of(context).push(
+          //     MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+          SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+          return false;
+        },
+        child: AbsorbPointer(
+            absorbing: _isLoading,
+            child: Stack(children: [
+              if (_isLoading)
+                Container(
+                  color: Colors.black54,
+                  child: const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              Container(
+                decoration: BoxDecoration(
+                  // color: Colors.transparent,
+                  image: DecorationImage(
+                    image: AssetImage(background),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                child: Scaffold(
+                  backgroundColor: Colors.transparent,
+                  appBar: AppBar(
+                    //   backgroundColor: Color.fromARGB(255, 207, 235, 255),
+                    //   automaticallyImplyLeading: false,
+                    //   title: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: [
+                    //       // Image.asset("assets/images/top3.png", width: 100, height: 50,),
+                    //
+                    //       const Text(
+                    //         "Student",
+                    //         style: TextStyle(
+                    //           fontSize: 30.0,
+                    //         ),
+                    //       ),
+                    //       Image.asset(
+                    //         "assets/images/Student.png",
+                    //         height: 50,
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    title: const Text('Student'),
+                    actions: [
+                      IconButton(
+                        onPressed: () async => {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return AlertDialog(
+                                title: const Text("Confirm Logout"),
+                                content: const Text(
+                                    "Are you sure you want to logout?"),
+                                actions: [
+                                  TextButton(
+                                    child: const Text("Cancel"),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: const Text("Logout"),
+                                    onPressed: () async {
+                                      setState(() {
+                                        _isLoading = true;
+                                      });
+                                      // Perform the deletion here
+                                      // ...
+                                      // showDialog(
+                                      //     context: context,
+                                      //     builder: (context) {
+                                      //       return const Center(
+                                      //           child: CircularProgressIndicator());
+                                      //     });
+                                      try {
+                                        await FirebaseAuth.instance.signOut();
+                                        timer?.cancel();
+                                        delete();
+                                        await OneSignal.shared
+                                            .removeExternalUserId();
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) =>
+                                                  const Option(),
+                                            ),
+                                            (route) => false);
+                                      } catch (e) {
+                                        print(e);
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                              backgroundColor:
+                                                  kPrimaryLightColor,
+                                              content: Text(
+                                                'Failed to logout: $e',
+                                                style: const TextStyle(
+                                                    fontSize: 18.0,
+                                                    color: Colors.black),
+                                              )),
+                                        );
+                                      } finally {
+                                        setState(() {
+                                          _isLoading = false;
+                                        });
+                                      }
+                                    },
+                                  ),
+                                ],
+                              );
                             },
-                          ),
-                          TextButton(
-                            child: const Text("Logout"),
-                            onPressed: () async {
-                              // Perform the deletion here
-                              // ...
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return const Center(
-                                        child: CircularProgressIndicator());
-                                  });
-                              try {
-                                await FirebaseAuth.instance.signOut();
-                                FlutterBackgroundService()
-                                    .invoke("stopService");
-                                timer?.cancel();
-                                delete();
-                                await OneSignal.shared.removeExternalUserId();
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Option(),
-                                    ),
-                                    (route) => false);
-                              } catch (e) {
-                                print(e);
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      backgroundColor: kPrimaryLightColor,
-                                      content: Text(
-                                        'Failed to logout: $e',
-                                        style: const TextStyle(
-                                            fontSize: 18.0,
-                                            color: Colors.black),
-                                      )),
-                                );
-                              }
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  )
-                },
-                icon: const Icon(
-                  Icons.logout,
-                  color: Colors.white,
+                          )
+                        },
+                        icon: const Icon(
+                          Icons.logout,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
+                  drawer: const NavigationDrawer(),
+                  body: _widgetOptions.elementAt(_selectedIndex),
+                  bottomNavigationBar: Container(
+                    decoration: const BoxDecoration(
+                      color: kPrimaryLightColor,
+                    ),
+                    child: SafeArea(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: GNav(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          activeColor: Colors.white,
+                          iconSize: 24,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 12),
+                          tabBackgroundColor: kPrimaryColor,
+                          tabs: const [
+                            GButton(
+                              icon: Icons.home,
+                              text: 'Home',
+                            ),
+                            GButton(
+                              icon: Icons.account_circle,
+                              text: 'Profile',
+                            ),
+                          ],
+                          selectedIndex: _selectedIndex,
+                          onTabChange: _onItemTapped,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
-          drawer: const NavigationDrawer(),
-          body: _widgetOptions.elementAt(_selectedIndex),
-          bottomNavigationBar: Container(
-            decoration: const BoxDecoration(
-              color: kPrimaryLightColor,
-            ),
-            child: SafeArea(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                child: GNav(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  activeColor: Colors.white,
-                  iconSize: 24,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                  tabBackgroundColor: kPrimaryColor,
-                  tabs: const [
-                    GButton(
-                      icon: Icons.home,
-                      text: 'Home',
-                    ),
-                    GButton(
-                      icon: Icons.account_circle,
-                      text: 'Profile',
-                    ),
-                  ],
-                  selectedIndex: _selectedIndex,
-                  onTabChange: _onItemTapped,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+            ])));
   }
 }
 

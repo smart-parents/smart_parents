@@ -291,8 +291,8 @@ class _ExamState extends State<Exam> with notification {
                                 addExam(nameController.text,
                                     batchyeardropdownValue);
                                 sendNotificationToAllUsers(
-                                    "",
-                                    'Exam',
+                                    "Exam",
+                                    '',
                                     nameController.text,
                                     await FirebaseFirestore.instance
                                         .collection('Admin/$admin/parents')
@@ -301,8 +301,8 @@ class _ExamState extends State<Exam> with notification {
                                             isEqualTo: batchyeardropdownValue)
                                         .get());
                                 sendNotificationToAllUsers(
-                                    "",
-                                    'Exam',
+                                    "Exam",
+                                    '',
                                     nameController.text,
                                     await FirebaseFirestore.instance
                                         .collection('Admin/$admin/students')

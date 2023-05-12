@@ -57,37 +57,38 @@ class _AddStudentPageState extends State<AddStudentPage> {
     login();
   }
 
-  Future<void> addUser() async {
-    CollectionReference students =
-        FirebaseFirestore.instance.collection('Admin/$admin/students');
-    students
-        .doc(number)
-        .set({
-          'name': name,
-          'number': number,
-          'password': password,
-          'branch': Branch,
-          'status': true,
-          'batch': batchyeardropdownValue
-        })
-        .then((value) => print('student Added'))
-        .catchError((error) => print('Failed to Add user: $error'));
-
-    CollectionReference users = FirebaseFirestore.instance.collection('Users');
-    users
-        .doc(number)
-        .set({'id': number, 'role': 'student', 'status': true, 'admin': admin})
-        .then((value) => print('student Added'))
-        .catchError((error) => print('Failed to Add user: $error'));
-  }
-
+  CollectionReference students =
+      FirebaseFirestore.instance.collection('Admin/$admin/students');
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
   registration() async {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: "$number@sps.com", password: password)
           .then((value) {
-        addUser();
+        students
+            .doc(number)
+            .set({
+              'name': name,
+              'number': number,
+              'password': password,
+              'branch': Branch,
+              'status': true,
+              'batch': batchyeardropdownValue
+            })
+            .then((value) => print('student Added'))
+            .catchError((error) => print('Failed to Add user: $error'));
+
+        users
+            .doc(number)
+            .set({
+              'id': number,
+              'role': 'student',
+              'status': true,
+              'admin': admin
+            })
+            .then((value) => print('student Added'))
+            .catchError((error) => print('Failed to Add user: $error'));
         clearText();
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -98,7 +99,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
             ),
           ),
         );
-        login();
+        // login();
         Navigator.pop(context);
       });
     } on FirebaseAuthException catch (e) {
@@ -386,6 +387,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
                                   registration();
                                   // Navigator.pop(context);
                                 });
+                                login();
                               }
                             },
                             child: const Text(

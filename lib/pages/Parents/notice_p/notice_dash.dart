@@ -1,9 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/components/imageshow.dart';
 
@@ -93,24 +91,7 @@ class _NoticeState extends State<Notice> {
                                             ),
                                           );
                                         },
-                                        child: kIsWeb
-                                            ? ImageNetwork(
-                                                image:
-                                                    '${storedocs[index]['photoUrl']}',
-                                                height: 300,
-                                                width: 300,
-                                                fitAndroidIos: BoxFit.contain,
-                                                fitWeb: BoxFitWeb.contain,
-                                                onLoading:
-                                                    const CircularProgressIndicator(
-                                                  color: kPrimaryColor,
-                                                ),
-                                                onError: const Icon(
-                                                  Icons.error,
-                                                  color: red,
-                                                ),
-                                              )
-                                            : Image.network(
+                                        child:  Image.network(
                                                 storedocs[index]['photoUrl'],
                                               ),
                                       ),

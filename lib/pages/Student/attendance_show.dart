@@ -115,9 +115,19 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
                 } else if (snapshot.hasError) {
                   return Text('Error: ${snapshot.error}');
                 } else {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
+                  if (snapshot.data != null && snapshot.data!.docs.isEmpty) {
+                    return const Center(
+                        child: Text("There are no Attendance! 😟",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.black,
+                                fontFamily: 'poppins')));
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
                 }
               },
             ),

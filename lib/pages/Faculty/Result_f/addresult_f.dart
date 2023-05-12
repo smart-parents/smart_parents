@@ -102,8 +102,8 @@ class _ResultAddState extends State<ResultAdd> with notification {
         .doc(docId)
         .update({'pdf': url});
     sendNotificationToAllUsers(
-        "",
-        'Result',
+        "Result",
+        '',
         subject,
         await FirebaseFirestore.instance
             .collection('Admin/$admin/students')
@@ -111,8 +111,8 @@ class _ResultAddState extends State<ResultAdd> with notification {
             .where('batch', isEqualTo: batchyeardropdownValue)
             .get());
     sendNotificationToAllUsers(
-        "",
-        'Result',
+        "Result",
+        '',
         subject,
         await FirebaseFirestore.instance
             .collection('Admin/$admin/parents')

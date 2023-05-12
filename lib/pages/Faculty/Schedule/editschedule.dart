@@ -5,7 +5,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
 // class Department {
@@ -46,9 +45,10 @@ class EditSchedule extends StatefulWidget {
 }
 
 class _EditScheduleState extends State<EditSchedule> {
-  DateTime start = DateTime.now();
+  TimeOfDay start = TimeOfDay.now();
   String _start = DateFormat('hh:mm a').format(DateTime.now());
-  DateTime end = DateTime.now().add(const Duration(hours: 1));
+  TimeOfDay end =
+      TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours: 1)));
   String _end = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(hours: 1)));
   String? Branch;
@@ -60,9 +60,11 @@ class _EditScheduleState extends State<EditSchedule> {
   void initState() {
     super.initState();
     _fetchSubjects();
-    start = DateFormat('hh:mm a').parse(widget.start);
+    DateTime start0 = DateFormat('hh:mm a').parse(widget.start);
+    start = TimeOfDay.fromDateTime(start0);
     _start = widget.start;
-    end = DateFormat('hh:mm a').parse(widget.end);
+    DateTime end0 = DateFormat('hh:mm a').parse(widget.end);
+    end = TimeOfDay.fromDateTime(end0);
     _end = widget.end;
     Sub = widget.subject;
     if (widget.type == 'Lecture') {
@@ -73,7 +75,8 @@ class _EditScheduleState extends State<EditSchedule> {
   }
 
   void update_schedule() async {
-    var fullhour = DateFormat('HH:mm').format(start);
+    var fullhour = DateFormat('HH:mm')
+        .format(DateTime(2022, 1, 1, start.hour, start.minute));
     // FirebaseFirestore.instance
     //     .collection('Admin/$admin/schedule')
     //     .doc('${branch}_$semesterdropdownValue')
@@ -317,24 +320,22 @@ class _EditScheduleState extends State<EditSchedule> {
                         Icons.edit,
                         color: Colors.grey[700],
                       ),
-                      onPressed: () {
-                        DatePicker.showTime12hPicker(
-                          context,
-                          theme: const DatePickerTheme(
-                            containerHeight: 300,
-                            backgroundColor: Colors.white,
-                          ),
-                          showTitleActions: true,
-                          onConfirm: (time) {
-                            setState(() {
-                              _start = DateFormat('hh:mm a').format(time);
-                              start = time;
-                              _end = DateFormat('hh:mm a')
-                                  .format(start.add(const Duration(hours: 1)));
-                              end = time.add(const Duration(hours: 1));
-                            });
-                          },
-                        );
+                      onPressed: () async {
+                        TimeOfDay? picked = await showTimePicker(
+                            context: context, initialTime: start);
+                        if (picked != null) {
+                          setState(() {
+                            _start = DateFormat('hh:mm a').format(DateTime(
+                                2022, 1, 1, picked.hour, picked.minute));
+                            start = picked;
+                            _end = DateFormat('hh:mm a').format(
+                                DateTime(2022, 1, 1, start.hour, start.minute)
+                                    .add(const Duration(hours: 1)));
+                            end = TimeOfDay.fromDateTime(
+                                DateTime(2022, 1, 1, start.hour, start.minute)
+                                    .add(const Duration(hours: 1)));
+                          });
+                        }
                       },
                     )
                   ],
@@ -367,23 +368,16 @@ class _EditScheduleState extends State<EditSchedule> {
                         Icons.edit,
                         color: Colors.grey[700],
                       ),
-                      onPressed: () {
-                        DatePicker.showTime12hPicker(
-                          context,
-                          theme: const DatePickerTheme(
-                            containerHeight: 240,
-                            backgroundColor: Colors.white,
-                          ),
-                          showTitleActions: true,
-                          currentTime: end,
-                          // showSecondsColumn: false,
-                          onConfirm: (time) {
-                            setState(() {
-                              _end = DateFormat('hh:mm a').format(time);
-                              end = time;
-                            });
-                          },
-                        );
+                      onPressed: () async {
+                        TimeOfDay? picked = await showTimePicker(
+                            context: context, initialTime: end);
+                        if (picked != null) {
+                          setState(() {
+                            _end = DateFormat('hh:mm a').format(DateTime(
+                                2022, 1, 1, picked.hour, picked.minute));
+                            end = picked;
+                          });
+                        }
                       },
                     )
                   ],
@@ -416,16 +410,13 @@ class _EditScheduleState extends State<EditSchedule> {
                                                 'Schedule Successfully Updatted.',
                                                 DialogType.SUCCES,
                                                 context,
-                                                () => {
-                                                      Navigator.of(context)
-                                                          .pushAndRemoveUntil(
-                                                              MaterialPageRoute(
-                                                                builder:
-                                                                    (context) =>
-                                                                        const ShowSchedule(),
-                                                              ),
-                                                              (route) => false)
-                                                    }),
+                                                () => Navigator.of(context)
+                                                    .pushAndRemoveUntil(
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const ShowSchedule(),
+                                                        ),
+                                                        (route) => false)),
                                           },
                                           child: const Text('Submit'),
                                         ),

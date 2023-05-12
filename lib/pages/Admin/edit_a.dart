@@ -121,7 +121,7 @@ class _EditAState extends State<EditA> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: TextFormField(
-                          // readOnly: true,
+                          readOnly: true,
                           initialValue: email,
                           autofocus: false,
                           onChanged: (value) => email = value,

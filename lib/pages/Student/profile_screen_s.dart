@@ -1,9 +1,11 @@
 // ignore_for_file: camel_case_types, deprecated_member_use, unused_import, use_build_context_synchronously
 
+import 'dart:typed_data';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 // import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:image_network/image_network.dart';

@@ -42,6 +42,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
       subscribeUserForNotifications();
     });
   }
+  bool _isLoading = false;
 
   Future<void> subscribeUserForNotifications() async {
     final SharedPreferences prefs = await _prefs;
@@ -135,7 +136,16 @@ class _ParentsScreenState extends State<ParentsScreen> {
         SystemChannels.platform.invokeMethod('SystemNavigator.pop');
         return false;
       },
-      child: Container(
+      child:  AbsorbPointer(
+              absorbing: _isLoading,
+              child: Stack(children: [
+                if (_isLoading)
+                  Container(
+                    color: Colors.black54,
+                    child: const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),Container(
         decoration: BoxDecoration(
           // color: Colors.transparent,
           image: DecorationImage(
@@ -143,7 +153,7 @@ class _ParentsScreenState extends State<ParentsScreen> {
             fit: BoxFit.cover,
           ),
         ),
-        child: Scaffold(
+        child:Scaffold(
           backgroundColor: Colors.transparent,
           appBar: AppBar(
             //   backgroundColor: Color.fromARGB(255, 187, 218, 240),
@@ -185,14 +195,17 @@ class _ParentsScreenState extends State<ParentsScreen> {
                           TextButton(
                             child: const Text("Logout"),
                             onPressed: () async {
+                              setState(() {
+                                        _isLoading = true;
+                                      });
                               // Perform the deletion here
                               // ...
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return const Center(
-                                        child: CircularProgressIndicator());
-                                  });
+                              // showDialog(
+                              //     context: context,
+                              //     builder: (context) {
+                              //       return const Center(
+                              //           child: CircularProgressIndicator());
+                              //     });
                                   try {
                                 await FirebaseAuth.instance.signOut();
                                 delete();
@@ -216,7 +229,11 @@ class _ParentsScreenState extends State<ParentsScreen> {
                                             color: Colors.black),
                                       )),
                                 );
-                              }
+                              }finally {
+                                        setState(() {
+                                          _isLoading = false;
+                                        });
+                                      }
                             },
                           ),
                         ],
@@ -264,8 +281,8 @@ class _ParentsScreenState extends State<ParentsScreen> {
             ),
           ),
         ),
-      ),
-    );
+       )
+            ])));
   }
 }
 
