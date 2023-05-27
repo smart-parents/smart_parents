@@ -34,99 +34,229 @@ class _OptionState extends State<Option> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    // double screenWidth = 100;
+    double screenWidth = MediaQuery.of(context).size.width * 0.4;
+    double size = MediaQuery.of(context).size.width * 0.06;
     return Background(
       child: SafeArea(
-        child:
-            // Responsive(
-            //   mobile:
-            Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Image.asset('assets/images/Admin.png'),
-                      // iconSize: height,
-                      iconSize: screenWidth * 0.4,
-                      onPressed: () {
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: size,
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const LoginScreen()),
                         );
                       },
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/Admin.png',
+                            width: screenWidth,
+                            // height: 100,
+                          ),
+                          const SizedBox(height: 8),
+                          const Text("Admin", style: TextStyle(fontSize: 20.0)),
+                        ],
+                      ),
                     ),
-                    const Text("Admin", style: TextStyle(fontSize: 20.0)),
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    IconButton(
-                      icon: Image.asset('assets/images/Student.png'),
-                      // iconSize: height,
-                      iconSize: screenWidth * 0.4,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginScreenS()),
-                        );
-                      },
-                    ),
-                    const Text("Student", style: TextStyle(fontSize: 20.0)),
-                  ],
-                ),
-              ],
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Image.asset('assets/images/Faculty.png'),
-                      // iconSize: height,
-                      iconSize: screenWidth * 0.4,
-                      onPressed: () {
+                  ),
+                  const SizedBox(width: 24),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const LoginScreenF()),
                         );
                       },
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/Faculty.png',
+                            width: screenWidth,
+                            // height: 100,
+                          ),
+                          const SizedBox(height: 8),
+                          const Text("Faculty",
+                              style: TextStyle(fontSize: 20.0)),
+                        ],
+                      ),
                     ),
-                    const Text("Faculty", style: TextStyle(fontSize: 20.0)),
-                  ],
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    IconButton(
-                      icon: Image.asset('assets/images/Parents.png'),
-                      // iconSize: height,
-                      iconSize: screenWidth * 0.4,
-                      onPressed: () {
+                  ),
+                  SizedBox(
+                    width: size,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  SizedBox(
+                    width: size,
+                  ),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginScreenS()),
+                        );
+                      },
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/Student.png',
+                            width: screenWidth,
+                            // height: 100,
+                          ),
+                          const SizedBox(height: 8),
+                          const Text("Student",
+                              style: TextStyle(fontSize: 20.0)),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 24),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => const LoginScreenP()),
                         );
                       },
+                      child: Column(
+                        children: [
+                          Image.asset(
+                            'assets/images/Parents.png',
+                            width: screenWidth,
+                            // height: 100,
+                          ),
+                          const SizedBox(height: 8),
+                          const Text("Parents",
+                              style: TextStyle(fontSize: 20.0)),
+                        ],
+                      ),
                     ),
-                    const Text("Parents", style: TextStyle(fontSize: 20.0)),
-                  ],
-                ),
-              ],
-            ),
-          ],
+                  ),
+                  SizedBox(
+                    width: size,
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
+
+        // 'assets/images/Parents.png',
+        // 'assets/images/Student.png',
+        // 'assets/images/Faculty.png',
+        // 'assets/images/Admin.png',
+
+        // Responsive(
+        //   mobile:
+        //     Row(
+        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //   children: [
+        //     Column(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         Column(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           children: [
+        //             IconButton(
+        //               icon: Image.asset('assets/images/Admin.png'),
+        //               // iconSize: height,
+        //               iconSize: screenWidth,
+        //               onPressed: () {
+        //                 Navigator.push(
+        //                   context,
+        //                   MaterialPageRoute(
+        //                       builder: (context) => const LoginScreen()),
+        //                 );
+        //               },
+        //             ),
+        //             const Text("Admin", style: TextStyle(fontSize: 20.0)),
+        //           ],
+        //         ),
+        //         Column(
+        //           mainAxisAlignment: MainAxisAlignment.end,
+        //           children: [
+        //             IconButton(
+        //               icon: Image.asset('assets/images/Student.png'),
+        //               // iconSize: height,
+        //               iconSize: screenWidth,
+        //               onPressed: () {
+        //                 Navigator.push(
+        //                   context,
+        //                   MaterialPageRoute(
+        //                       builder: (context) => const LoginScreenS()),
+        //                 );
+        //               },
+        //             ),
+        //             const Text("Student", style: TextStyle(fontSize: 20.0)),
+        //           ],
+        //         ),
+        //       ],
+        //     ),
+        //     Column(
+        //       mainAxisAlignment: MainAxisAlignment.center,
+        //       children: [
+        //         Column(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           children: [
+        //             IconButton(
+        //               icon: Image.asset('assets/images/Faculty.png'),
+        //               // iconSize: height,
+        //               iconSize: screenWidth,
+        //               onPressed: () {
+        //                 Navigator.push(
+        //                   context,
+        //                   MaterialPageRoute(
+        //                       builder: (context) => const LoginScreenF()),
+        //                 );
+        //               },
+        //             ),
+        //             const Text("Faculty", style: TextStyle(fontSize: 20.0)),
+        //           ],
+        //         ),
+        //         Column(
+        //           mainAxisAlignment: MainAxisAlignment.center,
+        //           children: [
+        //             IconButton(
+        //               icon: Image.asset('assets/images/Parents.png'),
+        //               // iconSize: height,
+        //               iconSize: screenWidth,
+        //               onPressed: () {
+        //                 Navigator.push(
+        //                   context,
+        //                   MaterialPageRoute(
+        //                       builder: (context) => const LoginScreenP()),
+        //                 );
+        //               },
+        //             ),
+        //             const Text("Parents", style: TextStyle(fontSize: 20.0)),
+        //           ],
+        //         ),
+        //       ],
+        //     ),
+        //   ],
+        // ),
         // desktop: const DesktopOption(),
       ),
       //   ],

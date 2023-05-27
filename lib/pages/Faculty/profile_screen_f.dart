@@ -30,7 +30,6 @@ class _ProfileFState extends State<ProfileF> {
     super.initState();
     main();
     login();
-    _loadPhotoUrl();
   }
 
   Future<void> _selectProfileImage() async {
@@ -63,14 +62,10 @@ class _ProfileFState extends State<ProfileF> {
   }
 
   String? id;
-  main() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      String? email = FirebaseAuth.instance.currentUser!.email;
-      String ema = email.toString();
-      String facid = ema.substring(0, ema.length - 8);
-      id = facid;
-      print(id);
-    }
+  main() async {
+    final SharedPreferences prefs = await _prefs;
+    id = prefs.getString('id');
+    print(id);
   }
 
   login() async {
@@ -86,6 +81,13 @@ class _ProfileFState extends State<ProfileF> {
           .then(
             (value) => print("login $em"),
           );
+      final doc = await FirebaseFirestore.instance
+          .collection('Admin/$admin/faculty')
+          .doc(id)
+          .get();
+      setState(() {
+        _imageUrl = doc.data()!['photoUrl'];
+      });
       print("login");
     } on FirebaseAuthException catch (e) {
       print(e);
@@ -93,17 +95,6 @@ class _ProfileFState extends State<ProfileF> {
   }
 
   bool _uploading = false;
-
-  void _loadPhotoUrl() async {
-    // final user = FirebaseAuth.instance.currentUser;
-    final doc = await FirebaseFirestore.instance
-        .collection('Admin/$admin/faculty')
-        .doc(id)
-        .get();
-    setState(() {
-      _imageUrl = doc.data()!['photoUrl'];
-    });
-  }
 
   Uint8List? _imageFile;
   String? _imageUrl;

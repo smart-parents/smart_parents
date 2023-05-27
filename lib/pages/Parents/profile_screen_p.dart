@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/change_password.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/edit_p.dart';
@@ -27,26 +28,10 @@ class _Profile_screenPState extends State<Profile_screenP> {
 
   // late Future<QuerySnapshot<Map<String, dynamic>>> snapshot;
   String? id;
-  main() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      String? email = FirebaseAuth.instance.currentUser!.email;
-      String em = email.toString();
-      String facid = em.substring(0, em.length - 8);
-      id = facid;
-    }
-  }
-
-  @override
-  void initState() {
-    main();
-    _loadPhotoUrl();
-    super.initState();
-  }
-
-  bool _uploading = false;
-
-  void _loadPhotoUrl() async {
-    // final user = FirebaseAuth.instance.currentUser;
+  final _prefs = SharedPreferences.getInstance();
+  main() async {
+    final SharedPreferences prefs = await _prefs;
+    id = prefs.getString('id');
     final doc = await FirebaseFirestore.instance
         .collection('Admin/$admin/parents')
         .doc(id)
@@ -57,6 +42,16 @@ class _Profile_screenPState extends State<Profile_screenP> {
       });
     }
   }
+
+  @override
+  void initState() {
+    main();
+    super.initState();
+  }
+
+  bool _uploading = false;
+
+
 
   Future<void> _selectProfileImage() async {
     showModalBottomSheet(
@@ -373,26 +368,29 @@ class _Profile_screenPState extends State<Profile_screenP> {
                               // crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                TextButton.icon(
-                                  onPressed: () async => {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditP(
-                                          id: "$id",
+                                Expanded(
+                                  child: TextButton.icon(
+                                    onPressed: () async => {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => EditP(
+                                            id: "$id",
+                                          ),
                                         ),
+                                      ) // (route) => false)
+                                    },
+                                    icon: const Icon(
+                                      Icons.info_outline,
+                                      color: Colors.white,
+                                    ),
+                                    label: const Text(
+                                      'Edit Details',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
                                       ),
-                                    ) // (route) => false)
-                                  },
-                                  icon: const Icon(
-                                    Icons.info_outline,
-                                    color: Colors.white,
-                                  ),
-                                  label: const Text(
-                                    'Edit',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
                                 ),
@@ -420,29 +418,32 @@ class _Profile_screenPState extends State<Profile_screenP> {
                                 //     ),
                                 //   ),
                                 // ),
-                                TextButton.icon(
-                                  onPressed: () async => {
-                                    // await FirebaseAuth.instance.signOut(),
-                                    // delete(),
-                                    // await storage.delete(key: "uid"),
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const ChangePassword(),
+                                Expanded(
+                                  child: TextButton.icon(
+                                    onPressed: () async => {
+                                      // await FirebaseAuth.instance.signOut(),
+                                      // delete(),
+                                      // await storage.delete(key: "uid"),
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const ChangePassword(),
+                                        ),
+                                      )
+                                    },
+                                    icon: const Icon(
+                                      Icons.password,
+                                      color: Colors.white,
+                                    ),
+                                    label: const Text(
+                                      // 'Change Password',
+                                      'Change Password',
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color:
+                                            Color.fromARGB(255, 255, 255, 255),
                                       ),
-                                    )
-                                  },
-                                  icon: const Icon(
-                                    Icons.password,
-                                    color: Colors.white,
-                                  ),
-                                  label: const Text(
-                                    // 'Change Password',
-                                    'Change',
-                                    style: TextStyle(
-                                      fontSize: 20,
-                                      color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
                                 ),

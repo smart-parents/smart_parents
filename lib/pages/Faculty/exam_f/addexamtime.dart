@@ -317,7 +317,7 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                 // child: Expanded(
                 child: ElevatedButton(
                     onPressed: () {
-                      addExam(Sub, date, start0, end0);
+                      addExam(Sub, date0, start0, end0);
                       Navigator.of(context).pop();
                     },
                     child: const Text("Add Exam TimeTable")),

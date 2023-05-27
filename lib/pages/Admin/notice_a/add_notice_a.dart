@@ -232,6 +232,8 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
                               value: Branch,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
                                 contentPadding: EdgeInsets.zero,
                               ),
                               hint: const Text('Select an item'),

@@ -13,31 +13,31 @@ class SignUpScreen extends StatelessWidget {
     return const Background(
       child: SingleChildScrollView(
         child:
-        //  Responsive(
-        //   mobile: 
-        MobileSignupScreen(),
-        //   desktop: 
-          // Row(
-          //   children: [
-          //     Expanded(
-          //       child: SignUpScreenTopImage(),
-          //     ),
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           SizedBox(
-          //             width: 450,
-          //             child: SignUpForm(),
-          //           ),
-          //           SizedBox(height: defaultPadding / 2),
-          //           // SocalSignUp()
-          //         ],
-          //       ),
-          //     )
-          //   ],
-          // ),
-        ),
+            //  Responsive(
+            //   mobile:
+            MobileSignupScreen(),
+        //   desktop:
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       child: SignUpScreenTopImage(),
+        //     ),
+        //     Expanded(
+        //       child: Column(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           SizedBox(
+        //             width: 450,
+        //             child: SignUpForm(),
+        //           ),
+        //           SizedBox(height: defaultPadding / 2),
+        //           // SocalSignUp()
+        //         ],
+        //       ),
+        //     )
+        //   ],
+        // ),
+      ),
       // ),
     );
   }

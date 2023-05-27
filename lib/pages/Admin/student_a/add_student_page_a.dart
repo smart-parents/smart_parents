@@ -65,43 +65,37 @@ class _AddStudentPageState extends State<AddStudentPage> {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: "$number@sps.com", password: password)
-          .then((value) {
-        students
-            .doc(number)
-            .set({
-              'name': name,
-              'number': number,
-              'password': password,
-              'branch': Branch,
-              'status': true,
-              'batch': batchyeardropdownValue
-            })
-            .then((value) => print('student Added'))
-            .catchError((error) => print('Failed to Add user: $error'));
-
-        users
-            .doc(number)
-            .set({
-              'id': number,
-              'role': 'student',
-              'status': true,
-              'admin': admin
-            })
-            .then((value) => print('student Added'))
-            .catchError((error) => print('Failed to Add user: $error'));
-        clearText();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: kPrimaryLightColor,
-            content: Text(
-              "Student Added.",
-              style: TextStyle(fontSize: 20.0, color: Colors.black),
-            ),
+          .then((value) {});
+      students
+          .doc(number)
+          .set({
+            'name': name,
+            'number': number,
+            'password': password,
+            'branch': Branch,
+            'status': true,
+            'batch': batchyeardropdownValue
+          })
+          .then((value) => print('student Added'))
+          .catchError((error) => print('Failed to Add user: $error'));
+      users
+          .doc(number)
+          .set(
+              {'id': number, 'role': 'student', 'status': true, 'admin': admin})
+          .then((value) => print('student Added'))
+          .catchError((error) => print('Failed to Add user: $error'));
+      clearText();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: kPrimaryLightColor,
+          content: Text(
+            "Student Added.",
+            style: TextStyle(fontSize: 20.0, color: Colors.black),
           ),
-        );
-        // login();
-        Navigator.pop(context);
-      });
+        ),
+      );
+      login();
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print(e);
       if (e.code == 'weak-password') {
@@ -222,6 +216,8 @@ class _AddStudentPageState extends State<AddStudentPage> {
                           value: Branch,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            focusedBorder: InputBorder.none,
                             contentPadding: EdgeInsets.zero,
                           ),
                           hint: const Text('Select an item'),

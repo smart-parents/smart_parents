@@ -1,10 +1,8 @@
 // ignore_for_file: library_private_types_in_public_api, deprecated_member_use, use_build_context_synchronously
 
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/change_password.dart';
@@ -28,26 +26,16 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
-    login();
     main();
-    _loadPhotoUrl();
+    login();
   }
 
-  // delete() async {
-  //   final SharedPreferences prefs = await _prefs;
-  //   final success = await prefs.clear();
-  //   print(success);
-  // }
-
-  String? id;
-  main() {
-    if (FirebaseAuth.instance.currentUser != null) {
-      String? email = FirebaseAuth.instance.currentUser!.email;
-      id = email.toString();
-    }
+  void main() async {
+    final SharedPreferences prefs = await _prefs;
+    em = prefs.getString('email');
   }
 
-  login() async {
+  void login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
     em = prefs.getString('email');
@@ -60,21 +48,17 @@ class _ProfileState extends State<Profile> {
             (value) => print("login $em"),
           );
       print("login");
+      final doc =
+          await FirebaseFirestore.instance.collection('Admin').doc(em).get();
+      setState(() {
+        _imageUrl = doc.data()!['photoUrl'];
+      });
     } on FirebaseAuthException catch (e) {
       print(e);
     }
   }
 
   bool _uploading = false;
-
-  void _loadPhotoUrl() async {
-    // final user = FirebaseAuth.instance.currentUser;
-    final doc =
-        await FirebaseFirestore.instance.collection('Admin').doc(id).get();
-    setState(() {
-      _imageUrl = doc.data()!['photoUrl'];
-    });
-  }
 
   Uint8List? _imageFile;
   String? _imageUrl;
@@ -143,7 +127,7 @@ class _ProfileState extends State<Profile> {
     final url = (await downloadUrl.ref.getDownloadURL());
     await FirebaseFirestore.instance
         .collection('Admin')
-        .doc(id)
+        .doc(em)
         .update({'photoUrl': url});
     setState(() {
       _imageUrl = url;
@@ -192,7 +176,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
       stream:
-          FirebaseFirestore.instance.collection('Admin').doc(id).snapshots(),
+          FirebaseFirestore.instance.collection('Admin').doc(em).snapshots(),
       builder: (_, snapshot) {
         if (snapshot.hasError) {
           print('Something Went Wrong');
@@ -376,27 +360,29 @@ class _ProfileState extends State<Profile> {
                               //   bottom: 0,
                               //   left: 0,
                               //   child:
-                              TextButton.icon(
-                                onPressed: () async => {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => EditA(
-                                        id: "$id",
+                              Expanded(
+                                child: TextButton.icon(
+                                  onPressed: () async => {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EditA(
+                                          id: "$em",
+                                        ),
                                       ),
+                                    ) // (route) => false)
+                                  },
+                                  icon: const Icon(
+                                    Icons.info_outline,
+                                    color: Colors.white,
+                                  ),
+                                  label: const Text(
+                                    // 'Edit Profile',
+                                    'Edit Details',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Color.fromARGB(255, 255, 255, 255),
                                     ),
-                                  ) // (route) => false)
-                                },
-                                icon: const Icon(
-                                  Icons.info_outline,
-                                  color: Colors.white,
-                                ),
-                                label: const Text(
-                                  // 'Edit Profile',
-                                  'Edit',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color.fromARGB(255, 255, 255, 255),
                                   ),
                                 ),
                               ),
@@ -409,33 +395,34 @@ class _ProfileState extends State<Profile> {
                               //   bottom: 0,
                               //   right: 0,
                               //   child:
-                              TextButton.icon(
-                                onPressed: () async => {
-                                  // await FirebaseAuth.instance.signOut(),
-                                  // delete(),
-                                  // await storage.delete(key: "uid"),
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ChangePassword(),
+                              Expanded(
+                                child: TextButton.icon(
+                                  onPressed: () async => {
+                                    // await FirebaseAuth.instance.signOut(),
+                                    // delete(),
+                                    // await storage.delete(key: "uid"),
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const ChangePassword(),
+                                      ),
+                                    )
+                                  },
+                                  icon: const Icon(
+                                    Icons.password,
+                                    color: Colors.white,
+                                  ),
+                                  label: const Text(
+                                    // 'Change Password',
+                                    'Change Password',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      color: Color.fromARGB(255, 255, 255, 255),
                                     ),
-                                  )
-                                },
-                                icon: const Icon(
-                                  Icons.password,
-                                  color: Colors.white,
-                                ),
-                                label: const Text(
-                                  // 'Change Password',
-                                  'Change',
-                                  style: TextStyle(
-                                    fontSize: 20,
-                                    color: Color.fromARGB(255, 255, 255, 255),
                                   ),
                                 ),
                               ),
-                              // ),
                             ],
                           ),
                         ],

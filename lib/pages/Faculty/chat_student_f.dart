@@ -99,6 +99,7 @@ class _ChatStudentState extends State<ChatStudent> with notification {
   void _showNumberPicker(BuildContext context) {
     // batchyeardropdownValue = batchyear;
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(

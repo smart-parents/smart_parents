@@ -50,50 +50,55 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
     passwordController.clear();
   }
 
-  // Adding Student
-  void addUser() {
-    CollectionReference facultys =
-        FirebaseFirestore.instance.collection('Admin/$admin/faculty');
-    facultys
-        .doc(faculty)
-        .set({
-          'faculty': faculty,
-          'name': name,
-          'password': password,
-          'branch': Branch,
-          'status': true
-        })
-        .then((value) => print('faculty Added'))
-        .catchError((error) => print('Failed to Add user: $error'));
-
-    CollectionReference users = FirebaseFirestore.instance.collection('Users');
-    users
-        .doc(faculty)
-        .set({'id': faculty, 'role': 'faculty', 'status': true, 'admin': admin})
-        .then((value) => print('faculty Added'))
-        .catchError((error) => print('Failed to Add user: $error'));
-  }
+  CollectionReference facultys =
+      FirebaseFirestore.instance.collection('Admin/$admin/faculty');
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
   registration() async {
     try {
       FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: "$faculty@spf.com", password: password)
-          .then((value) {
-        addUser();
-        clearText();
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: kPrimaryLightColor,
-            content: Text(
-              "Faculty Added.",
-              style: TextStyle(fontSize: 20.0, color: Colors.black),
-            ),
+          .then((value) {});
+      try {
+        print("add1................");
+        facultys
+            .doc(faculty)
+            .set({
+              'faculty': faculty,
+              'name': name,
+              'password': password,
+              'branch': Branch,
+              'status': true
+            })
+            .then((value) => print('faculty Added'))
+            .catchError((error) => print('Failed to Add user: $error'));
+        users
+            .doc(faculty)
+            .set({
+              'id': faculty,
+              'role': 'faculty',
+              'status': true,
+              'admin': admin
+            })
+            .then((value) => print('faculty Added'))
+            .catchError((error) => print('Failed to Add user: $error'));
+      } on Exception catch (e) {
+        print(e.toString());
+      }
+      print("add2................");
+      clearText();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: kPrimaryLightColor,
+          content: Text(
+            "Faculty Added.",
+            style: TextStyle(fontSize: 20.0, color: Colors.black),
           ),
-        );
-        login();
-        Navigator.pop(context);
-      });
+        ),
+      );
+      login();
+      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       print(e);
       if (e.code == 'weak-password') {
@@ -214,6 +219,8 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                             value: Branch,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
+                              enabledBorder: InputBorder.none,
+                              focusedBorder: InputBorder.none,
                               contentPadding: EdgeInsets.zero,
                             ),
                             hint: const Text('Select an item'),

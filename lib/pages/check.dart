@@ -20,8 +20,7 @@ class _CheckState extends State<Check> {
   @override
   void initState() {
     super.initState();
-      InternetPopup().initialize(context: context);
-    
+    InternetPopup().initialize(context: context);
   }
 
   final _prefs = SharedPreferences.getInstance();

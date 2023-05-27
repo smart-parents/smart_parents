@@ -136,6 +136,7 @@ class _AddExamState extends State<AddExam> {
                                           highlightColor: red,
                                           onPressed: () async {
                                             showDialog(
+                                              barrierDismissible: false,
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(

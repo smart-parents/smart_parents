@@ -70,6 +70,7 @@ class _NoticeState extends State<Notice> {
                       return GestureDetector(
                         onTap: () {
                           showDialog(
+                            barrierDismissible: false,
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
@@ -197,6 +198,7 @@ class _NoticeState extends State<Notice> {
                                           highlightColor: red,
                                           onPressed: () async {
                                             showDialog(
+                                              barrierDismissible: false,
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(

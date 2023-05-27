@@ -193,6 +193,8 @@ class _StudentState extends State<Student> {
                                         Column(
                                           children: [
                                             Switch(
+                                              activeTrackColor: Colors.white,
+                                              inactiveTrackColor: Colors.white,
                                               activeColor: green,
                                               inactiveThumbColor: red,
                                               value: storedocs[index]['status'],
@@ -362,6 +364,8 @@ class _StudentState extends State<Student> {
                                         Column(
                                           children: [
                                             Switch(
+                                              activeTrackColor: Colors.white,
+                                              inactiveTrackColor: Colors.white,
                                               activeColor: green,
                                               inactiveThumbColor: red,
                                               value: storedocs[index]['status'],

@@ -158,23 +158,23 @@ class _AttendencePageState extends State<AttendencePage> {
       ),
       body: Column(
         children: [
-          const SizedBox(
-            height: 15.0,
-          ),
-          const Center(
-            child: Text(
-              "Select those who are present and \n     long press for more options",
-              style: TextStyle(
-                  fontSize: 15,
-                  color: Colors.grey,
-                  fontWeight: FontWeight.w600),
-            ),
-          ),
+          // const SizedBox(
+          //   height: 15.0,
+          // ),
+          // const Center(
+          //   child: Text(
+          //     "Select those who are present and \n     long press for more options",
+          //     style: TextStyle(
+          //         fontSize: 15,
+          //         color: Colors.grey,
+          //         fontWeight: FontWeight.w600),
+          //   ),
+          // ),
           const SizedBox(
             height: 20,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.65,
+            height: MediaQuery.of(context).size.height * 0.75,
             child: ListView.builder(
                 itemCount: studentvar.length,
                 itemBuilder: (BuildContext context, int index) =>
@@ -202,13 +202,12 @@ class _AttendencePageState extends State<AttendencePage> {
                           DialogType.SUCCES,
                           context,
                           () => Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                      builder: (context) => const UserMainF(
-                                          // sub: widget.sub,
-                                          // studentId: '206470316022',
-                                          )),
-                                )
-                              ),
+                                MaterialPageRoute(
+                                    builder: (context) => const UserMainF(
+                                        // sub: widget.sub,
+                                        // studentId: '206470316022',
+                                        )),
+                              )),
                     },
                     child: const Text('Submit'),
                   ),

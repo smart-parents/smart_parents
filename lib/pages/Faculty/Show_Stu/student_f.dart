@@ -129,7 +129,7 @@ class _StudentFState extends State<StudentF> {
                                                 Text(
                                                   storedocs[index]['status']
                                                       ? 'Active'
-                                                      : 'Disactive',
+                                                      : 'Inactive',
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -232,7 +232,7 @@ class _StudentFState extends State<StudentF> {
                                                 Text(
                                                   storedocs[index]['status']
                                                       ? 'Active'
-                                                      : 'Disactive',
+                                                      : 'Inactive',
                                                   style: TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,

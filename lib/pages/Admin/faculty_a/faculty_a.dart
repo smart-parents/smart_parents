@@ -176,6 +176,11 @@ class _FacultyState extends State<Faculty> {
                                           Column(
                                             children: [
                                               Switch(
+                                                activeTrackColor: Colors.white,
+                                                inactiveTrackColor:
+                                                    Colors.white,
+                                                activeColor: green,
+                                                inactiveThumbColor: red,
                                                 value: storedocs[index]
                                                     ['status'],
                                                 onChanged: (value) {
@@ -190,7 +195,7 @@ class _FacultyState extends State<Faculty> {
                                               Text(
                                                 storedocs[index]['status']
                                                     ? 'Active'
-                                                    : 'Disactive',
+                                                    : 'Inactive',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15,
@@ -321,6 +326,11 @@ class _FacultyState extends State<Faculty> {
                                           Column(
                                             children: [
                                               Switch(
+                                                activeTrackColor: Colors.white,
+                                                inactiveTrackColor:
+                                                    Colors.white,
+                                                activeColor: green,
+                                                inactiveThumbColor: red,
                                                 value: storedocs[index]
                                                     ['status'],
                                                 onChanged: (value) {
@@ -335,7 +345,7 @@ class _FacultyState extends State<Faculty> {
                                               Text(
                                                 storedocs[index]['status']
                                                     ? 'Active'
-                                                    : 'Disactive',
+                                                    : 'Inactive',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15,

@@ -147,6 +147,7 @@ class _ExamState extends State<Exam> with notification {
                                       highlightColor: red,
                                       onPressed: () async {
                                         showDialog(
+                                          barrierDismissible: false,
                                           context: context,
                                           builder: (BuildContext context) {
                                             return AlertDialog(
@@ -228,6 +229,7 @@ class _ExamState extends State<Exam> with notification {
               // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
               onPressed: () => {
                 showDialog(
+                  barrierDismissible: false,
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(

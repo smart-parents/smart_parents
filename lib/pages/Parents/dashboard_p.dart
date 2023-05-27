@@ -3,6 +3,9 @@
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Parents/attendance_show.dart';
 import 'package:smart_parents/pages/Parents/chat_parents_f.dart';
+import 'package:smart_parents/pages/Parents/contact_faculty.dart';
+import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
+import 'package:smart_parents/pages/Parents/fees.dart';
 import 'package:smart_parents/pages/Parents/livelocation.dart';
 import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/result_p.dart';
@@ -24,11 +27,14 @@ class _Parents_homeState extends State<Parents_home> {
       mainAxisSpacing: 16.0,
       crossAxisSpacing: 16.0,
       children: [
-        _buildCard('Get Your Child Location', Icons.location_on, Colors.green),
-        _buildCard('View Attendance', Icons.calendar_month, Colors.blue),
-        _buildCard('View Notice', Icons.notifications, Colors.orange),
-        _buildCard('View Result', Icons.assignment, Colors.purple),
-        _buildCard('Chat With Faculty', Icons.chat, Colors.teal),
+        _buildCard('Chat with Faculty', Icons.chat, Colors.green),
+        _buildCard('Contact Faculty', Icons.mail, Colors.blue),
+        _buildCard('Get Your Child Location', Icons.location_on, Colors.orange),
+        _buildCard('View Attendances', Icons.event_note, Colors.purple),
+        _buildCard('View Exams', Icons.library_books, Colors.yellow),
+        _buildCard('View Results', Icons.bar_chart, Colors.teal),
+        _buildCard('View Fees', Icons.attach_money, Colors.red),
+        _buildCard('View Notices', Icons.notifications, Colors.deepPurple),
       ],
     );
   }
@@ -42,40 +48,53 @@ class _Parents_homeState extends State<Parents_home> {
       child: InkWell(
         onTap: () {
           switch (title) {
-            case 'Get Your Child Location':
-              // Navigator.push(context, FadeAnimation(const ChildLocation()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ChildLocation()),
-              );
-              break;
-            case 'View Attendance':
-              // Navigator.push(
-              //     context, FadeAnimation(const AttendanceCalendarPage()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AttendanceCalendarPage()),
-              );
-              break;
-            case 'View Notice':
-              // Navigator.push(context, FadeAnimation(const Notice()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Notice()),
-              );
-              break;
-            case 'Chat With Faculty':
-              // Navigator.push(context, FadeAnimation(const ChatParent ()));
+            case 'Chat with Faculty':
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const ChatParent()),
               );
               break;
-            case 'View Result':
-              // Navigator.push(context, FadeAnimation(const Result()));
+            case 'Contact Faculty':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ContactF()),
+              );
+              break;
+            case 'Get Your Child Location':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChildLocation()),
+              );
+              break;
+            case 'View Attendances':
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AttendanceCalendarPage()),
+              );
+              break;
+            case 'View Results':
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const Result()),
+              );
+              break;
+            case 'View Exams':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Exam()),
+              );
+              break;
+            case 'View Fees':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Fees()),
+              );
+              break;
+            case 'View Notices':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Notice()),
               );
               break;
           }
@@ -91,8 +110,10 @@ class _Parents_homeState extends State<Parents_home> {
             const SizedBox(height: 16.0),
             Text(
               title,
-              style:
-                  const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
             ),
           ],

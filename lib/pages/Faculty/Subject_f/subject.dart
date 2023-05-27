@@ -165,6 +165,7 @@ class _SubjectFState extends State<SubjectF> {
                                           highlightColor: red,
                                           onPressed: () async {
                                             showDialog(
+                                              barrierDismissible: false,
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(
@@ -259,7 +260,7 @@ class _SubjectFState extends State<SubjectF> {
                                     // Text(
                                     //   storedocs[index]['status']
                                     //       ? 'Active'
-                                    //       : 'Disactive',
+                                    //       : 'Inactive',
                                     //   style: TextStyle(
                                     //       fontWeight: FontWeight.bold,
                                     //       fontSize: 15,

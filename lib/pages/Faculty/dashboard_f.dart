@@ -1,11 +1,16 @@
 // ignore_for_file: library_private_types_in_public_api
 
 import 'package:flutter/material.dart';
+import 'package:smart_parents/pages/Faculty/Result_f/result_f.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
+import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
+import 'package:smart_parents/pages/Faculty/attendencepages/attendance_display_f.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdownpage2.dart';
 import 'package:smart_parents/pages/Faculty/chat_parents_f.dart';
 import 'package:smart_parents/pages/Faculty/chat_student_f.dart';
+import 'package:smart_parents/pages/Faculty/exam_f/exam.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/parents_f.dart';
+import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -23,11 +28,17 @@ class _DashboardState extends State<Dashboard> {
       mainAxisSpacing: 16.0,
       crossAxisSpacing: 16.0,
       children: [
-        _buildCard('Add Attendence', Icons.calendar_month, Colors.green),
-        _buildCard('Manage Parents', Icons.person_add_alt_1, Colors.blue),
-        _buildCard('Chat With Student', Icons.chat, Colors.orange),
-        _buildCard('Chat With Parents', Icons.chat, Colors.purple),
-        _buildCard('Manage Schedule', Icons.schedule, Colors.teal),
+        _buildCard('Manage Subjects', Icons.book, Colors.deepPurple),
+        _buildCard('Manage Parents', Icons.person_add_alt_1, Colors.teal),
+        _buildCard('Manage Schedule', Icons.schedule, Colors.red),
+        _buildCard(
+            "Add Today's Attendances", Icons.calendar_today, Colors.green),
+        _buildCard('Chat with Parents', Icons.chat, Colors.blue),
+        _buildCard('Chat with Student', Icons.chat, Colors.orange),
+        _buildCard('Manage Exams', Icons.library_books, Colors.purple),
+        _buildCard('Manage Results', Icons.bar_chart, Colors.yellow),
+        _buildCard('View Attendances', Icons.event_note, Colors.indigo),
+        _buildCard('View Students', Icons.people, Colors.pink),
       ],
     );
   }
@@ -41,40 +52,66 @@ class _DashboardState extends State<Dashboard> {
       child: InkWell(
         onTap: () {
           switch (title) {
-            case 'Add Attendence':
-              // Navigator.push(
-              //     context, FadeAnimation(const AttendenceDropdownpage2()));
+            case "Add Today's Attendances":
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const AttendenceDropdownpage2()),
+                MaterialPageRoute(
+                    builder: (context) => const AttendenceDropdownpage2()),
               );
               break;
-            case 'Manage Parents':
-              // Navigator.push(context, FadeAnimation(const Parent()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Parent()),
-              );
-              break;
-            case 'Manage Schedule':
-              // Navigator.push(context, FadeAnimation(const ShowSchedule()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ShowSchedule()),
-              );
-              break;
-            case 'Chat With Parents':
-              // Navigator.push(context, FadeAnimation(const ChatParent()));
+            case 'Chat with Parents':
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const ChatParent()),
               );
               break;
-            case 'Chat With Student':
-              // Navigator.push(context, FadeAnimation(const ChatStudent()));
+            case 'Chat with Student':
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const ChatStudent()),
+              );
+              break;
+            case 'Manage Exams':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Exam()),
+              );
+              break;
+            case 'Manage Parents':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Parent()),
+              );
+              break;
+            case 'Manage Results':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Result()),
+              );
+              break;
+            case 'Manage Schedule':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ShowSchedule()),
+              );
+              break;
+            case 'Manage Subjects':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const SubjectF()),
+              );
+              break;
+            case 'View Attendances':
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const AttendanceDisplayPage()),
+              );
+              break;
+            case 'View Students':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Show_stu()),
               );
               break;
           }
@@ -90,8 +127,10 @@ class _DashboardState extends State<Dashboard> {
             const SizedBox(height: 16.0),
             Text(
               title,
-              style:
-                  const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
             ),
           ],

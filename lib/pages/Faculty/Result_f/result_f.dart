@@ -148,6 +148,7 @@ class _ResultState extends State<Result> {
                                           highlightColor: red,
                                           onPressed: () async {
                                             showDialog(
+                                              barrierDismissible: false,
                                               context: context,
                                               builder: (BuildContext context) {
                                                 return AlertDialog(

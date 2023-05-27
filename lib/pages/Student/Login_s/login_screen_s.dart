@@ -24,31 +24,31 @@ class LoginScreenS extends StatelessWidget {
     locationData();
     return const Background(
       child: SingleChildScrollView(
-        child: 
-        // Responsive(
-        //   mobile: 
-          MobileLoginScreen(),
-          // desktop: Row(
-          //   // mainAxisAlignment: MainAxisAlignment.center,
-          //   children: [
-          //     Expanded(
-          //       child: LoginScreenTopImage(),
-          //     ),
-          //     Expanded(
-          //       child: Column(
-          //         mainAxisAlignment: MainAxisAlignment.center,
-          //         children: [
-          //           SizedBox(
-          //             width: 450,
-          //             child: LoginForm(),
-          //           ),
-          //           // SizedBox(height: defaultPadding / 2),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
-        ),
+        child:
+            // Responsive(
+            //   mobile:
+            MobileLoginScreen(),
+        // desktop: Row(
+        //   // mainAxisAlignment: MainAxisAlignment.center,
+        //   children: [
+        //     Expanded(
+        //       child: LoginScreenTopImage(),
+        //     ),
+        //     Expanded(
+        //       child: Column(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           SizedBox(
+        //             width: 450,
+        //             child: LoginForm(),
+        //           ),
+        //           // SizedBox(height: defaultPadding / 2),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
+      ),
       // ),
     );
   }

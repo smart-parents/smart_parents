@@ -7,10 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
+import 'package:smart_parents/pages/Parents/contact_faculty.dart';
 import 'package:smart_parents/pages/Student/Schedule/schedule_u.dart';
 import 'package:smart_parents/pages/Student/attendance.dart';
+import 'package:smart_parents/pages/Student/chat_student.dart';
+import 'package:smart_parents/pages/Student/fees.dart';
 import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
+
+import '../Parents/result_p.dart';
 
 Timer? timer;
 
@@ -100,10 +105,14 @@ class _DashboardState extends State<DashboardS> {
           mainAxisSpacing: 16.0,
           crossAxisSpacing: 16.0,
           children: [
-            _buildCard('View Attendence', Icons.calendar_month, Colors.green),
-            _buildCard('View Notice', Icons.notifications, Colors.blue),
-            _buildCard('View Schedule', Icons.schedule, Colors.orange),
-            _buildCard('View Exam', Icons.school, Colors.purple),
+            _buildCard('Chat with Faculty', Icons.chat, Colors.green),
+            _buildCard('Contact Faculty', Icons.mail, Colors.blue),
+            _buildCard('View Attendance', Icons.event_note, Colors.orange),
+            _buildCard('View Exams', Icons.library_books, Colors.purple),
+            _buildCard('View Fees', Icons.attach_money, Colors.teal),
+            _buildCard('View Notices', Icons.notifications, Colors.yellow),
+            _buildCard('View Results', Icons.bar_chart, Colors.red),
+            _buildCard('View Schedule', Icons.schedule, Colors.deepPurple),
           ],
         ),
       ),
@@ -119,43 +128,54 @@ class _DashboardState extends State<DashboardS> {
       child: InkWell(
         onTap: () {
           switch (title) {
-            case 'View Attendence':
-              // Navigator.push(
-              //     context, FadeAnimation(const AttendanceCalendarPage()));
-              // Navigator.push(context, FadeAnimation(getLocation()));
+            case 'Chat with Faculty':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ChatStudent()),
+              );
+              break;
+            case 'Contact Faculty':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ContactF()),
+              );
+              break;
+            case 'View Attendance':
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const AttendanceCalendarPage()),
               );
               break;
-            case 'View Notice':
-              // Navigator.push(context, FadeAnimation(const Notice()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const Notice()),
-              );
-              break;
-            case 'View Schedule':
-              // Navigator.push(context, FadeAnimation(const ShowSchedule()));
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ShowSchedule()),
-              );
-              break;
-            case 'View Exam':
-              // Navigator.push(context, FadeAnimation(const Exam()));
+            case 'View Exams':
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const Exam()),
               );
               break;
-            // case 'Manage Fees':
-            //   // Navigator.push(context, FadeAnimation(const Fees()));
-            //   Navigator.push(
-            //     context,
-            //     MaterialPageRoute(builder: (context) => const Fees()),
-            //   );
-            //   break;
+            case 'View Fees':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Fees()),
+              );
+              break;
+            case 'View Notices':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Notice()),
+              );
+              break;
+            case 'View Results':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Result()),
+              );
+              break;
+            case 'View Schedule':
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ShowSchedule()),
+              );
+              break;
           }
         },
         child: Column(
@@ -169,8 +189,10 @@ class _DashboardState extends State<DashboardS> {
             const SizedBox(height: 16.0),
             Text(
               title,
-              style:
-                  const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.bold,
+              ),
               textAlign: TextAlign.center,
             ),
           ],

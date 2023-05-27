@@ -197,6 +197,11 @@ class _ParentState extends State<Parent> {
                                           Column(
                                             children: [
                                               Switch(
+                                                activeTrackColor: Colors.white,
+                                                inactiveTrackColor:
+                                                    Colors.white,
+                                                activeColor: green,
+                                                inactiveThumbColor: red,
                                                 value: storedocs[index]
                                                     ['status'],
                                                 onChanged: (value) {
@@ -211,7 +216,7 @@ class _ParentState extends State<Parent> {
                                               Text(
                                                 storedocs[index]['status']
                                                     ? 'Active'
-                                                    : 'Disactive',
+                                                    : 'Inactive',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15,
@@ -344,6 +349,11 @@ class _ParentState extends State<Parent> {
                                           Column(
                                             children: [
                                               Switch(
+                                                activeTrackColor: Colors.white,
+                                                inactiveTrackColor:
+                                                    Colors.white,
+                                                activeColor: green,
+                                                inactiveThumbColor: red,
                                                 value: storedocs[index]
                                                     ['status'],
                                                 onChanged: (value) {
@@ -358,7 +368,7 @@ class _ParentState extends State<Parent> {
                                               Text(
                                                 storedocs[index]['status']
                                                     ? 'Active'
-                                                    : 'Disactive',
+                                                    : 'Inactive',
                                                 style: TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     fontSize: 15,

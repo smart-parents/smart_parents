@@ -54,6 +54,7 @@ class _ShowScheduleState extends State<ShowSchedule> {
   void _showNumberPicker(BuildContext context) {
     batchyeardropdownValue = batchyear;
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -379,6 +380,7 @@ class _ShowScheduleState extends State<ShowSchedule> {
                                   },
                                   onLongPress: () async {
                                     showDialog(
+                                      barrierDismissible: false,
                                       context: context,
                                       builder: (BuildContext context) {
                                         return AlertDialog(

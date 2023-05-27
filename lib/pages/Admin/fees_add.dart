@@ -44,6 +44,7 @@ class _FeesAddState extends State<FeesAdd> with notification {
 
   Future<void> addUser() async {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -220,6 +221,8 @@ class _FeesAddState extends State<FeesAdd> with notification {
                                   decoration: const InputDecoration(
                                     hintText: 'Search for an Enrollment',
                                     border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
                                   ),
                                   onChanged: (value) {
                                     setState(() {});
@@ -324,7 +327,6 @@ class _FeesAddState extends State<FeesAdd> with notification {
                         decoration: const InputDecoration(
                           labelText: 'Semester: ',
                           labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
                           errorStyle:
                               TextStyle(fontSize: 15, color: Color(0xEAB00000)),
                         ),
@@ -350,7 +352,10 @@ class _FeesAddState extends State<FeesAdd> with notification {
                         decoration: const InputDecoration(
                           labelText: 'Amount: ',
                           labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(),
+                          border: OutlineInputBorder(
+                              //   borderRadius: BorderRadius.circular(10),
+                              //   borderSide: const BorderSide(color: Colors.black),
+                              ),
                           errorStyle:
                               TextStyle(fontSize: 15, color: Color(0xEAB00000)),
                         ),

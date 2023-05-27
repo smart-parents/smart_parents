@@ -160,7 +160,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                       labelText: 'Old Password: ',
                       hintText: 'Enter Old Password',
                       labelStyle: TextStyle(fontSize: 20.0),
-                      border: OutlineInputBorder(),
                       errorStyle: TextStyle(fontSize: 15),
                     ),
                     controller: oldPasswordController,

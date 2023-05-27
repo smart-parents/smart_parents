@@ -96,22 +96,21 @@ class _AddParentPageState extends State<AddParentPage> {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: "$number@spp.com", password: password)
-          .then((value) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            backgroundColor: kPrimaryLightColor,
-            content: Text(
-              "Parents Added.",
-              style: TextStyle(fontSize: 20.0, color: Colors.black),
-            ),
+          .then((value) {});
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: kPrimaryLightColor,
+          content: Text(
+            "Parents Added.",
+            style: TextStyle(fontSize: 20.0, color: Colors.black),
           ),
-        );
-        addUser();
-        addUsers();
-        clearText();
-        login();
-        Navigator.pop(context);
-      });
+        ),
+      );
+      addUser();
+      addUsers();
+      clearText();
+      login();
+      Navigator.pop(context);
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(
@@ -252,6 +251,8 @@ class _AddParentPageState extends State<AddParentPage> {
                               value: child,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
+                                enabledBorder: InputBorder.none,
+                                focusedBorder: InputBorder.none,
                                 contentPadding: EdgeInsets.zero,
                               ),
                               hint: const Text('Select an item'),

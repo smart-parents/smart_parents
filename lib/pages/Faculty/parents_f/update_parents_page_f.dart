@@ -123,6 +123,8 @@ class _UpdateParentPageState extends State<UpdateParentPage> {
                                     value: child,
                                     decoration: const InputDecoration(
                                       border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
                                       contentPadding: EdgeInsets.zero,
                                     ),
                                     hint: const Text('Select an item'),

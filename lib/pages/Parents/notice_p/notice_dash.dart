@@ -57,6 +57,7 @@ class _NoticeState extends State<Notice> {
                       return GestureDetector(
                         onTap: () {
                           showDialog(
+                            barrierDismissible: false,
                             context: context,
                             builder: (BuildContext context) {
                               return AlertDialog(
@@ -91,9 +92,9 @@ class _NoticeState extends State<Notice> {
                                             ),
                                           );
                                         },
-                                        child:  Image.network(
-                                                storedocs[index]['photoUrl'],
-                                              ),
+                                        child: Image.network(
+                                          storedocs[index]['photoUrl'],
+                                        ),
                                       ),
                                     }
                                   ],

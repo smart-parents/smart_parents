@@ -18,8 +18,8 @@ class _DepartmentState extends State<Department> {
   @override
   void initState() {
     super.initState();
-      InternetPopup().initialize(context: context);
-    
+    InternetPopup().initialize(context: context);
+
     // login();
   }
 
@@ -140,6 +140,7 @@ class _DepartmentState extends State<Department> {
                                             onPressed: () async {
                                               try {
                                                 showDialog(
+                                                  barrierDismissible: false,
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {

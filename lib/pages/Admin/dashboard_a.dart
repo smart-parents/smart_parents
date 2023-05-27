@@ -160,9 +160,9 @@ class _DashboardState extends State<Dashboard> {
       mainAxisSpacing: 16.0,
       crossAxisSpacing: 16.0,
       children: [
-        _buildCard('Manage Students', Icons.people, Colors.green),
-        _buildCard('Manage Faculty', Icons.person, Colors.blue),
         _buildCard('Manage Departments', Icons.account_balance, Colors.orange),
+        _buildCard('Manage Faculty', Icons.person, Colors.blue),
+        _buildCard('Manage Students', Icons.people, Colors.green),
         _buildCard('Manage Notice', Icons.notifications, Colors.purple),
         _buildCard('Manage Fees', Icons.monetization_on, Colors.teal),
       ],

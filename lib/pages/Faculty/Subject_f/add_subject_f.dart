@@ -149,25 +149,6 @@ class _AddSubjectState extends State<AddSubject> {
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 10.0),
                 child: TextFormField(
-                  autofocus: false,
-                  decoration: const InputDecoration(
-                    labelText: 'Subject Name: ',
-                    labelStyle: TextStyle(fontSize: 20.0),
-                    border: OutlineInputBorder(),
-                    errorStyle: TextStyle(fontSize: 15),
-                  ),
-                  controller: nameController,
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please Enter Name';
-                    }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 10.0),
-                child: TextFormField(
                   maxLength: 7,
                   autofocus: false,
                   decoration: const InputDecoration(
@@ -188,6 +169,26 @@ class _AddSubjectState extends State<AddSubject> {
                   },
                 ),
               ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10.0),
+                child: TextFormField(
+                  autofocus: false,
+                  decoration: const InputDecoration(
+                    labelText: 'Subject Name: ',
+                    labelStyle: TextStyle(fontSize: 20.0),
+                    border: OutlineInputBorder(),
+                    errorStyle: TextStyle(fontSize: 15),
+                  ),
+                  controller: nameController,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please Enter Name';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
