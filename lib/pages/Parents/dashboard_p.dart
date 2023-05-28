@@ -1,5 +1,3 @@
-// ignore_for_file: camel_case_types
-
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Parents/attendance_show.dart';
 import 'package:smart_parents/pages/Parents/chat_parents_f.dart';
@@ -10,17 +8,15 @@ import 'package:smart_parents/pages/Parents/livelocation.dart';
 import 'package:smart_parents/pages/Parents/notice_p/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/result_p.dart';
 
-class Parents_home extends StatefulWidget {
-  const Parents_home({super.key});
-
+class ParentsHome extends StatefulWidget {
+  const ParentsHome({super.key});
   @override
-  State<Parents_home> createState() => _Parents_homeState();
+  State<ParentsHome> createState() => _ParentsHomeState();
 }
 
-class _Parents_homeState extends State<Parents_home> {
+class _ParentsHomeState extends State<ParentsHome> {
   @override
   Widget build(BuildContext context) {
-    // ignore: unnecessary_new
     return GridView.count(
       crossAxisCount: 2,
       padding: const EdgeInsets.all(16.0),

@@ -11,7 +11,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Check extends StatefulWidget {
   const Check({Key? key}) : super(key: key);
-
   @override
   State<Check> createState() => _CheckState();
 }
@@ -25,7 +24,6 @@ class _CheckState extends State<Check> {
 
   final _prefs = SharedPreferences.getInstance();
   String? role;
-
   Future<bool> checkLoginStatus() async {
     bool loggedIn = false;
     final SharedPreferences prefs = await _prefs;
@@ -91,11 +89,7 @@ class _CheckState extends State<Check> {
             } else {
               return const Option();
             }
-          }
-          // else if (snapshot.hasError) {
-          //   return Text('Error: ${snapshot.error}');
-          // }
-          else {
+          } else {
             return const Option();
           }
         });

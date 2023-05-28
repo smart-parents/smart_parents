@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, prefer_typing_uninitialized_variables
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,32 +6,22 @@ import 'package:smart_parents/components/constants.dart';
 
 class AddParentPage extends StatefulWidget {
   const AddParentPage({Key? key}) : super(key: key);
-// void initState() {
-//     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-//       // SystemUiOverlay.bottom,
-//     ]);
-// }
   @override
-  _AddParentPageState createState() => _AddParentPageState();
+  AddParentPageState createState() => AddParentPageState();
 }
 
-class _AddParentPageState extends State<AddParentPage> {
+class AddParentPageState extends State<AddParentPage> {
   final _formKey = GlobalKey<FormState>();
-  // final email = FirebaseAuth.instance.currentUser!.email;
   String? email;
   var name = "";
   var number = "";
   var password = "";
   String? child;
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
   final nameController = TextEditingController();
   final numberController = TextEditingController();
   final passwordController = TextEditingController();
-
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     nameController.dispose();
     numberController.dispose();
     passwordController.dispose();
@@ -52,16 +40,14 @@ class _AddParentPageState extends State<AddParentPage> {
     login();
   }
 
-  // Adding Student
   CollectionReference parents =
       FirebaseFirestore.instance.collection('Admin/$admin/parents');
-
   Future<void> addUser() async {
     final snahot = await FirebaseFirestore.instance
         .collection('Admin/$admin/students')
         .where('number', isEqualTo: child)
         .get();
-    var batchyear;
+    String? batchyear;
     if (snahot.docs.isNotEmpty) {
       for (DocumentSnapshot<Map<String, dynamic>> doc in snahot.docs) {
         batchyear = doc.get('batch');
@@ -111,12 +97,6 @@ class _AddParentPageState extends State<AddParentPage> {
       clearText();
       login();
       Navigator.pop(context);
-      // Navigator.pushReplacement(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => LoginScreen(),
-      //   ),
-      // );
     } on FirebaseAuthException catch (e) {
       print(e);
       if (e.code == 'weak-password') {
@@ -182,7 +162,6 @@ class _AddParentPageState extends State<AddParentPage> {
             tooltip: "Back",
             onPressed: () => Navigator.of(context).pop(),
           ),
-          // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         ),
         body: Center(
             child: FutureBuilder<QuerySnapshot>(
@@ -194,21 +173,9 @@ class _AddParentPageState extends State<AddParentPage> {
                   if (!snapshot.hasData) {
                     return const CircularProgressIndicator();
                   }
-                  // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
                   final items = snapshot.data!.docs
                       .map((doc) => doc.get('number'))
                       .toList();
-                  // future: FirebaseFirestore.instance
-                  //     .collection('Admin/$admin/department')
-                  //     .get(),
-                  // builder: (context, snapshot) {
-                  //   if (!snapshot.hasData) {
-                  //     return const CircularProgressIndicator();
-                  //   }
-                  // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
-                  // final items = snapshot.data!.docs
-                  // .map((doc) => doc.get('name'))
-                  // .toList();
                   return Form(
                     key: _formKey,
                     child: Padding(
@@ -247,7 +214,6 @@ class _AddParentPageState extends State<AddParentPage> {
                                 ]),
                             child: DropdownButtonFormField<String>(
                               isExpanded: true,
-                              // hint: Text(hint,style: TextStyle(color: Colors.black),),
                               value: child,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
@@ -261,8 +227,6 @@ class _AddParentPageState extends State<AddParentPage> {
                               elevation: 16,
                               dropdownColor: Colors.grey[100],
                               style: const TextStyle(color: Colors.black),
-                              // underline:
-                              //     Container(height: 0, color: Colors.black),
                               onChanged: (value) {
                                 setState(() {
                                   child = value;
@@ -278,7 +242,7 @@ class _AddParentPageState extends State<AddParentPage> {
                                 if (value == null) {
                                   return 'Please select a student';
                                 }
-                                return null; // return null if there's no error
+                                return null;
                               },
                             ),
                           ),
@@ -366,14 +330,12 @@ class _AddParentPageState extends State<AddParentPage> {
                             children: [
                               ElevatedButton(
                                 onPressed: () {
-                                  // Validate returns true if the form is valid, otherwise false.
                                   if (_formKey.currentState!.validate()) {
                                     setState(() {
                                       name = nameController.text;
                                       number = numberController.text;
                                       password = passwordController.text;
                                       registration();
-                                      // Navigator.pop(context);
                                     });
                                   }
                                 },

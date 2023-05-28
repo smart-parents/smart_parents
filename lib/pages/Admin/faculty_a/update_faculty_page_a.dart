@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
@@ -8,16 +6,14 @@ class UpdateFacultyPage extends StatefulWidget {
   final String id;
   const UpdateFacultyPage({Key? key, required this.id}) : super(key: key);
   @override
-  _UpdateFacultyPageState createState() => _UpdateFacultyPageState();
+  UpdateFacultyPageState createState() => UpdateFacultyPageState();
 }
 
-class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
+class UpdateFacultyPageState extends State<UpdateFacultyPage> {
   final _form1Key = GlobalKey<FormState>();
-  var Branch;
-  // Updaing Student
+  String? branch1;
   CollectionReference facultys =
       FirebaseFirestore.instance.collection('Admin/$admin/faculty');
-
   Future<void> updateUser(id, name, branch) {
     return facultys
         .doc(id)
@@ -40,7 +36,6 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
           tooltip: "Back",
           onPressed: () => Navigator.of(context).pop(),
         ),
-        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
       ),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
@@ -51,12 +46,10 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
             }
-            // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
             final items =
                 snapshot.data!.docs.map((doc) => doc.get('name')).toList();
             return Form(
               key: _form1Key,
-              // Getting Specific Data by ID
               child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                 future: FirebaseFirestore.instance
                     .collection('Admin/$admin/faculty')
@@ -74,8 +67,6 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                   var data = snapshot.data!.data();
                   var name = data!['name'];
                   var faculty = data['faculty'];
-                  // Branch = data['branch'];
-                  // var password = data['password'];
                   return Padding(
                     padding: const EdgeInsets.symmetric(
                         vertical: 20, horizontal: 30),
@@ -111,7 +102,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                               ]),
                           child: DropdownButtonFormField<String>(
                             isExpanded: true,
-                            value: Branch,
+                            value: branch1,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               enabledBorder: InputBorder.none,
@@ -124,11 +115,9 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                             elevation: 16,
                             dropdownColor: Colors.grey[100],
                             style: const TextStyle(color: Colors.black),
-                            // underline:
-                            //     Container(height: 0, color: Colors.black),
                             onChanged: (value) {
                               setState(() {
-                                Branch = value;
+                                branch1 = value;
                               });
                             },
                             items: items.map((item) {
@@ -141,7 +130,7 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                               if (value == null) {
                                 return 'Please select a branch';
                               }
-                              return null; // return null if there's no error
+                              return null;
                             },
                           ),
                         ),
@@ -192,60 +181,16 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                             },
                           ),
                         ),
-                        // Container(
-                        //   margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        //   child: TextFormField(
-                        //     readOnly: true,
-                        //     // maxLength: 2,
-                        //     initialValue: branch,
-                        //     autofocus: false,
-                        //     onChanged: (value) => branch = value,
-                        //     decoration: const InputDecoration(
-                        //       labelText: 'Branch: ',
-                        //       labelStyle: TextStyle(fontSize: 20.0),
-                        //       border: OutlineInputBorder(),
-                        //       errorStyle: TextStyle(fontSize: 15),
-                        //     ),
-                        //     validator: (value) {
-                        //       if (value == null || value.isEmpty) {
-                        //         return 'Please Enter Department Id';
-                        //       }
-                        //       return null;
-                        //     },
-                        //   ),
-                        // ),
-                        // Container(
-                        //   margin: const EdgeInsets.symmetric(vertical: 10.0),
-                        //   child: TextFormField(
-                        //     initialValue: password,
-                        //     autofocus: false,
-                        //     onChanged: (value) => password = value,
-                        //     obscureText: true,
-                        //     decoration: const InputDecoration(
-                        //       labelText: 'Password: ',
-                        //       labelStyle: TextStyle(fontSize: 20.0),
-                        //       border: OutlineInputBorder(),
-                        //       errorStyle: TextStyle(fontSize: 15),
-                        //     ),
-                        //     validator: (value) {
-                        //       if (value == null || value.isEmpty) {
-                        //         return 'Please Enter Password';
-                        //       }
-                        //       return null;
-                        //     },
-                        //   ),
-                        // ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                // Validate returns true if the form is valid, otherwise false.
                                 if (_form1Key.currentState!.validate()) {
                                   updateUser(
                                     widget.id,
                                     name,
-                                    Branch,
+                                    branch1,
                                   );
                                   Navigator.pop(context);
                                 }
@@ -255,15 +200,6 @@ class _UpdateFacultyPageState extends State<UpdateFacultyPage> {
                                 style: TextStyle(fontSize: 18.0),
                               ),
                             ),
-                            // ElevatedButton(
-                            //   onPressed: () => {clearText()},
-                            //   style: ElevatedButton.styleFrom(
-                            //       backgroundColor: Colors.blueGrey),
-                            //   child: const Text(
-                            //     'Reset',
-                            //     style: TextStyle(fontSize: 18.0),
-                            //   ),
-                            // ),
                           ],
                         )
                       ],

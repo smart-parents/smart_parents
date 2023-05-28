@@ -11,7 +11,6 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
     required this.press,
     this.password,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Row(

@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,7 +12,6 @@ import 'package:smart_parents/pages/Student/chat_student.dart';
 import 'package:smart_parents/pages/Student/fees.dart';
 import 'package:smart_parents/pages/Student/notice_s/notice_dash.dart';
 import 'package:smart_parents/pages/Parents/exam_p/exam.dart';
-
 import '../Parents/result_p.dart';
 
 Timer? timer;
@@ -22,38 +19,28 @@ Timer? timer;
 class DashboardS extends StatefulWidget {
   const DashboardS({Key? key}) : super(key: key);
   @override
-  _DashboardState createState() => _DashboardState();
+  DashboardState createState() => DashboardState();
 }
 
-class _DashboardState extends State<DashboardS> {
+class DashboardState extends State<DashboardS> {
   @override
   void initState() {
     super.initState();
-    // FlutterBackgroundService().startService();
     timer = Timer.periodic(const Duration(seconds: 5), (timer) {
       getLocationData();
     });
   }
 
   final _prefs = SharedPreferences.getInstance();
-
   getLocationData() async {
     if (FirebaseAuth.instance.currentUser != null) {
-      // Create a Location instance
       final SharedPreferences prefs = await _prefs;
       var id = prefs.getString('id');
       var role = prefs.getString('role');
       if (role == 'student') {
         Location location = Location();
-        // location.enableBackgroundMode(enable: true);
-        // Request the location permission if not granted
         await location.requestPermission();
-        // Get the current location data
         LocationData locationData = await location.getLocation();
-        // String? email = FirebaseAuth.instance.currentUser!.email;
-        // String em = email.toString();
-        // String id = em.substring(0, em.length - 8);
-        // Use Firestore package to send data to Firestore
         final fireStore = FirebaseFirestore.instance;
         fireStore
             .collection('Admin/$admin/students/$id/location')
@@ -91,7 +78,6 @@ class _DashboardState extends State<DashboardS> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        // color: Colors.transparent,
         image: DecorationImage(
           image: AssetImage(background),
           fit: BoxFit.cover,
@@ -143,7 +129,8 @@ class _DashboardState extends State<DashboardS> {
             case 'View Attendance':
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const AttendanceCalendarPage()),
+                MaterialPageRoute(
+                    builder: (context) => const AttendanceCalendarPage()),
               );
               break;
             case 'View Exams':

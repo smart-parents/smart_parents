@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api, empty_catches
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,32 +6,20 @@ import 'package:smart_parents/pages/option.dart';
 
 class ChangePassword extends StatefulWidget {
   const ChangePassword({Key? key}) : super(key: key);
-  // void initState() {
-  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //   // SystemUiOverlay.bottom,
-  // ]);
-  // }
-
   @override
-  _ChangePasswordState createState() => _ChangePasswordState();
+  ChangePasswordState createState() => ChangePasswordState();
 }
 
-class _ChangePasswordState extends State<ChangePassword> {
+class ChangePasswordState extends State<ChangePassword> {
   final _formKey = GlobalKey<FormState>();
-
   var oldpassword = "";
   var newpassword = "";
   var confirmpassword = "";
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
-
   final oldPasswordController = TextEditingController();
   final newPasswordController = TextEditingController();
   final confirmNewPasswordController = TextEditingController();
-
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     oldPasswordController.dispose();
     newPasswordController.dispose();
     confirmNewPasswordController.dispose();
@@ -41,57 +27,28 @@ class _ChangePasswordState extends State<ChangePassword> {
   }
 
   final currentUser = FirebaseAuth.instance.currentUser;
-  // changePassword() async {
-  //   try {
-  //     await currentUser!.updatePassword(newPassword);
-  //     FirebaseAuth.instance.signOut();
-  //     Navigator.pushReplacement(
-  //       context,
-  //       MaterialPageRoute(builder: (context) => const LoginScreen()),
-  //     );
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         // backgroundColor: Colors.lightBlueAccent,
-  //         content: Text(
-  //           'Your Password has been Changed. Login again !',
-  //           style: TextStyle(fontSize: 18.0),
-  //         ),
-  //       ),
-  //     );
-  //   } catch (e) {}
-  // }
   final _prefs = SharedPreferences.getInstance();
-
   Future<void> changePassword(
       String oldPassword, String newPassword, String confirmPassword) async {
-    // Get the current user
     if (newPassword == confirmPassword) {
       final user = FirebaseAuth.instance.currentUser;
       if (user == null) {
-        // Handle the case where the user is not signed in
-        print('User not signed in.');
         return;
       }
-      // Create a credential with the user's email and old password
       final credential = EmailAuthProvider.credential(
         email: user.email ?? '',
         password: oldPassword,
       );
       try {
-        // Reauthenticate the user with the old password
         await user.reauthenticateWithCredential(credential);
-        // If reauthentication is successful, update the user's password
         await user.updatePassword(newPassword);
-        print('Password changed successfully!');
         await FirebaseAuth.instance.signOut();
         final SharedPreferences prefs = await _prefs;
-        final success = await prefs.clear();
-        print(success);
+        await prefs.clear();
         Navigator.pushAndRemoveUntil(
             context,
-            PageRouteBuilder(
-              pageBuilder: (context, a, b) => const Option(),
-              transitionDuration: const Duration(seconds: 0),
+            MaterialPageRoute(
+              builder: (context) => const Option(),
             ),
             (route) => false);
         ScaffoldMessenger.of(context).showSnackBar(
@@ -105,7 +62,6 @@ class _ChangePasswordState extends State<ChangePassword> {
         );
       } on FirebaseAuthException catch (e) {
         if (e.code == 'wrong-password') {
-          print('The old password is incorrect.');
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               backgroundColor: kPrimaryLightColor,
@@ -115,8 +71,6 @@ class _ChangePasswordState extends State<ChangePassword> {
               ),
             ),
           );
-        } else {
-          print('An error occurred: $e');
         }
       }
     } else {
@@ -215,7 +169,6 @@ class _ChangePasswordState extends State<ChangePassword> {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    // Validate returns true if the form is valid, otherwise false.
                     if (_formKey.currentState!.validate()) {
                       setState(() {
                         oldpassword = oldPasswordController.text;

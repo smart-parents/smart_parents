@@ -1,13 +1,9 @@
-// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, prefer_typing_uninitialized_variables, prefer_final_fields, use_build_context_synchronously
-
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smart_parents/components/sendNotification.dart';
-import 'package:smart_parents/widgest/dropDownWidget.dart';
+import 'package:smart_parents/components/send_notification.dart';
+import 'package:smart_parents/widgest/dropdown_widget.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -18,12 +14,11 @@ class NoticeAdd extends StatefulWidget {
   State<NoticeAdd> createState() => _NoticeAddState();
 }
 
-class _NoticeAddState extends State<NoticeAdd> with notification {
-  String? Branch;
+class _NoticeAddState extends State<NoticeAdd> with NotificationMixin {
+  String? branch1;
   final _formKey = GlobalKey<FormState>();
   final subjectController = TextEditingController();
   final noticeController = TextEditingController();
-
   @override
   void dispose() {
     subjectController.dispose();
@@ -39,7 +34,6 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
   var subject = '';
   var notice = '';
   String? docId;
-
   Future<void> addnotice() async {
     CollectionReference notices =
         FirebaseFirestore.instance.collection('Admin/$admin/Notices');
@@ -48,7 +42,7 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
     notices
         .doc(docId)
         .set({
-          'branch': Branch,
+          'branch': branch1,
           'batch': batchyeardropdownValue,
           'subject': subject,
           'notice': notice,
@@ -62,7 +56,7 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
         subject,
         await FirebaseFirestore.instance
             .collection('Admin/$admin/parents')
-            .where('branch', isEqualTo: Branch)
+            .where('branch', isEqualTo: branch1)
             .where('batch', isEqualTo: batchyeardropdownValue)
             .get());
     sendNotificationToAllUsers(
@@ -71,7 +65,7 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
         subject,
         await FirebaseFirestore.instance
             .collection('Admin/$admin/students')
-            .where('branch', isEqualTo: Branch)
+            .where('branch', isEqualTo: branch1)
             .where('batch', isEqualTo: batchyeardropdownValue)
             .get());
     clearText();
@@ -86,7 +80,6 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
         final bytes = await pickedFile.readAsBytes();
         setState(() {
           _imageFile = bytes;
-          // uploadImage();
         });
         Navigator.pop(context);
       }
@@ -129,7 +122,6 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
     if (_imageFile == null) {
       return;
     }
-    // final user = FirebaseAuth.instance.currentUser;
     final storageRef =
         FirebaseStorage.instance.ref().child('$admin/Notices/$docId.jpg');
     final UploadTask uploadTask = storageRef.putData(_imageFile!);
@@ -194,9 +186,6 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
                     padding: const EdgeInsets.symmetric(
                         vertical: 20, horizontal: 30),
                     child: Column(children: [
-                      // const SizedBox(
-                      //   height: 30,
-                      // ),
                       Column(
                         children: [
                           const Text(
@@ -229,7 +218,7 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
                                 ]),
                             child: DropdownButtonFormField<String>(
                               isExpanded: true,
-                              value: Branch,
+                              value: branch1,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 enabledBorder: InputBorder.none,
@@ -242,11 +231,9 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
                               elevation: 16,
                               dropdownColor: Colors.grey[100],
                               style: const TextStyle(color: Colors.black),
-                              // underline:
-                              //     Container(height: 0, color: Colors.black),
                               onChanged: (value) {
                                 setState(() {
-                                  Branch = value;
+                                  branch1 = value;
                                 });
                               },
                               items: items.map((item) {
@@ -259,7 +246,7 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
                                 if (value == null) {
                                   return 'Please select a branch';
                                 }
-                                return null; // return null if there's no error
+                                return null;
                               },
                             ),
                           ),
@@ -268,10 +255,10 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
                       const SizedBox(
                         height: 20,
                       ),
-                      dropdown(
-                        DropdownValue: batchyeardropdownValue,
-                        sTring: batchList,
-                        Hint: "Batch(Starting Year)",
+                      Dropdown(
+                        dropdownValue: batchyeardropdownValue,
+                        string: batchList,
+                        hint: "Batch(Starting Year)",
                       ),
                       const SizedBox(
                         height: 20,
@@ -290,7 +277,6 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
                             ),
                             child: TextFormField(
                               minLines: 1,
-                              // maxLines: null,
                               decoration: const InputDecoration(
                                   enabledBorder: InputBorder.none,
                                   focusedBorder: InputBorder.none,
@@ -303,12 +289,10 @@ class _NoticeAddState extends State<NoticeAdd> with notification {
                                 }
                                 return null;
                               },
-                              // keyboardType: TextInputType.multiline,
                             ),
                           ),
                           Container(
                               width: MediaQuery.of(context).size.width,
-                              // height: 200,
                               padding:
                                   const EdgeInsets.fromLTRB(15, 10, 15, 10),
                               margin: const EdgeInsets.only(

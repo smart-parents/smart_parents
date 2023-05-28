@@ -1,43 +1,31 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables, deprecated_member_use
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
-import 'package:smart_parents/widgest/dropDownWidget.dart';
+import 'package:smart_parents/widgest/dropdown_widget.dart';
 import 'package:intl/intl.dart';
-
-// class Department {
-//   final String id;
-//   final String name;
-
-//   Department(this.id, this.name);
-// }
 
 class Subject {
   final String id;
   final String name;
-
   Subject(this.id, this.name);
 }
 
 class AddSchedule extends StatefulWidget {
   const AddSchedule({Key? key}) : super(key: key);
-
   @override
-  _AddScheduleState createState() => _AddScheduleState();
+  AddScheduleState createState() => AddScheduleState();
 }
 
-class _AddScheduleState extends State<AddSchedule> {
+class AddScheduleState extends State<AddSchedule> {
   TimeOfDay start = TimeOfDay.now();
   String _start = DateFormat('hh:mm a').format(DateTime.now());
   TimeOfDay end =
       TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours: 1)));
   String _end = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(hours: 1)));
-  String? Branch;
-  var Sub;
+  String? sub;
   List<Subject> _subjects = [];
   List<String> type = ['Lecture', 'Lab'];
   int selectedIndex = 0;
@@ -47,7 +35,7 @@ class _AddScheduleState extends State<AddSchedule> {
     _fetchSubjects();
   }
 
-  void add_schedule() async {
+  void addSchedule() async {
     var fullhour = DateFormat('HH:mm')
         .format(DateTime(2022, 1, 1, start.hour, start.minute));
     FirebaseFirestore.instance
@@ -62,12 +50,11 @@ class _AddScheduleState extends State<AddSchedule> {
                       .doc(admin)
                       .collection('schedule')
                       .doc('${branch}_$batchyeardropdownValue')
-                      // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
                       .collection('timetable')
                       .doc(daysdropdownValue)
                       .collection('entries')
                       .add({
-                    'subject': "$Sub",
+                    'subject': "$sub",
                     'type': type[selectedIndex],
                     'startTime': _start,
                     'start24': fullhour,
@@ -78,29 +65,21 @@ class _AddScheduleState extends State<AddSchedule> {
                 {
                   await FirebaseFirestore.instance
                       .collection('Admin/$admin/schedule')
-                      // .doc(widget.sub)
-                      // .collection('lectures')
                       .doc('${branch}_$batchyeardropdownValue')
                       .set({
-                    // 'day': daysdropdownValue,
                     'branch': branch,
                     'batch': batchyeardropdownValue,
-                    // 'subject': Sub,
-                    // 'start': _start,
-                    // 'end': _end,
                   }),
                   await FirebaseFirestore.instance
                       .collection('Admin')
                       .doc(admin)
                       .collection('schedule')
                       .doc('${branch}_$batchyeardropdownValue')
-                      // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
                       .collection('timetable')
                       .doc(daysdropdownValue)
                       .collection('entries')
                       .add({
-                    // 'subject': "$Sub (${type[selectedIndex]})",
-                    'subject': "$Sub",
+                    'subject': "$sub",
                     'type': type[selectedIndex],
                     'startTime': _start,
                     'start24': fullhour,
@@ -115,19 +94,16 @@ class _AddScheduleState extends State<AddSchedule> {
         await FirebaseFirestore.instance
             .collection('Admin/$admin/subject')
             .get();
-
     final List<Subject> subjects = [];
-
     for (final DocumentSnapshot<Map<String, dynamic>> subjectSnapshot
         in subjectSnapshot.docs) {
       final Subject subject =
           Subject(subjectSnapshot.id, subjectSnapshot.data()!['sub_name']);
       subjects.add(subject);
     }
-
     setState(() {
       _subjects = subjects;
-      Sub = _subjects[0].name;
+      sub = _subjects[0].name;
     });
   }
 
@@ -135,7 +111,7 @@ class _AddScheduleState extends State<AddSchedule> {
       DialogType dialogType, BuildContext context, VoidCallback onOkPress) {
     AwesomeDialog(
       context: context,
-      animType: AnimType.TOPSLIDE,
+      animType: AnimType.topSlide,
       dialogType: dialogType,
       title: title,
       desc: msg,
@@ -178,10 +154,10 @@ class _AddScheduleState extends State<AddSchedule> {
                     const SizedBox(
                       height: 20,
                     ),
-                    dropdown(
-                      DropdownValue: batchyeardropdownValue,
-                      sTring: batchList,
-                      Hint: "Batch(Starting Year)",
+                    Dropdown(
+                      dropdownValue: batchyeardropdownValue,
+                      string: batchList,
+                      hint: "Batch(Starting Year)",
                     ),
                     const SizedBox(
                       height: 20,
@@ -215,13 +191,7 @@ class _AddScheduleState extends State<AddSchedule> {
                           ]),
                       child: DropdownButton<String>(
                         isExpanded: true,
-                        // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                        value: Sub,
-                        // decoration: const InputDecoration(
-                        //   border: InputBorder.none,
-                        //   contentPadding: EdgeInsets.zero,
-                        // ),
-                        // hint: const Text('Select an item'),
+                        value: sub,
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                         elevation: 16,
                         dropdownColor: Colors.grey[100],
@@ -229,7 +199,7 @@ class _AddScheduleState extends State<AddSchedule> {
                         underline: Container(height: 0, color: Colors.black),
                         onChanged: (value) {
                           setState(() {
-                            Sub = value;
+                            sub = value;
                           });
                         },
                         items: _subjects.map((item) {
@@ -238,12 +208,6 @@ class _AddScheduleState extends State<AddSchedule> {
                             child: Text(item.name),
                           );
                         }).toList(),
-                        // validator: (value) {
-                        //   if (value == null) {
-                        //     return 'Please select a subject';
-                        //   }
-                        //   return null; // return null if there's no error
-                        // },
                       ),
                     ),
                   ],
@@ -251,23 +215,13 @@ class _AddScheduleState extends State<AddSchedule> {
                 const SizedBox(
                   height: 20,
                 ),
-                dropdown(
-                    DropdownValue: daysdropdownValue,
-                    sTring: Days,
-                    Hint: "Day"),
+                Dropdown(
+                    dropdownValue: daysdropdownValue,
+                    string: days,
+                    hint: "Day"),
                 const SizedBox(
                   height: 20,
                 ),
-                // Text(
-                //       DateFormat('E, dd MMM').format(dates[_selectedIndex]),
-                //       style: GoogleFonts.rubik(
-                //           fontSize: 30,
-                //           color: kPrimaryColor,
-                //           fontWeight: FontWeight.bold),
-                //     ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
                 Row(
                   children: <Widget>[
                     const Icon(
@@ -277,14 +231,7 @@ class _AddScheduleState extends State<AddSchedule> {
                       width: 20,
                     ),
                     Expanded(
-                        child:
-                            // _start.isEmpty
-                            //     ? Text(
-                            //         'Choose Start Time',
-                            //         style: fieldTextStyle,
-                            //       )
-                            //     :
-                            Text(
+                        child: Text(
                       _start,
                       style: fieldTextStyle,
                     )),
@@ -325,14 +272,7 @@ class _AddScheduleState extends State<AddSchedule> {
                       width: 20,
                     ),
                     Expanded(
-                        child:
-                            // _end.isEmpty
-                            //     ? Text(
-                            //         'Choose Stop Time',
-                            //         style: fieldTextStyle,
-                            //       )
-                            //     :
-                            Text(
+                        child: Text(
                       _end,
                       style: fieldTextStyle,
                     )),
@@ -377,11 +317,11 @@ class _AddScheduleState extends State<AddSchedule> {
                                         ),
                                         TextButton(
                                           onPressed: () => {
-                                            add_schedule(),
+                                            addSchedule(),
                                             showAlertDialogOnOkCallback(
                                                 'Success !',
                                                 'Schedule Successfully Submitted.',
-                                                DialogType.SUCCES,
+                                                DialogType.success,
                                                 context,
                                                 () => Navigator.of(context)
                                                     .pushAndRemoveUntil(
@@ -408,9 +348,6 @@ class _AddScheduleState extends State<AddSchedule> {
         ),
       ),
     );
-    // },
-    // ),
-    // );
   }
 
   void changeIndex(int index) {

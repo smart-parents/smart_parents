@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, prefer_typing_uninitialized_variables, non_constant_identifier_names
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,33 +7,28 @@ import 'package:smart_parents/components/constants.dart';
 class AddFacultyPage extends StatefulWidget {
   const AddFacultyPage({Key? key}) : super(key: key);
   @override
-  _AddFacultyPageState createState() => _AddFacultyPageState();
+  AddFacultyPageState createState() => AddFacultyPageState();
 }
 
-class _AddFacultyPageState extends State<AddFacultyPage> {
+class AddFacultyPageState extends State<AddFacultyPage> {
   final _formKey = GlobalKey<FormState>();
   final _prefs = SharedPreferences.getInstance();
   var faculty = "";
   var name = "";
-  var Branch;
+  String? branch1;
   var password = "";
-
   @override
   void initState() {
     super.initState();
     login();
   }
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
 
   final facultyController = TextEditingController();
   final nameController = TextEditingController();
   final branchController = TextEditingController();
   final passwordController = TextEditingController();
-
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     facultyController.dispose();
     nameController.dispose();
     branchController.dispose();
@@ -53,7 +46,6 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
   CollectionReference facultys =
       FirebaseFirestore.instance.collection('Admin/$admin/faculty');
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
-
   registration() async {
     try {
       FirebaseAuth.instance
@@ -68,7 +60,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
               'faculty': faculty,
               'name': name,
               'password': password,
-              'branch': Branch,
+              'branch': branch1,
               'status': true
             })
             .then((value) => print('faculty Added'))
@@ -154,7 +146,6 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
 
   @override
   Widget build(BuildContext context) {
-    // login();
     return Scaffold(
         appBar: AppBar(
           title: const Text("Add New Faculty"),
@@ -164,7 +155,6 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
             tooltip: "Back",
             onPressed: () => Navigator.pop(context),
           ),
-          // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         ),
         body: Center(
           child: FutureBuilder<QuerySnapshot>(
@@ -175,10 +165,8 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                 if (!snapshot.hasData) {
                   return const CircularProgressIndicator();
                 }
-                // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
                 final items =
                     snapshot.data!.docs.map((doc) => doc.get('name')).toList();
-
                 return Form(
                   key: _formKey,
                   child: Padding(
@@ -216,7 +204,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                               ]),
                           child: DropdownButtonFormField<String>(
                             isExpanded: true,
-                            value: Branch,
+                            value: branch1,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               enabledBorder: InputBorder.none,
@@ -229,11 +217,9 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                             elevation: 16,
                             dropdownColor: Colors.grey[100],
                             style: const TextStyle(color: Colors.black),
-                            // underline:
-                            //     Container(height: 0, color: Colors.black),
                             onChanged: (value) {
                               setState(() {
-                                Branch = value;
+                                branch1 = value;
                               });
                             },
                             items: items.map((item) {
@@ -246,7 +232,7 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                               if (value == null) {
                                 return 'Please select a branch';
                               }
-                              return null; // return null if there's no error
+                              return null;
                             },
                           ),
                         ),
@@ -334,18 +320,12 @@ class _AddFacultyPageState extends State<AddFacultyPage> {
                           children: [
                             ElevatedButton(
                               onPressed: () {
-                                // Validate returns true if the form is valid, otherwise false.
                                 if (_formKey.currentState!.validate()) {
                                   setState(() {
                                     faculty = facultyController.text;
                                     name = nameController.text;
-                                    // department = departmentController.text;
                                     password = passwordController.text;
-
-                                    // addUser();
-                                    // clearText();
                                     registration();
-                                    // Navigator.pop(context);
                                   });
                                   login();
                                 }

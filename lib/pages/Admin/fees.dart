@@ -1,5 +1,3 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +6,6 @@ import 'package:smart_parents/widgest/animation.dart';
 
 class Fees extends StatefulWidget {
   const Fees({Key? key}) : super(key: key);
-
   @override
   State<Fees> createState() => _FeesState();
 }
@@ -16,27 +13,8 @@ class Fees extends StatefulWidget {
 class _FeesState extends State<Fees> {
   Stream<QuerySnapshot> studentsStream =
       FirebaseFirestore.instance.collection('Admin/$admin/fees').snapshots();
-
-  // search() {
-  //   if (searchController.text.trim() == "") {
-  //     studentsStream = FirebaseFirestore.instance
-  //         .collection('Admin/$admin/students')
-  //         .snapshots();
-  //   } else {
-  //     studentsStream = FirebaseFirestore.instance
-  //         .collection('Admin/$admin/students')
-  //         .where('number', isEqualTo: searchController.text.trim())
-  //         // .where('number', isGreaterThanOrEqualTo: searchController.text.trim())
-  //         // .where('number', isLessThanOrEqualTo: searchController.text.trim())
-  //         // .where('fieldName', '>=', '0647031').where('fieldName', '<=', '0647031\uf8ff')
-  //         .snapshots();
-  //   }
-  // }
-
   TextEditingController searchController = TextEditingController();
-
   String number = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +34,6 @@ class _FeesState extends State<Fees> {
               controller: searchController,
               onChanged: (value) {
                 setState(() {
-                  // search();
                   number = value;
                 });
               },
@@ -108,12 +85,6 @@ class _FeesState extends State<Fees> {
                                   child: Column(
                                     children: [
                                       Row(children: [
-                                        // const SizedBox(
-                                        //   width: 10,
-                                        // ),
-                                        // Text(
-                                        //   '${index + 1}',
-                                        // ),
                                         Expanded(
                                           child: Text(
                                             '${storedocs[index]['number']}',
@@ -123,34 +94,18 @@ class _FeesState extends State<Fees> {
                                           ),
                                         ),
                                         Expanded(
-                                          child:
-                                              // Column(
-                                              //   children: <Widget>[
-                                              Text(
+                                          child: Text(
                                             'Fees: ${storedocs[index]['amount']}',
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20.0),
                                           ),
-                                          // Text(
-                                          //   'Name: ${storedocs[index]['name']}',
-                                          //   style: const TextStyle(
-                                          //       fontWeight: FontWeight.bold,
-                                          //       fontSize: 17.0),
-                                          // ),
-                                          //   ],
-                                          // ),
                                         ),
                                       ]),
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      // Row(
-                                      //   children: [
-                                      // Flexible(
-                                      //   child:
                                       Row(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
                                             child: Text(
@@ -171,27 +126,7 @@ class _FeesState extends State<Fees> {
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      // ),
-                                      // Expanded(
-                                      //   child: Column(
-                                      //     children: [
-                                      //       Text(
-                                      //         'Branch : ${storedocs[index]['branch']}',
-                                      //         style: const TextStyle(
-                                      //             fontSize: 13),
-                                      //       ),
-                                      //       Text(
-                                      //         'Batch : ${storedocs[index]['batch']}',
-                                      //         style: const TextStyle(
-                                      //             fontSize: 13),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // Flexible(
-                                      //   child:
                                       Row(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
                                             child: Text(
@@ -200,16 +135,8 @@ class _FeesState extends State<Fees> {
                                                   const TextStyle(fontSize: 13),
                                             ),
                                           ),
-                                          // Text(
-                                          //   'Year : ${storedocs[index]['year']}',
-                                          //   style: const TextStyle(
-                                          //       fontSize: 13),
-                                          // )
                                         ],
                                       ),
-                                      // ),
-                                      //   ],
-                                      // ),
                                     ],
                                   ),
                                 ),
@@ -227,12 +154,6 @@ class _FeesState extends State<Fees> {
                                   child: Column(
                                     children: [
                                       Row(children: [
-                                        // const SizedBox(
-                                        //   width: 10,
-                                        // ),
-                                        // Text(
-                                        //   '${index + 1}',
-                                        // ),
                                         Expanded(
                                           child: Text(
                                             '${storedocs[index]['number']}',
@@ -242,34 +163,18 @@ class _FeesState extends State<Fees> {
                                           ),
                                         ),
                                         Expanded(
-                                          child:
-                                              // Column(
-                                              //   children: <Widget>[
-                                              Text(
+                                          child: Text(
                                             'Fees: ${storedocs[index]['amount']}',
                                             style: const TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 20.0),
                                           ),
-                                          // Text(
-                                          //   'Name: ${storedocs[index]['name']}',
-                                          //   style: const TextStyle(
-                                          //       fontWeight: FontWeight.bold,
-                                          //       fontSize: 17.0),
-                                          // ),
-                                          //   ],
-                                          // ),
                                         ),
                                       ]),
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      // Row(
-                                      //   children: [
-                                      // Flexible(
-                                      //   child:
                                       Row(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
                                             child: Text(
@@ -290,27 +195,7 @@ class _FeesState extends State<Fees> {
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      // ),
-                                      // Expanded(
-                                      //   child: Column(
-                                      //     children: [
-                                      //       Text(
-                                      //         'Branch : ${storedocs[index]['branch']}',
-                                      //         style: const TextStyle(
-                                      //             fontSize: 13),
-                                      //       ),
-                                      //       Text(
-                                      //         'Batch : ${storedocs[index]['batch']}',
-                                      //         style: const TextStyle(
-                                      //             fontSize: 13),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // Flexible(
-                                      //   child:
                                       Row(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
                                             child: Text(
@@ -319,16 +204,8 @@ class _FeesState extends State<Fees> {
                                                   const TextStyle(fontSize: 13),
                                             ),
                                           ),
-                                          // Text(
-                                          //   'Year : ${storedocs[index]['year']}',
-                                          //   style: const TextStyle(
-                                          //       fontSize: 13),
-                                          // )
                                         ],
                                       ),
-                                      // ),
-                                      //   ],
-                                      // ),
                                     ],
                                   ),
                                 ),

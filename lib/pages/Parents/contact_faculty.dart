@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, deprecated_member_use
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
@@ -8,35 +6,16 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ContactF extends StatefulWidget {
   const ContactF({Key? key}) : super(key: key);
-
   @override
-  _ContactFState createState() => _ContactFState();
+  ContactFState createState() => ContactFState();
 }
 
-class _ContactFState extends State<ContactF> {
-  // final List<String> nomPrenom = [
-  //   'Mrs. Binita Acharya (Hod)',
-  //   'Mrs. Nikita Patel (Faculty)',
-  //   'Mrs. Aesha Virani (Faculty)',
-  //   'Mrs. Ankita Makode  (Faculty)',
-  //   'Ms. Mayuri Devganiya (Faculty)',
-  //   'Mrs. Shivani Kaniya (Faculty)'
-  // ];
-  // final List<String> phoneNumber = [
-  //   '1234567890',
-  //   '0987654321',
-  //   '1112223333',
-  //   '4445556666',
-  //   '1478523690',
-  //   '7897897890'
-  // ];
-
+class ContactFState extends State<ContactF> {
   Future<void> _makePhoneCall(String phoneNumber) async {
-    // Use the URL launcher to make the phone call.
     if (phoneNumber != '') {
-      final url = 'tel:$phoneNumber';
-      if (await canLaunch(url)) {
-        await launch(url);
+      final url = Uri.parse('tel:$phoneNumber');
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
       } else {
         throw 'Could not launch $url';
       }
@@ -45,9 +24,9 @@ class _ContactFState extends State<ContactF> {
 
   Future<void> _makeWhatsapp(String phoneNumber) async {
     if (phoneNumber != '') {
-      final url = 'https://wa.me/$phoneNumber';
-      if (await canLaunch(url)) {
-        await launch(url);
+      final url = Uri.parse('https://wa.me/$phoneNumber');
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
       } else {
         throw 'Could not launch $url';
       }
@@ -55,12 +34,11 @@ class _ContactFState extends State<ContactF> {
   }
 
   Future<void> _makeEmail(String emailAddress) async {
-    // Use the URL launcher to launch the email app.
     if (emailAddress != '') {
-      final url =
-          'mailto:$emailAddress?subject=Contact between Faculty and Parents';
-      if (await canLaunch(url)) {
-        await launch(url);
+      final url = Uri.parse(
+          'mailto:$emailAddress?subject=Contact between Faculty and Parents');
+      if (await canLaunchUrl(url)) {
+        await launchUrl(url);
       } else {
         throw 'Could not launch $url';
       }
@@ -88,25 +66,6 @@ class _ContactFState extends State<ContactF> {
         children: [
           Image.asset('assets/images/man.png',
               fit: BoxFit.contain, height: 100, width: 100),
-          // Positioned.fill(
-          //   child: Material(
-          //     color: Colors.transparent,
-          //     child: InkWell(
-          //       onTap: _pickImage,
-          //       child: Center(
-          //         child: Text(
-          //           _imageUrl != null
-          //               ? 'Tap to update photo'
-          //               : 'Tap to add photo',
-          //           style: const TextStyle(
-          //               color: Colors.white,
-          //               fontSize: 16,
-          //               fontWeight: FontWeight.bold),
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // ),
         ],
       );
     }
@@ -158,30 +117,18 @@ class _ContactFState extends State<ContactF> {
                   elevation: 10,
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child:
-                        //  Column(
-                        //   children: [
-                        //     const SizedBox(height: 10),
-                        Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Row(
                       children: [
-                        // const SizedBox(width: 10),
                         _buildPhotoWidget(storedocs[index]['photoUrl'] ?? ''),
                         const SizedBox(width: 10),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          // mainAxisSize: MainAxisSize.max,
                           children: [
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                // leading: const CircleAvatar(
-                                //   backgroundImage: _buildPhotoWidget(),
-                                // ),
-                                // leading:
-                                //     _buildPhotoWidget(storedocs[index]['photoUrl']),
                                 Text('${storedocs[index]['name']}',
                                     style:
                                         const TextStyle(color: Colors.green)),
@@ -204,8 +151,6 @@ class _ContactFState extends State<ContactF> {
                                 TextButton(
                                   child: Image.asset(
                                     'assets/images/whatsapp 24px.png',
-                                    // width: 25,
-                                    // height: 25,
                                   ),
                                   onPressed: () => _makeWhatsapp(
                                       storedocs[index]['mono'] ?? ''),
@@ -236,9 +181,6 @@ class _ContactFState extends State<ContactF> {
                         ),
                       ],
                     ),
-                    //     const SizedBox(height: 10),
-                    //   ],
-                    // ),
                   ),
                 );
               },
@@ -251,94 +193,3 @@ class _ContactFState extends State<ContactF> {
     );
   }
 }
-
-//backup code
-//
-// import 'package:flutter/material.dart';
-
-// class ContactF extends StatefulWidget {
-//   const ContactF({Key? key}) : super(key: key);
-
-//   @override
-//   _ContactFState createState() => _ContactFState();
-// }
-
-// class _ContactFState extends State<ContactF> {
-//   final List<String> nomPrenom = [
-//     'Mrs. Binita Acharya',
-//     'Ms. Nikita Patel',
-//     'Mrs. Aesha Virani',
-//     'Mrs. Ankita Makode',
-//     'Ms. Mayuri Devganiya',
-//     'Mrs. Shivani Kaniya'
-//   ];
-//   final List<String> phoneNumber = [
-//     'Hod',
-//     'Faculty',
-//     'Faculty',
-//     'Faculty',
-//     'Faculty',
-//     'Faculty'
-//   ];
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Contacts'),
-//       ),
-//       body: Container(
-//         decoration: BoxDecoration(
-//           image: DecorationImage(
-//             image: AssetImage('assets/images/background.jpg'),
-//             fit: BoxFit.cover,
-//           ),
-//         ),
-//         child: ListView.separated(
-//           shrinkWrap: true,
-//           padding: const EdgeInsets.all(8),
-//           itemCount: nomPrenom.length,
-//           itemBuilder: (BuildContext context, int index) {
-//             return Card(
-//               color: Colors.white,
-//               borderOnForeground: true,
-//               elevation: 10,
-//               child: Column(
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: [
-//                   ListTile(
-//                     leading: const CircleAvatar(
-//                       backgroundImage: AssetImage('assets/images/man.png'),
-//                     ),
-//                     title: Text(nomPrenom[index],
-//                         style: const TextStyle(color: Colors.green)),
-//                     subtitle: Text(
-//                       phoneNumber[index],
-//                       style: const TextStyle(color: Colors.orangeAccent),
-//                     ),
-//                   ),
-//                   Row(
-//                     mainAxisAlignment: MainAxisAlignment.end,
-//                     children: [
-//                       TextButton(
-//                         child: const Icon(Icons.call),
-//                         onPressed: () {/* ... */},
-//                       ),
-//                       const SizedBox(width: 8),
-//                       TextButton(
-//                         child: const Icon(Icons.mail),
-//                         onPressed: () {/* ... */},
-//                       ),
-//                     ],
-//                   ),
-//                 ],
-//               ),
-//             );
-//           },
-//           separatorBuilder: (BuildContext context, int index) =>
-//               const Divider(),
-//         ),
-//       ),
-//     );
-//   }
-// }

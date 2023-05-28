@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,31 +9,21 @@ class SignUpForm extends StatefulWidget {
   const SignUpForm({
     Key? key,
   }) : super(key: key);
-  // void initState() {
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //     // SystemUiOverlay.bottom,
-  //   ]);
-  // }
-
   @override
-  _SignUpFormState createState() => _SignUpFormState();
+  SignUpFormState createState() => SignUpFormState();
 }
 
-class _SignUpFormState extends State<SignUpForm> {
+class SignUpFormState extends State<SignUpForm> {
   final _formKey = GlobalKey<FormState>();
   CollectionReference admin = FirebaseFirestore.instance.collection('Admin');
   var email = "";
   var password = "";
   var confirmPassword = "";
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     emailController.dispose();
     passwordController.dispose();
     confirmPasswordController.dispose();
@@ -148,7 +136,6 @@ class _SignUpFormState extends State<SignUpForm> {
   }
 
   bool _showPassword = false;
-
   void _togglePasswordVisibility() {
     setState(() {
       _showPassword = !_showPassword;
@@ -165,7 +152,6 @@ class _SignUpFormState extends State<SignUpForm> {
             TextFormField(
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
-              // cursorColor: kPrimaryColor,
               onSaved: (email) {},
               decoration: const InputDecoration(
                 hintText: "Your email",
@@ -189,7 +175,6 @@ class _SignUpFormState extends State<SignUpForm> {
               child: TextFormField(
                 textInputAction: TextInputAction.next,
                 obscureText: !_showPassword,
-                // cursorColor: kPrimaryColor,
                 decoration: InputDecoration(
                   hintText: "Your password",
                   prefixIcon: Padding(
@@ -228,7 +213,6 @@ class _SignUpFormState extends State<SignUpForm> {
               child: TextFormField(
                 textInputAction: TextInputAction.done,
                 obscureText: !_showPassword,
-                // cursorColor: kPrimaryColor,
                 decoration: InputDecoration(
                   hintText: "Confirm Your password",
                   prefixIcon: Padding(

@@ -1,50 +1,31 @@
-// ignore_for_file: prefer_typing_uninitialized_variables, library_private_types_in_public_api, must_be_immutable, depend_on_referenced_packages
-
 import 'package:flutter/material.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/components/sendNotification.dart';
-import 'package:smart_parents/widgest/dropDownWidget.dart';
+import 'package:smart_parents/components/send_notification.dart';
+import 'package:smart_parents/widgest/dropdown_widget.dart';
 
 final _fireStore = FirebaseFirestore.instance;
-// User? loggedInUser;
 String? loggedName;
-var id;
+String? id;
 List<Map<String?, String>> messages = [];
-// String batchyear = DateFormat('yyyy').format(DateTime.now());
 
 class ChatParent extends StatefulWidget {
   const ChatParent({super.key});
-
-  // static String id = 'chat_screen';
   @override
-  _ChatParentState createState() => _ChatParentState();
+  ChatParentState createState() => ChatParentState();
 }
 
-class _ChatParentState extends State<ChatParent> with notification {
+class ChatParentState extends State<ChatParent> with NotificationMixin {
   final messageTextController = TextEditingController();
-  // final _auth = FirebaseAuth.instance;
-
   late String messageText = '';
-
   @override
   void initState() {
     super.initState();
-    // getCurrentUser();
     getUserName();
   }
-
-  // Future<void> getCurrentUser() async {
-  //   try {
-  //     loggedInUser = _auth.currentUser!;
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
 
   final _prefs = SharedPreferences.getInstance();
   void getUserName() async {
@@ -56,7 +37,6 @@ class _ChatParentState extends State<ChatParent> with notification {
   }
 
   void _handleSubmitted(String text) {
-    // Handle the submitted text here
     print('Submitted: $text');
     if (messageText != '') {
       Map<String?, String> messageMap = {
@@ -93,11 +73,10 @@ class _ChatParentState extends State<ChatParent> with notification {
                         .where('batch', isEqualTo: batchyeardropdownValue)
                         .get()),
               });
-    } // Clear the text input field
+    }
   }
 
   void _showNumberPicker(BuildContext context) {
-    // batchyeardropdownValue = batchyear;
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -105,16 +84,15 @@ class _ChatParentState extends State<ChatParent> with notification {
         return AlertDialog(
           scrollable: true,
           title: const Text('Select a Batch'),
-          content: dropdown(
-            DropdownValue: batchyeardropdownValue,
-            sTring: batchList,
-            Hint: "Batch(Starting Year)",
+          content: Dropdown(
+            dropdownValue: batchyeardropdownValue,
+            string: batchList,
+            hint: "Batch(Starting Year)",
           ),
           actions: [
             TextButton(
                 onPressed: () {
                   setState(() {
-                    // batchyear = batchyeardropdownValue;
                     Navigator.of(context).pop();
                   });
                 },
@@ -129,7 +107,6 @@ class _ChatParentState extends State<ChatParent> with notification {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        // color: Colors.transparent,
         image: DecorationImage(
           image: AssetImage(background),
           fit: BoxFit.cover,
@@ -137,15 +114,10 @@ class _ChatParentState extends State<ChatParent> with notification {
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,
-        // backgroundColor: Colors.white,
         appBar: AppBar(
-          // leading: null,
           leading: const BackButton(),
           title: const Text('️Chat with Parents'),
-          // foregroundColor: Colors.white,
           actions: [
-            // const BackButton(),
-            // const Text('️Chat Students'),
             GestureDetector(
               child: TextButton.icon(
                 label: Text(
@@ -163,45 +135,27 @@ class _ChatParentState extends State<ChatParent> with notification {
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.white,
                   ),
-                  // radius: 15,
-                  // foregroundColor: Colors.white,
                   child: Text(
                     batchyeardropdownValue,
                     textAlign: TextAlign.center,
                     style: GoogleFonts.rubik(
-                      // color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 20,
                     ),
                   ),
                 ),
-                // const Icon(Icons.filter_list),
                 onPressed: () {
                   _showNumberPicker(context);
                 },
               ),
             ),
-            // IconButton(
-            //     icon: const Icon(Icons.close),
-            //     onPressed: () {
-            //       _showNumberPicker(context);
-            //     }),
           ],
-          // backgroundColor: const Color(0xff001c55),
         ),
         body: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              // dropdown(
-              //   DropdownValue: batchyeardropdownValue,
-              //   sTring: batchList,
-              //   Hint: "Batch(Starting Year)",
-              // ),
-              // const SizedBox(
-              //   height: 20,
-              // ),
               CustomStreamBuilder(),
               Container(
                 decoration: kMessageContainerDecoration,
@@ -228,16 +182,9 @@ class _ChatParentState extends State<ChatParent> with notification {
                         }
                       },
                       child: TextButton(
-                        // style: const ButtonStyle( ),
-                        // TextButton.icon(
                         onPressed: () {
                           _handleSubmitted(messageTextController.text);
                         },
-                        // icon: const Icon(Icons.send),
-                        // label: const Text(
-                        //   'Send',
-                        //   style: kSendButtonTextStyle,
-                        // ),
                         child: const Text(
                           'Send',
                           style: kSendButtonTextStyle,
@@ -256,12 +203,11 @@ class _ChatParentState extends State<ChatParent> with notification {
 }
 
 class CustomStreamBuilder extends StatelessWidget {
-  late ScrollController _scrollController;
-
-  CustomStreamBuilder({super.key});
-
+  final ScrollController _scrollController;
+  CustomStreamBuilder({Key? key})
+      : _scrollController = ScrollController(),
+        super(key: key);
   void scroll() {
-    _scrollController = ScrollController();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
     });
@@ -269,7 +215,6 @@ class CustomStreamBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print(loggedInUser);
     return StreamBuilder<DocumentSnapshot<Map<String, dynamic>>>(
       stream: _fireStore
           .collection('Admin/$admin/messages_parent')
@@ -280,14 +225,8 @@ class CustomStreamBuilder extends StatelessWidget {
           print(snapshot.error);
         } else if (snapshot.hasData) {
           messages = [];
-
-          // final messagesSnapshot = snapshot.data?.docs;
           Map<String, dynamic>? data = snapshot.data?.data();
-          // data![semesterdropdownValue];
           List<MessageBubble> messageBubbles = [];
-
-          // for (var message in data) {
-          //   Map<String, dynamic> chat = message.data() as Map<String, dynamic>;
           if (data != null) {
             print(batchyeardropdownValue);
             if (data[batchyeardropdownValue] != null) {
@@ -295,7 +234,6 @@ class CustomStreamBuilder extends StatelessWidget {
                   data[batchyeardropdownValue] as List<dynamic>;
               for (var elem in test) {
                 Map<String?, dynamic> tmp = elem as Map<String?, dynamic>;
-
                 tmp.forEach((key, value) {
                   final messageText = value;
                   final messageSender = key;
@@ -311,7 +249,6 @@ class CustomStreamBuilder extends StatelessWidget {
               }
               scroll();
               return Expanded(
-                // child: SingleChildScrollView(
                 child: ListView(
                   controller: _scrollController,
                   padding: const EdgeInsets.symmetric(
@@ -320,7 +257,6 @@ class CustomStreamBuilder extends StatelessWidget {
                   ),
                   children: messageBubbles,
                 ),
-                // ),
               );
             } else {
               print('data[batchyeardropdownValue] == false');
@@ -344,12 +280,9 @@ class MessageBubble extends StatelessWidget {
       required this.messageText,
       required this.messageSender,
       required this.isMineMessage});
-
   final String messageText;
   final String messageSender;
-
   final bool isMineMessage;
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

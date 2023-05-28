@@ -1,14 +1,9 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 
 class TextFieldWidgetForm extends StatefulWidget {
   final String label;
   final String text;
   final ValueChanged<String> onChanged;
-
-  // final TextEditingController controller;
-
   const TextFieldWidgetForm({
     Key? key,
     required this.label,
@@ -16,20 +11,16 @@ class TextFieldWidgetForm extends StatefulWidget {
     required this.onChanged,
     controller,
   }) : super(key: key);
-
   @override
-  _TextFieldWidgetFormState createState() => _TextFieldWidgetFormState();
+  TextFieldWidgetFormState createState() => TextFieldWidgetFormState();
 }
 
-class _TextFieldWidgetFormState extends State<TextFieldWidgetForm> {
+class TextFieldWidgetFormState extends State<TextFieldWidgetForm> {
   late final TextEditingController controller;
-  // String? initialValue;
-  // late bool readOnly;
   @override
   void initState() {
     super.initState();
     controller = TextEditingController(text: widget.text);
-    // initialValue = String();
   }
 
   @override
@@ -56,8 +47,6 @@ class _TextFieldWidgetFormState extends State<TextFieldWidgetForm> {
           Padding(
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: TextFormField(
-              // readOnly: readOnly,
-              // initialValue: initialValue,
               style: const TextStyle(fontSize: 20),
               decoration: InputDecoration(
                 contentPadding:

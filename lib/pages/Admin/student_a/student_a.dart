@@ -1,5 +1,3 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,7 +9,6 @@ import 'package:smart_parents/widgest/animation.dart';
 
 class Student extends StatefulWidget {
   const Student({Key? key}) : super(key: key);
-
   @override
   State<Student> createState() => _StudentState();
 }
@@ -20,28 +17,11 @@ class _StudentState extends State<Student> {
   Stream<QuerySnapshot> studentsStream = FirebaseFirestore.instance
       .collection('Admin/$admin/students')
       .snapshots();
-
   @override
   void initState() {
     super.initState();
     login();
   }
-
-  // search() {
-  //   if (searchController.text.trim() == "") {
-  //     studentsStream = FirebaseFirestore.instance
-  //         .collection('Admin/$admin/students')
-  //         .snapshots();
-  //   } else {
-  //     studentsStream = FirebaseFirestore.instance
-  //         .collection('Admin/$admin/students')
-  //         .where('number', isEqualTo: searchController.text.trim())
-  //         // .where('number', isGreaterThanOrEqualTo: searchController.text.trim())
-  //         // .where('number', isLessThanOrEqualTo: searchController.text.trim())
-  //         // .where('fieldName', '>=', '0647031').where('fieldName', '<=', '0647031\uf8ff')
-  //         .snapshots();
-  //   }
-  // }
 
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/students');
@@ -88,7 +68,6 @@ class _StudentState extends State<Student> {
   }
 
   String number = '';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +87,6 @@ class _StudentState extends State<Student> {
               controller: searchController,
               onChanged: (value) {
                 setState(() {
-                  // search();
                   number = value;
                 });
               },
@@ -163,9 +141,6 @@ class _StudentState extends State<Student> {
                                         const SizedBox(
                                           width: 10,
                                         ),
-                                        // Text(
-                                        //   '${index + 1}',
-                                        // ),
                                         Text(
                                           '${storedocs[index]['batch']}',
                                           style: const TextStyle(
@@ -200,7 +175,6 @@ class _StudentState extends State<Student> {
                                               value: storedocs[index]['status'],
                                               onChanged: (value) {
                                                 setState(() {
-                                                  // _status = value;
                                                   updateStatus(
                                                       storedocs[index]['id'],
                                                       value);
@@ -225,12 +199,7 @@ class _StudentState extends State<Student> {
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      // Row(
-                                      //   children: [
-                                      // Flexible(
-                                      //   child:
                                       Row(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
                                             child: Text(
@@ -248,27 +217,7 @@ class _StudentState extends State<Student> {
                                           ),
                                         ],
                                       ),
-                                      // ),
-                                      // Expanded(
-                                      //   child: Column(
-                                      //     children: [
-                                      //       Text(
-                                      //         'Branch : ${storedocs[index]['branch']}',
-                                      //         style: const TextStyle(
-                                      //             fontSize: 13),
-                                      //       ),
-                                      //       Text(
-                                      //         'Batch : ${storedocs[index]['batch']}',
-                                      //         style: const TextStyle(
-                                      //             fontSize: 13),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // Flexible(
-                                      //   child:
                                       Row(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
                                             child: Text(
@@ -277,16 +226,8 @@ class _StudentState extends State<Student> {
                                                   const TextStyle(fontSize: 13),
                                             ),
                                           ),
-                                          // Text(
-                                          //   'Year : ${storedocs[index]['year']}',
-                                          //   style: const TextStyle(
-                                          //       fontSize: 13),
-                                          // )
                                         ],
                                       ),
-                                      // ),
-                                      //   ],
-                                      // ),
                                       const SizedBox(
                                         height: 15,
                                       ),
@@ -334,9 +275,6 @@ class _StudentState extends State<Student> {
                                         const SizedBox(
                                           width: 10,
                                         ),
-                                        // Text(
-                                        //   '${index + 1}',
-                                        // ),
                                         Text(
                                           '${storedocs[index]['batch']}',
                                           style: const TextStyle(
@@ -395,12 +333,7 @@ class _StudentState extends State<Student> {
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      // Row(
-                                      //   children: [
-                                      // Flexible(
-                                      //   child:
                                       Row(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
                                             child: Text(
@@ -418,27 +351,7 @@ class _StudentState extends State<Student> {
                                           ),
                                         ],
                                       ),
-                                      // ),
-                                      // Expanded(
-                                      //   child: Column(
-                                      //     children: [
-                                      //       Text(
-                                      //         'Branch : ${storedocs[index]['branch']}',
-                                      //         style: const TextStyle(
-                                      //             fontSize: 13),
-                                      //       ),
-                                      //       Text(
-                                      //         'Batch : ${storedocs[index]['batch']}',
-                                      //         style: const TextStyle(
-                                      //             fontSize: 13),
-                                      //       )
-                                      //     ],
-                                      //   ),
-                                      // ),
-                                      // Flexible(
-                                      //   child:
                                       Row(
-                                        // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Expanded(
                                             child: Text(
@@ -447,17 +360,8 @@ class _StudentState extends State<Student> {
                                                   const TextStyle(fontSize: 13),
                                             ),
                                           ),
-
-                                          // Text(
-                                          //   'Year : ${storedocs[index]['year']}',
-                                          //   style: const TextStyle(
-                                          //       fontSize: 13),
-                                          // )
                                         ],
                                       ),
-                                      // ),
-                                      //   ],
-                                      // ),
                                       const SizedBox(
                                         height: 15,
                                       ),
@@ -515,12 +419,6 @@ class _StudentState extends State<Student> {
       floatingActionButton: FloatingActionButton(
         onPressed: () => {
           Navigator.push(context, FloatingAnimation(const AddStudentPage())),
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => const AddStudentPage(),
-          //   ),
-          // )
         },
         child: const Icon(Icons.add),
       ),

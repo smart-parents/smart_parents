@@ -5,7 +5,6 @@ import 'package:smart_parents/pages/Parents/exam_p/addexam.dart';
 
 class Exam extends StatefulWidget {
   const Exam({Key? key}) : super(key: key);
-
   @override
   State<Exam> createState() => _ExamState();
 }
@@ -28,24 +27,14 @@ class _ExamState extends State<Exam> {
               child: CircularProgressIndicator(),
             );
           }
-
           final List storedocs = [];
           snapshot.data!.docs.map((DocumentSnapshot document) {
             Map a = document.data() as Map<String, dynamic>;
             storedocs.add(a);
             a['id'] = document.id;
           }).toList();
-
-          return
-              // MaterialApp(
-              // debugShowCheckedModeBanner: false,
-              // theme: ThemeData(
-              //   primarySwatch: Colors.lightBlue,
-              // ),
-              // home:
-              Scaffold(
+          return Scaffold(
             appBar: AppBar(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
               automaticallyImplyLeading: false,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
@@ -81,25 +70,16 @@ class _ExamState extends State<Exam> {
                               children: [
                                 Text(
                                   'Exam name: ${storedocs[index]['name']}',
-                                  // Enrollment[index],
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20.0),
                                 ),
                                 Text(
                                   'Batch(Starting Year): ${storedocs[index]['batch']}',
-                                  // Enrollment[index],
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20.0),
                                 ),
-                                // Text(
-                                //   'Year: ${storedocs[index]['year']}',
-                                //   // Enrollment[index],
-                                //   style: const TextStyle(
-                                //       fontWeight: FontWeight.bold,
-                                //       fontSize: 20.0),
-                                // ),
                               ],
                             ),
                           ),
@@ -119,7 +99,6 @@ class _ExamState extends State<Exam> {
                       ],
                     ),
                   ),
-            // ),
           );
         });
   }

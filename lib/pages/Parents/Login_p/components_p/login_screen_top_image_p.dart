@@ -5,13 +5,9 @@ class LoginScreenTopImage extends StatelessWidget {
   const LoginScreenTopImage({
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
-    // return SingleChildScrollView(
-    //   child:
     return Column(
       children: [
         const Text(
@@ -24,7 +20,6 @@ class LoginScreenTopImage extends StatelessWidget {
             const Spacer(),
             Expanded(
               flex: 8,
-              // child: SvgPicture.asset("assets/images/Admin.svg"),
               child: Image.asset(
                 "assets/images/Parents.png",
                 height: screenWidth * 0.5,
@@ -35,7 +30,6 @@ class LoginScreenTopImage extends StatelessWidget {
         ),
         const SizedBox(height: defaultPadding * 2),
       ],
-      // ),
     );
   }
 }

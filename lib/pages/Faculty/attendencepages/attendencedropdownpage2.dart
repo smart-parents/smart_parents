@@ -1,35 +1,29 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Faculty/attendencepages/attendencePage.dart';
-import 'package:smart_parents/widgest/dropDownWidget.dart';
+import 'package:smart_parents/pages/Faculty/attendencepages/attendence_page.dart';
+import 'package:smart_parents/widgest/dropdown_widget.dart';
 import 'package:intl/intl.dart';
 
 class Department {
   final String id;
   final String name;
-
   Department(this.id, this.name);
 }
 
 class Subject {
   final String id;
   final String name;
-
   Subject(this.id, this.name);
 }
 
 class AttendenceDropdownpage2 extends StatefulWidget {
   const AttendenceDropdownpage2({Key? key}) : super(key: key);
-
   @override
-  _AttendenceDropdownpage2State createState() =>
-      _AttendenceDropdownpage2State();
+  AttendenceDropdownpage2State createState() => AttendenceDropdownpage2State();
 }
 
-class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
+class AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
   final DateTime _current = DateTime.now();
   DateTime date = DateTime.now();
   String _date = DateFormat('dd-MM-yyyy').format(DateTime.now());
@@ -39,10 +33,8 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
       TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours: 1)));
   String _end = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(hours: 1)));
-  String? Branch;
-  var Sub;
+  String? sub;
   List<Subject> _subjects = [];
-
   @override
   void initState() {
     super.initState();
@@ -54,19 +46,16 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
         await FirebaseFirestore.instance
             .collection('Admin/$admin/subject')
             .get();
-
     final List<Subject> subjects = [];
-
     for (final DocumentSnapshot<Map<String, dynamic>> subjectSnapshot
         in subjectSnapshot.docs) {
       final Subject subject =
           Subject(subjectSnapshot.id, subjectSnapshot.data()!['sub_name']);
       subjects.add(subject);
     }
-
     setState(() {
       _subjects = subjects;
-      Sub = _subjects[0].name;
+      sub = _subjects[0].name;
     });
   }
 
@@ -74,7 +63,6 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
   Widget build(BuildContext context) {
     dynamic fieldTextStyle = const TextStyle(
         color: Colors.cyan, fontSize: 17, fontWeight: FontWeight.w400);
-
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -86,13 +74,10 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
             Padding(
               padding: const EdgeInsets.all(10.0),
               child: Column(children: [
-                // const SizedBox(
-                //   height: 30,
-                // ),
-                dropdown(
-                  DropdownValue: batchyeardropdownValue,
-                  sTring: batchList,
-                  Hint: "Batch(Starting Year)",
+                Dropdown(
+                  dropdownValue: batchyeardropdownValue,
+                  string: batchList,
+                  hint: "Batch(Starting Year)",
                 ),
                 const SizedBox(
                   height: 20,
@@ -128,13 +113,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                           ]),
                       child: DropdownButton<String>(
                         isExpanded: true,
-                        // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                        value: Sub,
-                        // decoration: const InputDecoration(
-                        //   border: InputBorder.none,
-                        //   contentPadding: EdgeInsets.zero,
-                        // ),
-                        // hint: const Text('Select an item'),
+                        value: sub,
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                         elevation: 16,
                         dropdownColor: Colors.grey[100],
@@ -142,7 +121,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                         underline: Container(height: 0, color: Colors.black),
                         onChanged: (value) {
                           setState(() {
-                            Sub = value;
+                            sub = value;
                           });
                         },
                         items: _subjects.map((item) {
@@ -151,12 +130,6 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                             child: Text(item.name),
                           );
                         }).toList(),
-                        // validator: (value) {
-                        //   if (value == null) {
-                        //     return 'Please select a subject';
-                        //   }
-                        //   return null; // return null if there's no error
-                        // },
                       ),
                     ),
                   ],
@@ -173,14 +146,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                       width: 20,
                     ),
                     Expanded(
-                        child:
-                            //  _date.isEmpty
-                            //     ? Text(
-                            //         'Choose Date',
-                            //         style: fieldTextStyle,
-                            //       )
-                            //     :
-                            Text(_date.toString(), style: fieldTextStyle)),
+                        child: Text(_date.toString(), style: fieldTextStyle)),
                     IconButton(
                       icon: Icon(
                         Icons.edit,
@@ -216,14 +182,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                       width: 20,
                     ),
                     Expanded(
-                        child:
-                            // _start.isEmpty
-                            //     ? Text(
-                            //         'Choose Start Time',
-                            //         style: fieldTextStyle,
-                            //       )
-                            //     :
-                            Text(
+                        child: Text(
                       _start,
                       style: fieldTextStyle,
                     )),
@@ -264,14 +223,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                       width: 20,
                     ),
                     Expanded(
-                        child:
-                            // _end.isEmpty
-                            //     ? Text(
-                            //         'Choose Stop Time',
-                            //         style: fieldTextStyle,
-                            //       )
-                            //     :
-                            Text(
+                        child: Text(
                       _end,
                       style: fieldTextStyle,
                     )),
@@ -299,7 +251,6 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                 ),
                 Center(
                   child: Container(
-                    // height: 300,
                     width: 350,
                     padding: const EdgeInsets.symmetric(horizontal: 10.0),
                     decoration: BoxDecoration(
@@ -326,7 +277,6 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                           const SizedBox(
                             height: 10,
                           ),
-                          // Text("Time",style: TextStyle(fontSize: 30),),
                           _date.isEmpty
                               ? Text(
                                   "${_current.toLocal()}".split(' ')[0],
@@ -341,7 +291,7 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                             child: Row(
                               children: [
                                 Expanded(child: Text("Branch: $branch")),
-                                Expanded(child: Text("Subject: $Sub"))
+                                Expanded(child: Text("Subject: $sub"))
                               ],
                             ),
                           ),
@@ -362,19 +312,17 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
                                 Expanded(
                                   child: ElevatedButton(
                                       onPressed: () {
-                                        // if (_formKey.currentState!.validate()) {
                                         Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   AttendencePage(
                                                       batch:
                                                           batchyeardropdownValue,
-                                                      sub: Sub,
+                                                      sub: sub.toString(),
                                                       date: _date,
                                                       start: _start,
                                                       end: _end)),
                                         );
-                                        // }
                                       },
                                       child: const Text("Take Attendence")),
                                 ),
@@ -392,8 +340,5 @@ class _AttendenceDropdownpage2State extends State<AttendenceDropdownpage2> {
         ),
       ),
     );
-    // },
-    // ),
-    // );
   }
 }

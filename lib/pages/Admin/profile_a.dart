@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, use_build_context_synchronously
-
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -14,15 +12,13 @@ import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
   const Profile({Key? key}) : super(key: key);
-
   @override
-  _ProfileState createState() => _ProfileState();
+  ProfileState createState() => ProfileState();
 }
 
-class _ProfileState extends State<Profile> {
+class ProfileState extends State<Profile> {
   String? em;
   final _prefs = SharedPreferences.getInstance();
-
   @override
   void initState() {
     super.initState();
@@ -59,10 +55,8 @@ class _ProfileState extends State<Profile> {
   }
 
   bool _uploading = false;
-
   Uint8List? _imageFile;
   String? _imageUrl;
-
   Future<void> pickImage(ImageSource source) async {
     final picker = ImagePicker();
     try {
@@ -121,9 +115,7 @@ class _ProfileState extends State<Profile> {
         .ref()
         .child('$admin/profile_photos/${user!.uid}.jpg');
     final UploadTask uploadTask = storageRef.putData(_imageFile!);
-
     final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() => null);
-
     final url = (await downloadUrl.ref.getDownloadURL());
     await FirebaseFirestore.instance
         .collection('Admin')
@@ -133,7 +125,6 @@ class _ProfileState extends State<Profile> {
       _imageUrl = url;
       _uploading = false;
     });
-
     print('Image uploaded to Firebase Storage: $_imageUrl');
   }
 
@@ -141,9 +132,7 @@ class _ProfileState extends State<Profile> {
     if (_uploading) {
       return const Center(child: CircularProgressIndicator());
     } else if (_imageUrl != null) {
-      return
-          // Stack(children: [
-          GestureDetector(
+      return GestureDetector(
         onTap: _selectProfileImage,
         child: ImageNetwork(
           image: _imageUrl!,
@@ -161,14 +150,8 @@ class _ProfileState extends State<Profile> {
           onTap: _selectProfileImage,
         ),
       );
-
-      // ]);
     } else {
-      // return Stack(
-      //   children: [
       return Image.asset('assets/images/man.png', fit: BoxFit.cover);
-      // ],
-      // );
     }
   }
 
@@ -195,16 +178,8 @@ class _ProfileState extends State<Profile> {
             Center(
               child: Container(
                 padding: const EdgeInsets.only(top: 25),
-                // width: 414.0,
-                // height: MediaQuery.of(context).size.width * 590.0,
-                // width: MediaQuery.of(context).size.width * 380.0,
-                // color: Colors.blue[50],
                 child: Column(
                   children: [
-                    // const CircleAvatar(
-                    //   radius: 40,
-                    //   backgroundImage: AssetImage('assets/images/man.png'),
-                    // ),
                     GestureDetector(
                       onTap: _selectProfileImage,
                       child: Container(
@@ -240,18 +215,14 @@ class _ProfileState extends State<Profile> {
                       'Admin',
                       style: TextStyle(
                         fontSize: 30,
-                        // color: Color.fromARGB(255, 0, 0, 0),
                       ),
                     ),
                     Container(
-                      // height: 470.0,
-                      // width: 365.0,
                       margin: const EdgeInsets.only(left: 25, right: 25),
                       height: MediaQuery.of(context).size.height * 0.55,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(18),
                           color: kPrimaryColor),
-                      // alignment: Alignment(0.0, -0.9),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -262,22 +233,6 @@ class _ProfileState extends State<Profile> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                // SizedBox(
-                                //   height: 30,
-                                // ),
-                                // Text(
-                                //   // alignment: Alignment(0.0, -0.8),
-                                //   "Enrollment: $number",
-                                //   //  ${snapshot['number']}",
-                                //   // ignore: prefer_const_constructors
-                                //   style: TextStyle(
-                                //     fontSize: 20,
-                                //     color: Color.fromARGB(255, 255, 255, 255),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
                                 Text(
                                   "Email: $email",
                                   style: const TextStyle(
@@ -305,61 +260,12 @@ class _ProfileState extends State<Profile> {
                                     color: Color.fromARGB(255, 255, 255, 255),
                                   ),
                                 ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                // Text(
-                                //   "Branch: $branch",
-                                //   style: TextStyle(
-                                //     fontSize: 20,
-                                //     color: Color.fromARGB(255, 255, 255, 255),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                // Text(
-                                //   "Batch: $batch",
-                                //   style: TextStyle(
-                                //     fontSize: 20,
-                                //     color: Color.fromARGB(255, 255, 255, 255),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                // Text(
-                                //   "Semester: $sem",
-                                //   style: TextStyle(
-                                //     fontSize: 20,
-                                //     color: Color.fromARGB(255, 255, 255, 255),
-                                //   ),
-                                // ),
-                                // SizedBox(
-                                //   height: 10,
-                                // ),
-                                // Text(
-                                //   "Year: $year",
-                                //   style: TextStyle(
-                                //     fontSize: 20,
-                                //     color: Color.fromARGB(255, 255, 255, 255),
-                                //   ),
-                                // ),
                               ],
                             ),
                           ),
-                          // Align(
-                          //   alignment: Alignment(0, 0),
-                          // child:
                           Row(
-                            // crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              // Positioned(
-                              //   // width: double.infinity,
-                              //   bottom: 0,
-                              //   left: 0,
-                              //   child:
                               Expanded(
                                 child: TextButton.icon(
                                   onPressed: () async => {
@@ -370,14 +276,13 @@ class _ProfileState extends State<Profile> {
                                           id: "$em",
                                         ),
                                       ),
-                                    ) // (route) => false)
+                                    )
                                   },
                                   icon: const Icon(
                                     Icons.info_outline,
                                     color: Colors.white,
                                   ),
                                   label: const Text(
-                                    // 'Edit Profile',
                                     'Edit Details',
                                     style: TextStyle(
                                       fontSize: 20,
@@ -386,21 +291,9 @@ class _ProfileState extends State<Profile> {
                                   ),
                                 ),
                               ),
-                              // ),
-                              // const SizedBox(
-                              //   height: 5,
-                              // ),
-                              // Positioned(
-                              //   // width: double.infinity,
-                              //   bottom: 0,
-                              //   right: 0,
-                              //   child:
                               Expanded(
                                 child: TextButton.icon(
                                   onPressed: () async => {
-                                    // await FirebaseAuth.instance.signOut(),
-                                    // delete(),
-                                    // await storage.delete(key: "uid"),
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -414,7 +307,6 @@ class _ProfileState extends State<Profile> {
                                     color: Colors.white,
                                   ),
                                   label: const Text(
-                                    // 'Change Password',
                                     'Change Password',
                                     style: TextStyle(
                                       fontSize: 20,

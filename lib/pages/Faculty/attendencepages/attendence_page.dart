@@ -1,11 +1,8 @@
-// ignore_for_file: file_names, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables, deprecated_member_use
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/user_main_f.dart';
-// import 'package:smart_parents/pages/Faculty/attendencepages/att.dart';
 
 class AttendencePage extends StatefulWidget {
   const AttendencePage(
@@ -22,22 +19,20 @@ class AttendencePage extends StatefulWidget {
   final String end;
   final String date;
   @override
-  _AttendencePageState createState() => _AttendencePageState();
+  AttendencePageState createState() => AttendencePageState();
 }
 
 class Name {
   final String id;
   final String name;
-
   Name(this.id, this.name);
 }
 
-class _AttendencePageState extends State<AttendencePage> {
+class AttendencePageState extends State<AttendencePage> {
   List<Name> studentvar = [];
   List attd = [];
   List color = [];
   List number = [];
-
   @override
   void initState() {
     super.initState();
@@ -45,17 +40,13 @@ class _AttendencePageState extends State<AttendencePage> {
   }
 
   List<Map<String?, String>> attendance = [];
-
   void _updateAttendance() async {
-    // var datetime = DateTime.now();
     Map<String, dynamic> attendanceMap = {};
     for (int i = 0; i < studentvar.length; i++) {
       attendanceMap[number[i]] = attd[i] == 'P' ? true : false;
     }
     await FirebaseFirestore.instance
         .collection('Admin/$admin/attendance')
-        // .doc(widget.sub)
-        // .collection('lectures')
         .doc('${widget.date}_${widget.start}_${widget.end}')
         .set({
       'date': widget.date,
@@ -70,37 +61,6 @@ class _AttendencePageState extends State<AttendencePage> {
 
   void _handleSubmitted() {
     _updateAttendance();
-
-    // for (int state = 0; state < attd.length; state++) {
-    //   Map<String?, String> attendanceMap = {
-    //     number[state]: attd[state],
-    //   };
-    //   attendance.add(attendanceMap);
-    //   _fireStore
-    //       .collection('Admin/$admin/attendance')
-    //       .doc(widget.sub)
-    //       .get()
-    //       .then((value) => {
-    //             if (value.exists)
-    //               {
-    //                 _fireStore
-    //                     .collection('Admin/$admin/attendance')
-    //                     .doc(widget.sub)
-    //                     .update({
-    //                   "${widget.date}_${widget.start}_${widget.end}": attendance
-    //                 })
-    //               }
-    //             else
-    //               {
-    //                 _fireStore
-    //                     .collection('Admin/$admin/attendance')
-    //                     .doc(widget.sub)
-    //                     .set({
-    //                   "${widget.date}_${widget.start}_${widget.end}": attendance
-    //                 })
-    //               }
-    //           });
-    // }
   }
 
   Future<void> _fetchNames() async {
@@ -113,7 +73,6 @@ class _AttendencePageState extends State<AttendencePage> {
             .orderBy('number')
             .orderBy('name')
             .get();
-
     final List<Name> names = [];
     final List nu = [];
     final List ad = [];
@@ -126,7 +85,6 @@ class _AttendencePageState extends State<AttendencePage> {
       ad.add('P');
       co.add(const Color(0xff00CE2D));
     }
-
     setState(() {
       studentvar = names;
       number = nu;
@@ -139,7 +97,7 @@ class _AttendencePageState extends State<AttendencePage> {
       DialogType dialogType, BuildContext context, VoidCallback onOkPress) {
     AwesomeDialog(
       context: context,
-      animType: AnimType.TOPSLIDE,
+      animType: AnimType.topSlide,
       dialogType: dialogType,
       title: title,
       desc: msg,
@@ -158,18 +116,6 @@ class _AttendencePageState extends State<AttendencePage> {
       ),
       body: Column(
         children: [
-          // const SizedBox(
-          //   height: 15.0,
-          // ),
-          // const Center(
-          //   child: Text(
-          //     "Select those who are present and \n     long press for more options",
-          //     style: TextStyle(
-          //         fontSize: 15,
-          //         color: Colors.grey,
-          //         fontWeight: FontWeight.w600),
-          //   ),
-          // ),
           const SizedBox(
             height: 20,
           ),
@@ -199,14 +145,11 @@ class _AttendencePageState extends State<AttendencePage> {
                       showAlertDialogOnOkCallback(
                           'Success !',
                           'Attendance Successfully Submitted.',
-                          DialogType.SUCCES,
+                          DialogType.success,
                           context,
                           () => Navigator.of(context).push(
                                 MaterialPageRoute(
-                                    builder: (context) => const UserMainF(
-                                        // sub: widget.sub,
-                                        // studentId: '206470316022',
-                                        )),
+                                    builder: (context) => const UserMainF()),
                               )),
                     },
                     child: const Text('Submit'),
@@ -228,11 +171,11 @@ class _AttendencePageState extends State<AttendencePage> {
       onTap: () {
         setState(() {
           if (attd[index] == 'P') {
-            ChangeState(attd, index, 'A');
-            ChangeColor(attd, index);
+            changeState(attd, index, 'A');
+            changeColor(attd, index);
           } else {
-            ChangeState(attd, index, 'P');
-            ChangeColor(attd, index);
+            changeState(attd, index, 'P');
+            changeColor(attd, index);
           }
         });
       },
@@ -262,11 +205,11 @@ class _AttendencePageState extends State<AttendencePage> {
     );
   }
 
-  void ChangeState(List isSelectedList, int value, String i) {
+  void changeState(List isSelectedList, int value, String i) {
     isSelectedList[value] = i;
   }
 
-  void ChangeColor(List isSelectedList, int index) {
+  void changeColor(List isSelectedList, int index) {
     if (isSelectedList[index] == 'P') {
       color[index] = const Color(0xff00CE2D);
       print("changed to : $isSelectedList");

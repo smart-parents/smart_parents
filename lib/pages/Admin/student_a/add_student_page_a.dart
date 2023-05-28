@@ -1,46 +1,31 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously, non_constant_identifier_names, prefer_typing_uninitialized_variables, no_leading_underscores_for_local_identifiers
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/widgest/dropDownWidget.dart';
+import 'package:smart_parents/widgest/dropdown_widget.dart';
 
 class AddStudentPage extends StatefulWidget {
   const AddStudentPage({Key? key}) : super(key: key);
-// void initState() {
-//     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-//       // SystemUiOverlay.bottom,
-//     ]);
-// }
   @override
-  _AddStudentPageState createState() => _AddStudentPageState();
+  AddStudentPageState createState() => AddStudentPageState();
 }
 
-class _AddStudentPageState extends State<AddStudentPage> {
+class AddStudentPageState extends State<AddStudentPage> {
   final _formKey = GlobalKey<FormState>();
-
   var name = "";
   var number = "";
   var password = "";
-  String? Branch;
-  // var sem;
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
+  String? branch1;
   final nameController = TextEditingController();
   final numberController = TextEditingController();
   final passwordController = TextEditingController();
-  // final semController = TextEditingController();
-
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     nameController.dispose();
     numberController.dispose();
     passwordController.dispose();
-    // semController.dispose();
     super.dispose();
   }
 
@@ -48,7 +33,6 @@ class _AddStudentPageState extends State<AddStudentPage> {
     nameController.clear();
     numberController.clear();
     passwordController.clear();
-    // semController.clear();
   }
 
   @override
@@ -72,7 +56,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
             'name': name,
             'number': number,
             'password': password,
-            'branch': Branch,
+            'branch': branch1,
             'status': true,
             'batch': batchyeardropdownValue
           })
@@ -161,7 +145,6 @@ class _AddStudentPageState extends State<AddStudentPage> {
           tooltip: "Back",
           onPressed: () => Navigator.of(context).pop(),
         ),
-        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
       ),
       body: Center(
         child: FutureBuilder<QuerySnapshot>(
@@ -172,10 +155,8 @@ class _AddStudentPageState extends State<AddStudentPage> {
               if (!snapshot.hasData) {
                 return const CircularProgressIndicator();
               }
-              // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
               final items =
                   snapshot.data!.docs.map((doc) => doc.get('name')).toList();
-              // Branch = items[0];
               return Form(
                 key: _formKey,
                 child: Padding(
@@ -213,7 +194,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
                             ]),
                         child: DropdownButtonFormField<String>(
                           isExpanded: true,
-                          value: Branch,
+                          value: branch1,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,
@@ -225,11 +206,9 @@ class _AddStudentPageState extends State<AddStudentPage> {
                           elevation: 16,
                           dropdownColor: Colors.grey[100],
                           style: const TextStyle(color: Colors.black),
-                          // underline:
-                          //     Container(height: 0, color: Colors.black),
                           onChanged: (value) {
                             setState(() {
-                              Branch = value;
+                              branch1 = value;
                             });
                           },
                           items: items.map((item) {
@@ -242,28 +221,21 @@ class _AddStudentPageState extends State<AddStudentPage> {
                             if (value == null) {
                               return 'Please select a branch';
                             }
-                            return null; // return null if there's no error
+                            return null;
                           },
                         ),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      dropdown(
-                        DropdownValue: batchyeardropdownValue,
-                        sTring: batchList,
-                        Hint: "Batch(Starting Year)",
+                      Dropdown(
+                        dropdownValue: batchyeardropdownValue,
+                        string: batchList,
+                        hint: "Batch(Starting Year)",
                       ),
                       const SizedBox(
                         height: 20,
                       ),
-                      // dropdown(
-                      //     DropdownValue: semesterdropdownValue,
-                      //     sTring: Semester,
-                      //     Hint: "Semester"),
-                      // const SizedBox(
-                      //   height: 20,
-                      // ),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10.0),
                         child: TextFormField(
@@ -309,29 +281,6 @@ class _AddStudentPageState extends State<AddStudentPage> {
                           },
                         ),
                       ),
-                      // Container(
-                      //   margin: const EdgeInsets.symmetric(vertical: 10.0),
-                      //   child: TextFormField(
-                      //     maxLength: 1,
-                      //     autofocus: false,
-                      //     decoration: const InputDecoration(
-                      //       labelText: 'Semester: ',
-                      //       labelStyle: TextStyle(fontSize: 20.0),
-                      //       border: OutlineInputBorder(),
-                      //       errorStyle: TextStyle(fontSize: 15),
-                      //     ),
-                      //     keyboardType: TextInputType.number,
-                      //     controller: semController,
-                      //     validator: (value) {
-                      //       if (value == null || value.isEmpty) {
-                      //         return 'Please Enter Semester';
-                      //       } else if (value.length != 1) {
-                      //         return 'Please Enter Valid Semester';
-                      //       }
-                      //       return null;
-                      //     },
-                      //   ),
-                      // ),
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10.0),
                         child: TextFormField(
@@ -373,15 +322,12 @@ class _AddStudentPageState extends State<AddStudentPage> {
                         children: [
                           ElevatedButton(
                             onPressed: () {
-                              // Validate returns true if the form is valid, otherwise false.
                               if (_formKey.currentState!.validate()) {
                                 setState(() {
                                   name = nameController.text;
                                   number = numberController.text;
                                   password = passwordController.text;
-                                  // sem = semController.text;
                                   registration();
-                                  // Navigator.pop(context);
                                 });
                                 login();
                               }

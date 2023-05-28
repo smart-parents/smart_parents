@@ -1,5 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages, library_private_types_in_public_api, non_constant_identifier_names, prefer_typing_uninitialized_variables, deprecated_member_use
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -7,17 +5,9 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
 import 'package:intl/intl.dart';
 
-// class Department {
-//   final String id;
-//   final String name;
-
-//   Department(this.id, this.name);
-// }
-
 class Subject {
   final String id;
   final String name;
-
   Subject(this.id, this.name);
 }
 
@@ -39,20 +29,18 @@ class EditSchedule extends StatefulWidget {
   final String type;
   final String subject;
   final String day;
-
   @override
-  _EditScheduleState createState() => _EditScheduleState();
+  EditScheduleState createState() => EditScheduleState();
 }
 
-class _EditScheduleState extends State<EditSchedule> {
+class EditScheduleState extends State<EditSchedule> {
   TimeOfDay start = TimeOfDay.now();
   String _start = DateFormat('hh:mm a').format(DateTime.now());
   TimeOfDay end =
       TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours: 1)));
   String _end = DateFormat('hh:mm a')
       .format(DateTime.now().add(const Duration(hours: 1)));
-  String? Branch;
-  var Sub;
+  String? sub;
   List<Subject> _subjects = [];
   List<String> type = ['Lecture', 'Lab'];
   int selectedIndex = 0;
@@ -66,7 +54,7 @@ class _EditScheduleState extends State<EditSchedule> {
     DateTime end0 = DateFormat('hh:mm a').parse(widget.end);
     end = TimeOfDay.fromDateTime(end0);
     _end = widget.end;
-    Sub = widget.subject;
+    sub = widget.subject;
     if (widget.type == 'Lecture') {
       selectedIndex = 0;
     } else if (widget.type == 'Lab') {
@@ -74,68 +62,25 @@ class _EditScheduleState extends State<EditSchedule> {
     }
   }
 
-  void update_schedule() async {
+  void updateSchedule() async {
     var fullhour = DateFormat('HH:mm')
         .format(DateTime(2022, 1, 1, start.hour, start.minute));
-    // FirebaseFirestore.instance
-    //     .collection('Admin/$admin/schedule')
-    //     .doc('${branch}_$semesterdropdownValue')
-    //     .get()
-    //     .then((value) async => {
-    // if (value.exists)
-    //   {
-    //     await
     FirebaseFirestore.instance
         .collection('Admin')
         .doc(admin)
         .collection('schedule')
         .doc('${branch}_${widget.batch}')
-        // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
         .collection('timetable')
         .doc(widget.day)
         .collection('entries')
         .doc(widget.doc)
         .set({
-      // 'subject': "$Sub (${type[selectedIndex]})",
-      'subject': "$Sub",
+      'subject': "$sub",
       'type': type[selectedIndex],
       'startTime': _start,
       'start24': fullhour,
       'endTime': _end,
     });
-    // }
-    // else
-    //   {
-    //     await FirebaseFirestore.instance
-    //         .collection('Admin/$admin/schedule')
-    //         // .doc(widget.sub)
-    //         // .collection('lectures')
-    //         .doc('${branch}_$semesterdropdownValue')
-    //         .set({
-    //       // 'day': daysdropdownValue,
-    //       'branch': branch,
-    //       'sem': semesterdropdownValue,
-    //       // 'subject': Sub,
-    //       // 'start': _start,
-    //       // 'end': _end,
-    //     }),
-    //     await FirebaseFirestore.instance
-    //         .collection('Admin')
-    //         .doc(admin)
-    //         .collection('schedule')
-    //         .doc('${branch}_$semesterdropdownValue')
-    //         // .doc('${branch}_${semesterdropdownValue}_$daysdropdownValue')
-    //         .collection('timetable')
-    //         .doc(daysdropdownValue)
-    //         .collection('entries')
-    //         .add({
-    //       'subject': "$Sub (${type[selectedIndex]})",
-    //       'startTime': _start,
-    //       'start24': fullhour,
-    //       'endTime': _end,
-    //     })
-    //   }
-    // });
   }
 
   Future<void> _fetchSubjects() async {
@@ -143,19 +88,15 @@ class _EditScheduleState extends State<EditSchedule> {
         await FirebaseFirestore.instance
             .collection('Admin/$admin/subject')
             .get();
-
     final List<Subject> subjects = [];
-
     for (final DocumentSnapshot<Map<String, dynamic>> subjectSnapshot
         in subjectSnapshot.docs) {
       final Subject subject =
           Subject(subjectSnapshot.id, subjectSnapshot.data()!['sub_name']);
       subjects.add(subject);
     }
-
     setState(() {
       _subjects = subjects;
-      // Sub = _subjects[0].name;
     });
   }
 
@@ -163,7 +104,7 @@ class _EditScheduleState extends State<EditSchedule> {
       DialogType dialogType, BuildContext context, VoidCallback onOkPress) {
     AwesomeDialog(
       context: context,
-      animType: AnimType.TOPSLIDE,
+      animType: AnimType.topSlide,
       dialogType: dialogType,
       title: title,
       desc: msg,
@@ -206,13 +147,6 @@ class _EditScheduleState extends State<EditSchedule> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // dropdown(
-                    //     DropdownValue: semesterdropdownValue,
-                    //     sTring: Semester,
-                    //     Hint: "Semester"),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
                     const Text(
                       "Subject",
                       style: TextStyle(fontSize: 20),
@@ -242,13 +176,7 @@ class _EditScheduleState extends State<EditSchedule> {
                           ]),
                       child: DropdownButton<String>(
                         isExpanded: true,
-                        // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                        value: Sub,
-                        // decoration: const InputDecoration(
-                        //   border: InputBorder.none,
-                        //   contentPadding: EdgeInsets.zero,
-                        // ),
-                        // hint: const Text('Select an item'),
+                        value: sub,
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                         elevation: 16,
                         dropdownColor: Colors.grey[100],
@@ -256,7 +184,7 @@ class _EditScheduleState extends State<EditSchedule> {
                         underline: Container(height: 0, color: Colors.black),
                         onChanged: (value) {
                           setState(() {
-                            Sub = value;
+                            sub = value;
                           });
                         },
                         items: _subjects.map((item) {
@@ -265,12 +193,6 @@ class _EditScheduleState extends State<EditSchedule> {
                             child: Text(item.name),
                           );
                         }).toList(),
-                        // validator: (value) {
-                        //   if (value == null) {
-                        //     return 'Please select a subject';
-                        //   }
-                        //   return null; // return null if there's no error
-                        // },
                       ),
                     ),
                   ],
@@ -278,23 +200,6 @@ class _EditScheduleState extends State<EditSchedule> {
                 const SizedBox(
                   height: 20,
                 ),
-                // dropdown(
-                //     DropdownValue: daysdropdownValue,
-                //     sTring: Days,
-                //     Hint: "Day"),
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                // Text(
-                //       DateFormat('E, dd MMM').format(dates[_selectedIndex]),
-                //       style: GoogleFonts.rubik(
-                //           fontSize: 30,
-                //           color: kPrimaryColor,
-                //           fontWeight: FontWeight.bold),
-                //     ),
-                // const SizedBox(
-                //   height: 20,
-                // ),
                 Row(
                   children: <Widget>[
                     const Icon(
@@ -304,14 +209,7 @@ class _EditScheduleState extends State<EditSchedule> {
                       width: 20,
                     ),
                     Expanded(
-                        child:
-                            // _start.isEmpty
-                            //     ? Text(
-                            //         'Choose Start Time',
-                            //         style: fieldTextStyle,
-                            //       )
-                            //     :
-                            Text(
+                        child: Text(
                       _start,
                       style: fieldTextStyle,
                     )),
@@ -352,14 +250,7 @@ class _EditScheduleState extends State<EditSchedule> {
                       width: 20,
                     ),
                     Expanded(
-                        child:
-                            // _end.isEmpty
-                            //     ? Text(
-                            //         'Choose Stop Time',
-                            //         style: fieldTextStyle,
-                            //       )
-                            //     :
-                            Text(
+                        child: Text(
                       _end,
                       style: fieldTextStyle,
                     )),
@@ -404,11 +295,11 @@ class _EditScheduleState extends State<EditSchedule> {
                                         ),
                                         TextButton(
                                           onPressed: () => {
-                                            update_schedule(),
+                                            updateSchedule(),
                                             showAlertDialogOnOkCallback(
                                                 'Success !',
                                                 'Schedule Successfully Updatted.',
-                                                DialogType.SUCCES,
+                                                DialogType.success,
                                                 context,
                                                 () => Navigator.of(context)
                                                     .pushAndRemoveUntil(
@@ -435,9 +326,6 @@ class _EditScheduleState extends State<EditSchedule> {
         ),
       ),
     );
-    // },
-    // ),
-    // );
   }
 
   void changeIndex(int index) {

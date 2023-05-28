@@ -5,7 +5,6 @@ class SignUpScreenTopImage extends StatelessWidget {
   const SignUpScreenTopImage({
     Key? key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -21,10 +20,8 @@ class SignUpScreenTopImage extends StatelessWidget {
             const Spacer(),
             Expanded(
               flex: 8,
-              // child: SvgPicture.asset("assets/images/Admin.svg"),
               child: Image.asset(
                 "assets/images/Admin.png",
-                // height: 100,
                 height: screenWidth * 0.5,
               ),
             ),

@@ -1,4 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, use_build_context_synchronously
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
@@ -6,7 +5,6 @@ import 'package:smart_parents/components/pdfshow.dart';
 
 class Result extends StatefulWidget {
   const Result({Key? key}) : super(key: key);
-
   @override
   State<Result> createState() => _ResultState();
 }
@@ -17,7 +15,6 @@ class _ResultState extends State<Result> {
       .where('branch', isEqualTo: branch)
       .where('batch', isEqualTo: batch)
       .snapshots();
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -81,7 +78,6 @@ class _ResultState extends State<Result> {
                                       children: <Widget>[
                                         Text(
                                           '${storedocs[index]['subject']}',
-                                          // Enrollment[index],
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20),
@@ -89,123 +85,12 @@ class _ResultState extends State<Result> {
                                         const SizedBox(
                                           height: 10,
                                         ),
-                                        // Text(
-                                        //   'Branch : ${storedocs[index]['branch']}',
-                                        //   style: const TextStyle(fontSize: 15),
-                                        // ),
-                                        // const SizedBox(
-                                        //   height: 10,
-                                        // ),
                                         Text(
                                           'Date : ${storedocs[index]['date']}',
                                           style: const TextStyle(fontSize: 15),
                                         ),
-                                        // const SizedBox(
-                                        //   height: 10,
-                                        // ),
-                                        // Text(
-                                        //   'Batch(Starting Year) : ${storedocs[index]['batch']}',
-                                        //   style: const TextStyle(fontSize: 15),
-                                        // ),
                                       ],
                                     ),
-                                    // Column(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.start,
-                                    //   children: [
-                                    //     // Text(
-                                    //     //   'Batch(Starting Year) : ${storedocs[index]['batch']}',
-                                    //     //   style: const TextStyle(fontSize: 15),
-                                    //     // ),
-                                    //     // const SizedBox(
-                                    //     //   height: 10,
-                                    //     // ),
-                                    //     Text(
-                                    //       'Branch : ${storedocs[index]['branch']}',
-                                    //       style: const TextStyle(fontSize: 15),
-                                    //     ),
-
-                                    //   ],
-                                    // ),
-                                    // Column(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.start,
-                                    //   children: [
-                                    //     const Text("Delete"),
-                                    //     IconButton(
-                                    //       highlightColor: red,
-                                    //       onPressed: () async {
-                                    //         showDialog(
-                                    //           context: context,
-                                    //           builder: (BuildContext context) {
-                                    //             return AlertDialog(
-                                    //               title: const Text(
-                                    //                   "Confirm Delete"),
-                                    //               content: const Text(
-                                    //                   "Are you sure you want to delete this item?"),
-                                    //               actions: [
-                                    //                 TextButton(
-                                    //                   child:
-                                    //                       const Text("CANCEL"),
-                                    //                   onPressed: () {
-                                    //                     Navigator.of(context)
-                                    //                         .pop();
-                                    //                   },
-                                    //                 ),
-                                    //                 TextButton(
-                                    //                   child:
-                                    //                       const Text("DELETE"),
-                                    //                   onPressed: () {
-                                    //                     // Perform the deletion here
-                                    //                     // ...
-                                    //                     try {
-                                    //                       // await delete(storedocs[index]
-                                    //                       //         ['number'] +
-                                    //                       //     '@sps.com');
-                                    //                       deleteUser(
-                                    //                           storedocs[index]
-                                    //                               ['id']);
-                                    //                       ScaffoldMessenger.of(
-                                    //                               context)
-                                    //                           .showSnackBar(
-                                    //                         const SnackBar(
-                                    //                             content: Text(
-                                    //                                 'Notice deleted.')),
-                                    //                       );
-                                    //                     } catch (e) {
-                                    //                       print(e);
-                                    //                       ScaffoldMessenger.of(
-                                    //                               context)
-                                    //                           .showSnackBar(
-                                    //                         SnackBar(
-                                    //                             content: Text(
-                                    //                                 'Failed to delete Notice: $e')),
-                                    //                       );
-                                    //                     }
-                                    //                     Navigator.of(context)
-                                    //                         .pop();
-                                    //                   },
-                                    //                 ),
-                                    //               ],
-                                    //             );
-                                    //           },
-                                    //         );
-                                    //       },
-                                    //       icon: const Icon(
-                                    //         Icons.delete,
-                                    //         color: red,
-                                    //       ),
-                                    //     ),
-                                    //     // Switch(
-                                    //     //   value: isActive[index],
-                                    //     //   onChanged: (bool newValue) {
-                                    //     //     setState(() {
-                                    //     //       isActive[index] = !isActive[index];
-                                    //     //     });
-                                    //     //   },
-                                    //     // ),
-                                    //   ],
-                                    // ),
                                   ],
                                 ),
                               ],

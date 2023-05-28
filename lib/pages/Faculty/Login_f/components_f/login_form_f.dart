@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -12,22 +10,17 @@ class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
   }) : super(key: key);
-  // void initState() {
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-  // }
   @override
-  _LoginFormState createState() => _LoginFormState();
+  LoginFormState createState() => LoginFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   var faculty = "";
   var password = "";
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  // final storage = new FlutterSecureStorage();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-
   check() async {
     final snapShot = await FirebaseFirestore.instance
         .collection('Users')
@@ -44,7 +37,6 @@ class _LoginFormState extends State<LoginForm> {
         for (QueryDocumentSnapshot<Map<String, dynamic>> doc in snapShot.docs) {
           admin = doc.get('admin');
         }
-        // await storage.write(key: "uid", value: userCredential.user?.uid);
         final SharedPreferences prefs = await _prefs;
         await prefs.setString('uid', userCredential.user?.uid as String);
         await prefs.setString('role', 'faculty');
@@ -99,14 +91,12 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
   }
 
   bool _showPassword = false;
-
   void _togglePasswordVisibility() {
     setState(() {
       _showPassword = !_showPassword;
@@ -117,7 +107,6 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      // child: SingleChildScrollView(
       child: Column(
         children: [
           TextFormField(

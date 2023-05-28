@@ -1,33 +1,24 @@
-// ignore_for_file: camel_case_types, deprecated_member_use, unused_import, use_build_context_synchronously
-
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-
 import 'package:flutter/material.dart';
-// import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:image_network/image_network.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/change_password.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/Student/dashboard_s.dart';
 import 'package:smart_parents/pages/Student/edit_s.dart';
-import 'package:smart_parents/pages/option.dart';
 
-class Profile_screenS extends StatefulWidget {
-  const Profile_screenS({super.key});
-
+class ProfileScreenS extends StatefulWidget {
+  const ProfileScreenS({super.key});
   @override
-  State<Profile_screenS> createState() => _Profile_screenSState();
+  State<ProfileScreenS> createState() => _ProfileScreenSState();
 }
 
-class _Profile_screenSState extends State<Profile_screenS> {
+class _ProfileScreenSState extends State<ProfileScreenS> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   String? email = FirebaseAuth.instance.currentUser!.email;
-
   @override
   void initState() {
     main();
@@ -39,7 +30,7 @@ class _Profile_screenSState extends State<Profile_screenS> {
   main() async {
     final SharedPreferences prefs = await _prefs;
     id = prefs.getString('id');
-     final doc = await FirebaseFirestore.instance
+    final doc = await FirebaseFirestore.instance
         .collection('Admin/$admin/students')
         .doc(id)
         .get();
@@ -49,9 +40,6 @@ class _Profile_screenSState extends State<Profile_screenS> {
   }
 
   bool _uploading = false;
-
- 
-
   Future<void> _selectProfileImage() async {
     showModalBottomSheet(
       context: context,
@@ -83,7 +71,6 @@ class _Profile_screenSState extends State<Profile_screenS> {
 
   Uint8List? _imageFile;
   String? _imageUrl;
-
   Future<void> pickImage(ImageSource source) async {
     final picker = ImagePicker();
     try {
@@ -113,9 +100,7 @@ class _Profile_screenSState extends State<Profile_screenS> {
         .ref()
         .child('$admin/profile_photos/${user!.uid}.jpg');
     final UploadTask uploadTask = storageRef.putData(_imageFile!);
-
     final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() => null);
-
     final url = (await downloadUrl.ref.getDownloadURL());
     await FirebaseFirestore.instance
         .collection('Admin/$admin/students')
@@ -125,7 +110,6 @@ class _Profile_screenSState extends State<Profile_screenS> {
       _imageUrl = url;
       _uploading = false;
     });
-
     print('Image uploaded to Firebase Storage: $_imageUrl');
   }
 
@@ -133,9 +117,7 @@ class _Profile_screenSState extends State<Profile_screenS> {
     if (_uploading) {
       return const Center(child: CircularProgressIndicator());
     } else if (_imageUrl != null) {
-      return
-          // Stack(children: [
-          GestureDetector(
+      return GestureDetector(
         onTap: _selectProfileImage,
         child: ImageNetwork(
           image: _imageUrl!,
@@ -153,14 +135,8 @@ class _Profile_screenSState extends State<Profile_screenS> {
           onTap: _selectProfileImage,
         ),
       );
-
-      // ]);
     } else {
-      // return Stack(
-      //   children: [
       return Image.asset('assets/images/man.png', fit: BoxFit.cover);
-      // ],
-      // );
     }
   }
 
@@ -185,9 +161,7 @@ class _Profile_screenSState extends State<Profile_screenS> {
           var name = data['name'];
           var email = data['email'];
           var mono = data['mono'];
-          // var year = data['year'];
           var branch = data['branch'];
-          // var sem = data['sem'];
           var batch = data['batch'];
           var dob = data['dob'];
           var age = data['age'];
@@ -345,27 +319,6 @@ class _Profile_screenSState extends State<Profile_screenS> {
                                   const SizedBox(
                                     height: 10,
                                   ),
-                                  // Text(
-                                  //   "Batch: $batch",
-                                  //   style: const TextStyle(
-                                  //     fontSize: 20,
-                                  //     color: Color.fromARGB(255, 255, 255, 255),
-                                  //   ),
-                                  // ),
-                                  // const SizedBox(
-                                  //   height: 10,
-                                  // ),
-
-                                  // const SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // Text(
-                                  //   "Year: $year",
-                                  //   style: const TextStyle(
-                                  //     fontSize: 20,
-                                  //     color: Color.fromARGB(255, 255, 255, 255),
-                                  //   ),
-                                  // ),
                                 ],
                               ),
                             ),
@@ -395,38 +348,9 @@ class _Profile_screenSState extends State<Profile_screenS> {
                                     ),
                                   ),
                                 ),
-                                // TextButton.icon(
-                                //   onPressed: () async => {
-                                //     await FirebaseAuth.instance.signOut(),
-                                //     // FlutterBackgroundService()
-                                //     //     .invoke("stopService"),
-                                //     timer?.cancel(),
-                                //     delete(),
-                                //     Navigator.pushAndRemoveUntil(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //           builder: (context) => const Option(),
-                                //         ),
-                                //         (route) => false)
-                                //   },
-                                //   icon: const Icon(
-                                //     Icons.logout,
-                                //     color: Colors.white,
-                                //   ),
-                                //   label: const Text(
-                                //     'Logout',
-                                //     style: TextStyle(
-                                //       fontSize: 20,
-                                //       color: Color.fromARGB(255, 255, 255, 255),
-                                //     ),
-                                //   ),
-                                // ),
                                 Expanded(
                                   child: TextButton.icon(
                                     onPressed: () async => {
-                                      // await FirebaseAuth.instance.signOut(),
-                                      // delete(),
-                                      // await storage.delete(key: "uid"),
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -440,7 +364,6 @@ class _Profile_screenSState extends State<Profile_screenS> {
                                       color: Colors.white,
                                     ),
                                     label: const Text(
-                                      // 'Change Password',
                                       'Change Password',
                                       style: TextStyle(
                                         fontSize: 20,

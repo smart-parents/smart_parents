@@ -1,33 +1,14 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:smart_parents/components/constants.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   const MyApp({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       title: 'College Timetable',
-//       home: TimetablePage(),
-//     );
-//   }
-// }
-
 class TimetablePage extends StatefulWidget {
   const TimetablePage({super.key});
-
   @override
-  _TimetablePageState createState() => _TimetablePageState();
+  TimetablePageState createState() => TimetablePageState();
 }
 
-class _TimetablePageState extends State<TimetablePage> {
+class TimetablePageState extends State<TimetablePage> {
   final _service = TimetableService();
   final _days = [
     'Monday',
@@ -43,7 +24,6 @@ class _TimetablePageState extends State<TimetablePage> {
   final _startController = TextEditingController();
   final _endController = TextEditingController();
   String _selectedDay = 'Monday';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -133,7 +113,6 @@ class _TimetablePageState extends State<TimetablePage> {
                 ElevatedButton(
                   onPressed: () async {
                     if (_formKey.currentState!.validate()) {
-// Incomplete code, add functionality to save lecture to Firebase Firestore
                       final subject = _subjectController.text;
                       final start = _startController.text;
                       final end = _endController.text;
@@ -161,17 +140,12 @@ class TimetableEntry {
   final String subject;
   final String startTime;
   final String endTime;
-
   TimetableEntry(
       {required this.subject, required this.startTime, required this.endTime});
 }
 
 class TimetableService {
-  // final String collegeId;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  // TimetableService({required this.collegeId});
-
   Stream<List<TimetableEntry>> getTimetableStream(String day) {
     return _firestore
         .collection('Admin')

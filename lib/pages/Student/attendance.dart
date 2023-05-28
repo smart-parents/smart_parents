@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, prefer_typing_uninitialized_variables
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -9,14 +7,13 @@ import 'package:intl/intl.dart';
 
 class AttendanceCalendarPage extends StatefulWidget {
   const AttendanceCalendarPage({Key? key}) : super(key: key);
-
   @override
-  _AttendanceCalendarPageState createState() => _AttendanceCalendarPageState();
+  AttendanceCalendarPageState createState() => AttendanceCalendarPageState();
 }
 
-class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
+class AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
   final _prefs = SharedPreferences.getInstance();
-  var id;
+  String? id;
   void getUserName() async {
     final SharedPreferences prefs = await _prefs;
     id = prefs.getString('id');
@@ -28,10 +25,6 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
     super.initState();
   }
 
-//  _getEventsForDay(DateTime day) {
-//     // Implementation example
-//     // return kEvents[day] ?? [];
-//   }
   CalendarFormat _calendarFormat = CalendarFormat.month;
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay = DateTime.now();
@@ -58,7 +51,6 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
               selectedTextStyle: TextStyle(color: Colors.white),
               todayTextStyle: TextStyle(color: Colors.black),
             ),
-            // eventLoader: _getEventsForDay,
             firstDay: DateTime(2021, 1, 1),
             lastDay: DateTime.now(),
             calendarFormat: _calendarFormat,
@@ -83,8 +75,6 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance
                   .collection('Admin/$admin/attendance')
-                  // .doc(widget.sub)
-                  // .collection('lectures')
                   .where('date', isEqualTo: day)
                   .where('batch', isEqualTo: batch)
                   .where('branch', isEqualTo: branch)
@@ -103,7 +93,6 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
                     selectedTextStyle: TextStyle(color: Colors.white),
                     todayTextStyle: TextStyle(color: Colors.black),
                   ),
-                  // eventLoader: _getEventsForDay,
                   firstDay: DateTime(2021, 1, 1),
                   lastDay: DateTime.now(),
                   calendarFormat: _calendarFormat,
@@ -139,7 +128,6 @@ class _AttendanceCalendarPageState extends State<AttendanceCalendarPage> {
                         shadowColor: Colors.grey[200],
                         child: ListTile(
                           textColor: Colors.white,
-                          // tileColor: lecturePresent ? green : red,
                           title: Text('${data['subject']} '),
                           subtitle: Text('${data['start']} - ${data['end']}'),
                           trailing: Text(lecturePresent ? 'Present' : 'Absent'),

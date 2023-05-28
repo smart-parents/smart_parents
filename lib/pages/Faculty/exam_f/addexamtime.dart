@@ -1,5 +1,3 @@
-// ignore_for_file: depend_on_referenced_packages, non_constant_identifier_names, prefer_typing_uninitialized_variables
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +8,6 @@ class AddExamTimeTable extends StatefulWidget {
       : super(key: key);
   final String docid;
   final String name;
-
   @override
   State<AddExamTimeTable> createState() => _AddExamTimeTableState();
 }
@@ -18,7 +15,6 @@ class AddExamTimeTable extends StatefulWidget {
 class Subject {
   final String id;
   final String name;
-
   Subject(this.id, this.name);
 }
 
@@ -43,26 +39,23 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
         .catchError((error) => print('Failed to Add user: $error'));
   }
 
-  var Sub;
+  String? sub;
   List<Subject> _subjects = [];
   Future<void> _fetchSubjects() async {
     final QuerySnapshot<Map<String, dynamic>> subjectSnapshot =
         await FirebaseFirestore.instance
             .collection('Admin/$admin/subject')
             .get();
-
     final List<Subject> subjects = [];
-
     for (final DocumentSnapshot<Map<String, dynamic>> subjectSnapshot
         in subjectSnapshot.docs) {
       final Subject subject =
           Subject(subjectSnapshot.id, subjectSnapshot.data()!['sub_name']);
       subjects.add(subject);
     }
-
     setState(() {
       _subjects = subjects;
-      Sub = _subjects[0].name;
+      sub = _subjects[0].name;
     });
   }
 
@@ -81,7 +74,6 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -91,9 +83,6 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
         title: Text(widget.name, style: const TextStyle(fontSize: 30.0)),
       ),
       body: Center(
-        // child: ListView(
-        //     // crossAxisAlignment: CrossAxisAlignment.start,
-        //     children: [
         child: Padding(
           padding: const EdgeInsets.all(20.0),
           child: ListView(
@@ -128,13 +117,7 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                     ]),
                 child: DropdownButton<String>(
                   isExpanded: true,
-                  // hint: Text(hint,style: TextStyle(color: Colors.black),),
-                  value: Sub,
-                  // decoration: const InputDecoration(
-                  //   border: InputBorder.none,
-                  //   contentPadding: EdgeInsets.zero,
-                  // ),
-                  // hint: const Text('Select an item'),
+                  value: sub,
                   icon: const Icon(Icons.keyboard_arrow_down_outlined),
                   elevation: 16,
                   dropdownColor: Colors.grey[100],
@@ -142,7 +125,7 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                   underline: Container(height: 0, color: Colors.black),
                   onChanged: (value) {
                     setState(() {
-                      Sub = value;
+                      sub = value;
                     });
                   },
                   items: _subjects.map((item) {
@@ -151,35 +134,15 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                       child: Text(item.name),
                     );
                   }).toList(),
-                  // validator: (value) {
-                  //   if (value == null) {
-                  //     return 'Please select a subject';
-                  //   }
-                  //   return null; // return null if there's no error
-                  // },
                 ),
               ),
-
-              // const SizedBox(
-              //   width: 40,
-              // ),
               Row(
                 children: <Widget>[
                   const Icon(
                     Icons.calendar_today,
                   ),
-                  // const SizedBox(
-                  //   width: 20,
-                  // ),
                   Expanded(
-                      child:
-                          //  _date.isEmpty
-                          //     ? Text(
-                          //         'Choose Date',
-                          //         style: fieldTextStyle,
-                          //       )
-                          //     :
-                          Text(date0.toString(), style: fieldTextStyle)),
+                      child: Text(date0.toString(), style: fieldTextStyle)),
                   IconButton(
                     icon: Icon(
                       Icons.edit,
@@ -211,18 +174,8 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                   const Icon(
                     Icons.access_time,
                   ),
-                  // const SizedBox(
-                  //   width: 20,
-                  // ),
                   Expanded(
-                      child:
-                          // _start.isEmpty
-                          //     ? Text(
-                          //         'Choose Start Time',
-                          //         style: fieldTextStyle,
-                          //       )
-                          //     :
-                          Text(
+                      child: Text(
                     start0,
                     style: fieldTextStyle,
                   )),
@@ -259,18 +212,8 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                   const Icon(
                     Icons.access_time,
                   ),
-                  // const SizedBox(
-                  //   width: 20,
-                  // ),
                   Expanded(
-                      child:
-                          // _end.isEmpty
-                          //     ? Text(
-                          //         'Choose Stop Time',
-                          //         style: fieldTextStyle,
-                          //       )
-                          //     :
-                          Text(
+                      child: Text(
                     end0,
                     style: fieldTextStyle,
                   )),
@@ -293,36 +236,15 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
                   )
                 ],
               ),
-              // Container(
-              //   margin: const EdgeInsets.symmetric(vertical: 10.0),
-              //   child: TextFormField(
-              //     autofocus: false,
-              //     decoration: const InputDecoration(
-              //       labelText: 'Name: ',
-              //       labelStyle: TextStyle(fontSize: 20.0),
-              //       border: OutlineInputBorder(),
-              //       errorStyle: TextStyle(fontSize: 15),
-              //     ),
-              //     controller: nameController,
-              //     validator: (value) {
-              //       if (value == null || value.isEmpty) {
-              //         return 'Please Enter Name';
-              //       }
-              //       return null;
-              //     },
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                // child: Expanded(
                 child: ElevatedButton(
                     onPressed: () {
-                      addExam(Sub, date0, start0, end0);
+                      addExam(sub, date0, start0, end0);
                       Navigator.of(context).pop();
                     },
                     child: const Text("Add Exam TimeTable")),
               ),
-              // ),
             ],
           ),
         ),

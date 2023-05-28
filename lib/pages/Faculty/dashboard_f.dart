@@ -1,8 +1,7 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:flutter/material.dart';
 import 'package:smart_parents/pages/Faculty/Result_f/result_f.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
+import 'package:smart_parents/pages/Faculty/Show_Stu/show1.dart';
 import 'package:smart_parents/pages/Faculty/Subject_f/subject.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendance_display_f.dart';
 import 'package:smart_parents/pages/Faculty/attendencepages/attendencedropdownpage2.dart';
@@ -10,16 +9,14 @@ import 'package:smart_parents/pages/Faculty/chat_parents_f.dart';
 import 'package:smart_parents/pages/Faculty/chat_student_f.dart';
 import 'package:smart_parents/pages/Faculty/exam_f/exam.dart';
 import 'package:smart_parents/pages/Faculty/parents_f/parents_f.dart';
-import 'package:smart_parents/pages/Faculty/show_Stu/show1.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
-
   @override
-  _DashboardState createState() => _DashboardState();
+  DashboardState createState() => DashboardState();
 }
 
-class _DashboardState extends State<Dashboard> {
+class DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return GridView.count(
@@ -111,7 +108,7 @@ class _DashboardState extends State<Dashboard> {
             case 'View Students':
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const Show_stu()),
+                MaterialPageRoute(builder: (context) => const ShowStu()),
               );
               break;
           }

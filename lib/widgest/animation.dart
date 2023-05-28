@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
-// Navigator.push(context, FloatingAnimation(const SecondPage())),
-
 class FloatingAnimation extends PageRouteBuilder {
   final Widget page;
-
   FloatingAnimation(this.page)
       : super(
           pageBuilder: (context, animation, anotherAnimation) => page,
@@ -24,11 +21,8 @@ class FloatingAnimation extends PageRouteBuilder {
         );
 }
 
-// Navigator.push(context, FadeAnimation(const SecondPage())),
-
 class FadeAnimation extends PageRouteBuilder {
   final Widget page;
-
   FadeAnimation(this.page)
       : super(
           pageBuilder: (

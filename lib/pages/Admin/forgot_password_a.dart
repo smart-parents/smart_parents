@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,27 +7,16 @@ import 'package:smart_parents/pages/Admin/Signup_a/signup_screen_a.dart';
 
 class ForgotPassword extends StatefulWidget {
   const ForgotPassword({Key? key}) : super(key: key);
-// void initState() {
-//     SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-//       // SystemUiOverlay.bottom,
-//     ]);
-// }
   @override
-  _ForgotPasswordState createState() => _ForgotPasswordState();
+  ForgotPasswordState createState() => ForgotPasswordState();
 }
 
-class _ForgotPasswordState extends State<ForgotPassword> {
+class ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
-
   var email = "";
-
-  // Create a text controller and use it to retrieve the current value
-  // of the TextField.
   final emailController = TextEditingController();
-
   @override
   void dispose() {
-    // Clean up the controller when the widget is disposed.
     emailController.dispose();
     super.dispose();
   }
@@ -85,7 +72,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         automaticallyImplyLeading: false,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
@@ -137,7 +123,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                       children: [
                         ElevatedButton(
                           onPressed: () {
-                            // Validate returns true if the form is valid, otherwise false.
                             if (_formKey.currentState!.validate()) {
                               setState(() {
                                 email = emailController.text;
@@ -154,11 +139,8 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                           onPressed: () => {
                             Navigator.pushAndRemoveUntil(
                                 context,
-                                PageRouteBuilder(
-                                  pageBuilder: (context, a, b) =>
-                                      const LoginScreen(),
-                                  transitionDuration:
-                                      const Duration(seconds: 0),
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
                                 ),
                                 (route) => false)
                           },
@@ -178,15 +160,12 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                         const Text("Don't have an Account? "),
                         TextButton(
                             onPressed: () => {
-                                  Navigator.pushAndRemoveUntil(
+                                  Navigator.push(
                                       context,
-                                      PageRouteBuilder(
-                                        pageBuilder: (context, a, b) =>
+                                      MaterialPageRoute(
+                                        builder: (context) =>
                                             const SignUpScreen(),
-                                        transitionDuration:
-                                            const Duration(seconds: 0),
-                                      ),
-                                      (route) => false)
+                                      ))
                                 },
                             child: const Text(
                               'Signup',

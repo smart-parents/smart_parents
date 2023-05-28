@@ -1,29 +1,22 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/components/sendNotification.dart';
+import 'package:smart_parents/components/send_notification.dart';
 import 'package:smart_parents/pages/Faculty/exam_f/addexam.dart';
-import 'package:smart_parents/widgest/dropDownWidget.dart';
+import 'package:smart_parents/widgest/dropdown_widget.dart';
 
 class Exam extends StatefulWidget {
   const Exam({Key? key}) : super(key: key);
-
   @override
   State<Exam> createState() => _ExamState();
 }
 
-class _ExamState extends State<Exam> with notification {
+class _ExamState extends State<Exam> with NotificationMixin {
   final nameController = TextEditingController();
-
-  // For Deleting User
   CollectionReference exams =
       FirebaseFirestore.instance.collection('Admin/$admin/exams');
-
   Future<void> deleteUser(id) async {
-    // print("User Deleted $id");
     final subcollections = exams.doc(id).collection('exam').get();
     subcollections.then((QuerySnapshot<Map<String, dynamic>> snapshot) {
       for (var doc in snapshot.docs) {
@@ -47,7 +40,6 @@ class _ExamState extends State<Exam> with notification {
 
   @override
   Widget build(BuildContext context) {
-    // myMethod();
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Admin/$admin/exams')
@@ -62,24 +54,14 @@ class _ExamState extends State<Exam> with notification {
               child: CircularProgressIndicator(),
             );
           }
-
           final List storedocs = [];
           snapshot.data!.docs.map((DocumentSnapshot document) {
             Map a = document.data() as Map<String, dynamic>;
             storedocs.add(a);
             a['id'] = document.id;
           }).toList();
-
-          return
-              // MaterialApp(
-              // debugShowCheckedModeBanner: false,
-              // theme: ThemeData(
-              //   primarySwatch: Colors.lightBlue,
-              // ),
-              // home:
-              Scaffold(
+          return Scaffold(
             appBar: AppBar(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
               automaticallyImplyLeading: false,
               leading: IconButton(
                 icon: const Icon(Icons.arrow_back),
@@ -118,25 +100,16 @@ class _ExamState extends State<Exam> with notification {
                                   children: [
                                     Text(
                                       'Exam name: ${storedocs[index]['name']}',
-                                      // Enrollment[index],
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20.0),
                                     ),
                                     Text(
                                       'Batch(Starting Year): ${storedocs[index]['batch']}',
-                                      // Enrollment[index],
                                       style: const TextStyle(
                                           fontWeight: FontWeight.bold,
                                           fontSize: 20.0),
                                     ),
-                                    // Text(
-                                    //   'Year: ${storedocs[index]['year']}',
-                                    //   // Enrollment[index],
-                                    //   style: const TextStyle(
-                                    //       fontWeight: FontWeight.bold,
-                                    //       fontSize: 20.0),
-                                    // ),
                                   ],
                                 ),
                                 Column(
@@ -165,12 +138,7 @@ class _ExamState extends State<Exam> with notification {
                                                 TextButton(
                                                   child: const Text("DELETE"),
                                                   onPressed: () {
-                                                    // Perform the deletion here
-                                                    // ...
                                                     try {
-                                                      // await delete(storedocs[index]
-                                                      //         ['number'] +
-                                                      //     '@sps.com');
                                                       deleteUser(
                                                           storedocs[index]
                                                               ['id']);
@@ -226,7 +194,6 @@ class _ExamState extends State<Exam> with notification {
                     ),
                   ),
             floatingActionButton: FloatingActionButton(
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
               onPressed: () => {
                 showDialog(
                   barrierDismissible: false,
@@ -264,13 +231,10 @@ class _ExamState extends State<Exam> with notification {
                                 },
                               ),
                             ),
-                            // const SizedBox(
-                            //   height: 20,
-                            // ),
-                            dropdown(
-                              DropdownValue: batchyeardropdownValue,
-                              sTring: batchList,
-                              Hint: "Batch(Starting Year)",
+                            Dropdown(
+                              dropdownValue: batchyeardropdownValue,
+                              string: batchList,
+                              hint: "Batch(Starting Year)",
                             ),
                             const SizedBox(
                               height: 20,
@@ -324,7 +288,6 @@ class _ExamState extends State<Exam> with notification {
               },
               child: const Icon(Icons.add),
             ),
-            // ),
           );
         });
   }

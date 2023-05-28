@@ -1,25 +1,20 @@
-// ignore_for_file: library_private_types_in_public_api, non_constant_identifier_names
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/widgest/dropDownWidget.dart';
+import 'package:smart_parents/widgest/dropdown_widget.dart';
 
 class UpdateStudentPage extends StatefulWidget {
   final String id;
   const UpdateStudentPage({Key? key, required this.id}) : super(key: key);
   @override
-  _UpdateStudentPageState createState() => _UpdateStudentPageState();
+  UpdateStudentPageState createState() => UpdateStudentPageState();
 }
 
-class _UpdateStudentPageState extends State<UpdateStudentPage> {
+class UpdateStudentPageState extends State<UpdateStudentPage> {
   final _formKey = GlobalKey<FormState>();
-  String? Branch;
-
-  // Updaing Student
+  String? branch1;
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/students');
-
   Future<void> updateUser(id, name, branch) async {
     students
         .doc(id)
@@ -40,7 +35,6 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
             tooltip: "Back",
             onPressed: () => Navigator.of(context).pop(),
           ),
-          // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         ),
         body: Center(
             child: FutureBuilder<QuerySnapshot>(
@@ -51,13 +45,11 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                   if (!snapshot.hasData) {
                     return const CircularProgressIndicator();
                   }
-                  // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
                   final items = snapshot.data!.docs
                       .map((doc) => doc.get('name'))
                       .toList();
                   return Form(
                       key: _formKey,
-                      // Getting Specific Data by ID
                       child:
                           FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
                         future: FirebaseFirestore.instance
@@ -77,8 +69,6 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                           var data = snapshot.data!.data();
                           var name = data!['name'];
                           var number = data['number'];
-                          // var password = data['password'];
-                          // Branch = data['branch'];
                           batchyeardropdownValue = data['batch'];
                           return Padding(
                             padding: const EdgeInsets.symmetric(
@@ -116,7 +106,7 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                       ]),
                                   child: DropdownButtonFormField<String>(
                                     isExpanded: true,
-                                    value: Branch,
+                                    value: branch1,
                                     decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       enabledBorder: InputBorder.none,
@@ -129,11 +119,9 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                     elevation: 16,
                                     dropdownColor: Colors.grey[100],
                                     style: const TextStyle(color: Colors.black),
-                                    // underline:
-                                    //     Container(height: 0, color: Colors.black),
                                     onChanged: (value) {
                                       setState(() {
-                                        Branch = value;
+                                        branch1 = value;
                                       });
                                     },
                                     items: items.map((item) {
@@ -146,17 +134,17 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                       if (value == null) {
                                         return 'Please select a branch';
                                       }
-                                      return null; // return null if there's no error
+                                      return null;
                                     },
                                   ),
                                 ),
                                 const SizedBox(
                                   height: 20,
                                 ),
-                                dropdown(
-                                  DropdownValue: batchyeardropdownValue,
-                                  sTring: batchList,
-                                  Hint: "Batch(Starting Year)",
+                                Dropdown(
+                                  dropdownValue: batchyeardropdownValue,
+                                  string: batchList,
+                                  hint: "Batch(Starting Year)",
                                 ),
                                 const SizedBox(
                                   height: 20,
@@ -207,40 +195,17 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                     },
                                   ),
                                 ),
-                                // Container(
-                                //   margin: const EdgeInsets.symmetric(
-                                //       vertical: 10.0),
-                                //   child: TextFormField(
-                                //     initialValue: password,
-                                //     autofocus: false,
-                                //     onChanged: (value) => password = value,
-                                //     obscureText: true,
-                                //     decoration: const InputDecoration(
-                                //       labelText: 'Password: ',
-                                //       labelStyle: TextStyle(fontSize: 20.0),
-                                //       border: OutlineInputBorder(),
-                                //       errorStyle: TextStyle(fontSize: 15),
-                                //     ),
-                                //     validator: (value) {
-                                //       if (value == null || value.isEmpty) {
-                                //         return 'Please Enter Password';
-                                //       }
-                                //       return null;
-                                //     },
-                                //   ),
-                                // ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                   children: [
                                     ElevatedButton(
                                       onPressed: () {
-                                        // Validate returns true if the form is valid, otherwise false.
                                         if (_formKey.currentState!.validate()) {
                                           updateUser(
                                             widget.id,
                                             name,
-                                            Branch,
+                                            branch1,
                                           );
                                           Navigator.pop(context);
                                         }
@@ -250,15 +215,6 @@ class _UpdateStudentPageState extends State<UpdateStudentPage> {
                                         style: TextStyle(fontSize: 18.0),
                                       ),
                                     ),
-                                    // ElevatedButton(
-                                    //   onPressed: () => {},
-                                    //   style: ElevatedButton.styleFrom(
-                                    //       backgroundColor: Colors.blueGrey),
-                                    //   child: const Text(
-                                    //     'Reset',
-                                    //     style: TextStyle(fontSize: 18.0),
-                                    //   ),
-                                    // ),
                                   ],
                                 )
                               ],

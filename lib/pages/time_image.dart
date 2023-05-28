@@ -1,39 +1,26 @@
-// ignore_for_file: file_names, library_private_types_in_public_api
-
 import 'dart:async';
-
-//
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-// import 'package:smart_parents/components/internetcheck.dart';
 import 'package:smart_parents/pages/check.dart';
 
 class MyCustomSplashScreen extends StatefulWidget {
   const MyCustomSplashScreen({super.key});
-
   @override
-  _MyCustomSplashScreenState createState() => _MyCustomSplashScreenState();
+  MyCustomSplashScreenState createState() => MyCustomSplashScreenState();
 }
 
-class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
+class MyCustomSplashScreenState extends State<MyCustomSplashScreen>
     with TickerProviderStateMixin {
   double _fontSize = 2;
   double _textOpacity = 0.0;
   double _containerOpacity = 0.0;
-
   late AnimationController _controller;
   late Animation<double> animation1;
-
   @override
   void initState() {
     super.initState();
-    // if (kIsWeb) {
-    // } else {
-    //   InternetPopup().initialize(context: context);
-    // }
     _controller =
         AnimationController(vsync: this, duration: const Duration(seconds: 3));
-
     animation1 = Tween<double>(begin: 40, end: 20).animate(CurvedAnimation(
         parent: _controller, curve: Curves.fastLinearToSlowEaseIn))
       ..addListener(() {
@@ -41,21 +28,17 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
           _textOpacity = 1.0;
         });
       });
-
     _controller.forward();
-
     Timer(const Duration(seconds: 2), () {
       setState(() {
         _fontSize = 1.06;
       });
     });
-
     Timer(const Duration(seconds: 2), () {
       setState(() {
         _containerOpacity = 1;
       });
     });
-
     Timer(const Duration(seconds: 4), () {
       setState(() {
         Navigator.pushReplacement(context, PageTransition(const Check()));
@@ -71,9 +54,7 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
   @override
   Widget build(BuildContext context) {
-    // double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-
     return Scaffold(
         body: Stack(
       children: [
@@ -122,7 +103,6 @@ class _MyCustomSplashScreenState extends State<MyCustomSplashScreen>
 
 class PageTransition extends PageRouteBuilder {
   final Widget page;
-
   PageTransition(this.page)
       : super(
           pageBuilder: (context, animation, anotherAnimation) => page,
@@ -141,64 +121,3 @@ class PageTransition extends PageRouteBuilder {
           },
         );
 }
-
-// import 'dart:async';
-
-// import 'package:flutter/material.dart';
-
-// class TimeImage extends StatefulWidget {
-//   const TimeImage({Key? key}) : super(key: key);
-//   @override
-//   State<TimeImage> createState() => _TimeImageState();
-// }
-
-// class _TimeImageState extends State<TimeImage> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     Timer(
-//         const Duration(seconds: 3),
-//         () => Navigator.of(context).pushReplacement(
-//             MaterialPageRoute(builder: (context) => const WelcomeScreen())));
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: Colors.white,
-//       body: SizedBox(
-//         width: MediaQuery.of(context).size.width,
-//         height: MediaQuery.of(context).size.height,
-//         child: Stack(
-//           alignment: AlignmentDirectional.center,
-//           children: [
-//             Column(
-//               mainAxisSize: MainAxisSize.min,
-//               children: [
-//                 Padding(
-//                   padding: const EdgeInsets.only(top: 10.0),
-//                   child: Image.asset(
-//                     "assets/images/Final.png",
-//                     fit: BoxFit.cover,
-//                     height: 350,
-//                     width: 350,
-//                   ),
-//                 ),
-//                 // SizedBox(
-//                 //   height: 100,
-//                 // ),
-//                 // Text(
-//                 //   "SMART PARENTS",
-//                 //   style: TextStyle(
-//                 //     color: Colors.white,
-//                 //     fontSize: 40,
-//                 //   ),
-//                 // ),
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

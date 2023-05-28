@@ -1,23 +1,16 @@
-// ignore_for_file: library_private_types_in_public_api
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-// import 'package:smart_parents/pages/Student/profile_screen_s.dart';
-// import 'package:smart_parents/widgest/textfieldwidgetform.dart';
 
 class EditA extends StatefulWidget {
   final String id;
   const EditA({Key? key, required this.id}) : super(key: key);
   @override
-  _EditAState createState() => _EditAState();
+  EditAState createState() => EditAState();
 }
 
-class _EditAState extends State<EditA> {
+class EditAState extends State<EditA> {
   final _formKey = GlobalKey<FormState>();
-
-  // Updaing Student
   CollectionReference students = FirebaseFirestore.instance.collection('Admin');
-
   Future<void> updateUser(id, name, email, mono) {
     return students
         .doc(id)
@@ -30,14 +23,10 @@ class _EditAState extends State<EditA> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          // foregroundColor: Colors.white,
-          // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
-          leading: const BackButton(),
-          title: const Text('ADMIN DETAILS')),
+          leading: const BackButton(), title: const Text('ADMIN DETAILS')),
       body: SingleChildScrollView(
         child: Form(
           key: _formKey,
-          // Getting Specific Data by ID
           child: FutureBuilder<DocumentSnapshot<Map<String, dynamic>>>(
             future: FirebaseFirestore.instance
                 .collection('Admin')
@@ -85,7 +74,6 @@ class _EditAState extends State<EditA> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: TextFormField(
-                          // readOnly: true,
                           initialValue: name,
                           autofocus: false,
                           onChanged: (value) => name = value,
@@ -140,9 +128,6 @@ class _EditAState extends State<EditA> {
                   const SizedBox(
                     height: 15,
                   ),
-                  // SizedBox(
-                  //   height: 15,
-                  // ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -160,7 +145,6 @@ class _EditAState extends State<EditA> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: TextFormField(
-                          // readOnly: true,
                           initialValue: mono,
                           autofocus: false,
                           onChanged: (value) => mono = value,
@@ -189,11 +173,8 @@ class _EditAState extends State<EditA> {
                                 }
                             },
                         style: ElevatedButton.styleFrom(
-                          // backgroundColor:
-                          //     const Color.fromARGB(255, 37, 86, 116),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(10.0)),
-                          // fixedSize: const Size(300, 60),
                         ),
                         child: const Text(
                           "Confirm",

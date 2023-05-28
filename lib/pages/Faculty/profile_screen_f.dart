@@ -1,10 +1,6 @@
-// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, unnecessary_null_comparison, use_build_context_synchronously
-
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:smart_parents/components/change_password.dart';
@@ -16,15 +12,13 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfileF extends StatefulWidget {
   const ProfileF({Key? key}) : super(key: key);
-
   @override
-  _ProfileFState createState() => _ProfileFState();
+  ProfileFState createState() => ProfileFState();
 }
 
-class _ProfileFState extends State<ProfileF> {
+class ProfileFState extends State<ProfileF> {
   String? em;
   final _prefs = SharedPreferences.getInstance();
-
   @override
   void initState() {
     super.initState();
@@ -95,10 +89,8 @@ class _ProfileFState extends State<ProfileF> {
   }
 
   bool _uploading = false;
-
   Uint8List? _imageFile;
   String? _imageUrl;
-
   Future<void> pickImage(ImageSource source) async {
     final picker = ImagePicker();
     try {
@@ -128,9 +120,7 @@ class _ProfileFState extends State<ProfileF> {
         .ref()
         .child('$admin/profile_photos/${user!.uid}.jpg');
     final UploadTask uploadTask = storageRef.putData(_imageFile!);
-
     final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() => null);
-
     final url = (await downloadUrl.ref.getDownloadURL());
     await FirebaseFirestore.instance
         .collection('Admin/$admin/faculty')
@@ -140,7 +130,6 @@ class _ProfileFState extends State<ProfileF> {
       _imageUrl = url;
       _uploading = false;
     });
-
     print('Image uploaded to Firebase Storage: $_imageUrl');
   }
 
@@ -148,9 +137,7 @@ class _ProfileFState extends State<ProfileF> {
     if (_uploading) {
       return const Center(child: CircularProgressIndicator());
     } else if (_imageUrl != null) {
-      return
-          // Stack(children: [
-          GestureDetector(
+      return GestureDetector(
         onTap: _selectProfileImage,
         child: ImageNetwork(
           image: _imageUrl!,
@@ -168,14 +155,8 @@ class _ProfileFState extends State<ProfileF> {
           onTap: _selectProfileImage,
         ),
       );
-
-      // ]);
     } else {
-      // return Stack(
-      //   children: [
       return Image.asset('assets/images/man.png', fit: BoxFit.cover);
-      // ],
-      // );
     }
   }
 
@@ -217,16 +198,11 @@ class _ProfileFState extends State<ProfileF> {
             age = (ageDuration.inDays / 365).floor();
             print('Age: $age');
           }
-          // var dob = data['dob'];
           return ListView(
             children: [
               Center(
                 child: Container(
-                  // padding: const EdgeInsets.only(top: 10),
                   padding: const EdgeInsets.only(top: 25),
-                  // height: MediaQuery.of(context).size.width * 590.0,
-                  // width: MediaQuery.of(context).size.width * 380.0,
-                  // color: kPrimaryLightColor,
                   child: Column(
                     children: [
                       GestureDetector(
@@ -260,27 +236,19 @@ class _ProfileFState extends State<ProfileF> {
                               ],
                             )),
                       ),
-                      // const CircleAvatar(
-                      //   radius: 40,
-                      //   backgroundImage: AssetImage('assets/images/man.png'),
-                      // ),
                       const Text(
                         'Faculty',
                         style: TextStyle(
                           fontSize: 30,
-                          // color: Color.fromARGB(255, 0, 0, 0),
                         ),
                       ),
                       Container(
-                        // height: 470.0,
-                        // width: 365.0,
                         margin: const EdgeInsets.only(left: 25, right: 25),
                         height: MediaQuery.of(context).size.height * 0.55,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(18),
                           color: kPrimaryColor,
                         ),
-                        // alignment: Alignment(0.0, -0.9),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -290,18 +258,11 @@ class _ProfileFState extends State<ProfileF> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // const SizedBox(
-                                  //   height: 10,
-                                  // ),
                                   Text(
-                                    // alignment: Alignment(0.0, -0.8),
                                     "Faculty Id: $faculty",
-                                    //  ${snapshot['number']}",
-                                    // ignore: prefer_const_constructors
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20,
-                                      color: const Color.fromARGB(
-                                          255, 255, 255, 255),
+                                      color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
                                   const SizedBox(
@@ -364,34 +325,10 @@ class _ProfileFState extends State<ProfileF> {
                                       color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
-                                  // SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // Text(
-                                  //   "Semester: $sem",
-                                  //   style: TextStyle(
-                                  //     fontSize: 20,
-                                  //     color: Color.fromARGB(255, 255, 255, 255),
-                                  //   ),
-                                  // ),
-                                  // SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // Text(
-                                  //   "Year: $year",
-                                  //   style: TextStyle(
-                                  //     fontSize: 20,
-                                  //     color: Color.fromARGB(255, 255, 255, 255),
-                                  //   ),
-                                  // ),
                                 ],
                               ),
                             ),
-                            // Align(
-                            //   alignment: Alignment(0, 0),
-                            // child:
                             Row(
-                              // crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
@@ -404,7 +341,7 @@ class _ProfileFState extends State<ProfileF> {
                                             id: "$id",
                                           ),
                                         ),
-                                      ) // (route) => false)
+                                      )
                                     },
                                     icon: const Icon(
                                       Icons.info_outline,
@@ -420,36 +357,9 @@ class _ProfileFState extends State<ProfileF> {
                                     ),
                                   ),
                                 ),
-                                // TextButton.icon(
-                                //   onPressed: () async => {
-                                //     await FirebaseAuth.instance.signOut(),
-                                //     delete(),
-                                //     // await storage.delete(key: "uid"),
-                                //     Navigator.pushAndRemoveUntil(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //           builder: (context) => const Option(),
-                                //         ),
-                                //         (route) => false)
-                                //   },
-                                //   icon: const Icon(
-                                //     Icons.logout,
-                                //     color: Colors.white,
-                                //   ),
-                                //   label: const Text(
-                                //     'Logout',
-                                //     style: TextStyle(
-                                //       fontSize: 20,
-                                //       color: Color.fromARGB(255, 255, 255, 255),
-                                //     ),
-                                //   ),
-                                // ),
                                 Expanded(
                                   child: TextButton.icon(
                                     onPressed: () async => {
-                                      // await FirebaseAuth.instance.signOut(),
-                                      // delete(),
-                                      // await storage.delete(key: "uid"),
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -463,7 +373,6 @@ class _ProfileFState extends State<ProfileF> {
                                       color: Colors.white,
                                     ),
                                     label: const Text(
-                                      // 'Change Password',
                                       'Change Password',
                                       style: TextStyle(
                                         fontSize: 20,
@@ -475,7 +384,6 @@ class _ProfileFState extends State<ProfileF> {
                                 ),
                               ],
                             ),
-                            // ),
                           ],
                         ),
                       ),

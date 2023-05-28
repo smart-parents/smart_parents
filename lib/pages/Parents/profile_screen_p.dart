@@ -1,10 +1,6 @@
-// ignore_for_file: camel_case_types, deprecated_member_use, use_build_context_synchronously
-
 import 'dart:typed_data';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import 'package:flutter/material.dart';
 import 'package:image_network/image_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,19 +10,15 @@ import 'package:smart_parents/pages/Parents/edit_p.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
-class Profile_screenP extends StatefulWidget {
-  const Profile_screenP({super.key});
-
+class ProfileScreenP extends StatefulWidget {
+  const ProfileScreenP({super.key});
   @override
-  State<Profile_screenP> createState() => _Profile_screenPState();
+  State<ProfileScreenP> createState() => _ProfileScreenPState();
 }
 
-class _Profile_screenPState extends State<Profile_screenP> {
+class _ProfileScreenPState extends State<ProfileScreenP> {
   String uid = FirebaseAuth.instance.currentUser!.uid;
   String? email = FirebaseAuth.instance.currentUser!.email;
-  // get fid => null;
-
-  // late Future<QuerySnapshot<Map<String, dynamic>>> snapshot;
   String? id;
   final _prefs = SharedPreferences.getInstance();
   main() async {
@@ -50,9 +42,6 @@ class _Profile_screenPState extends State<Profile_screenP> {
   }
 
   bool _uploading = false;
-
-
-
   Future<void> _selectProfileImage() async {
     showModalBottomSheet(
       context: context,
@@ -84,7 +73,6 @@ class _Profile_screenPState extends State<Profile_screenP> {
 
   Uint8List? _imageFile;
   String? _imageUrl;
-
   Future<void> pickImage(ImageSource source) async {
     final picker = ImagePicker();
     try {
@@ -114,9 +102,7 @@ class _Profile_screenPState extends State<Profile_screenP> {
         .ref()
         .child('$admin/profile_photos/${user!.uid}.jpg');
     final UploadTask uploadTask = storageRef.putData(_imageFile!);
-
     final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() => null);
-
     final url = (await downloadUrl.ref.getDownloadURL());
     await FirebaseFirestore.instance
         .collection('Admin/$admin/parents')
@@ -126,7 +112,6 @@ class _Profile_screenPState extends State<Profile_screenP> {
       _imageUrl = url;
       _uploading = false;
     });
-
     print('Image uploaded to Firebase Storage: $_imageUrl');
   }
 
@@ -134,9 +119,7 @@ class _Profile_screenPState extends State<Profile_screenP> {
     if (_uploading) {
       return const Center(child: CircularProgressIndicator());
     } else if (_imageUrl != null) {
-      return
-          // Stack(children: [
-          GestureDetector(
+      return GestureDetector(
         onTap: _selectProfileImage,
         child: ImageNetwork(
           image: _imageUrl!,
@@ -154,14 +137,8 @@ class _Profile_screenPState extends State<Profile_screenP> {
           onTap: _selectProfileImage,
         ),
       );
-
-      // ]);
     } else {
-      // return Stack(
-      //   children: [
       return Image.asset('assets/images/man.png', fit: BoxFit.cover);
-      // ],
-      // );
     }
   }
 
@@ -206,16 +183,8 @@ class _Profile_screenPState extends State<Profile_screenP> {
               Center(
                 child: Container(
                   padding: const EdgeInsets.only(top: 25),
-                  // width: 414.0,
-                  // height: MediaQuery.of(context).size.height * 10.0,
-                  // width: MediaQuery.of(context).size.width * 10.0,
-                  // color: Colors.blue[50],
                   child: Column(
                     children: [
-                      // const CircleAvatar(
-                      //   radius: 40,
-                      //   backgroundImage: AssetImage('assets/images/man.png'),
-                      // ),
                       GestureDetector(
                         onTap: _selectProfileImage,
                         child: Container(
@@ -255,16 +224,12 @@ class _Profile_screenPState extends State<Profile_screenP> {
                         ),
                       ),
                       Container(
-                        // height: 470.0,
-                        // width: 365.0,
                         margin: const EdgeInsets.only(left: 25, right: 25),
                         height: MediaQuery.of(context).size.height * 0.55,
-                        // width: MediaQuery.of(context).size.width * 2.0,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(18),
                           color: kPrimaryColor,
                         ),
-                        // alignment: Alignment(0.0, -0.9),
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -274,18 +239,11 @@ class _Profile_screenPState extends State<Profile_screenP> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  // SizedBox(
-                                  //   height: 30,
-                                  // ),
                                   Text(
-                                    // alignment: Alignment(0.0, -0.8),
                                     "Mobile: $number",
-                                    //  ${snapshot['number']}",
-                                    // ignore: prefer_const_constructors
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 20,
-                                      color: const Color.fromARGB(
-                                          255, 255, 255, 255),
+                                      color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
                                   const SizedBox(
@@ -328,44 +286,10 @@ class _Profile_screenPState extends State<Profile_screenP> {
                                       color: Color.fromARGB(255, 255, 255, 255),
                                     ),
                                   ),
-                                  // SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // Text(
-                                  //   "Batch: $batch",
-                                  //   style: TextStyle(
-                                  //     fontSize: 20,
-                                  //     color: Color.fromARGB(255, 255, 255, 255),
-                                  //   ),
-                                  // ),
-                                  // SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // Text(
-                                  //   "Semester: $sem",
-                                  //   style: TextStyle(
-                                  //     fontSize: 20,
-                                  //     color: Color.fromARGB(255, 255, 255, 255),
-                                  //   ),
-                                  // ),
-                                  // SizedBox(
-                                  //   height: 10,
-                                  // ),
-                                  // Text(
-                                  //   "Year: $year",
-                                  //   style: TextStyle(
-                                  //     fontSize: 20,
-                                  //     color: Color.fromARGB(255, 255, 255, 255),
-                                  //   ),
-                                  // ),
                                 ],
                               ),
                             ),
-                            // Align(
-                            //   alignment: Alignment(0, 0),
-                            // child:
                             Row(
-                              // crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Expanded(
@@ -378,7 +302,7 @@ class _Profile_screenPState extends State<Profile_screenP> {
                                             id: "$id",
                                           ),
                                         ),
-                                      ) // (route) => false)
+                                      )
                                     },
                                     icon: const Icon(
                                       Icons.info_outline,
@@ -394,36 +318,9 @@ class _Profile_screenPState extends State<Profile_screenP> {
                                     ),
                                   ),
                                 ),
-                                // TextButton.icon(
-                                //   onPressed: () async => {
-                                //     await FirebaseAuth.instance.signOut(),
-                                //     delete(),
-                                //     // await storage.delete(key: "uid"),
-                                //     Navigator.pushAndRemoveUntil(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //           builder: (context) => const Option(),
-                                //         ),
-                                //         (route) => false)
-                                //   },
-                                //   icon: const Icon(
-                                //     Icons.logout,
-                                //     color: Colors.white,
-                                //   ),
-                                //   label: const Text(
-                                //     'Logout',
-                                //     style: TextStyle(
-                                //       fontSize: 20,
-                                //       color: Color.fromARGB(255, 255, 255, 255),
-                                //     ),
-                                //   ),
-                                // ),
                                 Expanded(
                                   child: TextButton.icon(
                                     onPressed: () async => {
-                                      // await FirebaseAuth.instance.signOut(),
-                                      // delete(),
-                                      // await storage.delete(key: "uid"),
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -437,7 +334,6 @@ class _Profile_screenPState extends State<Profile_screenP> {
                                       color: Colors.white,
                                     ),
                                     label: const Text(
-                                      // 'Change Password',
                                       'Change Password',
                                       style: TextStyle(
                                         fontSize: 20,
@@ -449,7 +345,6 @@ class _Profile_screenPState extends State<Profile_screenP> {
                                 ),
                               ],
                             ),
-                            // ),
                           ],
                         ),
                       ),

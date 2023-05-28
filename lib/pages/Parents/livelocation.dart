@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, deprecated_member_use, non_constant_identifier_names, depend_on_referenced_packages
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,13 +8,12 @@ import 'package:url_launcher/url_launcher.dart';
 class ChildLocation extends StatefulWidget {
   const ChildLocation({Key? key}) : super(key: key);
   @override
-  _ChildLocationState createState() => _ChildLocationState();
+  ChildLocationState createState() => ChildLocationState();
 }
 
-class _ChildLocationState extends State<ChildLocation>
+class ChildLocationState extends State<ChildLocation>
     with TickerProviderStateMixin {
-  MapType _MapType = MapType.normal;
-
+  MapType mapType = MapType.normal;
   GoogleMapController? _mapController;
   void _onMapCreated(GoogleMapController controller) {
     _mapController = controller;
@@ -40,7 +37,6 @@ class _ChildLocationState extends State<ChildLocation>
       child: Text("Hybrid"),
     ),
   ];
-
   MapType _getGoogleMapType(MapType mapType) {
     switch (mapType) {
       case MapType.normal:
@@ -57,12 +53,10 @@ class _ChildLocationState extends State<ChildLocation>
   }
 
   void openMaps(double latitude, double longitude) async {
-    String googleMapsUrl =
-        // 'https://www.google.com/maps?q=$latitude,$longitude&z=17&t=k&output=embed';
-        'https://www.google.com/maps?q=$latitude,$longitude&z=17&t=k&output=embed&markers=$latitude,$longitude';
-    // 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    if (await canLaunch(googleMapsUrl)) {
-      await launch(googleMapsUrl);
+    Uri googleMapsUrl = Uri.parse(
+        'https://www.google.com/maps?q=$latitude,$longitude&z=17&t=k&output=embed&markers=$latitude,$longitude');
+    if (await canLaunchUrl(googleMapsUrl)) {
+      await launchUrl(googleMapsUrl);
     } else {
       throw 'Could not open the map.';
     }
@@ -70,13 +64,6 @@ class _ChildLocationState extends State<ChildLocation>
 
   @override
   Widget build(BuildContext context) {
-    // LatLng currentLatLng;
-    // if (_currentLocation != null) {
-    //   currentLatLng =
-    //       LatLng(_currentLocation!.latitude!, _currentLocation!.longitude!);
-    // } else {
-    //   currentLatLng = const LatLng(0, 0);
-    // }
     return StreamBuilder<DocumentSnapshot>(
       stream: FirebaseFirestore.instance
           .collection('Admin/$admin/students/$child/location')
@@ -93,21 +80,12 @@ class _ChildLocationState extends State<ChildLocation>
         if (!snapshot.hasData || snapshot.data!.data() == null) {
           return const Text('No data available');
         }
-        // if (snapshot.hasData) {
-        //   var data = snapshot.data!.data() as Map<String, dynamic>;
-        //   var latitude = data['latitude'];
-        //   var longitude = data['longitude'];
-        // }
         var data = snapshot.data!.data() as Map<String, dynamic>;
         var latitude = data['latitude'];
         var longitude = data['longitude'];
         var timestamp = data['timestamp'];
         var datetime =
             DateFormat('dd-MM-yyyy hh:mm:ss a').format(timestamp.toDate());
-        // if (latitude != null && longitude != null) {
-        //   _mapController!.moveCamera(
-        //       CameraUpdate.newLatLng(LatLng(latitude!, longitude!)));
-        // }
         return Scaffold(
           appBar: AppBar(
             title: const Text('Child Location'),
@@ -115,7 +93,7 @@ class _ChildLocationState extends State<ChildLocation>
               DropdownButton(
                 elevation: 0,
                 dropdownColor: kPrimaryColor,
-                value: _MapType,
+                value: mapType,
                 style: const TextStyle(
                   color: Colors.white,
                 ),
@@ -129,7 +107,7 @@ class _ChildLocationState extends State<ChildLocation>
                 ),
                 onChanged: (MapType? newValue) {
                   setState(() {
-                    _MapType = newValue!;
+                    mapType = newValue!;
                   });
                 },
               ),
@@ -139,19 +117,14 @@ class _ChildLocationState extends State<ChildLocation>
             padding: const EdgeInsets.all(8),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
-              // mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Padding(
-                //   padding: const EdgeInsets.only(top: 8, bottom: 8),
-                //   child:
                 Text(
                     'Date & Time: $datetime\nLocation: ($latitude, $longitude)'),
-                // ),
                 Flexible(
                   child: Stack(
                     children: [
                       GoogleMap(
-                          mapType: _getGoogleMapType(_MapType),
+                          mapType: _getGoogleMapType(mapType),
                           onMapCreated: _onMapCreated,
                           initialCameraPosition: CameraPosition(
                             target: LatLng(latitude ?? 0, longitude ?? 0),
@@ -166,7 +139,6 @@ class _ChildLocationState extends State<ChildLocation>
                             )
                           }),
                       Column(
-                        // crossAxisAlignment: CrossAxisAlignment.end,
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Padding(

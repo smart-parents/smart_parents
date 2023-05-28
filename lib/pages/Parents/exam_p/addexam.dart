@@ -15,14 +15,11 @@ class AddExam extends StatefulWidget {
 
 class _AddExamState extends State<AddExam> {
   final nameController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
         stream: FirebaseFirestore.instance
             .collection('Admin/$admin/exams/${widget.docid}/exam')
-            // .doc(widget.docid)
-            // .where('branch', isEqualTo: branch)
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.hasError) {
@@ -33,104 +30,70 @@ class _AddExamState extends State<AddExam> {
               child: CircularProgressIndicator(),
             );
           }
-
           final List storedocs = [];
           snapshot.data!.docs.map((DocumentSnapshot document) {
             Map a = document.data() as Map<String, dynamic>;
             storedocs.add(a);
             a['id'] = document.id;
           }).toList();
-          // var data = snapshot.data!.data();
-          // var name = data!['name'];
-
-          return
-              // MaterialApp(
-              // debugShowCheckedModeBanner: false,
-              // theme: ThemeData(
-              //   primarySwatch: Colors.lightBlue,
-              // ),
-              // home:
-              Scaffold(
-                  appBar: AppBar(
-                    // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
-                    automaticallyImplyLeading: false,
-                    leading: IconButton(
-                      icon: const Icon(Icons.arrow_back),
-                      tooltip: "Back",
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                    title: Text(widget.name,
-                        style: const TextStyle(fontSize: 30.0)),
-                  ),
-                  body: Column(
-                    children: [
-                      // storedocs.isNotEmpty
-                      //     ?
-                      _buildPhotoWidget(),
-                      Expanded(
-                        child: ListView.builder(
-                          itemCount: storedocs.length,
-                          itemBuilder: (context, index) {
-                            return Card(
-                              elevation: 5,
-                              shadowColor: Colors.grey[200],
-                              child: Padding(
-                                padding: const EdgeInsets.all(15.0),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+          return Scaffold(
+              appBar: AppBar(
+                automaticallyImplyLeading: false,
+                leading: IconButton(
+                  icon: const Icon(Icons.arrow_back),
+                  tooltip: "Back",
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+                title:
+                    Text(widget.name, style: const TextStyle(fontSize: 30.0)),
+              ),
+              body: Column(
+                children: [
+                  _buildPhotoWidget(),
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: storedocs.length,
+                      itemBuilder: (context, index) {
+                        return Card(
+                          elevation: 5,
+                          shadowColor: Colors.grey[200],
+                          child: Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Subject: ${storedocs[index]['subject']}',
-                                          // Enrollment[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0),
-                                        ),
-                                        Text(
-                                          'Date: ${storedocs[index]['date']}',
-                                          // Enrollment[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0),
-                                        ),
-                                        Text(
-                                          'Time: ${storedocs[index]['starttime']} to ${storedocs[index]['endtime']}',
-                                          // Enrollment[index],
-                                          style: const TextStyle(
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 20.0),
-                                        ),
-                                      ],
+                                    Text(
+                                      'Subject: ${storedocs[index]['subject']}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
+                                    ),
+                                    Text(
+                                      'Date: ${storedocs[index]['date']}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
+                                    ),
+                                    Text(
+                                      'Time: ${storedocs[index]['starttime']} to ${storedocs[index]['endtime']}',
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20.0),
                                     ),
                                   ],
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                      )
-                      // : Center(
-                      //     child: Column(
-                      //       children: <Widget>[
-                      //         Image.asset(
-                      //           "assets/images/No data.png",
-                      //         ),
-                      //         const Text(
-                      //           "No data",
-                      //           style:
-                      //               TextStyle(fontWeight: FontWeight.bold),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      ,
-                    ],
-                  ));
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ));
         });
   }
 
@@ -143,7 +106,6 @@ class _AddExamState extends State<AddExam> {
   String? docId;
   String? _imageUrl;
   void _loadPhotoUrl() async {
-    // final user = FirebaseAuth.instance.currentUser;
     final doc = await FirebaseFirestore.instance
         .collection('Admin/$admin/exams')
         .doc(widget.docid)

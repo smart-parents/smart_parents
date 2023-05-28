@@ -1,4 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, use_build_context_synchronously
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:smart_parents/widgest/animation.dart';
 
 class Result extends StatefulWidget {
   const Result({Key? key}) : super(key: key);
-
   @override
   State<Result> createState() => _ResultState();
 }
@@ -19,11 +17,11 @@ class _ResultState extends State<Result> {
       .collection('Admin/$admin/Results')
       .where('branch', isEqualTo: branch)
       .snapshots();
-  CollectionReference Result =
+  CollectionReference result =
       FirebaseFirestore.instance.collection('Admin/$admin/Results');
-
   deleteUser(id) async {
-    Result.doc(id)
+    result
+        .doc(id)
         .delete()
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
@@ -93,7 +91,6 @@ class _ResultState extends State<Result> {
                                       children: <Widget>[
                                         Text(
                                           '${storedocs[index]['subject']}',
-                                          // Enrollment[index],
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20),
@@ -121,24 +118,6 @@ class _ResultState extends State<Result> {
                                         ),
                                       ],
                                     ),
-                                    // Column(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.start,
-                                    //   children: [
-                                    //     // Text(
-                                    //     //   'Batch(Starting Year) : ${storedocs[index]['batch']}',
-                                    //     //   style: const TextStyle(fontSize: 15),
-                                    //     // ),
-                                    //     // const SizedBox(
-                                    //     //   height: 10,
-                                    //     // ),
-                                    //     Text(
-                                    //       'Branch : ${storedocs[index]['branch']}',
-                                    //       style: const TextStyle(fontSize: 15),
-                                    //     ),
-
-                                    //   ],
-                                    // ),
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -169,12 +148,7 @@ class _ResultState extends State<Result> {
                                                       child:
                                                           const Text("DELETE"),
                                                       onPressed: () {
-                                                        // Perform the deletion here
-                                                        // ...
                                                         try {
-                                                          // await delete(storedocs[index]
-                                                          //         ['number'] +
-                                                          //     '@sps.com');
                                                           deleteUser(
                                                               storedocs[index]
                                                                   ['id']);
@@ -209,14 +183,6 @@ class _ResultState extends State<Result> {
                                             color: red,
                                           ),
                                         ),
-                                        // Switch(
-                                        //   value: isActive[index],
-                                        //   onChanged: (bool newValue) {
-                                        //     setState(() {
-                                        //       isActive[index] = !isActive[index];
-                                        //     });
-                                        //   },
-                                        // ),
                                       ],
                                     ),
                                   ],

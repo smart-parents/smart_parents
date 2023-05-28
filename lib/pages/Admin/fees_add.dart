@@ -1,22 +1,18 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages, use_build_context_synchronously
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/components/sendNotification.dart';
+import 'package:smart_parents/components/send_notification.dart';
 import 'package:smart_parents/pages/Admin/fees.dart';
 
 class FeesAdd extends StatefulWidget {
   const FeesAdd({Key? key}) : super(key: key);
-
   @override
-  _FeesAddState createState() => _FeesAddState();
+  FeesAddState createState() => FeesAddState();
 }
 
-class _FeesAddState extends State<FeesAdd> with notification {
-  // int? name;
+class FeesAddState extends State<FeesAdd> with NotificationMixin {
   final _formKey = GlobalKey<FormState>();
   final amountController = TextEditingController();
   final semController = TextEditingController();
@@ -60,8 +56,6 @@ class _FeesAddState extends State<FeesAdd> with notification {
             TextButton(
               child: const Text("Payment"),
               onPressed: () async {
-                // Perform the deletion here
-                // ...
                 try {
                   CollectionReference students = FirebaseFirestore.instance
                       .collection('Admin/$admin/fees');
@@ -102,7 +96,6 @@ class _FeesAddState extends State<FeesAdd> with notification {
                     SnackBar(content: Text('Failed to delete Notice: $e')),
                   );
                 }
-                // Navigator.of(context).pop();
               },
             ),
           ],
@@ -115,11 +108,8 @@ class _FeesAddState extends State<FeesAdd> with notification {
   String sem = '';
   String amount = '';
   String? namestudent;
-
   String? selectedItem;
-
   final TextEditingController _searchController = TextEditingController();
-
   bool isDropdownOpen = false;
   @override
   Widget build(BuildContext context) {
@@ -134,12 +124,10 @@ class _FeesAddState extends State<FeesAdd> with notification {
             if (!snapshot.hasData) {
               return const CircularProgressIndicator();
             }
-            // final items = snapshot.data.docs.map((doc) => doc.data()['name']).toList();
             final items =
                 snapshot.data!.docs.map((doc) => doc.get('number')).toList();
             final names =
                 snapshot.data!.docs.map((doc) => doc.get('name')).toList();
-            // int? name;
             return Form(
               key: _formKey,
               child: Padding(
@@ -177,7 +165,6 @@ class _FeesAddState extends State<FeesAdd> with notification {
                           ]),
                       child: DropdownButton<String>(
                         isExpanded: true,
-                        // hint: Text(hint,style: TextStyle(color: Colors.black),),
                         value: batchyeardropdownValue,
                         icon: const Icon(Icons.keyboard_arrow_down_outlined),
                         elevation: 16,
@@ -306,8 +293,6 @@ class _FeesAddState extends State<FeesAdd> with notification {
                       Container(
                         margin: const EdgeInsets.symmetric(vertical: 10.0),
                         child: Text(
-                          // names[items.indexOf(child)],
-                          // names[name] ?? 'name',
                           '$namestudent',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -352,10 +337,7 @@ class _FeesAddState extends State<FeesAdd> with notification {
                         decoration: const InputDecoration(
                           labelText: 'Amount: ',
                           labelStyle: TextStyle(fontSize: 20.0),
-                          border: OutlineInputBorder(
-                              //   borderRadius: BorderRadius.circular(10),
-                              //   borderSide: const BorderSide(color: Colors.black),
-                              ),
+                          border: OutlineInputBorder(),
                           errorStyle:
                               TextStyle(fontSize: 15, color: Color(0xEAB00000)),
                         ),
@@ -382,7 +364,6 @@ class _FeesAddState extends State<FeesAdd> with notification {
                       },
                       style: ElevatedButton.styleFrom(
                         shape: const StadiumBorder(),
-                        // backgroundColor: const Color.fromARGB(255, 37, 86, 116),
                         minimumSize: const Size(150, 50),
                       ),
                       child: const Text(
@@ -397,7 +378,6 @@ class _FeesAddState extends State<FeesAdd> with notification {
           },
         ),
       ),
-      // ),
     );
   }
 }

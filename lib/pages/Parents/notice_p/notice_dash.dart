@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
@@ -7,7 +5,6 @@ import 'package:smart_parents/components/imageshow.dart';
 
 class Notice extends StatefulWidget {
   const Notice({Key? key}) : super(key: key);
-
   @override
   State<Notice> createState() => _NoticeState();
 }
@@ -18,7 +15,6 @@ class _NoticeState extends State<Notice> {
       .where('branch', isEqualTo: branch)
       .where('batch', isEqualTo: batch)
       .snapshots();
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -38,7 +34,6 @@ class _NoticeState extends State<Notice> {
             storedocs.add(a);
             a['id'] = document.id;
           }).toList();
-
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
@@ -64,7 +59,6 @@ class _NoticeState extends State<Notice> {
                                 scrollable: true,
                                 title: Text(
                                   '${storedocs[index]['subject']}',
-                                  // Enrollment[index],
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
@@ -122,7 +116,6 @@ class _NoticeState extends State<Notice> {
                               children: <Widget>[
                                 Text(
                                   '${storedocs[index]['subject']}',
-                                  // Enrollment[index],
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),

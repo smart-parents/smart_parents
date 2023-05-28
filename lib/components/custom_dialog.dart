@@ -6,11 +6,9 @@ class Alerts {
   final BuildContext context;
   double h;
   double w;
-
   Alerts({required this.context})
       : h = MediaQuery.of(context).size.height,
         w = MediaQuery.of(context).size.width;
-
   void customDialog(
       {required AlertType type,
       String? message,
@@ -65,7 +63,6 @@ class Alerts {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(15),
                         border: Border.all(color: Colors.white, width: 1.5),
-                        // shape: BoxShape.rectangle,
                         boxShadow: const [
                           BoxShadow(
                             color: Colors.black,

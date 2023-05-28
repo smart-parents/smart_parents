@@ -1,4 +1,3 @@
-// ignore_for_file: non_constant_identifier_names, depend_on_referenced_packages, use_build_context_synchronously
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:smart_parents/widgest/animation.dart';
 
 class Notice extends StatefulWidget {
   const Notice({Key? key}) : super(key: key);
-
   @override
   State<Notice> createState() => _NoticeState();
 }
@@ -17,16 +15,16 @@ class Notice extends StatefulWidget {
 class _NoticeState extends State<Notice> {
   Stream<QuerySnapshot> noticesStream =
       FirebaseFirestore.instance.collection('Admin/$admin/Notices').snapshots();
-  CollectionReference Notices =
+  CollectionReference notices =
       FirebaseFirestore.instance.collection('Admin/$admin/Notices');
-
   @override
   void initState() {
     super.initState();
   }
 
   deleteUser(id) async {
-    Notices.doc(id)
+    notices
+        .doc(id)
         .delete()
         .then((value) => print('User Deleted'))
         .catchError((error) => print('Failed to Delete user: $error'));
@@ -77,7 +75,6 @@ class _NoticeState extends State<Notice> {
                                 scrollable: true,
                                 title: Text(
                                   '${storedocs[index]['subject']}',
-                                  // Enrollment[index],
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
@@ -143,7 +140,6 @@ class _NoticeState extends State<Notice> {
                                       children: <Widget>[
                                         Text(
                                           '${storedocs[index]['subject']}',
-                                          // Enrollment[index],
                                           style: const TextStyle(
                                               fontWeight: FontWeight.bold,
                                               fontSize: 20),
@@ -171,24 +167,6 @@ class _NoticeState extends State<Notice> {
                                         ),
                                       ],
                                     ),
-                                    // Column(
-                                    //   mainAxisAlignment:
-                                    //       MainAxisAlignment.start,
-                                    //   children: [
-                                    //     // Text(
-                                    //     //   'Batch(Starting Year) : ${storedocs[index]['batch']}',
-                                    //     //   style: const TextStyle(fontSize: 15),
-                                    //     // ),
-                                    //     // const SizedBox(
-                                    //     //   height: 10,
-                                    //     // ),
-                                    //     Text(
-                                    //       'Branch : ${storedocs[index]['branch']}',
-                                    //       style: const TextStyle(fontSize: 15),
-                                    //     ),
-
-                                    //   ],
-                                    // ),
                                     Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
@@ -219,12 +197,7 @@ class _NoticeState extends State<Notice> {
                                                       child:
                                                           const Text("DELETE"),
                                                       onPressed: () {
-                                                        // Perform the deletion here
-                                                        // ...
                                                         try {
-                                                          // await delete(storedocs[index]
-                                                          //         ['number'] +
-                                                          //     '@sps.com');
                                                           deleteUser(
                                                               storedocs[index]
                                                                   ['id']);
@@ -259,14 +232,6 @@ class _NoticeState extends State<Notice> {
                                             color: red,
                                           ),
                                         ),
-                                        // Switch(
-                                        //   value: isActive[index],
-                                        //   onChanged: (bool newValue) {
-                                        //     setState(() {
-                                        //       isActive[index] = !isActive[index];
-                                        //     });
-                                        //   },
-                                        // ),
                                       ],
                                     ),
                                   ],

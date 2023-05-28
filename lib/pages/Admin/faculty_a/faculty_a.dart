@@ -9,7 +9,6 @@ import 'package:smart_parents/widgest/animation.dart';
 
 class Faculty extends StatefulWidget {
   const Faculty({Key? key}) : super(key: key);
-
   @override
   State<Faculty> createState() => _FacultyState();
 }
@@ -23,12 +22,9 @@ class _FacultyState extends State<Faculty> {
 
   Stream<QuerySnapshot>? facultyStream =
       FirebaseFirestore.instance.collection('Admin/$admin/faculty').snapshots();
-
-  // For Deleting User
   CollectionReference facultys =
       FirebaseFirestore.instance.collection('Admin/$admin/faculty');
   Future<void> deleteUser(id) {
-    // print("User Deleted $id");
     return facultys
         .doc(id)
         .delete()
@@ -71,10 +67,8 @@ class _FacultyState extends State<Faculty> {
 
   TextEditingController searchController = TextEditingController();
   String number = '';
-
   @override
   Widget build(BuildContext context) {
-    // login();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -92,7 +86,6 @@ class _FacultyState extends State<Faculty> {
               controller: searchController,
               onChanged: (value) {
                 setState(() {
-                  // search();
                   number = value;
                 });
               },
@@ -148,15 +141,11 @@ class _FacultyState extends State<Faculty> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          // Text(
-                                          //   '${index + 1}',
-                                          // ),
                                           Expanded(
                                             child: Column(
                                               children: <Widget>[
                                                 Text(
                                                   '${storedocs[index]['faculty']}',
-                                                  // Enrollment[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -164,7 +153,6 @@ class _FacultyState extends State<Faculty> {
                                                 ),
                                                 Text(
                                                   'Name: ${storedocs[index]['name']}',
-                                                  // Students[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -185,7 +173,6 @@ class _FacultyState extends State<Faculty> {
                                                     ['status'],
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    // _status = value;
                                                     updateStatus(
                                                         storedocs[index]['id'],
                                                         value);
@@ -211,10 +198,6 @@ class _FacultyState extends State<Faculty> {
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      // Row(
-                                      //   children: [
-                                      //     Expanded(
-                                      // child:
                                       Row(
                                         children: [
                                           Expanded(
@@ -233,9 +216,6 @@ class _FacultyState extends State<Faculty> {
                                           ),
                                         ],
                                       ),
-                                      // ),
-                                      // Expanded(
-                                      // child:
                                       Row(
                                         children: [
                                           Expanded(
@@ -247,9 +227,6 @@ class _FacultyState extends State<Faculty> {
                                           ),
                                         ],
                                       ),
-                                      //     ),
-                                      //   ],
-                                      // ),
                                       const SizedBox(
                                         height: 15,
                                       ),
@@ -298,15 +275,11 @@ class _FacultyState extends State<Faculty> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          // Text(
-                                          //   '${index + 1}',
-                                          // ),
                                           Expanded(
                                             child: Column(
                                               children: <Widget>[
                                                 Text(
                                                   '${storedocs[index]['faculty']}',
-                                                  // Enrollment[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -314,7 +287,6 @@ class _FacultyState extends State<Faculty> {
                                                 ),
                                                 Text(
                                                   'Name: ${storedocs[index]['name']}',
-                                                  // Students[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -335,7 +307,6 @@ class _FacultyState extends State<Faculty> {
                                                     ['status'],
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    // _status = value;
                                                     updateStatus(
                                                         storedocs[index]['id'],
                                                         value);
@@ -361,10 +332,6 @@ class _FacultyState extends State<Faculty> {
                                       const SizedBox(
                                         height: 15,
                                       ),
-                                      // Row(
-                                      //   children: [
-                                      //     Expanded(
-                                      // child:
                                       Row(
                                         children: [
                                           Expanded(
@@ -383,9 +350,6 @@ class _FacultyState extends State<Faculty> {
                                           ),
                                         ],
                                       ),
-                                      // ),
-                                      // Expanded(
-                                      // child:
                                       Row(
                                         children: [
                                           Expanded(
@@ -397,9 +361,6 @@ class _FacultyState extends State<Faculty> {
                                           ),
                                         ],
                                       ),
-                                      //     ),
-                                      //   ],
-                                      // ),
                                       const SizedBox(
                                         height: 15,
                                       ),
@@ -454,15 +415,8 @@ class _FacultyState extends State<Faculty> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         onPressed: () => {
           Navigator.push(context, FloatingAnimation(const AddFacultyPage())),
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(
-          //     builder: (context) => const AddFacultyPage(),
-          //   ),
-          // )
         },
         child: const Icon(Icons.add),
       ),

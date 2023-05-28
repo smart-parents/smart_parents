@@ -1,12 +1,9 @@
-// ignore_for_file: deprecated_member_use, constant_identifier_names, depend_on_referenced_packages, unused_field, use_build_context_synchronously
-
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/pages/TimeImage.dart';
-// import 'package:flutter_background_service_android/flutter_background_service_android.dart';
+import 'package:smart_parents/pages/time_image.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,7 +17,6 @@ Future<void> main() async {
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
-
   @override
   State<MyApp> createState() => _MyAppState();
 }
@@ -31,20 +27,12 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
-
     OneSignal.shared
-        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {
-      print('Notification opened');
-    });
-
+        .setNotificationOpenedHandler((OSNotificationOpenedResult result) {});
     OneSignal.shared
-        .setInAppMessageClickedHandler((OSInAppMessageAction action) {
-      print('In app message clicked');
-    });
-
+        .setInAppMessageClickedHandler((OSInAppMessageAction action) {});
     checkPrivacyConsent();
     takeNotificationPermission();
-    print('notification setup successfully');
   }
 
   Future<void> checkPrivacyConsent() async {
@@ -61,10 +49,9 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> takeNotificationPermission() async {
-    // Check if the user has provided privacy consent
-    bool userProvidedPrivacyConsent =
+    _userProvidedPrivacyConsent =
         await OneSignal.shared.userProvidedPrivacyConsent();
-    if (!userProvidedPrivacyConsent) {
+    if (!_userProvidedPrivacyConsent) {
       requestPrivacyConsent();
       return;
     }
@@ -89,8 +76,6 @@ class _MyAppState extends State<MyApp> {
       title: 'Smart Parents',
       theme: ThemeData(
           inputDecorationTheme: const InputDecorationTheme(
-            // prefixIconColor: Colors.grey[600],
-            // suffixIconColor: Colors.grey[600],
             prefixIconColor: kPrimaryColor,
             suffixIconColor: kPrimaryColor,
             enabledBorder: OutlineInputBorder(
@@ -100,16 +85,10 @@ class _MyAppState extends State<MyApp> {
               borderSide: BorderSide(color: kPrimaryColor, width: 2.0),
             ),
           ),
-          // buttonTheme: ButtonThemeData(colorScheme: primary),
           elevatedButtonTheme: ElevatedButtonThemeData(
             style: ButtonStyle(
                 backgroundColor: MaterialStatePropertyAll(primary.primary),
-                foregroundColor: MaterialStatePropertyAll(primary.background)
-                // textStyle: MaterialStatePropertyAll(
-                //   TextStyle(color:primary.primary)
-                // ),
-                // foregroundColor: MaterialStatePropertyAll(primary.primary),
-                ),
+                foregroundColor: MaterialStatePropertyAll(primary.background)),
           ),
           appBarTheme: const AppBarTheme(
               backgroundColor: kPrimaryColor, foregroundColor: Colors.white),

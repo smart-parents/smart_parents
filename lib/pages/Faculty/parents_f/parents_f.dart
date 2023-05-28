@@ -1,5 +1,3 @@
-// ignore_for_file: nullable_type_in_catch_clause
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,36 +9,25 @@ import 'package:smart_parents/widgest/animation.dart';
 
 class Parent extends StatefulWidget {
   const Parent({Key? key}) : super(key: key);
-
-  // Future<void> initState() async {
-  //   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
-  //     // SystemUiOverlay.bottom,
-  //   ]);}
-
   @override
   State<Parent> createState() => _ParentState();
 }
 
 class _ParentState extends State<Parent> {
-  // final email = FirebaseAuth.instance.currentUser!.email;
-
   Stream<QuerySnapshot> parentsStream = FirebaseFirestore.instance
       .collection('Admin/$admin/parents')
       .where('branch', isEqualTo: branch)
       .snapshots();
-
   @override
   void initState() {
     super.initState();
     login();
   }
 
-  // For Deleting User
   CollectionReference parents =
       FirebaseFirestore.instance.collection('Admin/$admin/parents');
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
   Future<void> deleteUser(id) {
-    // print("User Deleted $id");
     return parents
         .doc(id)
         .delete()
@@ -82,10 +69,8 @@ class _ParentState extends State<Parent> {
 
   TextEditingController searchController = TextEditingController();
   String number = '';
-
   @override
   Widget build(BuildContext context) {
-    // myMethod();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -103,7 +88,6 @@ class _ParentState extends State<Parent> {
               controller: searchController,
               onChanged: (value) {
                 setState(() {
-                  // search();
                   number = value;
                 });
               },
@@ -159,9 +143,6 @@ class _ParentState extends State<Parent> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          // Text(
-                                          //   '${index + 1}',
-                                          // ),
                                           Expanded(
                                             child: Column(
                                               crossAxisAlignment:
@@ -169,7 +150,6 @@ class _ParentState extends State<Parent> {
                                               children: <Widget>[
                                                 Text(
                                                   '${storedocs[index]['number']}',
-                                                  // Enrollment[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -177,7 +157,6 @@ class _ParentState extends State<Parent> {
                                                 ),
                                                 Text(
                                                   'Name: ${storedocs[index]['name']}',
-                                                  // Students[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -185,7 +164,6 @@ class _ParentState extends State<Parent> {
                                                 ),
                                                 Text(
                                                   'Child: ${storedocs[index]['child']}',
-                                                  // Students[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -206,7 +184,6 @@ class _ParentState extends State<Parent> {
                                                     ['status'],
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    // _status = value;
                                                     updateStatus(
                                                         storedocs[index]['id'],
                                                         value);
@@ -227,40 +204,6 @@ class _ParentState extends State<Parent> {
                                               ),
                                             ],
                                           ),
-                                          // Column(
-                                          //   children: [
-                                          //     const Text("Delete"),
-                                          //     IconButton(
-                                          //       highlightColor: red,
-                                          //       onPressed: () async {
-                                          //         try {
-                                          //           // await delete(storedocs[index]
-                                          //           //         ['number'] +
-                                          //           //     '@sps.com');
-                                          //           deleteUser(storedocs[index]['id']);
-                                          //           ScaffoldMessenger.of(context)
-                                          //               .showSnackBar(
-                                          //             const SnackBar(
-                                          //                 content:
-                                          //                     Text('Student deleted.')),
-                                          //           );
-                                          //         } catch (e) {
-                                          //           print(e);
-                                          //           ScaffoldMessenger.of(context)
-                                          //               .showSnackBar(
-                                          //             SnackBar(
-                                          //                 content: Text(
-                                          //                     'Failed to delete student: $e')),
-                                          //           );
-                                          //         }
-                                          //       },
-                                          //       icon: const Icon(
-                                          //         Icons.delete,
-                                          //         color: red,
-                                          //       ),
-                                          //     ),
-                                          //   ],
-                                          // ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -311,9 +254,6 @@ class _ParentState extends State<Parent> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          // Text(
-                                          //   '${index + 1}',
-                                          // ),
                                           Expanded(
                                             child: Column(
                                               crossAxisAlignment:
@@ -321,7 +261,6 @@ class _ParentState extends State<Parent> {
                                               children: <Widget>[
                                                 Text(
                                                   '${storedocs[index]['number']}',
-                                                  // Enrollment[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -329,7 +268,6 @@ class _ParentState extends State<Parent> {
                                                 ),
                                                 Text(
                                                   'Name: ${storedocs[index]['name']}',
-                                                  // Students[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -337,7 +275,6 @@ class _ParentState extends State<Parent> {
                                                 ),
                                                 Text(
                                                   'Child: ${storedocs[index]['child']}',
-                                                  // Students[index],
                                                   style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -358,7 +295,6 @@ class _ParentState extends State<Parent> {
                                                     ['status'],
                                                 onChanged: (value) {
                                                   setState(() {
-                                                    // _status = value;
                                                     updateStatus(
                                                         storedocs[index]['id'],
                                                         value);
@@ -379,40 +315,6 @@ class _ParentState extends State<Parent> {
                                               ),
                                             ],
                                           ),
-                                          // Column(
-                                          //   children: [
-                                          //     const Text("Delete"),
-                                          //     IconButton(
-                                          //       highlightColor: red,
-                                          //       onPressed: () async {
-                                          //         try {
-                                          //           // await delete(storedocs[index]
-                                          //           //         ['number'] +
-                                          //           //     '@sps.com');
-                                          //           deleteUser(storedocs[index]['id']);
-                                          //           ScaffoldMessenger.of(context)
-                                          //               .showSnackBar(
-                                          //             const SnackBar(
-                                          //                 content:
-                                          //                     Text('Student deleted.')),
-                                          //           );
-                                          //         } catch (e) {
-                                          //           print(e);
-                                          //           ScaffoldMessenger.of(context)
-                                          //               .showSnackBar(
-                                          //             SnackBar(
-                                          //                 content: Text(
-                                          //                     'Failed to delete student: $e')),
-                                          //           );
-                                          //         }
-                                          //       },
-                                          //       icon: const Icon(
-                                          //         Icons.delete,
-                                          //         color: red,
-                                          //       ),
-                                          //     ),
-                                          //   ],
-                                          // ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -469,7 +371,6 @@ class _ParentState extends State<Parent> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
         onPressed: () => {
           Navigator.push(context, FloatingAnimation(const AddParentPage())),
         },

@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -8,17 +6,12 @@ import 'package:smart_parents/components/custom_dialog.dart';
 class InternetPopup {
   bool _isOnline = false;
   bool _isDialogOn = false;
-
   final Connectivity _connectivity = Connectivity();
-
   static final InternetPopup _internetPopup = InternetPopup._internal();
-
   factory InternetPopup() {
     return _internetPopup;
   }
-
   InternetPopup._internal();
-
   void initialize(
       {required BuildContext context,
       String? customMessage,
@@ -50,14 +43,12 @@ class InternetPopup {
             });
       }
     });
-
     _connectivity.onConnectivityChanged.listen((result) async {
       if (result != ConnectivityResult.none) {
         _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
       }
-
       if (_isOnline == true) {
         if (_isDialogOn == true) {
           _isDialogOn = false;
@@ -84,14 +75,12 @@ class InternetPopup {
   void initializeCustomWidget(
       {required BuildContext context, required Widget widget}) {
     final navigator = Navigator.of(context);
-
     _connectivity.checkConnectivity().then((result) async {
       if (result != ConnectivityResult.none) {
         _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
       }
-
       if (_isOnline == true) {
         if (_isDialogOn == true) {
           _isDialogOn = false;
@@ -99,18 +88,15 @@ class InternetPopup {
         }
       } else {
         _isDialogOn = true;
-
         Alerts(context: context).showModalWithWidget(child: widget);
       }
     });
-
     _connectivity.onConnectivityChanged.listen((result) async {
       if (result != ConnectivityResult.none) {
         _isOnline = await InternetConnectionChecker().hasConnection;
       } else {
         _isOnline = false;
       }
-
       if (_isOnline == true) {
         if (_isDialogOn == true) {
           _isDialogOn = false;
@@ -118,7 +104,6 @@ class InternetPopup {
         }
       } else {
         _isDialogOn = true;
-
         Alerts(context: context).showModalWithWidget(child: widget);
       }
     });

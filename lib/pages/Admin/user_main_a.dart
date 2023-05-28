@@ -1,16 +1,11 @@
-// ignore_for_file: library_private_types_in_public_api, use_build_context_synchronously
-
 import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-//
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-// import 'package:smart_parents/components/internetcheck.dart';
 import 'package:smart_parents/pages/Admin/dashboard_a.dart';
 import 'package:smart_parents/pages/Admin/profile_a.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -19,12 +14,13 @@ import 'package:smart_parents/pages/option.dart';
 class UserMainA extends StatefulWidget {
   const UserMainA({Key? key}) : super(key: key);
   @override
-  _UserMainState createState() => _UserMainState();
+  UserMainState createState() => UserMainState();
 }
 
-class _UserMainState extends State<UserMainA> {
+class UserMainState extends State<UserMainA> {
   int _selectedIndex = 0;
   final _prefs = SharedPreferences.getInstance();
+  String? id;
   @override
   void initState() {
     super.initState();
@@ -32,16 +28,11 @@ class _UserMainState extends State<UserMainA> {
     Timer(const Duration(seconds: 5), () {
       subscribeUserForNotifications();
     });
-    // if (kIsWeb) {
-    // } else {
-    //   InternetPopup().initialize(context: context);
-    // }
   }
 
   Future<void> subscribeUserForNotifications() async {
     final SharedPreferences prefs = await _prefs;
-    var id = prefs.getString('id');
-    // Check if the user has provided privacy consent
+    id = prefs.getString('id');
     bool userProvidedPrivacyConsent =
         await OneSignal.shared.userProvidedPrivacyConsent();
     if (!userProvidedPrivacyConsent) {
@@ -49,15 +40,10 @@ class _UserMainState extends State<UserMainA> {
           "User has not provided privacy consent yet. Cannot subscribe for notifications.");
       return;
     }
-    // Prompt the user to enable notifications
     await OneSignal.shared.promptUserForPushNotificationPermission();
-
-    // Retrieve the user's device token
     String deviceToken = await OneSignal.shared
         .getDeviceState()
         .then((deviceState) => deviceState!.userId!);
-
-    // Subscribe the user to notifications
     await FirebaseFirestore.instance
         .collection('Admin')
         .doc(id)
@@ -78,11 +64,9 @@ class _UserMainState extends State<UserMainA> {
     }
   }
 
-  // final storage = new FlutterSecureStorage();
   static final List<Widget> _widgetOptions = <Widget>[
     const Dashboard(),
     const Profile(),
-    // const ChangePassword(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -90,30 +74,6 @@ class _UserMainState extends State<UserMainA> {
     });
   }
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   login();
-  // }
-
-  // final _prefs = SharedPreferences.getInstance();
-  // login() async {
-  //   FirebaseAuth.instance.signOut();
-  //   final SharedPreferences prefs = await _prefs;
-  //   String? email = prefs.getString('email');
-  //   String? pass = prefs.getString('pass');
-  //   print("signout");
-  //   try {
-  //     FirebaseAuth.instance
-  //         .signInWithEmailAndPassword(email: "$email", password: "$pass")
-  //         .then(
-  //           (value) => print("login $email"),
-  //         );
-  //     print("login");
-  //   } on FirebaseAuthException catch (e) {
-  //     print(e);
-  //   }
-  // }
   delete() async {
     final SharedPreferences prefs = await _prefs;
     final success = await prefs.clear();
@@ -122,35 +82,23 @@ class _UserMainState extends State<UserMainA> {
 
   @override
   Widget build(BuildContext context) {
-    // login();
     return WillPopScope(
         onWillPop: () async {
-          // Navigator.of(context).push(
-          //     MaterialPageRoute(builder: (context) => const WelcomeScreen()));
           SystemChannels.platform.invokeMethod('SystemNavigator.pop');
           return false;
         },
         child: Container(
           decoration: BoxDecoration(
-            // color: Colors.transparent,
             image: DecorationImage(
               image: AssetImage(background),
               fit: BoxFit.cover,
             ),
           ),
-          // child: InternetConnectionDialog(
           child: Scaffold(
             backgroundColor: Colors.transparent,
             appBar: AppBar(
-              // backgroundColor: Colors.transparent,
-              // backgroundColor: const Color.fromARGB(255, 207, 235, 255),
               automaticallyImplyLeading: false,
-              title:
-                  //  Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  // Image.asset("assets/images/top3.png", width: 100, height: 50,),
-                  const Text(
+              title: const Text(
                 "Admin",
                 style: TextStyle(
                   fontSize: 30.0,
@@ -177,11 +125,6 @@ class _UserMainState extends State<UserMainA> {
                             TextButton(
                               child: const Text("Logout"),
                               onPressed: () async {
-                                // setState(() {
-                                //   _isLoading = true;
-                                // });
-                                // Perform the deletion here
-                                // ...
                                 showDialog(
                                     barrierDismissible: false,
                                     context: context,
@@ -193,7 +136,19 @@ class _UserMainState extends State<UserMainA> {
                                   await FirebaseAuth.instance.signOut();
                                   delete();
                                   await OneSignal.shared.removeExternalUserId();
-                                  // await storage.delete(key: "uid"),
+                                  try {
+                                    final documentReference = FirebaseFirestore
+                                        .instance
+                                        .collection("Admin")
+                                        .doc(id);
+                                    await documentReference.update({
+                                      "notification_token": FieldValue.delete(),
+                                    });
+                                    print(
+                                        "Field 'notification_token' deleted successfully from document $id");
+                                  } catch (e) {
+                                    print('Error deleting field: $e');
+                                  }
                                   Navigator.pushAndRemoveUntil(
                                       context,
                                       MaterialPageRoute(
@@ -212,10 +167,6 @@ class _UserMainState extends State<UserMainA> {
                                               color: Colors.black),
                                         )),
                                   );
-                                } finally {
-                                  // setState(() {
-                                  //   _isLoading = false;
-                                  // });
                                 }
                               },
                             ),
@@ -230,26 +181,6 @@ class _UserMainState extends State<UserMainA> {
                   ),
                 ),
               ],
-              // Image.asset(
-              //   "assets/images/Admin.png",
-              //   height: 50,
-              // ),
-              // ElevatedButton(
-              //   onPressed: () async => {
-              //     await FirebaseAuth.instance.signOut(),
-              //     await storage.delete(key: "uid"),
-              //     Navigator.pushAndRemoveUntil(
-              //         context,
-              //         MaterialPageRoute(
-              //           builder: (context) => LoginScreen(),
-              //         ),
-              //         (route) => false)
-              //   },
-              //   child: Text('Logout'),
-              //   style: ElevatedButton.styleFrom(backgroundColor: Colors.blueGrey),
-              // )
-              //   ],
-              // ),
             ),
             body: _widgetOptions.elementAt(_selectedIndex),
             bottomNavigationBar: Container(

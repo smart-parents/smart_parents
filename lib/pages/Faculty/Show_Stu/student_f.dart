@@ -1,5 +1,3 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers, library_private_types_in_public_api, prefer_typing_uninitialized_variables
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
@@ -8,16 +6,14 @@ class StudentF extends StatefulWidget {
   final String batch;
   const StudentF({Key? key, required this.batch}) : super(key: key);
   @override
-  _StudentFState createState() => _StudentFState();
+  StudentFState createState() => StudentFState();
 }
 
-class _StudentFState extends State<StudentF> {
-  // For Deleting User
+class StudentFState extends State<StudentF> {
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/students');
   String number = '';
   TextEditingController searchController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +33,6 @@ class _StudentFState extends State<StudentF> {
               controller: searchController,
               onChanged: (value) {
                 setState(() {
-                  // search();
                   number = value;
                 });
               },
@@ -78,7 +73,6 @@ class _StudentFState extends State<StudentF> {
                       storedocs.add(a);
                       a['id'] = document.id;
                     }).toList();
-
                     return Center(
                       child: storedocs.isNotEmpty
                           ? ListView.builder(
@@ -146,7 +140,6 @@ class _StudentFState extends State<StudentF> {
                                             height: 15,
                                           ),
                                           Row(
-                                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
                                               Expanded(
                                                 child: Text(
@@ -165,7 +158,6 @@ class _StudentFState extends State<StudentF> {
                                             ],
                                           ),
                                           Row(
-                                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
                                               Expanded(
                                                 child: Text(
@@ -174,11 +166,6 @@ class _StudentFState extends State<StudentF> {
                                                       fontSize: 13),
                                                 ),
                                               ),
-                                              // Text(
-                                              //   'Year : ${storedocs[index]['year']}',
-                                              //   style: const TextStyle(
-                                              //       fontSize: 13),
-                                              // )
                                             ],
                                           ),
                                         ],
@@ -249,7 +236,6 @@ class _StudentFState extends State<StudentF> {
                                             height: 15,
                                           ),
                                           Row(
-                                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
                                               Expanded(
                                                 child: Text(
@@ -268,7 +254,6 @@ class _StudentFState extends State<StudentF> {
                                             ],
                                           ),
                                           Row(
-                                            // mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
                                               Expanded(
                                                 child: Text(
@@ -277,11 +262,6 @@ class _StudentFState extends State<StudentF> {
                                                       fontSize: 13),
                                                 ),
                                               ),
-                                              // Text(
-                                              //   'Year : ${storedocs[index]['year']}',
-                                              //   style: const TextStyle(
-                                              //       fontSize: 13),
-                                              // )
                                             ],
                                           ),
                                         ],

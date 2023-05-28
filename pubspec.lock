@@ -473,7 +473,7 @@ packages:
     source: hosted
     version: "1.0.0+1"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
@@ -569,7 +569,7 @@ packages:
     source: hosted
     version: "3.5.1"
   path:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path
       sha256: "8829d8a55c13fc0e37127c29fedf290c102f4e40ae94ada574091fe0ff96c917"
@@ -1094,5 +1094,5 @@ packages:
     source: hosted
     version: "6.3.0"
 sdks:
-  dart: ">=3.0.0 <4.0.0"
+  dart: ">=3.0.2 <4.0.0"
   flutter: ">=3.10.0"

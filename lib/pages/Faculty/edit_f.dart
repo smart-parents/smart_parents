@@ -1,5 +1,3 @@
-// ignore_for_file: library_private_types_in_public_api, depend_on_referenced_packages
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -8,15 +6,13 @@ class EditF extends StatefulWidget {
   final String id;
   const EditF({Key? key, required this.id}) : super(key: key);
   @override
-  _EditFState createState() => _EditFState();
+  EditFState createState() => EditFState();
 }
 
-class _EditFState extends State<EditF> {
+class EditFState extends State<EditF> {
   final _formKey = GlobalKey<FormState>();
   var admin = 'd@gm.co';
-
   CollectionReference? students;
-
   adminget(String admin) {
     this.admin = admin;
     students = FirebaseFirestore.instance.collection('Admin/$admin/faculty');
@@ -53,7 +49,6 @@ class _EditFState extends State<EditF> {
         initialDate: _selectedDate ?? DateTime.now(),
         firstDate: DateTime(1900),
         lastDate: DateTime.now());
-
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
@@ -124,7 +119,6 @@ class _EditFState extends State<EditF> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: TextFormField(
-                          // readOnly: true,
                           initialValue: name,
                           autofocus: false,
                           onChanged: (value) => name = value,
@@ -160,7 +154,6 @@ class _EditFState extends State<EditF> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: TextFormField(
-                          // readOnly: true,
                           initialValue: email,
                           autofocus: false,
                           onChanged: (value) => email = value,
@@ -196,7 +189,6 @@ class _EditFState extends State<EditF> {
                       Padding(
                         padding: const EdgeInsets.only(left: 20.0, right: 20.0),
                         child: TextFormField(
-                          // readOnly: true,
                           initialValue: mono,
                           autofocus: false,
                           onChanged: (value) => mono = value,
