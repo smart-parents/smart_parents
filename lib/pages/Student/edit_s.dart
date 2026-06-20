@@ -5,7 +5,7 @@ import 'package:smart_parents/components/constants.dart';
 
 class EditS extends StatefulWidget {
   final String id;
-  const EditS({Key? key, required this.id}) : super(key: key);
+  const EditS({super.key, required this.id});
   @override
   EditSState createState() => EditSState();
 }
@@ -32,7 +32,7 @@ class EditSState extends State<EditS> {
 
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/students');
-  Future<void> updateUser(id, name, email, mono, branch, batch, dob) {
+  Future<void> updateUser(dynamic id, dynamic name, dynamic email, dynamic mono, dynamic branch, dynamic batch, dynamic dob) {
     return students
         .doc(id)
         .update(({

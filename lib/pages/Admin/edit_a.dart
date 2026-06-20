@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class EditA extends StatefulWidget {
   final String id;
-  const EditA({Key? key, required this.id}) : super(key: key);
+  const EditA({super.key, required this.id});
   @override
   EditAState createState() => EditAState();
 }
@@ -11,7 +11,7 @@ class EditA extends StatefulWidget {
 class EditAState extends State<EditA> {
   final _formKey = GlobalKey<FormState>();
   CollectionReference students = FirebaseFirestore.instance.collection('Admin');
-  Future<void> updateUser(id, name, email, mono) {
+  Future<void> updateUser(dynamic id, dynamic name, dynamic email, dynamic mono) {
     return students
         .doc(id)
         .update(({'name': name, 'email': email, 'mono': mono}))

@@ -4,7 +4,7 @@ import 'package:smart_parents/components/constants.dart';
 
 class StudentF extends StatefulWidget {
   final String batch;
-  const StudentF({Key? key, required this.batch}) : super(key: key);
+  const StudentF({super.key, required this.batch});
   @override
   StudentFState createState() => StudentFState();
 }

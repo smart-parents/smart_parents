@@ -17,7 +17,7 @@ import '../Parents/result_p.dart';
 Timer? timer;
 
 class DashboardS extends StatefulWidget {
-  const DashboardS({Key? key}) : super(key: key);
+  const DashboardS({super.key});
   @override
   DashboardState createState() => DashboardState();
 }
@@ -32,7 +32,7 @@ class DashboardState extends State<DashboardS> {
   }
 
   final _prefs = SharedPreferences.getInstance();
-  getLocationData() async {
+  Future<void> getLocationData() async {
     if (FirebaseAuth.instance.currentUser != null) {
       final SharedPreferences prefs = await _prefs;
       var id = prefs.getString('id');

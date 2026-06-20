@@ -4,8 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:smart_parents/components/constants.dart';
 
 class AddExamTimeTable extends StatefulWidget {
-  const AddExamTimeTable({Key? key, required this.docid, required this.name})
-      : super(key: key);
+  const AddExamTimeTable({super.key, required this.docid, required this.name});
   final String docid;
   final String name;
   @override
@@ -25,7 +24,7 @@ class _AddExamTimeTableState extends State<AddExamTimeTable> {
     _fetchSubjects();
   }
 
-  addExam(subject, date, start, end) {
+  Future<void> addExam(dynamic subject, dynamic date, dynamic start, dynamic end) {
     CollectionReference exam = FirebaseFirestore.instance
         .collection('Admin/$admin/exams/${widget.docid}/exam');
     return exam

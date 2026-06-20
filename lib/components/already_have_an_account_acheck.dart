@@ -6,11 +6,11 @@ class AlreadyHaveAnAccountCheck extends StatelessWidget {
   final Function? press;
   final Function? password;
   const AlreadyHaveAnAccountCheck({
-    Key? key,
+    super.key,
     this.login = true,
     required this.press,
     this.password,
-  }) : super(key: key);
+  });
   @override
   Widget build(BuildContext context) {
     return Row(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 
 class AddDepartPage extends StatefulWidget {
-  const AddDepartPage({Key? key}) : super(key: key);
+  const AddDepartPage({super.key});
   @override
   AddDepartPageState createState() => AddDepartPageState();
 }
@@ -26,7 +26,7 @@ class AddDepartPageState extends State<AddDepartPage> {
     super.dispose();
   }
 
-  clearText() async {
+  Future<void> clearText() async {
     nameController.clear();
     departmentController.clear();
   }

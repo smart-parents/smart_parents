@@ -18,7 +18,7 @@ class Subject {
 }
 
 class AttendenceDropdownpage2 extends StatefulWidget {
-  const AttendenceDropdownpage2({Key? key}) : super(key: key);
+  const AttendenceDropdownpage2({super.key});
   @override
   AttendenceDropdownpage2State createState() => AttendenceDropdownpage2State();
 }

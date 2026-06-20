@@ -8,8 +8,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   LoginFormState createState() => LoginFormState();
 }
@@ -21,13 +21,14 @@ class LoginFormState extends State<LoginForm> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-  check() async {
+  Future<void> check() async {
     final snapShot = await FirebaseFirestore.instance
         .collection('Users')
         .where('id', isEqualTo: faculty)
         .where('role', isEqualTo: 'faculty')
         .where('status', isEqualTo: true)
         .get();
+    if (!mounted) return;
     if (snapShot.docs.isNotEmpty) {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
@@ -43,6 +44,7 @@ class LoginFormState extends State<LoginForm> {
         await prefs.setString('faculty', "$faculty@spf.com");
         await prefs.setString('pass', password);
         await prefs.setString('id', faculty);
+        if (!mounted) return;
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(

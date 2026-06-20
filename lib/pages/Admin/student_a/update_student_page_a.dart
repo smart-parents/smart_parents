@@ -5,7 +5,7 @@ import 'package:smart_parents/widgest/dropdown_widget.dart';
 
 class UpdateStudentPage extends StatefulWidget {
   final String id;
-  const UpdateStudentPage({Key? key, required this.id}) : super(key: key);
+  const UpdateStudentPage({super.key, required this.id});
   @override
   UpdateStudentPageState createState() => UpdateStudentPageState();
 }
@@ -15,7 +15,7 @@ class UpdateStudentPageState extends State<UpdateStudentPage> {
   String? branch1;
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/students');
-  Future<void> updateUser(id, name, branch) async {
+  Future<void> updateUser(dynamic id, dynamic name, dynamic branch) async {
     students
         .doc(id)
         .update(
@@ -106,7 +106,7 @@ class UpdateStudentPageState extends State<UpdateStudentPage> {
                                       ]),
                                   child: DropdownButtonFormField<String>(
                                     isExpanded: true,
-                                    value: branch1,
+                                    initialValue: branch1,
                                     decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       enabledBorder: InputBorder.none,

@@ -27,7 +27,7 @@ class _ProfileScreenSState extends State<ProfileScreenS> {
 
   String? id;
   final _prefs = SharedPreferences.getInstance();
-  main() async {
+  Future<void> main() async {
     final SharedPreferences prefs = await _prefs;
     id = prefs.getString('id');
     final doc = await FirebaseFirestore.instance
@@ -81,6 +81,7 @@ class _ProfileScreenSState extends State<ProfileScreenS> {
           _imageFile = bytes;
           uploadImage();
         });
+        if (!mounted) return;
         Navigator.pop(context);
       }
     } catch (e) {

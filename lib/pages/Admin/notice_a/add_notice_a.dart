@@ -2,19 +2,18 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:smart_parents/components/send_notification.dart';
 import 'package:smart_parents/widgest/dropdown_widget.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class NoticeAdd extends StatefulWidget {
-  const NoticeAdd({Key? key}) : super(key: key);
+  const NoticeAdd({super.key});
   @override
   State<NoticeAdd> createState() => _NoticeAddState();
 }
 
-class _NoticeAddState extends State<NoticeAdd> with NotificationMixin {
+class _NoticeAddState extends State<NoticeAdd> {
   String? branch1;
   final _formKey = GlobalKey<FormState>();
   final subjectController = TextEditingController();
@@ -26,7 +25,7 @@ class _NoticeAddState extends State<NoticeAdd> with NotificationMixin {
     super.dispose();
   }
 
-  clearText() async {
+  Future<void> clearText() async {
     subjectController.clear();
     noticeController.clear();
   }
@@ -50,24 +49,6 @@ class _NoticeAddState extends State<NoticeAdd> with NotificationMixin {
         })
         .then((value) => print('notice Added'))
         .catchError((error) => print('Failed to Add user: $error'));
-    sendNotificationToAllUsers(
-        "Notice",
-        '',
-        subject,
-        await FirebaseFirestore.instance
-            .collection('Admin/$admin/parents')
-            .where('branch', isEqualTo: branch1)
-            .where('batch', isEqualTo: batchyeardropdownValue)
-            .get());
-    sendNotificationToAllUsers(
-        "Notice",
-        '',
-        subject,
-        await FirebaseFirestore.instance
-            .collection('Admin/$admin/students')
-            .where('branch', isEqualTo: branch1)
-            .where('batch', isEqualTo: batchyeardropdownValue)
-            .get());
     clearText();
   }
 
@@ -81,6 +62,7 @@ class _NoticeAddState extends State<NoticeAdd> with NotificationMixin {
         setState(() {
           _imageFile = bytes;
         });
+        if (!mounted) return;
         Navigator.pop(context);
       }
     } catch (e) {
@@ -218,7 +200,7 @@ class _NoticeAddState extends State<NoticeAdd> with NotificationMixin {
                                 ]),
                             child: DropdownButtonFormField<String>(
                               isExpanded: true,
-                              value: branch1,
+                              initialValue: branch1,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 enabledBorder: InputBorder.none,

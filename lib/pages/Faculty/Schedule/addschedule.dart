@@ -1,6 +1,7 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+// import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/Schedule/schedule_f.dart';
 import 'package:smart_parents/widgest/dropdown_widget.dart';
@@ -13,7 +14,7 @@ class Subject {
 }
 
 class AddSchedule extends StatefulWidget {
-  const AddSchedule({Key? key}) : super(key: key);
+  const AddSchedule({super.key});
   @override
   AddScheduleState createState() => AddScheduleState();
 }
@@ -21,10 +22,12 @@ class AddSchedule extends StatefulWidget {
 class AddScheduleState extends State<AddSchedule> {
   TimeOfDay start = TimeOfDay.now();
   String _start = DateFormat('hh:mm a').format(DateTime.now());
-  TimeOfDay end =
-      TimeOfDay.fromDateTime(DateTime.now().add(const Duration(hours: 1)));
-  String _end = DateFormat('hh:mm a')
-      .format(DateTime.now().add(const Duration(hours: 1)));
+  TimeOfDay end = TimeOfDay.fromDateTime(
+    DateTime.now().add(const Duration(hours: 1)),
+  );
+  String _end = DateFormat(
+    'hh:mm a',
+  ).format(DateTime.now().add(const Duration(hours: 1)));
   String? sub;
   List<Subject> _subjects = [];
   List<String> type = ['Lecture', 'Lab'];
@@ -36,57 +39,57 @@ class AddScheduleState extends State<AddSchedule> {
   }
 
   void addSchedule() async {
-    var fullhour = DateFormat('HH:mm')
-        .format(DateTime(2022, 1, 1, start.hour, start.minute));
+    var fullhour = DateFormat(
+      'HH:mm',
+    ).format(DateTime(2022, 1, 1, start.hour, start.minute));
     FirebaseFirestore.instance
         .collection('Admin/$admin/schedule')
         .doc('${branch}_$batchyeardropdownValue')
         .get()
-        .then((value) async => {
-              if (value.exists)
-                {
-                  await FirebaseFirestore.instance
-                      .collection('Admin')
-                      .doc(admin)
-                      .collection('schedule')
-                      .doc('${branch}_$batchyeardropdownValue')
-                      .collection('timetable')
-                      .doc(daysdropdownValue)
-                      .collection('entries')
-                      .add({
-                    'subject': "$sub",
-                    'type': type[selectedIndex],
-                    'startTime': _start,
-                    'start24': fullhour,
-                    'endTime': _end,
-                  })
-                }
-              else
-                {
-                  await FirebaseFirestore.instance
-                      .collection('Admin/$admin/schedule')
-                      .doc('${branch}_$batchyeardropdownValue')
-                      .set({
-                    'branch': branch,
-                    'batch': batchyeardropdownValue,
-                  }),
-                  await FirebaseFirestore.instance
-                      .collection('Admin')
-                      .doc(admin)
-                      .collection('schedule')
-                      .doc('${branch}_$batchyeardropdownValue')
-                      .collection('timetable')
-                      .doc(daysdropdownValue)
-                      .collection('entries')
-                      .add({
-                    'subject': "$sub",
-                    'type': type[selectedIndex],
-                    'startTime': _start,
-                    'start24': fullhour,
-                    'endTime': _end,
-                  })
-                }
-            });
+        .then(
+          (value) async => {
+            if (value.exists)
+              {
+                await FirebaseFirestore.instance
+                    .collection('Admin')
+                    .doc(admin)
+                    .collection('schedule')
+                    .doc('${branch}_$batchyeardropdownValue')
+                    .collection('timetable')
+                    .doc(daysdropdownValue)
+                    .collection('entries')
+                    .add({
+                      'subject': "$sub",
+                      'type': type[selectedIndex],
+                      'startTime': _start,
+                      'start24': fullhour,
+                      'endTime': _end,
+                    }),
+              }
+            else
+              {
+                await FirebaseFirestore.instance
+                    .collection('Admin/$admin/schedule')
+                    .doc('${branch}_$batchyeardropdownValue')
+                    .set({'branch': branch, 'batch': batchyeardropdownValue}),
+                await FirebaseFirestore.instance
+                    .collection('Admin')
+                    .doc(admin)
+                    .collection('schedule')
+                    .doc('${branch}_$batchyeardropdownValue')
+                    .collection('timetable')
+                    .doc(daysdropdownValue)
+                    .collection('entries')
+                    .add({
+                      'subject': "$sub",
+                      'type': type[selectedIndex],
+                      'startTime': _start,
+                      'start24': fullhour,
+                      'endTime': _end,
+                    }),
+              },
+          },
+        );
   }
 
   Future<void> _fetchSubjects() async {
@@ -97,8 +100,10 @@ class AddScheduleState extends State<AddSchedule> {
     final List<Subject> subjects = [];
     for (final DocumentSnapshot<Map<String, dynamic>> subjectSnapshot
         in subjectSnapshot.docs) {
-      final Subject subject =
-          Subject(subjectSnapshot.id, subjectSnapshot.data()!['sub_name']);
+      final Subject subject = Subject(
+        subjectSnapshot.id,
+        subjectSnapshot.data()!['sub_name'],
+      );
       subjects.add(subject);
     }
     setState(() {
@@ -107,24 +112,50 @@ class AddScheduleState extends State<AddSchedule> {
     });
   }
 
-  void showAlertDialogOnOkCallback(String title, String msg,
-      DialogType dialogType, BuildContext context, VoidCallback onOkPress) {
-    AwesomeDialog(
+  // void showAlertDialogOnOkCallback(
+  //   String title,
+  //   String msg,
+  //   DialogType dialogType,
+  //   BuildContext context,
+  //   VoidCallback onOkPress,
+  // ) {
+  //   AwesomeDialog(
+  //     context: context,
+  //     animType: AnimType.topSlide,
+  //     dialogType: dialogType,
+  //     title: title,
+  //     desc: msg,
+  //     btnOkIcon: Icons.check_circle,
+  //     btnOkColor: Colors.green.shade900,
+  //     btnOkOnPress: onOkPress,
+  //   ).show();
+  // }
+  void showAlertDialogOnOkCallback(
+    String title,
+    String msg,
+    BuildContext context,
+    VoidCallback onOkPress,
+  ) {
+    QuickAlert.show(
       context: context,
-      animType: AnimType.topSlide,
-      dialogType: dialogType,
+      type: QuickAlertType.success,
       title: title,
-      desc: msg,
-      btnOkIcon: Icons.check_circle,
-      btnOkColor: Colors.green.shade900,
-      btnOkOnPress: onOkPress,
-    ).show();
+      text: msg,
+      confirmBtnText: 'OK',
+      onConfirmBtnTap: () {
+        Navigator.pop(context);
+        onOkPress();
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     dynamic fieldTextStyle = const TextStyle(
-        color: Colors.cyan, fontSize: 17, fontWeight: FontWeight.w400);
+      color: Colors.cyan,
+      fontSize: 17,
+      fontWeight: FontWeight.w400,
+    );
     return Scaffold(
       appBar: AppBar(
         leading: const BackButton(),
@@ -135,214 +166,218 @@ class AddScheduleState extends State<AddSchedule> {
           children: [
             Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Column(children: [
-                Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        customRadio(type[0], 0),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        customRadio(type[1], 1),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Dropdown(
-                      dropdownValue: batchyeardropdownValue,
-                      string: batchList,
-                      hint: "Batch(Starting Year)",
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    const Text(
-                      "Subject",
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                      decoration: BoxDecoration(
+              child: Column(
+                children: [
+                  Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          customRadio(type[0], 0),
+                          const SizedBox(width: 10),
+                          customRadio(type[1], 1),
+                          const SizedBox(width: 10),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Dropdown(
+                        dropdownValue: batchyeardropdownValue,
+                        string: batchList,
+                        hint: "Batch(Starting Year)",
+                      ),
+                      const SizedBox(height: 20),
+                      const Text("Subject", style: TextStyle(fontSize: 20)),
+                      const SizedBox(height: 5),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        decoration: BoxDecoration(
                           color: Colors.grey[100],
                           borderRadius: BorderRadius.circular(15.0),
                           border: Border.all(
-                              color: Colors.grey,
-                              style: BorderStyle.solid,
-                              width: 0.80),
+                            color: Colors.grey,
+                            style: BorderStyle.solid,
+                            width: 0.80,
+                          ),
                           boxShadow: const [
                             BoxShadow(
                               color: Colors.grey,
-                              offset: Offset(
-                                5.0,
-                                5.0,
-                              ),
+                              offset: Offset(5.0, 5.0),
                               blurRadius: 5.0,
                               spreadRadius: 1.0,
                             ),
-                          ]),
-                      child: DropdownButton<String>(
-                        isExpanded: true,
-                        value: sub,
-                        icon: const Icon(Icons.keyboard_arrow_down_outlined),
-                        elevation: 16,
-                        dropdownColor: Colors.grey[100],
-                        style: const TextStyle(color: Colors.black),
-                        underline: Container(height: 0, color: Colors.black),
-                        onChanged: (value) {
-                          setState(() {
-                            sub = value;
-                          });
-                        },
-                        items: _subjects.map((item) {
-                          return DropdownMenuItem<String>(
-                            value: item.name,
-                            child: Text(item.name),
-                          );
-                        }).toList(),
+                          ],
+                        ),
+                        child: DropdownButton<String>(
+                          isExpanded: true,
+                          value: sub,
+                          icon: const Icon(Icons.keyboard_arrow_down_outlined),
+                          elevation: 16,
+                          dropdownColor: Colors.grey[100],
+                          style: const TextStyle(color: Colors.black),
+                          underline: Container(height: 0, color: Colors.black),
+                          onChanged: (value) {
+                            setState(() {
+                              sub = value;
+                            });
+                          },
+                          items: _subjects.map((item) {
+                            return DropdownMenuItem<String>(
+                              value: item.name,
+                              child: Text(item.name),
+                            );
+                          }).toList(),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Dropdown(
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Dropdown(
                     dropdownValue: daysdropdownValue,
                     string: days,
-                    hint: "Day"),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: <Widget>[
-                    const Icon(
-                      Icons.access_time,
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: Text(
-                      _start,
-                      style: fieldTextStyle,
-                    )),
-                    IconButton(
-                      icon: Icon(
-                        Icons.edit,
-                        color: Colors.grey[700],
+                    hint: "Day",
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      const Icon(Icons.access_time),
+                      const SizedBox(width: 20),
+                      Expanded(child: Text(_start, style: fieldTextStyle)),
+                      IconButton(
+                        icon: Icon(Icons.edit, color: Colors.grey[700]),
+                        onPressed: () async {
+                          TimeOfDay? picked = await showTimePicker(
+                            context: context,
+                            initialTime: start,
+                          );
+                          if (picked != null) {
+                            setState(() {
+                              _start = DateFormat('hh:mm a').format(
+                                DateTime(
+                                  2022,
+                                  1,
+                                  1,
+                                  picked.hour,
+                                  picked.minute,
+                                ),
+                              );
+                              start = picked;
+                              _end = DateFormat('hh:mm a').format(
+                                DateTime(
+                                  2022,
+                                  1,
+                                  1,
+                                  start.hour,
+                                  start.minute,
+                                ).add(const Duration(hours: 1)),
+                              );
+                              end = TimeOfDay.fromDateTime(
+                                DateTime(
+                                  2022,
+                                  1,
+                                  1,
+                                  start.hour,
+                                  start.minute,
+                                ).add(const Duration(hours: 1)),
+                              );
+                            });
+                          }
+                        },
                       ),
-                      onPressed: () async {
-                        TimeOfDay? picked = await showTimePicker(
-                            context: context, initialTime: start);
-                        if (picked != null) {
-                          setState(() {
-                            _start = DateFormat('hh:mm a').format(DateTime(
-                                2022, 1, 1, picked.hour, picked.minute));
-                            start = picked;
-                            _end = DateFormat('hh:mm a').format(
-                                DateTime(2022, 1, 1, start.hour, start.minute)
-                                    .add(const Duration(hours: 1)));
-                            end = TimeOfDay.fromDateTime(
-                                DateTime(2022, 1, 1, start.hour, start.minute)
-                                    .add(const Duration(hours: 1)));
-                          });
-                        }
-                      },
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: <Widget>[
-                    const Icon(
-                      Icons.access_time,
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Expanded(
-                        child: Text(
-                      _end,
-                      style: fieldTextStyle,
-                    )),
-                    IconButton(
-                      icon: Icon(
-                        Icons.edit,
-                        color: Colors.grey[700],
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    children: <Widget>[
+                      const Icon(Icons.access_time),
+                      const SizedBox(width: 20),
+                      Expanded(child: Text(_end, style: fieldTextStyle)),
+                      IconButton(
+                        icon: Icon(Icons.edit, color: Colors.grey[700]),
+                        onPressed: () async {
+                          TimeOfDay? picked = await showTimePicker(
+                            context: context,
+                            initialTime: end,
+                          );
+                          if (picked != null) {
+                            setState(() {
+                              _end = DateFormat('hh:mm a').format(
+                                DateTime(
+                                  2022,
+                                  1,
+                                  1,
+                                  picked.hour,
+                                  picked.minute,
+                                ),
+                              );
+                              end = picked;
+                            });
+                          }
+                        },
                       ),
-                      onPressed: () async {
-                        TimeOfDay? picked = await showTimePicker(
-                            context: context, initialTime: end);
-                        if (picked != null) {
-                          setState(() {
-                            _end = DateFormat('hh:mm a').format(DateTime(
-                                2022, 1, 1, picked.hour, picked.minute));
-                            end = picked;
-                          });
-                        }
-                      },
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
                         Expanded(
                           child: ElevatedButton(
-                              onPressed: () => showDialog<String>(
-                                    context: context,
-                                    builder: (BuildContext context) =>
-                                        AlertDialog(
-                                      title: const Text('Submit Schedule?'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: const Text('Cancel'),
-                                        ),
-                                        TextButton(
-                                          onPressed: () => {
-                                            addSchedule(),
-                                            showAlertDialogOnOkCallback(
-                                                'Success !',
-                                                'Schedule Successfully Submitted.',
-                                                DialogType.success,
-                                                context,
-                                                () => Navigator.of(context)
-                                                    .pushAndRemoveUntil(
-                                                        MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              const ShowSchedule(),
-                                                        ),
-                                                        (route) => false)),
-                                          },
-                                          child: const Text('Submit'),
-                                        ),
-                                      ],
-                                    ),
+                            onPressed: () => showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Submit Schedule?'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Cancel'),
+                                    child: const Text('Cancel'),
                                   ),
-                              style: ElevatedButton.styleFrom(
-                                  fixedSize: const Size(300, 40)),
-                              child: const Text("Add Schedule")),
+                                  TextButton(
+                                    onPressed: () => {
+                                      addSchedule(),
+                                      // showAlertDialogOnOkCallback(
+                                      //     'Success !',
+                                      //     'Schedule Successfully Submitted.',
+                                      //     DialogType.success,
+                                      //     context,
+                                      //     () => Navigator.of(context)
+                                      //         .pushAndRemoveUntil(
+                                      //             MaterialPageRoute(
+                                      //               builder: (context) =>
+                                      //                   const ShowSchedule(),
+                                      //             ),
+                                      //             (route) => false)),
+                                      showAlertDialogOnOkCallback(
+                                        'Success !',
+                                        'Schedule Successfully Submitted.',
+                                        context,
+                                        () => Navigator.of(context)
+                                            .pushAndRemoveUntil(
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    const ShowSchedule(),
+                                              ),
+                                              (route) => false,
+                                            ),
+                                      ),
+                                    },
+                                    child: const Text('Submit'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            style: ElevatedButton.styleFrom(
+                              fixedSize: const Size(300, 40),
+                            ),
+                            child: const Text("Add Schedule"),
+                          ),
                         ),
                       ],
-                    ))
-              ]),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
@@ -368,8 +403,9 @@ class AddScheduleState extends State<AddSchedule> {
       child: Text(
         txt,
         style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: selectedIndex == index ? Colors.cyan : Colors.grey),
+          fontWeight: FontWeight.bold,
+          color: selectedIndex == index ? Colors.cyan : Colors.grey,
+        ),
       ),
     );
   }

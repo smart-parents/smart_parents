@@ -5,7 +5,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/option.dart';
 
 class ChangePassword extends StatefulWidget {
-  const ChangePassword({Key? key}) : super(key: key);
+  const ChangePassword({super.key});
   @override
   ChangePasswordState createState() => ChangePasswordState();
 }
@@ -45,6 +45,7 @@ class ChangePasswordState extends State<ChangePassword> {
         await FirebaseAuth.instance.signOut();
         final SharedPreferences prefs = await _prefs;
         await prefs.clear();
+        if (!mounted) return;
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(

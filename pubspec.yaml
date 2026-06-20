@@ -1,12 +1,13 @@
 name: smart_parents
-description: Final year project 'Smart Parents'.
+description: "Smart Parents- College Management System"
+# The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.0.2 <4.0.0'
+  sdk: ^3.12.2
 
 # flutter pub get
 # flutter pub upgrade
@@ -16,40 +17,40 @@ dependencies:
   flutter:
     sdk: flutter
 
-  awesome_dialog: ^3.1.0
-  carousel_slider: ^4.2.1
-  cloud_firestore: ^4.7.1
-  connectivity_plus: ^4.0.1
-  dotted_border: ^2.0.0+3
-  file_picker: ^5.3.1
-  firebase_auth: ^4.6.1
-  firebase_core: ^2.13.0
-  firebase_storage: ^11.2.1
-  fluttertoast: ^8.2.2
-  google_fonts: ^4.0.4
-  google_maps_flutter: ^2.2.8
-  google_nav_bar: ^5.0.6
-  image_network: ^2.5.2
-  image_picker: ^0.8.7+5
-  internet_connection_checker: ^1.0.0+1
-  intl: ^0.18.1
-  location: ^4.4.0
-  onesignal_flutter: ^3.5.1
-  path: ^1.8.3
-  pdf: ^3.10.4
-  photo_view: ^0.14.0
-  printing: ^5.11.0
-  share_plus: ^7.0.1
-  shared_preferences: ^2.1.1
-  syncfusion_flutter_pdfviewer: ^21.2.6
-  table_calendar: ^3.0.9
-  url_launcher: ^6.1.11
+  carousel_slider: ^5.1.2
+  cloud_firestore: ^6.4.1
+  # connectivity_plus: ^7.1.1
+  connectivity_plus: ^6.1.5
+  dotted_border: ^3.1.0
+  file_picker: ^12.0.0-beta.7
+  firebase_auth: ^6.5.1
+  firebase_core: ^4.9.0
+  firebase_storage: ^13.4.1
+  fluttertoast: ^9.1.0
+  google_fonts: ^8.1.0
+  google_maps_flutter: ^2.17.1
+  google_nav_bar: ^5.0.7
+  image_network: ^2.6.0
+  image_picker: ^1.2.2
+  internet_connection_checker: ^3.0.1
+  intl: ^0.20.2
+  location: ^8.0.1
+  path: ^1.9.1
+  pdf: ^3.12.0
+  photo_view: ^0.15.0
+  printing: ^5.14.3
+  quickalert: ^1.1.0
+  share_plus: ^13.1.0
+  shared_preferences: ^2.5.5
+  syncfusion_flutter_pdfviewer: ^33.2.13+1
+  table_calendar: ^3.2.0
+  url_launcher: ^6.3.2
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_lints: ^2.0.1
+  flutter_lints: ^6.0.0
   
 flutter:
 

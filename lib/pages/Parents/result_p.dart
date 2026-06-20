@@ -4,7 +4,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/components/pdfshow.dart';
 
 class Result extends StatefulWidget {
-  const Result({Key? key}) : super(key: key);
+  const Result({super.key});
   @override
   State<Result> createState() => _ResultState();
 }

@@ -5,7 +5,6 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/components/send_notification.dart';
 import 'package:smart_parents/widgest/dropdown_widget.dart';
 import 'package:path/path.dart' as path;
 import 'package:intl/intl.dart';
@@ -36,7 +35,7 @@ class ResultAdd extends StatefulWidget {
   State<ResultAdd> createState() => _ResultAddState();
 }
 
-class _ResultAddState extends State<ResultAdd> with NotificationMixin {
+class _ResultAddState extends State<ResultAdd> {
   DataModel? task;
   File? file;
   final subjectController = TextEditingController();
@@ -46,44 +45,60 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
     super.dispose();
   }
 
-  clearText() async {
+  Future<void> clearText() async {
     subjectController.clear();
   }
 
-  Future selectFile() async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+  // Future selectFile() async {
+  //   FilePickerResult? result = await FilePicker.pickFiles(
+  //     type: FileType.custom,
+  //     allowedExtensions: ['pdf'],
+  //   );
+  //   if (result != null) {
+  //     final path = result.files.single.path!;
+  //     setState(() => file = File(path));
+  //   }
+  // }
+  Future<void> selectFile() async {
+    FilePickerResult? result = await FilePicker.pickFiles(
       type: FileType.custom,
       allowedExtensions: ['pdf'],
     );
-    if (result != null) {
-      final path = result.files.single.path!;
-      setState(() => file = File(path));
+    if (result != null && result.files.single.path != null) {
+      setState(() {
+        file = File(result.files.single.path!);
+      });
     }
   }
 
-  CollectionReference results =
-      FirebaseFirestore.instance.collection('Admin/$admin/Results');
+  CollectionReference results = FirebaseFirestore.instance.collection(
+    'Admin/$admin/Results',
+  );
   String? docId;
   var subject = '';
   Future uploadFile() async {
     if (file == null) return;
     var date = DateFormat('dd-MM-yyyy hh:mm:ss').format(DateTime.now());
     DocumentReference docRef = results.doc();
-    docRef.set({
-      'branch': branch,
-      'batch': batchyeardropdownValue,
-      'subject': subject,
-      'date': date,
-    }).then((_) {
-      docId = docRef.id;
-      print('Document ID: ${docRef.id}');
-    }).catchError((error) {
-      print('Failed to Add user: $error');
-      return null;
-    });
+    docRef
+        .set({
+          'branch': branch,
+          'batch': batchyeardropdownValue,
+          'subject': subject,
+          'date': date,
+        })
+        .then((_) {
+          docId = docRef.id;
+          print('Document ID: ${docRef.id}');
+        })
+        .catchError((error) {
+          print('Failed to Add user: $error');
+          return null;
+        });
     docId = docRef.id;
-    final storageRef =
-        FirebaseStorage.instance.ref().child('$admin/Results/$docId.pdf');
+    final storageRef = FirebaseStorage.instance.ref().child(
+      '$admin/Results/$docId.pdf',
+    );
     final UploadTask uploadTask = storageRef.putFile(file!);
     final TaskSnapshot downloadUrl = await uploadTask.whenComplete(() => null);
     final url = (await downloadUrl.ref.getDownloadURL());
@@ -91,26 +106,9 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
         .collection('Admin/$admin/Results')
         .doc(docId)
         .update({'pdf': url});
-    sendNotificationToAllUsers(
-        "Result",
-        '',
-        subject,
-        await FirebaseFirestore.instance
-            .collection('Admin/$admin/students')
-            .where('branch', isEqualTo: branch)
-            .where('batch', isEqualTo: batchyeardropdownValue)
-            .get());
-    sendNotificationToAllUsers(
-        "Result",
-        '',
-        subject,
-        await FirebaseFirestore.instance
-            .collection('Admin/$admin/parents')
-            .where('branch', isEqualTo: branch)
-            .where('batch', isEqualTo: batchyeardropdownValue)
-            .get());
     print('Image uploaded to Firebase Storage: $url');
     clearText();
+    if (!mounted) return;
     Navigator.pop(context);
     return const CircularProgressIndicator();
   }
@@ -120,11 +118,9 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
   Widget build(BuildContext context) {
     final fileName = file != null ? path.basename(file!.path) : null;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Add Result'),
-        ),
-        body: SingleChildScrollView(
-            child: Form(
+      appBar: AppBar(title: const Text('Add Result')),
+      body: SingleChildScrollView(
+        child: Form(
           key: _formKey,
           child: Container(
             margin: const EdgeInsets.all(20),
@@ -135,23 +131,24 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
                   string: batchList,
                   hint: "Batch(Starting Year)",
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 Container(
                   padding: const EdgeInsets.only(left: 15),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     border: Border.all(
-                        style: BorderStyle.solid, color: Colors.grey),
+                      style: BorderStyle.solid,
+                      color: Colors.grey,
+                    ),
                   ),
                   child: TextFormField(
                     minLines: 1,
                     decoration: const InputDecoration(
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
-                        hintText: "Enter result topic:",
-                        hintStyle: TextStyle(fontSize: 18)),
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      hintText: "Enter result topic:",
+                      hintStyle: TextStyle(fontSize: 18),
+                    ),
                     controller: subjectController,
                     validator: (value) {
                       if (value!.isEmpty) {
@@ -161,13 +158,14 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
                     },
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
+                const SizedBox(height: 20),
                 DottedBorder(
-                  color: kPrimaryColor,
-                  dashPattern: const [10, 15],
-                  strokeWidth: 5,
+                  options: RoundedRectDottedBorderOptions(
+                    color: kPrimaryColor,
+                    dashPattern: const [10, 15],
+                    strokeWidth: 5,
+                    radius: const Radius.circular(0),
+                  ),
                   child: Container(
                     width: double.infinity,
                     color: kPrimaryLightColor,
@@ -176,9 +174,7 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
                         Center(
                           child: Column(
                             children: [
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              const SizedBox(height: 10),
                               if (fileName == null) ...{
                                 const Text(
                                   'Please select file!',
@@ -193,12 +189,15 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
                                       color: kPrimaryColor,
                                       size: 20,
                                     ),
-                                    Text(fileName,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                            color: kPrimaryColor,
-                                            fontSize: 15,
-                                            fontWeight: FontWeight.bold)),
+                                    Text(
+                                      fileName,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        color: kPrimaryColor,
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
                                   ],
                                 ),
                               },
@@ -207,38 +206,36 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
                                 size: 100,
                                 color: kPrimaryColor,
                               ),
-                              const SizedBox(
-                                height: 10,
-                              ),
+                              const SizedBox(height: 10),
                               ElevatedButton.icon(
-                                  onPressed: selectFile,
-                                  style: ElevatedButton.styleFrom(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 30.0, vertical: 15.0),
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10.0)),
+                                onPressed: selectFile,
+                                style: ElevatedButton.styleFrom(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 30,
+                                    vertical: 15,
                                   ),
-                                  label: const Text(
-                                    "Browse File",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10),
                                   ),
-                                  icon: const Icon(Icons.search)),
-                              const SizedBox(
-                                height: 20,
+                                ),
+                                label: const Text(
+                                  "Browse File",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                icon: const Icon(Icons.search),
                               ),
+                              const SizedBox(height: 20),
                             ],
                           ),
-                        )
+                        ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 55,
-                ),
+                const SizedBox(height: 55),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
@@ -253,9 +250,12 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
                   },
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 40.0, vertical: 20.0),
+                      horizontal: 40.0,
+                      vertical: 20.0,
+                    ),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0)),
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
                   ),
                   child: const Text(
                     "Upload Result",
@@ -265,6 +265,8 @@ class _ResultAddState extends State<ResultAdd> with NotificationMixin {
               ],
             ),
           ),
-        )));
+        ),
+      ),
+    );
   }
 }

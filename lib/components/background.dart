@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class Background extends StatelessWidget {
   final Widget child;
   const Background({
-    Key? key,
+    super.key,
     required this.child,
     this.topImage = "assets/images/top.png",
-  }) : super(key: key);
+  });
   final String topImage;
   @override
   Widget build(BuildContext context) {

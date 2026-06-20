@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 
 class AddParentPage extends StatefulWidget {
-  const AddParentPage({Key? key}) : super(key: key);
+  const AddParentPage({super.key});
   @override
   AddParentPageState createState() => AddParentPageState();
 }
@@ -28,7 +28,7 @@ class AddParentPageState extends State<AddParentPage> {
     super.dispose();
   }
 
-  clearText() {
+  void clearText() {
     nameController.clear();
     numberController.clear();
     passwordController.clear();
@@ -77,12 +77,13 @@ class AddParentPageState extends State<AddParentPage> {
         .catchError((error) => print('Failed to Add user: $error'));
   }
 
-  registration() async {
+  Future<void> registration() async {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
               email: "$number@spp.com", password: password)
           .then((value) {});
+          if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: kPrimaryLightColor,
@@ -126,7 +127,7 @@ class AddParentPageState extends State<AddParentPage> {
   }
 
   final _prefs = SharedPreferences.getInstance();
-  login() async {
+  Future<void> login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
     email = prefs.getString('faculty');
@@ -214,7 +215,7 @@ class AddParentPageState extends State<AddParentPage> {
                                 ]),
                             child: DropdownButtonFormField<String>(
                               isExpanded: true,
-                              value: child,
+                              initialValue: child,
                               decoration: const InputDecoration(
                                 border: InputBorder.none,
                                 enabledBorder: InputBorder.none,

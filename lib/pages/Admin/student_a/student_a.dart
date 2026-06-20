@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/widgest/animation.dart';
 
 class Student extends StatefulWidget {
-  const Student({Key? key}) : super(key: key);
+  const Student({super.key});
   @override
   State<Student> createState() => _StudentState();
 }
@@ -25,7 +25,7 @@ class _StudentState extends State<Student> {
 
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/students');
-  Future<void> deleteUser(id) async {
+  Future<void> deleteUser(dynamic id) async {
     return students
         .doc(id)
         .delete()
@@ -34,7 +34,7 @@ class _StudentState extends State<Student> {
   }
 
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
-  Future<void> updateStatus(id, status) async {
+  Future<void> updateStatus(dynamic id, dynamic status) async {
     students
         .doc(id)
         .update({'status': status})
@@ -49,7 +49,7 @@ class _StudentState extends State<Student> {
 
   TextEditingController searchController = TextEditingController();
   final _prefs = SharedPreferences.getInstance();
-  login() async {
+  Future<void> login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
     String? email = prefs.getString('email');
@@ -170,7 +170,7 @@ class _StudentState extends State<Student> {
                                             Switch(
                                               activeTrackColor: Colors.white,
                                               inactiveTrackColor: Colors.white,
-                                              activeColor: green,
+                                              activeThumbColor: green,
                                               inactiveThumbColor: red,
                                               value: storedocs[index]['status'],
                                               onChanged: (value) {
@@ -304,7 +304,7 @@ class _StudentState extends State<Student> {
                                             Switch(
                                               activeTrackColor: Colors.white,
                                               inactiveTrackColor: Colors.white,
-                                              activeColor: green,
+                                              activeThumbColor: green,
                                               inactiveThumbColor: red,
                                               value: storedocs[index]['status'],
                                               onChanged: (value) {

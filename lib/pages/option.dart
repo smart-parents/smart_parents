@@ -6,7 +6,7 @@ import 'package:smart_parents/pages/Parents/Login_p/login_screen_p.dart';
 import 'package:smart_parents/pages/Student/Login_s/login_screen_s.dart';
 
 class Option extends StatefulWidget {
-  const Option({Key? key}) : super(key: key);
+  const Option({super.key});
   @override
   State<Option> createState() => _OptionState();
 }

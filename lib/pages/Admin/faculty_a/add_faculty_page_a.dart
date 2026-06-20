@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 
 class AddFacultyPage extends StatefulWidget {
-  const AddFacultyPage({Key? key}) : super(key: key);
+  const AddFacultyPage({super.key});
   @override
   AddFacultyPageState createState() => AddFacultyPageState();
 }
@@ -36,7 +36,7 @@ class AddFacultyPageState extends State<AddFacultyPage> {
     super.dispose();
   }
 
-  clearText() async {
+  Future<void> clearText() async {
     facultyController.clear();
     nameController.clear();
     branchController.clear();
@@ -46,7 +46,7 @@ class AddFacultyPageState extends State<AddFacultyPage> {
   CollectionReference facultys =
       FirebaseFirestore.instance.collection('Admin/$admin/faculty');
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
-  registration() async {
+  Future<void> registration() async {
     try {
       FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -119,7 +119,7 @@ class AddFacultyPageState extends State<AddFacultyPage> {
     }
   }
 
-  login() async {
+  Future<void> login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
     String? email = prefs.getString('email');
@@ -204,7 +204,7 @@ class AddFacultyPageState extends State<AddFacultyPage> {
                               ]),
                           child: DropdownButtonFormField<String>(
                             isExpanded: true,
-                            value: branch1,
+                            initialValue: branch1,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               enabledBorder: InputBorder.none,

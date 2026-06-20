@@ -4,7 +4,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Student/dashboard_s.dart';
@@ -12,7 +11,7 @@ import 'package:smart_parents/pages/Student/profile_screen_s.dart';
 import 'package:smart_parents/pages/option.dart';
 
 class UserMainS extends StatefulWidget {
-  const UserMainS({Key? key}) : super(key: key);
+  const UserMainS({super.key});
   @override
   UserMainState createState() => UserMainState();
 }
@@ -23,38 +22,38 @@ class UserMainState extends State<UserMainS> {
   void initState() {
     super.initState();
     adminget();
-    Timer(const Duration(seconds: 5), () {
-      subscribeUserForNotifications();
-    });
+    // Timer(const Duration(seconds: 5), () {
+    //   subscribeUserForNotifications();
+    // });
   }
 
   final _prefs = SharedPreferences.getInstance();
   String? id;
-  Future<void> subscribeUserForNotifications() async {
-    final SharedPreferences prefs = await _prefs;
-    id = prefs.getString('id');
-    bool userProvidedPrivacyConsent =
-        await OneSignal.shared.userProvidedPrivacyConsent();
-    if (!userProvidedPrivacyConsent) {
-      print(
-          "User has not provided privacy consent yet. Cannot subscribe for notifications.");
-      return;
-    }
-    await OneSignal.shared.promptUserForPushNotificationPermission();
-    String deviceToken = await OneSignal.shared
-        .getDeviceState()
-        .then((deviceState) => deviceState!.userId!);
-    await FirebaseFirestore.instance
-        .collection('Admin/$admin/students')
-        .doc(id)
-        .set({'notification_token': deviceToken}, SetOptions(merge: true));
-  }
-
+  // Future<void> subscribeUserForNotifications() async {
+  //   final SharedPreferences prefs = await _prefs;
+  //   id = prefs.getString('id');
+  //   bool userProvidedPrivacyConsent = await OneSignal.shared
+  //       .userProvidedPrivacyConsent();
+  //   if (!userProvidedPrivacyConsent) {
+  //     print(
+  //       "User has not provided privacy consent yet. Cannot subscribe for notifications.",
+  //     );
+  //     return;
+  //   }
+  //   await OneSignal.shared.promptUserForPushNotificationPermission();
+  //   String deviceToken = await OneSignal.shared.getDeviceState().then(
+  //     (deviceState) => deviceState!.userId!,
+  //   );
+  //   await FirebaseFirestore.instance
+  //       .collection('Admin/$admin/students')
+  //       .doc(id)
+  //       .set({'notification_token': deviceToken}, SetOptions(merge: true));
+  // }
   static final List<Widget> _widgetOptions = <Widget>[
     const DashboardS(),
-    const ProfileScreenS()
+    const ProfileScreenS(),
   ];
-  adminget() async {
+  Future<void> adminget() async {
     final SharedPreferences prefs = await _prefs;
     var pid = prefs.getString('id');
     final snapShot = await FirebaseFirestore.instance
@@ -85,7 +84,7 @@ class UserMainState extends State<UserMainS> {
     });
   }
 
-  delete() async {
+  Future<void> delete() async {
     final SharedPreferences prefs = await _prefs;
     final success = await prefs.clear();
     print(success);
@@ -93,10 +92,12 @@ class UserMainState extends State<UserMainS> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-        return false;
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) async {
+        if (!didPop) {
+          await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+        }
       },
       child: Container(
         decoration: BoxDecoration(
@@ -130,17 +131,19 @@ class UserMainState extends State<UserMainS> {
                             child: const Text("Logout"),
                             onPressed: () async {
                               showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (context) {
-                                    return const Center(
-                                        child: CircularProgressIndicator());
-                                  });
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (context) {
+                                  return const Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                },
+                              );
                               try {
                                 await FirebaseAuth.instance.signOut();
                                 timer?.cancel();
                                 delete();
-                                await OneSignal.shared.removeExternalUserId();
+                                // await OneSignal.shared.removeExternalUserId();
                                 try {
                                   final documentReference = FirebaseFirestore
                                       .instance
@@ -150,27 +153,32 @@ class UserMainState extends State<UserMainS> {
                                     "notification_token": FieldValue.delete(),
                                   });
                                   print(
-                                      "Field 'notification_token' deleted successfully from document $id");
+                                    "Field 'notification_token' deleted successfully from document $id",
+                                  );
                                 } catch (e) {
                                   print('Error deleting field: $e');
                                 }
+                                if (!context.mounted) return;
                                 Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const Option(),
-                                    ),
-                                    (route) => false);
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const Option(),
+                                  ),
+                                  (route) => false,
+                                );
                               } catch (e) {
                                 print(e);
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                      backgroundColor: kPrimaryLightColor,
-                                      content: Text(
-                                        'Failed to logout: $e',
-                                        style: const TextStyle(
-                                            fontSize: 18.0,
-                                            color: Colors.black),
-                                      )),
+                                    backgroundColor: kPrimaryLightColor,
+                                    content: Text(
+                                      'Failed to logout: $e',
+                                      style: const TextStyle(
+                                        fontSize: 18.0,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ),
                                 );
                               }
                             },
@@ -178,20 +186,15 @@ class UserMainState extends State<UserMainS> {
                         ],
                       );
                     },
-                  )
+                  ),
                 },
-                icon: const Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                ),
+                icon: const Icon(Icons.logout, color: Colors.white),
               ),
             ],
           ),
           body: _widgetOptions.elementAt(_selectedIndex),
           bottomNavigationBar: Container(
-            decoration: const BoxDecoration(
-              color: kPrimaryLightColor,
-            ),
+            decoration: const BoxDecoration(color: kPrimaryLightColor),
             child: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
@@ -199,18 +202,14 @@ class UserMainState extends State<UserMainS> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   activeColor: Colors.white,
                   iconSize: 24,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 20,
+                    vertical: 12,
+                  ),
                   tabBackgroundColor: kPrimaryColor,
                   tabs: const [
-                    GButton(
-                      icon: Icons.home,
-                      text: 'Home',
-                    ),
-                    GButton(
-                      icon: Icons.account_circle,
-                      text: 'Profile',
-                    ),
+                    GButton(icon: Icons.home, text: 'Home'),
+                    GButton(icon: Icons.account_circle, text: 'Profile'),
                   ],
                   selectedIndex: _selectedIndex,
                   onTabChange: _onItemTapped,

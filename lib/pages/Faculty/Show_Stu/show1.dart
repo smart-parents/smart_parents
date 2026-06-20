@@ -4,7 +4,7 @@ import 'package:smart_parents/pages/Faculty/Show_Stu/student_f.dart';
 import 'package:smart_parents/widgest/dropdown_widget.dart';
 
 class ShowStu extends StatefulWidget {
-  const ShowStu({Key? key}) : super(key: key);
+  const ShowStu({super.key});
   @override
   ShowStuState createState() => ShowStuState();
 }

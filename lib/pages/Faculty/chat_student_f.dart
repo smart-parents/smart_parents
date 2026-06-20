@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/components/send_notification.dart';
 import 'package:smart_parents/widgest/dropdown_widget.dart';
 
 final _fireStore = FirebaseFirestore.instance;
@@ -18,7 +17,7 @@ class ChatStudent extends StatefulWidget {
   ChatStudentState createState() => ChatStudentState();
 }
 
-class ChatStudentState extends State<ChatStudent> with NotificationMixin {
+class ChatStudentState extends State<ChatStudent> {
   final messageTextController = TextEditingController();
   late String messageText = '';
   @override
@@ -63,15 +62,6 @@ class ChatStudentState extends State<ChatStudent> with NotificationMixin {
                         .doc(branch)
                         .set({batchyeardropdownValue: messages})
                   },
-                sendNotificationToAllUsers(
-                    "Message from faculty",
-                    '',
-                    text,
-                    await FirebaseFirestore.instance
-                        .collection('Admin/$admin/students')
-                        .where('branch', isEqualTo: branch)
-                        .where('batch', isEqualTo: batchyeardropdownValue)
-                        .get()),
               });
     }
   }
@@ -173,10 +163,10 @@ class ChatStudentState extends State<ChatStudent> with NotificationMixin {
                         style: const TextStyle(color: Colors.black),
                       ),
                     ),
-                    RawKeyboardListener(
+                    KeyboardListener(
                       focusNode: FocusNode(),
-                      onKey: (RawKeyEvent event) {
-                        if (event is RawKeyUpEvent &&
+                      onKeyEvent: (KeyEvent event) {
+                        if (event is KeyUpEvent &&
                             event.logicalKey == LogicalKeyboardKey.enter) {
                           _handleSubmitted(messageTextController.text);
                         }
@@ -204,9 +194,8 @@ class ChatStudentState extends State<ChatStudent> with NotificationMixin {
 
 class CustomStreamBuilder extends StatelessWidget {
   final ScrollController _scrollController;
-  CustomStreamBuilder({Key? key})
-      : _scrollController = ScrollController(),
-        super(key: key);
+  CustomStreamBuilder({super.key})
+      : _scrollController = ScrollController();
   void scroll() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);

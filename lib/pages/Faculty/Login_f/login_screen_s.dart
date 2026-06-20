@@ -4,7 +4,7 @@ import 'package:smart_parents/pages/Faculty/Login_f/components_f/login_form_f.da
 import 'package:smart_parents/pages/Faculty/Login_f/components_f/login_screen_top_image_f.dart';
 
 class LoginScreenF extends StatelessWidget {
-  const LoginScreenF({Key? key}) : super(key: key);
+  const LoginScreenF({super.key});
   @override
   Widget build(BuildContext context) {
     return const Background(
@@ -17,8 +17,8 @@ class LoginScreenF extends StatelessWidget {
 
 class MobileLoginScreen extends StatelessWidget {
   const MobileLoginScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return const SingleChildScrollView(

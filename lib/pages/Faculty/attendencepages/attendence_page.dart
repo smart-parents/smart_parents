@@ -1,18 +1,19 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
+// import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Faculty/user_main_f.dart';
 
 class AttendencePage extends StatefulWidget {
-  const AttendencePage(
-      {Key? key,
-      required this.batch,
-      required this.sub,
-      required this.start,
-      required this.end,
-      required this.date})
-      : super(key: key);
+  const AttendencePage({
+    super.key,
+    required this.batch,
+    required this.sub,
+    required this.start,
+    required this.end,
+    required this.date,
+  });
   final String batch;
   final String sub;
   final String start;
@@ -49,14 +50,14 @@ class AttendencePageState extends State<AttendencePage> {
         .collection('Admin/$admin/attendance')
         .doc('${widget.date}_${widget.start}_${widget.end}')
         .set({
-      'date': widget.date,
-      'start': widget.start,
-      'end': widget.end,
-      'branch': branch,
-      'batch': widget.batch,
-      'subject': widget.sub,
-      'attendance': attendanceMap,
-    });
+          'date': widget.date,
+          'start': widget.start,
+          'end': widget.end,
+          'branch': branch,
+          'batch': widget.batch,
+          'subject': widget.sub,
+          'attendance': attendanceMap,
+        });
   }
 
   void _handleSubmitted() {
@@ -93,18 +94,36 @@ class AttendencePageState extends State<AttendencePage> {
     });
   }
 
-  void showAlertDialogOnOkCallback(String title, String msg,
-      DialogType dialogType, BuildContext context, VoidCallback onOkPress) {
-    AwesomeDialog(
+  // void showAlertDialogOnOkCallback(String title, String msg,
+  //     DialogType dialogType, BuildContext context, VoidCallback onOkPress) {
+  //   AwesomeDialog(
+  //     context: context,
+  //     animType: AnimType.topSlide,
+  //     dialogType: dialogType,
+  //     title: title,
+  //     desc: msg,
+  //     btnOkIcon: Icons.check_circle,
+  //     btnOkColor: Colors.green.shade900,
+  //     btnOkOnPress: onOkPress,
+  //   ).show();
+  // }
+  void showAlertDialogOnOkCallback(
+    String title,
+    String msg,
+    BuildContext context,
+    VoidCallback onOkPress,
+  ) {
+    QuickAlert.show(
       context: context,
-      animType: AnimType.topSlide,
-      dialogType: dialogType,
+      type: QuickAlertType.success,
       title: title,
-      desc: msg,
-      btnOkIcon: Icons.check_circle,
-      btnOkColor: Colors.green.shade900,
-      btnOkOnPress: onOkPress,
-    ).show();
+      text: msg,
+      confirmBtnText: 'OK',
+      onConfirmBtnTap: () {
+        Navigator.pop(context);
+        onOkPress();
+      },
+    );
   }
 
   @override
@@ -116,19 +135,16 @@ class AttendencePageState extends State<AttendencePage> {
       ),
       body: Column(
         children: [
-          const SizedBox(
-            height: 20,
-          ),
+          const SizedBox(height: 20),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.75,
             child: ListView.builder(
-                itemCount: studentvar.length,
-                itemBuilder: (BuildContext context, int index) =>
-                    buildAttendenceCard(context, index)),
+              itemCount: studentvar.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  buildAttendenceCard(context, index),
+            ),
           ),
-          const SizedBox(
-            height: 25,
-          ),
+          const SizedBox(height: 25),
           ElevatedButton(
             onPressed: () => showDialog<String>(
               context: context,
@@ -142,15 +158,27 @@ class AttendencePageState extends State<AttendencePage> {
                   TextButton(
                     onPressed: () => {
                       _handleSubmitted(),
+                      // showAlertDialogOnOkCallback(
+                      //   'Success !',
+                      //   'Attendance Successfully Submitted.',
+                      //   DialogType.success,
+                      //   context,
+                      //   () => Navigator.of(context).push(
+                      //     MaterialPageRoute(
+                      //       builder: (context) => const UserMainF(),
+                      //     ),
+                      //   ),
+                      // ),
                       showAlertDialogOnOkCallback(
-                          'Success !',
-                          'Attendance Successfully Submitted.',
-                          DialogType.success,
-                          context,
-                          () => Navigator.of(context).push(
-                                MaterialPageRoute(
-                                    builder: (context) => const UserMainF()),
-                              )),
+                        'Success !',
+                        'Attendance Successfully Submitted.',
+                        context,
+                        () => Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => const UserMainF(),
+                          ),
+                        ),
+                      ),
                     },
                     child: const Text('Submit'),
                   ),
@@ -165,7 +193,7 @@ class AttendencePageState extends State<AttendencePage> {
     );
   }
 
-  buildAttendenceCard(BuildContext context, int index) {
+  GestureDetector buildAttendenceCard(BuildContext context, int index) {
     var index2 = index + 1;
     return GestureDetector(
       onTap: () {
@@ -187,13 +215,8 @@ class AttendencePageState extends State<AttendencePage> {
           padding: const EdgeInsets.all(10.0),
           child: Row(
             children: <Widget>[
-              Text(
-                index2.toString(),
-                style: const TextStyle(fontSize: 20),
-              ),
-              const SizedBox(
-                width: 25,
-              ),
+              Text(index2.toString(), style: const TextStyle(fontSize: 20)),
+              const SizedBox(width: 25),
               Text(
                 "${studentvar[index].id}-${studentvar[index].name}",
                 style: const TextStyle(fontSize: 20),

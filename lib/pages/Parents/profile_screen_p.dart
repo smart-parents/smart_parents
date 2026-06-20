@@ -21,7 +21,7 @@ class _ProfileScreenPState extends State<ProfileScreenP> {
   String? email = FirebaseAuth.instance.currentUser!.email;
   String? id;
   final _prefs = SharedPreferences.getInstance();
-  main() async {
+  Future<void> main() async {
     final SharedPreferences prefs = await _prefs;
     id = prefs.getString('id');
     final doc = await FirebaseFirestore.instance
@@ -83,6 +83,7 @@ class _ProfileScreenPState extends State<ProfileScreenP> {
           _imageFile = bytes;
           uploadImage();
         });
+        if (!mounted) return;
         Navigator.pop(context);
       }
     } catch (e) {

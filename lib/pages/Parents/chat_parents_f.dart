@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/components/send_notification.dart';
 
 final _fireStore = FirebaseFirestore.instance;
 String? loggedName;
@@ -16,7 +15,7 @@ class ChatParent extends StatefulWidget {
   ChatParentState createState() => ChatParentState();
 }
 
-class ChatParentState extends State<ChatParent> with NotificationMixin {
+class ChatParentState extends State<ChatParent> {
   final messageTextController = TextEditingController();
   late String messageText = '';
   @override
@@ -68,14 +67,6 @@ class ChatParentState extends State<ChatParent> with NotificationMixin {
                         .doc(branch)
                         .set({batch.toString(): messages})
                   },
-                sendNotificationToAllUsers(
-                    "Message from parents",
-                    '',
-                    text,
-                    await FirebaseFirestore.instance
-                        .collection('Admin/$admin/faculty')
-                        .where('branch', isEqualTo: branch)
-                        .get()),
               });
     }
   }
@@ -117,10 +108,10 @@ class ChatParentState extends State<ChatParent> with NotificationMixin {
                         style: const TextStyle(color: Colors.black),
                       ),
                     ),
-                    RawKeyboardListener(
+                    KeyboardListener(
                       focusNode: FocusNode(),
-                      onKey: (RawKeyEvent event) {
-                        if (event is RawKeyUpEvent &&
+                      onKeyEvent: (KeyEvent event) {
+                        if (event is KeyUpEvent &&
                             event.logicalKey == LogicalKeyboardKey.enter) {
                           _handleSubmitted(messageTextController.text);
                         }
@@ -148,9 +139,8 @@ class ChatParentState extends State<ChatParent> with NotificationMixin {
 
 class CustomStreamBuilder extends StatelessWidget {
   final ScrollController _scrollController;
-  CustomStreamBuilder({Key? key})
-      : _scrollController = ScrollController(),
-        super(key: key);
+  CustomStreamBuilder({super.key})
+      : _scrollController = ScrollController();
   void scroll() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _scrollController.jumpTo(_scrollController.position.maxScrollExtent);

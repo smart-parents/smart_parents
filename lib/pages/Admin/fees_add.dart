@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/components/send_notification.dart';
 import 'package:smart_parents/pages/Admin/fees.dart';
 
 class FeesAdd extends StatefulWidget {
-  const FeesAdd({Key? key}) : super(key: key);
+  const FeesAdd({super.key});
   @override
   FeesAddState createState() => FeesAddState();
 }
 
-class FeesAddState extends State<FeesAdd> with NotificationMixin {
+class FeesAddState extends State<FeesAdd> {
   final _formKey = GlobalKey<FormState>();
   final amountController = TextEditingController();
   final semController = TextEditingController();
@@ -29,7 +28,7 @@ class FeesAddState extends State<FeesAdd> with NotificationMixin {
     super.dispose();
   }
 
-  datafetch() {
+  void datafetch() {
     setState(() {
       studentStream = FirebaseFirestore.instance
           .collection('Admin/$admin/students')
@@ -71,22 +70,6 @@ class FeesAddState extends State<FeesAdd> with NotificationMixin {
                       .then((value) => print('fee Added'))
                       .catchError(
                           (error) => print('Failed to Add user: $error'));
-                  sendNotificationToAllUsers(
-                      "Fees",
-                      '',
-                      '$amount is paid',
-                      await FirebaseFirestore.instance
-                          .collection('Admin/$admin/students')
-                          .where('number', isEqualTo: selectedItem)
-                          .get());
-                  sendNotificationToAllUsers(
-                      "Fees",
-                      '',
-                      '$amount is paid',
-                      await FirebaseFirestore.instance
-                          .collection('Admin/$admin/parents')
-                          .where('child', isEqualTo: selectedItem)
-                          .get());
                   Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => const Fees()),
                   );

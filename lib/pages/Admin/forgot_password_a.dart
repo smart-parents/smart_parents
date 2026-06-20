@@ -4,13 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
 import 'package:smart_parents/pages/Admin/Signup_a/signup_screen_a.dart';
-
 class ForgotPassword extends StatefulWidget {
-  const ForgotPassword({Key? key}) : super(key: key);
+  const ForgotPassword({super.key});
   @override
   ForgotPasswordState createState() => ForgotPasswordState();
 }
-
 class ForgotPasswordState extends State<ForgotPassword> {
   final _formKey = GlobalKey<FormState>();
   var email = "";
@@ -20,17 +18,18 @@ class ForgotPasswordState extends State<ForgotPassword> {
     emailController.dispose();
     super.dispose();
   }
-
-  resetPassword() async {
+  Future<void> resetPassword() async {
     final snapShot = await FirebaseFirestore.instance
         .collection('Users')
         .where('id', isEqualTo: email)
         .where('role', isEqualTo: 'admin')
         .where('status', isEqualTo: true)
         .get();
+        if (!mounted) return;
     if (snapShot.docs.isNotEmpty) {
       try {
         await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: kPrimaryLightColor,
@@ -67,7 +66,6 @@ class ForgotPasswordState extends State<ForgotPassword> {
       );
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

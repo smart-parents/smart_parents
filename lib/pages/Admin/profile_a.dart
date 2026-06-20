@@ -11,7 +11,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 class Profile extends StatefulWidget {
-  const Profile({Key? key}) : super(key: key);
+  const Profile({super.key});
   @override
   ProfileState createState() => ProfileState();
 }
@@ -67,6 +67,7 @@ class ProfileState extends State<Profile> {
           _imageFile = bytes;
           uploadImage();
         });
+        if (!mounted) return;
         Navigator.pop(context);
       }
     } catch (e) {

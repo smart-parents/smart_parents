@@ -5,7 +5,7 @@ import 'package:smart_parents/pages/Faculty/Subject_f/add_subject_f.dart';
 import 'package:smart_parents/widgest/animation.dart';
 
 class SubjectF extends StatefulWidget {
-  const SubjectF({Key? key}) : super(key: key);
+  const SubjectF({super.key});
   @override
   State<SubjectF> createState() => _SubjectFState();
 }
@@ -22,7 +22,7 @@ class _SubjectFState extends State<SubjectF> {
 
   CollectionReference subject =
       FirebaseFirestore.instance.collection('Admin/$admin/subject');
-  Future<void> deleteUser(id) async {
+  Future<void> deleteUser(dynamic id) async {
     return subject
         .doc(id)
         .delete()

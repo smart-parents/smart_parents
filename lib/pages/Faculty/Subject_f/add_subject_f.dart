@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 
 class AddSubject extends StatefulWidget {
-  const AddSubject({Key? key}) : super(key: key);
+  const AddSubject({super.key});
   @override
   AddSubjectState createState() => AddSubjectState();
 }
@@ -21,7 +21,7 @@ class AddSubjectState extends State<AddSubject> {
     super.dispose();
   }
 
-  clearText() {
+  void clearText() {
     nameController.clear();
     numberController.clear();
   }

@@ -5,7 +5,7 @@ import 'package:smart_parents/pages/Admin/fees_add.dart';
 import 'package:smart_parents/widgest/animation.dart';
 
 class Fees extends StatefulWidget {
-  const Fees({Key? key}) : super(key: key);
+  const Fees({super.key});
   @override
   State<Fees> createState() => _FeesState();
 }

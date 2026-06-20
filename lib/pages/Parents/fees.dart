@@ -3,7 +3,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class Fees extends StatefulWidget {
-  const Fees({Key? key}) : super(key: key);
+  const Fees({super.key});
   @override
   State<Fees> createState() => _FeesState();
 }

@@ -1,0 +1,22 @@
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "smart-parents-97628",
+                    "appId": "1:988559124743:android:25b5408345d1e810bc3da2",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "smart-parents-97628",
+                    "configurations": {
+                        "android": "1:988559124743:android:25b5408345d1e810bc3da2",
+                        "web": "1:988559124743:web:6c66e5fabad30a6bbc3da2"
+                    }
+                }
+            }
+        }
+    }
+}

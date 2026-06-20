@@ -2,21 +2,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
-import 'package:smart_parents/components/send_notification.dart';
 import 'package:smart_parents/pages/Faculty/exam_f/addexam.dart';
 import 'package:smart_parents/widgest/dropdown_widget.dart';
 
 class Exam extends StatefulWidget {
-  const Exam({Key? key}) : super(key: key);
+  const Exam({super.key});
   @override
   State<Exam> createState() => _ExamState();
 }
 
-class _ExamState extends State<Exam> with NotificationMixin {
+class _ExamState extends State<Exam> {
   final nameController = TextEditingController();
   CollectionReference exams =
       FirebaseFirestore.instance.collection('Admin/$admin/exams');
-  Future<void> deleteUser(id) async {
+  Future<void> deleteUser(dynamic id) async {
     final subcollections = exams.doc(id).collection('exam').get();
     subcollections.then((QuerySnapshot<Map<String, dynamic>> snapshot) {
       for (var doc in snapshot.docs) {
@@ -31,7 +30,7 @@ class _ExamState extends State<Exam> with NotificationMixin {
     FirebaseStorage.instance.ref().child('$admin/exams/$id.jpg').delete();
   }
 
-  addExam(name, batch) {
+  Future<void> addExam(dynamic name, dynamic batch) {
     return exams
         .add({'name': name, 'batch': batch, 'branch': branch})
         .then((value) => print('student Added'))
@@ -256,26 +255,6 @@ class _ExamState extends State<Exam> with NotificationMixin {
                               setState(() async {
                                 addExam(nameController.text,
                                     batchyeardropdownValue);
-                                sendNotificationToAllUsers(
-                                    "Exam",
-                                    '',
-                                    nameController.text,
-                                    await FirebaseFirestore.instance
-                                        .collection('Admin/$admin/parents')
-                                        .where('branch', isEqualTo: branch)
-                                        .where('batch',
-                                            isEqualTo: batchyeardropdownValue)
-                                        .get());
-                                sendNotificationToAllUsers(
-                                    "Exam",
-                                    '',
-                                    nameController.text,
-                                    await FirebaseFirestore.instance
-                                        .collection('Admin/$admin/students')
-                                        .where('branch', isEqualTo: branch)
-                                        .where('batch',
-                                            isEqualTo: batchyeardropdownValue)
-                                        .get());
                                 Navigator.of(context).pop();
                               });
                             }

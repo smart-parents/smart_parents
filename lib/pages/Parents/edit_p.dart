@@ -5,7 +5,7 @@ import 'package:smart_parents/components/constants.dart';
 
 class EditP extends StatefulWidget {
   final String id;
-  const EditP({Key? key, required this.id}) : super(key: key);
+  const EditP({super.key, required this.id});
   @override
   EditPState createState() => EditPState();
 }
@@ -14,7 +14,7 @@ class EditPState extends State<EditP> {
   final _formKey = GlobalKey<FormState>();
   CollectionReference parents =
       FirebaseFirestore.instance.collection('Admin/$admin/parents');
-  Future<void> updateUser(id, name, email, dob) {
+  Future<void> updateUser(dynamic id, dynamic name, dynamic email, dynamic dob) {
     return parents
         .doc(id)
         .update(({

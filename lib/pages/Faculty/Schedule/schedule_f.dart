@@ -265,6 +265,7 @@ class ShowScheduleState extends State<ShowSchedule> {
                                                     print('Schedule Deleted'))
                                                 .catchError((error) => print(
                                                     'Failed to Delete Schedule: $error'));
+                                                    if (!context.mounted) return;
                                             Navigator.of(context).pop();
                                           },
                                         ),
@@ -368,7 +369,7 @@ class TimetableService {
     });
   }
 
-  Future<void> deleteSchedule(id, String day) async {
+  Future<void> deleteSchedule(dynamic id, String day) async {
     await FirebaseFirestore.instance
         .collection('Admin')
         .doc(admin)

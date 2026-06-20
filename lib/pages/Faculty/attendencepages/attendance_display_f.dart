@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_parents/components/constants.dart';
 
 class AttendanceDisplayPage extends StatefulWidget {
-  const AttendanceDisplayPage({Key? key}) : super(key: key);
+  const AttendanceDisplayPage({super.key});
   @override
   AttendanceDisplayPageState createState() => AttendanceDisplayPageState();
 }
@@ -79,8 +79,7 @@ class AttendanceDisplayPageState extends State<AttendanceDisplayPage> {
 
 class AttendanceDetailsPage extends StatelessWidget {
   final Map<String, dynamic>? attendance;
-  const AttendanceDetailsPage({Key? key, required this.attendance})
-      : super(key: key);
+  const AttendanceDetailsPage({super.key, required this.attendance});
   @override
   Widget build(BuildContext context) {
     return Scaffold(

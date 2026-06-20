@@ -6,7 +6,7 @@ import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
 
 class AttendanceCalendarPage extends StatefulWidget {
-  const AttendanceCalendarPage({Key? key}) : super(key: key);
+  const AttendanceCalendarPage({super.key});
   @override
   AttendanceCalendarPageState createState() => AttendanceCalendarPageState();
 }

@@ -6,7 +6,7 @@ import 'package:smart_parents/pages/Admin/notice_a/notice_a.dart';
 import 'package:smart_parents/pages/Admin/student_a/student_a.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  const Dashboard({super.key});
   @override
   DashboardState createState() => DashboardState();
 }

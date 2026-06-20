@@ -7,7 +7,7 @@ import 'package:smart_parents/pages/Admin/notice_a/add_notice_a.dart';
 import 'package:smart_parents/widgest/animation.dart';
 
 class Notice extends StatefulWidget {
-  const Notice({Key? key}) : super(key: key);
+  const Notice({super.key});
   @override
   State<Notice> createState() => _NoticeState();
 }
@@ -22,7 +22,7 @@ class _NoticeState extends State<Notice> {
     super.initState();
   }
 
-  deleteUser(id) async {
+  Future<void> deleteUser(dynamic id) async {
     notices
         .doc(id)
         .delete()

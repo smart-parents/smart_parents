@@ -7,7 +7,7 @@ import 'package:smart_parents/pages/Faculty/Result_f/addresult_f.dart';
 import 'package:smart_parents/widgest/animation.dart';
 
 class Result extends StatefulWidget {
-  const Result({Key? key}) : super(key: key);
+  const Result({super.key});
   @override
   State<Result> createState() => _ResultState();
 }
@@ -19,7 +19,7 @@ class _ResultState extends State<Result> {
       .snapshots();
   CollectionReference result =
       FirebaseFirestore.instance.collection('Admin/$admin/Results');
-  deleteUser(id) async {
+  Future<void> deleteUser(dynamic id) async {
     result
         .doc(id)
         .delete()

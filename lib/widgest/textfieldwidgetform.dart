@@ -5,12 +5,12 @@ class TextFieldWidgetForm extends StatefulWidget {
   final String text;
   final ValueChanged<String> onChanged;
   const TextFieldWidgetForm({
-    Key? key,
+    super.key,
     required this.label,
     required this.text,
     required this.onChanged,
     controller,
-  }) : super(key: key);
+  });
   @override
   TextFieldWidgetFormState createState() => TextFieldWidgetFormState();
 }

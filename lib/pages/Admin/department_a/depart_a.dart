@@ -6,7 +6,7 @@ import 'package:smart_parents/pages/Admin/department_a/add_depart_a.dart';
 import 'package:smart_parents/widgest/animation.dart';
 
 class Department extends StatefulWidget {
-  const Department({Key? key}) : super(key: key);
+  const Department({super.key});
   @override
   State<Department> createState() => _DepartmentState();
 }
@@ -23,7 +23,7 @@ class _DepartmentState extends State<Department> {
       .snapshots();
   CollectionReference department =
       FirebaseFirestore.instance.collection('Admin/$admin/department');
-  Future<void> deleteUser(id) {
+  Future<void> deleteUser(String id) {
     return department
         .doc(id)
         .delete()

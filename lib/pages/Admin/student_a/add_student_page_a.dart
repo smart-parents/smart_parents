@@ -7,7 +7,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/widgest/dropdown_widget.dart';
 
 class AddStudentPage extends StatefulWidget {
-  const AddStudentPage({Key? key}) : super(key: key);
+  const AddStudentPage({super.key});
   @override
   AddStudentPageState createState() => AddStudentPageState();
 }
@@ -29,7 +29,7 @@ class AddStudentPageState extends State<AddStudentPage> {
     super.dispose();
   }
 
-  clearText() {
+  void clearText() {
     nameController.clear();
     numberController.clear();
     passwordController.clear();
@@ -44,7 +44,7 @@ class AddStudentPageState extends State<AddStudentPage> {
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/students');
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
-  registration() async {
+  Future<void> registration() async {
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
@@ -69,6 +69,7 @@ class AddStudentPageState extends State<AddStudentPage> {
           .then((value) => print('student Added'))
           .catchError((error) => print('Failed to Add user: $error'));
       clearText();
+      if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           backgroundColor: kPrimaryLightColor,
@@ -109,7 +110,7 @@ class AddStudentPageState extends State<AddStudentPage> {
   }
 
   final _prefs = SharedPreferences.getInstance();
-  login() async {
+  Future<void> login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
     String? email = prefs.getString('email');
@@ -194,7 +195,7 @@ class AddStudentPageState extends State<AddStudentPage> {
                             ]),
                         child: DropdownButtonFormField<String>(
                           isExpanded: true,
-                          value: branch1,
+                          initialValue: branch1,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabledBorder: InputBorder.none,

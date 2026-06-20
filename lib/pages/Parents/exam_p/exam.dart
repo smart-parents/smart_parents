@@ -4,7 +4,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/pages/Parents/exam_p/addexam.dart';
 
 class Exam extends StatefulWidget {
-  const Exam({Key? key}) : super(key: key);
+  const Exam({super.key});
   @override
   State<Exam> createState() => _ExamState();
 }

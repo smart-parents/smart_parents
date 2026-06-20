@@ -5,7 +5,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ContactF extends StatefulWidget {
-  const ContactF({Key? key}) : super(key: key);
+  const ContactF({super.key});
   @override
   ContactFState createState() => ContactFState();
 }

@@ -7,8 +7,8 @@ import 'package:smart_parents/pages/Admin/Login_a/login_screen_a.dart';
 
 class SignUpForm extends StatefulWidget {
   const SignUpForm({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   SignUpFormState createState() => SignUpFormState();
 }
@@ -73,12 +73,13 @@ class SignUpFormState extends State<SignUpForm> {
         .catchError((error) => print('Failed to Add user: $error'));
   }
 
-  registration() async {
+  Future<void> registration() async {
     if (password == confirmPassword) {
       try {
         UserCredential userCredential = await FirebaseAuth.instance
             .createUserWithEmailAndPassword(email: email, password: password);
         print(userCredential);
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
             backgroundColor: kPrimaryLightColor,

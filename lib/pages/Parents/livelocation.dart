@@ -6,7 +6,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChildLocation extends StatefulWidget {
-  const ChildLocation({Key? key}) : super(key: key);
+  const ChildLocation({super.key});
   @override
   ChildLocationState createState() => ChildLocationState();
 }

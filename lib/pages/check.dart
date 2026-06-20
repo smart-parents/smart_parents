@@ -10,7 +10,7 @@ import 'package:smart_parents/pages/Admin/user_main_a.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Check extends StatefulWidget {
-  const Check({Key? key}) : super(key: key);
+  const Check({super.key});
   @override
   State<Check> createState() => _CheckState();
 }

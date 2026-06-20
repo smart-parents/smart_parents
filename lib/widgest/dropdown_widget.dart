@@ -6,11 +6,11 @@ class Dropdown extends StatefulWidget {
   final List<String> string;
   final String hint;
   const Dropdown({
-    Key? key,
+    super.key,
     required this.dropdownValue,
     required this.string,
     required this.hint,
-  }) : super(key: key);
+  });
   @override
   DropdownState createState() => DropdownState();
 }

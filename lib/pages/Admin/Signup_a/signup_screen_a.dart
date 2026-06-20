@@ -4,7 +4,7 @@ import 'package:smart_parents/pages/Admin/Signup_a/components_a/sign_up_top_imag
 import 'package:smart_parents/pages/Admin/Signup_a/components_a/signup_form_a.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return const Background(
@@ -17,8 +17,8 @@ class SignUpScreen extends StatelessWidget {
 
 class MobileSignupScreen extends StatelessWidget {
   const MobileSignupScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return const Column(

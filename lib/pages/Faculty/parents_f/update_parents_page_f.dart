@@ -4,7 +4,7 @@ import 'package:smart_parents/components/constants.dart';
 
 class UpdateParentPage extends StatefulWidget {
   final String id;
-  const UpdateParentPage({Key? key, required this.id}) : super(key: key);
+  const UpdateParentPage({super.key, required this.id});
   @override
   UpdateParentPageState createState() => UpdateParentPageState();
 }
@@ -13,7 +13,7 @@ class UpdateParentPageState extends State<UpdateParentPage> {
   final _formKey = GlobalKey<FormState>();
   CollectionReference students =
       FirebaseFirestore.instance.collection('Admin/$admin/parents');
-  Future<void> updateUser(id, name, child) {
+  Future<void> updateUser(dynamic id, dynamic name, dynamic child) {
     return students
         .doc(id)
         .update({'name': name, 'child': child})
@@ -104,7 +104,7 @@ class UpdateParentPageState extends State<UpdateParentPage> {
                                       ]),
                                   child: DropdownButtonFormField<String>(
                                     isExpanded: true,
-                                    value: child,
+                                    initialValue: child,
                                     decoration: const InputDecoration(
                                       border: InputBorder.none,
                                       enabledBorder: InputBorder.none,

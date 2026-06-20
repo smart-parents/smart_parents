@@ -4,7 +4,7 @@ import 'package:smart_parents/pages/Parents/Login_p/components_p/login_form_p.da
 import 'package:smart_parents/pages/Parents/Login_p/components_p/login_screen_top_image_p.dart';
 
 class LoginScreenP extends StatelessWidget {
-  const LoginScreenP({Key? key}) : super(key: key);
+  const LoginScreenP({super.key});
   @override
   Widget build(BuildContext context) {
     return const Background(
@@ -17,8 +17,8 @@ class LoginScreenP extends StatelessWidget {
 
 class MobileLoginScreen extends StatelessWidget {
   const MobileLoginScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return const SingleChildScrollView(

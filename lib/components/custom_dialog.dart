@@ -39,10 +39,8 @@ class Alerts {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context1) {
-          return WillPopScope(
-            onWillPop: () async {
-              return false;
-            },
+          return PopScope(
+            canPop: false,
             child: Dialog(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5),

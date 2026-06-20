@@ -5,8 +5,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/components/imageshow.dart';
 
 class AddExam extends StatefulWidget {
-  const AddExam({Key? key, required this.docid, required this.name})
-      : super(key: key);
+  const AddExam({super.key, required this.docid, required this.name});
   final String docid;
   final String name;
   @override

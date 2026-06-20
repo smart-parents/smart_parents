@@ -5,8 +5,8 @@ import 'package:smart_parents/pages/Student/Login_s/components_s/login_form_s.da
 import 'package:smart_parents/pages/Student/Login_s/components_s/login_screen_top_image_s.dart';
 
 class LoginScreenS extends StatelessWidget {
-  const LoginScreenS({Key? key}) : super(key: key);
-  locationData() async {
+  const LoginScreenS({super.key});
+  Future<void> locationData() async {
     Location location = Location();
     PermissionStatus permissionStatus = await location.hasPermission();
     if (permissionStatus != PermissionStatus.granted) {
@@ -27,8 +27,8 @@ class LoginScreenS extends StatelessWidget {
 
 class MobileLoginScreen extends StatelessWidget {
   const MobileLoginScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
   @override
   Widget build(BuildContext context) {
     return const SingleChildScrollView(

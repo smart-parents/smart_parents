@@ -11,7 +11,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfileF extends StatefulWidget {
-  const ProfileF({Key? key}) : super(key: key);
+  const ProfileF({super.key});
   @override
   ProfileFState createState() => ProfileFState();
 }
@@ -56,13 +56,13 @@ class ProfileFState extends State<ProfileF> {
   }
 
   String? id;
-  main() async {
+  Future<void> main() async {
     final SharedPreferences prefs = await _prefs;
     id = prefs.getString('id');
     print(id);
   }
 
-  login() async {
+  Future<void> login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
     em = prefs.getString('faculty');
@@ -101,6 +101,7 @@ class ProfileFState extends State<ProfileF> {
           _imageFile = bytes;
           uploadImage();
         });
+        if (!mounted) return;
         Navigator.pop(context);
       }
     } catch (e) {

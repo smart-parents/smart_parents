@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 
 class EditF extends StatefulWidget {
   final String id;
-  const EditF({Key? key, required this.id}) : super(key: key);
+  const EditF({super.key, required this.id});
   @override
   EditFState createState() => EditFState();
 }
@@ -13,7 +13,7 @@ class EditFState extends State<EditF> {
   final _formKey = GlobalKey<FormState>();
   var admin = 'd@gm.co';
   CollectionReference? students;
-  adminget(String admin) {
+  void adminget(String admin) {
     this.admin = admin;
     students = FirebaseFirestore.instance.collection('Admin/$admin/faculty');
     students!.doc(widget.id).get().then((snapshot) {
@@ -27,7 +27,7 @@ class EditFState extends State<EditF> {
     });
   }
 
-  Future<void> updateUser(id, name, email, mono, branch, dob) {
+  Future<void> updateUser(dynamic id, name, email, mono, branch, dob) {
     return students!
         .doc(id)
         .update(({

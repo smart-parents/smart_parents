@@ -4,7 +4,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:flutter/material.dart';
 
 class Fees extends StatefulWidget {
-  const Fees({Key? key}) : super(key: key);
+  const Fees({super.key});
   @override
   State<Fees> createState() => _FeesState();
 }
@@ -17,7 +17,7 @@ class _FeesState extends State<Fees> {
   }
 
   String? id;
-  main() {
+  void main() {
     if (FirebaseAuth.instance.currentUser != null) {
       String? email = FirebaseAuth.instance.currentUser!.email;
       id = email!.substring(0, email.length - 8);

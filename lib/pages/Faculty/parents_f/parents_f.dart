@@ -8,7 +8,7 @@ import 'package:smart_parents/pages/Faculty/parents_f/update_parents_page_f.dart
 import 'package:smart_parents/widgest/animation.dart';
 
 class Parent extends StatefulWidget {
-  const Parent({Key? key}) : super(key: key);
+  const Parent({super.key});
   @override
   State<Parent> createState() => _ParentState();
 }
@@ -27,7 +27,7 @@ class _ParentState extends State<Parent> {
   CollectionReference parents =
       FirebaseFirestore.instance.collection('Admin/$admin/parents');
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
-  Future<void> deleteUser(id) {
+  Future<void> deleteUser(dynamic id) {
     return parents
         .doc(id)
         .delete()
@@ -35,7 +35,7 @@ class _ParentState extends State<Parent> {
         .catchError((error) => print('Failed to Delete user: $error'));
   }
 
-  void updateStatus(id, status) {
+  void updateStatus(dynamic id,dynamic  status) {
     parents
         .doc(id)
         .update({'status': status})
@@ -49,7 +49,7 @@ class _ParentState extends State<Parent> {
   }
 
   final _prefs = SharedPreferences.getInstance();
-  login() async {
+  Future<void> login() async {
     FirebaseAuth.instance.signOut();
     final SharedPreferences prefs = await _prefs;
     String? email = prefs.getString('faculty');
@@ -178,7 +178,7 @@ class _ParentState extends State<Parent> {
                                                 activeTrackColor: Colors.white,
                                                 inactiveTrackColor:
                                                     Colors.white,
-                                                activeColor: green,
+                                                activeThumbColor: green,
                                                 inactiveThumbColor: red,
                                                 value: storedocs[index]
                                                     ['status'],
@@ -289,7 +289,7 @@ class _ParentState extends State<Parent> {
                                                 activeTrackColor: Colors.white,
                                                 inactiveTrackColor:
                                                     Colors.white,
-                                                activeColor: green,
+                                                activeThumbColor: green,
                                                 inactiveThumbColor: red,
                                                 value: storedocs[index]
                                                     ['status'],

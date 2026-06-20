@@ -4,7 +4,7 @@ import 'package:smart_parents/components/constants.dart';
 import 'package:smart_parents/components/imageshow.dart';
 
 class Notice extends StatefulWidget {
-  const Notice({Key? key}) : super(key: key);
+  const Notice({super.key});
   @override
   State<Notice> createState() => _NoticeState();
 }

@@ -10,8 +10,7 @@ import 'package:smart_parents/pages/Faculty/exam_f/addexamtime.dart';
 import 'package:smart_parents/widgest/animation.dart';
 
 class AddExam extends StatefulWidget {
-  const AddExam({Key? key, required this.docid, required this.name})
-      : super(key: key);
+  const AddExam({super.key, required this.docid, required this.name});
   final String docid;
   final String name;
   @override
@@ -20,7 +19,7 @@ class AddExam extends StatefulWidget {
 
 class _AddExamState extends State<AddExam> {
   final nameController = TextEditingController();
-  deleteUser(id) {
+  Future<void> deleteUser(dynamic id) {
     CollectionReference exam = FirebaseFirestore.instance
         .collection('Admin/$admin/exams/${widget.docid}/exam');
     return exam
@@ -339,6 +338,7 @@ class _AddExamState extends State<AddExam> {
           _imageFile = bytes;
           uploadImage();
         });
+        if (!mounted) return;
         Navigator.pop(context);
       }
     } catch (e) {
